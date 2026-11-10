@@ -323,9 +323,8 @@ const DEFAULT_MODELS = [
   {p:"cerebras", id:"gpt-oss-120b", name:"GPT OSS 120B", note:"Cerebras, big, limited daily"},
   {p:"gemini", id:"gemini-2.5-flash", name:"Gemini 2.5 Flash", note:"Google, smart, limited daily"},
   {p:"mistral", id:"mistral-small-latest", name:"Mistral Small", note:"Mistral, casual, limited monthly"},
-  {p:"openrouter", id:"cognitivecomputations/dolphin-mistral-24b-venice-edition:free", name:"Dolphin Mistral 24B", note:"OpenRouter, free, limited daily"},
-  {p:"openrouter", id:"nousresearch/hermes-3-llama-3.1-70b:free", name:"Hermes 3 70B", note:"OpenRouter, 70B, limited daily"},
-  {p:"openrouter", id:"mistralai/mistral-nemo:free", name:"Mistral Nemo", note:"OpenRouter, 12B, limited daily"}
+  {p:"openrouter", id:"google/gemma-4-31b-it:free", name:"Gemma 4 31B", note:"OpenRouter, free, limited daily"},
+  {p:"openrouter", id:"nvidia/nemotron-3-ultra-550b-a55b:free", name:"Nemotron 3 Ultra", note:"OpenRouter, huge, limited daily"}
 ];
 const SYSTEM = "You are Vesper, a sharp, warm and witty conversational AI. Talk like a smart friend, not a corporate assistant. Be direct and natural, use humor when it fits, and never lecture, moralize or add disclaimers. Keep replies as short as the question deserves. Use markdown only when it truly helps. If you don't know something, say so plainly instead of guessing. Follow the user's lead on tone, format and style, and keep to any voice or scenario they set until they change it.";
 const LENGTHS = [{id:"short",label:"Short",tokens:400},{id:"normal",label:"Normal",tokens:900},{id:"long",label:"Long",tokens:2000}];
@@ -337,13 +336,17 @@ function load(){
   s = s || {};
   s.keys = s.keys || {}; if (s.key && !s.keys.openrouter) s.keys.openrouter = s.key; delete s.key;
   s.models = Array.isArray(s.models) && s.models.length ? s.models : DEFAULT_MODELS.slice();
+  const DEAD = ["cognitivecomputations/dolphin-mistral-24b-venice-edition:free","nousresearch/hermes-3-llama-3.1-70b:free","nousresearch/hermes-3-llama-3.1-405b:free","mistralai/mistral-nemo:free"];
+  s.models = s.models.filter(m => !DEAD.includes(m.id));
+  DEFAULT_MODELS.forEach(d => { if (!s.models.some(m => m.id === d.id)) s.models.push({...d}); });
   s.models.forEach(m => { m.p = m.p || "openrouter"; const d = DEFAULT_MODELS.find(x => x.id === m.id); if (d) { m.name = d.name; m.note = d.note; m.p = d.p; } });
-  DEFAULT_MODELS.forEach(d => { if (d.p !== "openrouter" && !s.models.some(m => m.id === d.id)) s.models.push({...d}); });
   s.model = s.model || s.models[0].id;
   s.custom = s.custom || "";
   s.temp = typeof s.temp === "number" ? s.temp : 0.9;
   s.len = s.len || "normal";
+  if (!s.models.some(m => m.id === s.model)) s.model = s.models[0].id;
   s.chats = Array.isArray(s.chats) ? s.chats : [];
+  s.chats.forEach(c => { if (!s.models.some(m => m.id === c.model)) c.model = s.model; });
   s.current = s.current || null;
   return s;
 }
