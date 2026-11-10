@@ -1,22 +1,9 @@
 <p align="center">
-  <img src="icon-192.png" width="96" alt="Vesper logo">
-</p>
-
-<h1 align="center">Vesper</h1>
-
-<p align="center">
-  A fast, private AI chat app for your phone.<br>
-  Free models, your own key, zero accounts, zero servers.
+  <a href="https://pushkarx-code.github.io/vesper/"><img src="docs/banner.png" alt="Vesper. A fast, private AI chat app for your phone. Free models, your own key, no servers." width="100%"></a>
 </p>
 
 <p align="center">
   <a href="https://pushkarx-code.github.io/vesper/"><b>Open Vesper</b></a>
-</p>
-
-<p align="center">
-  <img src="docs/home.png" width="250" alt="Vesper home screen">
-  <img src="docs/chat.png" width="250" alt="A chat in Vesper">
-  <img src="docs/models.png" width="250" alt="The model picker">
 </p>
 
 ## What it is
@@ -27,15 +14,11 @@ There is no backend. Nothing you type passes through a Vesper server, because th
 
 ## Features
 
-* **Streaming replies.** Answers appear word by word, with a stop button when you've heard enough.
-* **Any OpenRouter model.** Switch models from the top bar, even in the middle of a chat. One tap loads every free model that is live right now.
-* **Chat history.** Every conversation is saved on your device and listed in the side drawer.
-* **Follows your lead.** Ask a quick question, or set up a character and a scene in plain words. Vesper stays in character until you tell it to stop.
-* **Custom instructions.** One optional box for anything it should always know or do.
-* **Tunable.** Set the creativity and the reply length to taste.
-* **Retry and copy.** Regenerate the last reply or copy any answer in one tap.
-* **Installable.** Add it to your home screen and it opens full screen, with its own icon, like any other app.
-* **Clear errors.** When a free model is busy or gone, Vesper says so in plain words and tells you what to do.
+<p align="center">
+  <img src="docs/features.png" alt="Streaming replies. Any OpenRouter model. Private by design. Follows your lead. Installs like an app. Tuned to you." width="100%">
+</p>
+
+Also in the box: chat history saved on your device, retry and copy on every answer, and plain language errors that tell you what to do when a free model is busy or gone.
 
 ## Get started
 
@@ -103,7 +86,7 @@ npx serve .
 
 * Vesper needs an internet connection to chat. The models run in the cloud, not on your phone.
 * AI models make mistakes and can state wrong things with confidence. Check anything important.
-* The screenshots above show sample conversations.
+* The screens in the banner show a sample conversation.
 
 ## Credits
 
