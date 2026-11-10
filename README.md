@@ -8,7 +8,7 @@
 
 ## What it is
 
-Vesper is a chat app that lives in your browser and installs to your home screen like a native app. It connects straight to [OpenRouter](https://openrouter.ai), so you can talk to dozens of AI models, including free ones, through one clean interface.
+Vesper is a chat app that lives in your browser and installs to your home screen like a native app. It connects straight to free AI providers (OpenRouter, Groq, Cerebras, Google Gemini and Mistral), so you can talk to dozens of models through one clean interface.
 
 There is no backend. Nothing you type passes through a Vesper server, because there isn't one. Your key and your chats stay on your device.
 
@@ -36,11 +36,9 @@ Go to [pushkarx-code.github.io/vesper](https://pushkarx-code.github.io/vesper/) 
 
 Tap the Chrome menu, then **Add to Home screen**, then **Install**.
 
-**3. Add your key**
+**3. Add a key**
 
-1. Create a free account at [openrouter.ai](https://openrouter.ai).
-2. Open **Keys** and create a new key.
-3. In Vesper, tap **Add API key**, paste it, then tap **Save key** and **Test**.
+In Vesper, open **Settings**, pick a provider and follow the short steps shown there to get a free key. Paste it, then tap **Save key** and **Test**. Every free tier has a daily limit, so adding two or three providers means you never run dry.
 
 That's it. Start typing.
 
@@ -48,7 +46,7 @@ That's it. Start typing.
 
 * Your API key is stored only in your browser's local storage on your device.
 * Your chats are stored only on your device. Clearing the site data deletes them.
-* Messages go directly from your browser to OpenRouter, and from there to the model provider you picked. Their privacy terms apply to that part of the trip.
+* Messages go directly from your browser to the provider you picked, and from there to the model provider you picked. Their privacy terms apply to that part of the trip.
 * Vesper has no analytics, no tracking and no accounts.
 
 Treat your key like a password. Never paste it into a chat, a screenshot or a public file.
@@ -58,7 +56,7 @@ Treat your key like a password. Never paste it into a chat, a screenshot or a pu
 Vesper ships with a short list of free models to get you going. Free models on OpenRouter change often and have rate limits, so if one stops responding:
 
 1. Tap the model name at the top.
-2. Tap **Find all free models** to load the current list.
+2. Tap **Find models** to load the current list.
 3. Pick another one.
 
 You can also add any model by its OpenRouter name. Names ending in `:free` cost nothing. Anything else uses your OpenRouter credits.

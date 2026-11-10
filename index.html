@@ -249,11 +249,11 @@ textarea.input{resize:vertical;min-height:120px;line-height:1.5}
   <div class="sheet-body">
     <div class="opt-list" id="modelList"></div>
     <div class="field">
-      <button class="btn" id="findFree">Find all free models</button>
+      <button class="btn" id="findFree">Find models</button>
       <div class="status" id="freeStatus"></div>
     </div>
     <div class="field">
-      <label for="customModel">Add a model by its OpenRouter name</label>
+      <label for="customModel">Add an OpenRouter model by its name</label>
       <div class="row"><input class="input" id="customModel" placeholder="provider/model:free" spellcheck="false" autocapitalize="off"><button class="btn" id="addModel">Add</button></div>
       <small>Free ones end in :free. Others use your OpenRouter credits.</small>
     </div>
@@ -266,11 +266,15 @@ textarea.input{resize:vertical;min-height:120px;line-height:1.5}
   <div class="sheet-head"><h2>Settings</h2><button class="icon-btn" data-close aria-label="Close"><svg width="20" height="20"><use href="#i-x"/></svg></button></div>
   <div class="sheet-body">
     <div class="field">
-      <label for="apiKey">OpenRouter API key</label>
+      <div class="flabel">Provider</div>
+      <div class="row" id="provRow" style="flex-wrap:wrap"></div>
+      <div class="status" id="provUse" style="margin:8px 0"></div>
+      <label for="apiKey" id="keyLabel">API key</label>
       <div class="row"><input class="input" id="apiKey" type="password" placeholder="Paste your key" spellcheck="false" autocapitalize="off" autocomplete="off"><button class="btn" id="toggleKey">Show</button></div>
       <div class="row"><button class="btn primary" id="saveKey">Save key</button><button class="btn" id="testKey">Test</button></div>
       <div class="status" id="keyStatus"></div>
-      <small>Your key stays on this phone only. It is sent straight to OpenRouter and nowhere else. Get one free at openrouter.ai, under Keys.</small>
+      <small id="provSteps" style="white-space:pre-line"></small>
+      <small>Each key stays on this phone and goes only to its own provider.</small>
     </div>
     <div class="divider"></div>
     <div class="field">
@@ -302,13 +306,26 @@ textarea.input{resize:vertical;min-height:120px;line-height:1.5}
 (() => {
 "use strict";
 const $ = s => document.querySelector(s);
-const API = "https://openrouter.ai/api/v1";
+const PROVIDERS = {
+  openrouter:{name:"OpenRouter", base:"https://openrouter.ai/api/v1", site:"openrouter.ai", usage:"Limited: about 200 free messages a day", steps:"1. Open openrouter.ai and sign up.\n2. Tap your profile, then Keys, then Create key.\n3. Copy it and paste it here."},
+  groq:{name:"Groq", base:"https://api.groq.com/openai/v1", site:"console.groq.com", usage:"Limited: very fast, daily cap resets every day", steps:"1. Open console.groq.com and sign up with Google.\n2. Tap API Keys, then Create API Key.\n3. Copy it and paste it here."},
+  cerebras:{name:"Cerebras", base:"https://api.cerebras.ai/v1", site:"cloud.cerebras.ai", usage:"Limited: large daily token cap, resets daily", steps:"1. Open cloud.cerebras.ai and sign up.\n2. Open API Keys and create one.\n3. Copy it and paste it here."},
+  gemini:{name:"Google Gemini", base:"https://generativelanguage.googleapis.com/v1beta/openai", site:"aistudio.google.com/apikey", usage:"Limited: free daily quota, resets daily", steps:"1. Open aistudio.google.com/apikey and sign in with Google.\n2. Tap Create API key.\n3. Copy it and paste it here."},
+  mistral:{name:"Mistral", base:"https://api.mistral.ai/v1", site:"console.mistral.ai", usage:"Limited: free plan, slow rate, monthly cap", steps:"1. Open console.mistral.ai and sign up, then pick the free Experiment plan.\n2. Open API keys and create one.\n3. Copy it and paste it here."}
+};
+const pOf = id => { const m = S.models.find(x => x.id === id); return (m && m.p) || "openrouter"; };
+const keyOf = pid => (S.keys && S.keys[pid]) || "";
+const hasKey = () => Object.values(S.keys || {}).some(Boolean);
 const STORE = "vesper.v1";
 
 const DEFAULT_MODELS = [
-  {id:"cognitivecomputations/dolphin-mistral-24b-venice-edition:free", name:"Dolphin Mistral 24B", note:"24B, free"},
-  {id:"nousresearch/hermes-3-llama-3.1-70b:free", name:"Hermes 3 70B", note:"70B, free if still listed"},
-  {id:"mistralai/mistral-nemo:free", name:"Mistral Nemo", note:"12B, fast, free if still listed"}
+  {p:"groq", id:"llama-3.3-70b-versatile", name:"Llama 3.3 70B", note:"Groq, very fast, limited daily"},
+  {p:"cerebras", id:"gpt-oss-120b", name:"GPT OSS 120B", note:"Cerebras, big, limited daily"},
+  {p:"gemini", id:"gemini-2.5-flash", name:"Gemini 2.5 Flash", note:"Google, smart, limited daily"},
+  {p:"mistral", id:"mistral-small-latest", name:"Mistral Small", note:"Mistral, casual, limited monthly"},
+  {p:"openrouter", id:"cognitivecomputations/dolphin-mistral-24b-venice-edition:free", name:"Dolphin Mistral 24B", note:"OpenRouter, free, limited daily"},
+  {p:"openrouter", id:"nousresearch/hermes-3-llama-3.1-70b:free", name:"Hermes 3 70B", note:"OpenRouter, 70B, limited daily"},
+  {p:"openrouter", id:"mistralai/mistral-nemo:free", name:"Mistral Nemo", note:"OpenRouter, 12B, limited daily"}
 ];
 const SYSTEM = "You are Vesper, a sharp, warm and witty conversational AI. Talk like a smart friend, not a corporate assistant. Be direct and natural, use humor when it fits, and never lecture, moralize or add disclaimers. Keep replies as short as the question deserves. Use markdown only when it truly helps. If you don't know something, say so plainly instead of guessing. Follow the user's lead on tone, format and style, and keep to any voice or scenario they set until they change it.";
 const LENGTHS = [{id:"short",label:"Short",tokens:400},{id:"normal",label:"Normal",tokens:900},{id:"long",label:"Long",tokens:2000}];
@@ -318,9 +335,10 @@ function load(){
   let s = null;
   try { s = JSON.parse(localStorage.getItem(STORE) || "null"); } catch(e) {}
   s = s || {};
-  s.key = s.key || "";
+  s.keys = s.keys || {}; if (s.key && !s.keys.openrouter) s.keys.openrouter = s.key; delete s.key;
   s.models = Array.isArray(s.models) && s.models.length ? s.models : DEFAULT_MODELS.slice();
-  s.models.forEach(m => { const d = DEFAULT_MODELS.find(x => x.id === m.id); if (d) { m.name = d.name; m.note = d.note; } });
+  s.models.forEach(m => { m.p = m.p || "openrouter"; const d = DEFAULT_MODELS.find(x => x.id === m.id); if (d) { m.name = d.name; m.note = d.note; m.p = d.p; } });
+  DEFAULT_MODELS.forEach(d => { if (d.p !== "openrouter" && !s.models.some(m => m.id === d.id)) s.models.push({...d}); });
   s.model = s.model || s.models[0].id;
   s.custom = s.custom || "";
   s.temp = typeof s.temp === "number" ? s.temp : 0.9;
@@ -362,8 +380,8 @@ function renderHero(){
   hero.className = "hero";
   hero.innerHTML = `${FACE("mark")}
     <h1>${greetingLine().replace(/\.$/,"")}<i>.</i></h1>
-    <p>${S.key ? "What's on your mind?" : "One step left: add your free OpenRouter key."}</p>`;
-  if (!S.key) {
+    <p>${hasKey() ? "What's on your mind?" : "One step left: add a free API key."}</p>`;
+  if (!hasKey()) {
     const kc = document.createElement("div");
     kc.className = "keycard";
     kc.innerHTML = `<p style="margin:0;font-size:14px">Your key stays on this phone. Nothing else to sign up for.</p>`;
@@ -462,20 +480,21 @@ $("#composer").addEventListener("submit", e => {
   e.preventDefault();
   if (busy) { controller && controller.abort(); return; }
   const text = input.value.trim(); if (!text) return;
-  if (!S.key) { openSheet("sheetSettings"); toast("Add your API key first"); return; }
+  if (!keyOf(pOf(S.model))) { setProv = pOf(S.model); openSheet("sheetSettings"); toast("Add your " + PROVIDERS[setProv].name + " key first"); return; }
   const c = ensureChat();
   if (c.title === "New chat") c.title = text.slice(0, 48) + (text.length > 48 ? "…" : "");
   c.messages.push({role:"user", content:text}); c.updated = Date.now(); save();
   input.value = ""; autosize(); renderThread(); renderList(); generate();
 });
 
-function friendlyError(status, body){
+function friendlyError(status, body, pid){
+  const P = PROVIDERS[pid || "openrouter"];
   const msg = (body && body.error && (body.error.message || body.error.code)) || "";
-  if (status === 401) return "Your API key was rejected. Open Settings and paste a fresh key from openrouter.ai.";
-  if (status === 402) return "This model needs credits. Pick a model that ends in :free.";
-  if (status === 429) return "The free model is busy or you hit today's free limit. Wait a minute, or switch model from the top.";
-  if (status === 404) return "This model isn't available anymore. Pick another one from the top, or tap Find all free models.";
-  if (status >= 500) return "OpenRouter is having trouble right now. Try again in a moment.";
+  if (status === 401) return "Your " + P.name + " key was rejected. Open Settings and paste a fresh key from " + P.site + ".";
+  if (status === 402) return "This model needs credits. Pick another model from the top.";
+  if (status === 429) return "You hit the free limit on " + P.name + " or it is busy. Wait a minute, or switch to a model from another provider at the top.";
+  if (status === 404) return "This model isn't available anymore. Pick another one from the top, or tap Find models.";
+  if (status >= 500) return P.name + " is having trouble right now. Try again in a moment.";
   return msg ? "Error: " + msg : "Something went wrong. Check your connection and try again.";
 }
 
@@ -483,6 +502,7 @@ async function generate(){
   const c = chat(); if (!c) return;
   const len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
   const history = c.messages.filter(m => !m.error).map(m => ({role:m.role, content:m.content}));
+  const pid = pOf(c.model), P = PROVIDERS[pid];
   const payload = {model:c.model, stream:true, temperature:S.temp, max_tokens:len.tokens,
     messages:[{role:"system", content:SYSTEM + (S.custom.trim() ? "\n\nStanding instructions from the user:\n" + S.custom.trim() : "")}, ...history]};
 
@@ -496,14 +516,14 @@ async function generate(){
   let text = "", raf = 0;
   const paint = () => { raf = 0; ans.innerHTML = md(text); scrollDown(false); };
   try {
-    const res = await fetch(API + "/chat/completions", {
+    const res = await fetch(P.base + "/chat/completions", {
       method:"POST", signal:controller.signal,
-      headers:{"Authorization":"Bearer " + S.key, "Content-Type":"application/json", "HTTP-Referer":location.origin, "X-Title":"Vesper"},
+      headers:Object.assign({"Authorization":"Bearer " + keyOf(pid), "Content-Type":"application/json"}, pid === "openrouter" ? {"HTTP-Referer":location.origin, "X-Title":"Vesper"} : {}),
       body:JSON.stringify(payload)
     });
     if (!res.ok) {
       let body = null; try { body = await res.json(); } catch(e) {}
-      throw {friendly: friendlyError(res.status, body)};
+      throw {friendly: friendlyError(res.status, body, pid)};
     }
     const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
     while (true) {
@@ -515,7 +535,7 @@ async function generate(){
         if (!line.startsWith("data:")) continue;
         const data = line.slice(5).trim(); if (data === "[DONE]") continue;
         let j; try { j = JSON.parse(data); } catch(e) { continue; }
-        if (j.error) throw {friendly: friendlyError(j.error.code || 0, j)};
+        if (j.error) throw {friendly: friendlyError(j.error.code || 0, j, pid)};
         const d = j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content;
         if (d) { text += d; if (!raf) raf = requestAnimationFrame(paint); }
       }
@@ -527,7 +547,7 @@ async function generate(){
       if (text.trim()) c.messages.push({role:"assistant", content:text});
     } else {
       if (text.trim()) c.messages.push({role:"assistant", content:text});
-      else c.messages.push({role:"assistant", content:(err && err.friendly) || "Couldn't reach OpenRouter. Check your internet and try again.", error:true});
+      else c.messages.push({role:"assistant", content:(err && err.friendly) || "Couldn't reach " + P.name + ". Check your internet and try again.", error:true});
     }
   } finally {
     busy = false; controller = null; c.updated = Date.now(); save(); syncSend(); renderThread(); renderList();
@@ -556,7 +576,9 @@ function renderSheet(id){
 function renderModels(){
   const cur = chat() ? chat().model : S.model;
   const list = $("#modelList"); list.innerHTML = "";
-  S.models.forEach(m => {
+  let lastP = "";
+  S.models.slice().sort((a,b) => Object.keys(PROVIDERS).indexOf(a.p) - Object.keys(PROVIDERS).indexOf(b.p)).forEach(m => {
+    if (m.p !== lastP) { lastP = m.p; const h = document.createElement("div"); h.className = "flabel"; h.style.cssText = "margin:14px 4px 6px"; h.textContent = PROVIDERS[m.p].name + ", " + PROVIDERS[m.p].usage.replace(/^Limited: /,"limited: ") + (keyOf(m.p) ? "" : " (no key yet)"); list.appendChild(h); }
     const b = document.createElement("button"); b.className = "opt" + (m.id === cur ? " sel" : "");
     b.innerHTML = `<div class="t"><b></b><span></span></div>${m.id === cur ? '<svg class="check"><use href="#i-check"/></svg>' : ""}`;
     b.querySelector("b").textContent = m.name; b.querySelector("span").textContent = m.note || m.id;
@@ -564,32 +586,54 @@ function renderModels(){
     list.appendChild(b);
   });
 }
+const SKIP = /whisper|tts|guard|embed|moderation|playai|orpheus|image|vision-preview|aqa|imagen|veo|robotics|audio/i;
 $("#findFree").onclick = async () => {
   const st = $("#freeStatus"); st.className = "status"; st.textContent = "Looking…";
-  try {
-    const r = await fetch(API + "/models"); const j = await r.json();
-    const free = (j.data || []).filter(m => m.id.endsWith(":free") || (m.pricing && +m.pricing.prompt === 0 && +m.pricing.completion === 0))
-      .filter(m => !m.architecture || !m.architecture.output_modalities || m.architecture.output_modalities.includes("text"));
-    let added = 0;
-    free.forEach(m => { if (!S.models.some(x => x.id === m.id)) { S.models.push({id:m.id, name:(m.name || m.id).replace(/\s*\(free\)\s*$/i,""), note:(m.context_length ? Math.round(m.context_length/1000) + "K context, " : "") + "free"}); added++; } });
-    // drop defaults that no longer exist
-    const live = new Set((j.data || []).map(m => m.id));
-    S.models = S.models.filter(m => live.has(m.id));
-    if (!S.models.length) S.models = DEFAULT_MODELS.slice();
-    save(); renderModels();
-    st.className = "status good"; st.textContent = free.length + " free models found" + (added ? ", " + added + " added" : "") + ".";
-  } catch(e) { st.className = "status bad"; st.textContent = "Couldn't load the list. Check your internet."; }
+  let added = 0, notes = [];
+  for (const pid of Object.keys(PROVIDERS)) {
+    const P = PROVIDERS[pid]; if (pid !== "openrouter" && !keyOf(pid)) continue;
+    try {
+      const r = await fetch(P.base + "/models", pid === "openrouter" ? {} : {headers:{Authorization:"Bearer " + keyOf(pid)}});
+      if (!r.ok) { notes.push(P.name + " " + r.status); continue; }
+      const j = await r.json(); const data = j.data || j.models || [];
+      let list;
+      if (pid === "openrouter") {
+        list = data.filter(m => m.id.endsWith(":free") || (m.pricing && +m.pricing.prompt === 0 && +m.pricing.completion === 0))
+          .filter(m => !m.architecture || !m.architecture.output_modalities || m.architecture.output_modalities.includes("text"))
+          .map(m => ({id:m.id, name:(m.name || m.id).replace(/\s*\(free\)\s*$/i,""), note:"OpenRouter, free, limited daily"}));
+        const live = new Set(data.map(m => m.id));
+        S.models = S.models.filter(m => m.p !== "openrouter" || live.has(m.id));
+      } else {
+        list = data.map(m => ({id:String(m.id).replace(/^models\//,""), name:String(m.id).replace(/^models\//,"")})).filter(m => !SKIP.test(m.id))
+          .map(m => ({...m, note:P.name + ", limited daily"}));
+      }
+      list.forEach(m => { if (!S.models.some(x => x.id === m.id)) { S.models.push({p:pid, ...m}); added++; } });
+    } catch(e) { notes.push(P.name + " unreachable"); }
+  }
+  if (!S.models.length) S.models = DEFAULT_MODELS.slice();
+  save(); renderModels();
+  st.className = "status " + (notes.length ? "bad" : "good"); st.textContent = added + " models added." + (notes.length ? " Problems: " + notes.join(", ") + "." : "");
 };
 $("#addModel").onclick = () => {
   const v = $("#customModel").value.trim(); if (!v || !v.includes("/")) { toast("Use the full name, like provider/model"); return; }
-  if (!S.models.some(m => m.id === v)) S.models.push({id:v, name:v.split("/").pop().replace(/:free$/,""), note:v});
+  if (!S.models.some(m => m.id === v)) S.models.push({p:"openrouter", id:v, name:v.split("/").pop().replace(/:free$/,""), note:"OpenRouter, " + v});
   $("#customModel").value = ""; save(); renderModels(); toast("Added");
 };
 
 /* settings */
+let setProv = "openrouter";
+function renderProv(){
+  const P = PROVIDERS[setProv];
+  const pr = $("#provRow"); pr.innerHTML = "";
+  Object.keys(PROVIDERS).forEach(id => { const b = document.createElement("button"); b.className = "chip"; b.textContent = PROVIDERS[id].name + (keyOf(id) ? " ✓" : ""); b.setAttribute("aria-pressed", String(id === setProv)); b.onclick = () => { setProv = id; renderSettings(); }; pr.appendChild(b); });
+  $("#provUse").textContent = P.usage + ". No provider is unlimited."; $("#provUse").className = "status";
+  $("#keyLabel").textContent = P.name + " API key";
+  $("#provSteps").textContent = "How to get a free key:\n" + P.steps;
+}
 function renderSettings(){
+  renderProv();
   $("#custom").value = S.custom;
-  $("#apiKey").value = S.key; $("#keyStatus").textContent = ""; $("#keyStatus").className = "status";
+  $("#apiKey").value = keyOf(setProv); $("#apiKey").type = "password"; $("#toggleKey").textContent = "Show"; $("#keyStatus").textContent = ""; $("#keyStatus").className = "status";
   $("#temp").value = S.temp; $("#tempVal").textContent = S.temp.toFixed(2);
   const lr = $("#lenRow"); lr.innerHTML = "";
   LENGTHS.forEach(l => { const b = document.createElement("button"); b.className = "chip"; b.textContent = l.label; b.setAttribute("aria-pressed", String(S.len === l.id)); b.onclick = () => { S.len = l.id; save(); renderSettings(); }; lr.appendChild(b); });
@@ -599,17 +643,17 @@ $("#toggleKey").onclick = () => { const k = $("#apiKey"); const show = k.type ==
 $("#saveKey").onclick = () => {
   const v = $("#apiKey").value.trim(); const st = $("#keyStatus");
   if (!v) { st.className = "status bad"; st.textContent = "Paste your key first."; return; }
-  S.key = v; save(); st.className = "status good"; st.textContent = "Saved on this phone."; if (!chat()) renderThread();
+  S.keys[setProv] = v; save(); renderProv(); st.className = "status good"; st.textContent = "Saved on this phone."; if (!chat()) renderThread();
 };
 $("#testKey").onclick = async () => {
-  const v = $("#apiKey").value.trim() || S.key; const st = $("#keyStatus");
+  const v = $("#apiKey").value.trim() || keyOf(setProv); const st = $("#keyStatus");
   if (!v) { st.className = "status bad"; st.textContent = "Paste your key first."; return; }
   st.className = "status"; st.textContent = "Testing…";
   try {
-    const r = await fetch(API + "/key", {headers:{Authorization:"Bearer " + v}});
+    const r = await fetch(PROVIDERS[setProv].base + (setProv === "openrouter" ? "/key" : "/models"), {headers:{Authorization:"Bearer " + v}});
     if (r.ok) { st.className = "status good"; st.textContent = "Key works."; }
-    else { st.className = "status bad"; st.textContent = r.status === 401 ? "This key was rejected. Make a new one at openrouter.ai." : "Test failed (" + r.status + ")."; }
-  } catch(e) { st.className = "status bad"; st.textContent = "Couldn't reach OpenRouter. Check your internet."; }
+    else { st.className = "status bad"; st.textContent = r.status === 401 ? "This key was rejected. Make a new one at " + PROVIDERS[setProv].site + "." : "Test failed (" + r.status + ")."; }
+  } catch(e) { st.className = "status bad"; st.textContent = "Couldn't reach " + PROVIDERS[setProv].name + ". Check your internet."; }
 };
 $("#custom").oninput = e => { S.custom = e.target.value; save(); };
 $("#temp").oninput = e => { S.temp = +e.target.value; $("#tempVal").textContent = S.temp.toFixed(2); save(); };
