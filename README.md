@@ -12,6 +12,12 @@ Vesper is a chat app that lives in your browser and installs to your home screen
 
 There is no backend. Nothing you type passes through a Vesper server, because there isn't one. Your key and your chats stay on your device.
 
+## A closer look
+
+<p align="center">
+  <img src="docs/showcase.png" alt="Every model, one tap. Your chats, your phone. Answers, beautifully set. Your key, your rules." width="100%">
+</p>
+
 ## Features
 
 <p align="center">
@@ -86,7 +92,7 @@ npx serve .
 
 * Vesper needs an internet connection to chat. The models run in the cloud, not on your phone.
 * AI models make mistakes and can state wrong things with confidence. Check anything important.
-* The screens in the banner show a sample conversation.
+* The screens in the images show sample conversations.
 
 ## Credits
 
