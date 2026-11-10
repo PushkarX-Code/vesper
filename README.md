@@ -15,10 +15,10 @@ There is no backend. Nothing you type passes through a Vesper server, because th
 ## Features
 
 <p align="center">
-  <img src="docs/features.png" alt="Streaming replies. Any OpenRouter model. Private by design. Follows your lead. Installs like an app. Tuned to you." width="100%">
+  <img src="docs/features.png" alt="Streaming replies. Any OpenRouter model. Private by design. Every chat, kept. Installs like an app. Tuned to you." width="100%">
 </p>
 
-Also in the box: chat history saved on your device, retry and copy on every answer, and plain language errors that tell you what to do when a free model is busy or gone.
+Also in the box: retry and copy on every answer, and plain language errors that tell you what to do when a free model is busy or gone.
 
 ## Get started
 

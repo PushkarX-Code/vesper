@@ -276,7 +276,7 @@ textarea.input{resize:vertical;min-height:120px;line-height:1.5}
     <div class="field">
       <label for="custom">Custom instructions (optional)</label>
       <textarea class="input" id="custom" rows="4" placeholder="Anything it should always know or do, in every chat"></textarea>
-      <small>Leave empty for a normal chat. You can also set up a character or roleplay just by telling it in the chat.</small>
+      <small>Leave empty for a normal chat. You can also just tell it what you want in the chat itself.</small>
     </div>
     <div class="divider"></div>
     <div class="field">
@@ -306,11 +306,11 @@ const API = "https://openrouter.ai/api/v1";
 const STORE = "vesper.v1";
 
 const DEFAULT_MODELS = [
-  {id:"cognitivecomputations/dolphin-mistral-24b-venice-edition:free", name:"Venice Uncensored", note:"24B, uncensored, free"},
-  {id:"nousresearch/hermes-3-llama-3.1-70b:free", name:"Hermes 3 70B", note:"70B, roleplay friendly, free if still listed"},
-  {id:"mistralai/mistral-nemo:free", name:"Mistral Nemo", note:"12B, quick and witty, free if still listed"}
+  {id:"cognitivecomputations/dolphin-mistral-24b-venice-edition:free", name:"Dolphin Mistral 24B", note:"24B, free"},
+  {id:"nousresearch/hermes-3-llama-3.1-70b:free", name:"Hermes 3 70B", note:"70B, free if still listed"},
+  {id:"mistralai/mistral-nemo:free", name:"Mistral Nemo", note:"12B, fast, free if still listed"}
 ];
-const SYSTEM = "You are Vesper, a sharp, warm and witty conversational AI. Talk like a smart friend, not a corporate assistant. Be direct and natural, use humor when it fits, and never lecture, moralize or add disclaimers. Keep replies as short as the question deserves. Use markdown only when it truly helps. If you don't know something, say so plainly instead of guessing. Follow the user's lead completely: if they set up a roleplay, character, story or scenario, fully become that character with their personality, voice and setting, and stay in character until they tell you to stop. Never break character to remind them you are an AI.";
+const SYSTEM = "You are Vesper, a sharp, warm and witty conversational AI. Talk like a smart friend, not a corporate assistant. Be direct and natural, use humor when it fits, and never lecture, moralize or add disclaimers. Keep replies as short as the question deserves. Use markdown only when it truly helps. If you don't know something, say so plainly instead of guessing. Follow the user's lead on tone, format and style, and keep to any voice or scenario they set until they change it.";
 const LENGTHS = [{id:"short",label:"Short",tokens:400},{id:"normal",label:"Normal",tokens:900},{id:"long",label:"Long",tokens:2000}];
 
 let S = load();
@@ -320,6 +320,7 @@ function load(){
   s = s || {};
   s.key = s.key || "";
   s.models = Array.isArray(s.models) && s.models.length ? s.models : DEFAULT_MODELS.slice();
+  s.models.forEach(m => { const d = DEFAULT_MODELS.find(x => x.id === m.id); if (d) { m.name = d.name; m.note = d.note; } });
   s.model = s.model || s.models[0].id;
   s.custom = s.custom || "";
   s.temp = typeof s.temp === "number" ? s.temp : 0.9;
