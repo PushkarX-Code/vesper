@@ -74,7 +74,7 @@ You can also add any model by its OpenRouter name. Names ending in `:free` cost 
 index.html              The whole app: layout, styles and logic
 manifest.webmanifest    Install settings (name, icons, colours)
 sw.js                   Service worker for install and offline shell
-icon.svg, icon-*.png    App icons
+mark.webp, icon-*.png   Logo and app icons
 docs/                   Screenshots for this README
 ```
 
