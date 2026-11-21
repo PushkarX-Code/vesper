@@ -21,6 +21,8 @@ const server = http.createServer((req, res) => {
 
 const NOW = Date.parse("2026-11-21T20:10:00Z");
 const GEMMA = "openrouter::google/gemma-4-31b-it:free";
+const CHAR_DIR = path.join(ROOT, "docs", "art", "characters");
+const face = n => "data:image/webp;base64," + fs.readFileSync(path.join(CHAR_DIR, "av-" + n + ".webp")).toString("base64");
 const DEMO = {
   v: 2, keys: { openrouter: "demo", groq: "demo" }, model: GEMMA, icon: "chrome", temp: 0.8, len: "normal",
   memOn: true,
@@ -31,7 +33,9 @@ const DEMO = {
     { id: "m4", text: "Is building an app called Vesper.", at: NOW }
   ],
   companions: [
-    { id: "k1", pid: "mira", name: "Mira", about: "A calm, curious night owl who loves films and late talks.", style: "Warm, playful, short texts.", story: "", greeting: "Hey you. Long day?", color: "#f5a3b6" },
+    { id: "k1", name: "Seraphine", about: "Elegant, calm and a little mysterious. Loves late talks.", style: "Warm, playful, short texts.", story: "", greeting: "Hey you. Long day?", color: "#b89cff", photo: face("seraphine") },
+    { id: "k3", name: "Scarlet", about: "Bold, witty and always up for a debate.", style: "Quick and teasing.", story: "", greeting: "", color: "#ff8f8f", photo: face("scarlet") },
+    { id: "k4", name: "Aurelia", about: "Sunny, kind and full of travel stories.", style: "Bright and encouraging.", story: "", greeting: "", color: "#f0c26b", photo: face("aurelia") },
     { id: "k2", pid: "atlas", name: "Atlas", about: "A sharp creative director who pushes your ideas further.", style: "Direct and full of energy.", story: "", greeting: "", color: "#6ea8ff" }
   ],
   chats: [
@@ -40,7 +44,7 @@ const DEMO = {
       { role: "assistant", model: GEMMA, secs: 4, reasoning: "Short openers, one idea each, built for the first second of a vertical video.",
         content: "Here are three that land in the first second:\n\n1. **\"I stopped buying serums after this.\"** Curiosity plus a bold claim.\n2. **\"Your bathroom shelf is lying to you.\"** Calls out the viewer directly.\n3. **\"Watch my skin in 10 seconds.\"** Promises a visible payoff.\n\nOpen on a tight close up, cut every 1.5 seconds, and get the product in frame by second 3." }
     ]},
-    { id: "c2", title: "Mira", model: GEMMA, companion: "k1", updated: NOW - 3600e3, messages: [
+    { id: "c2", title: "Seraphine", model: GEMMA, companion: "k1", updated: NOW - 3600e3, messages: [
       { role: "assistant", greeting: true, content: "Hey you. Long day?" },
       { role: "user", content: "Long but good. Finished the edit." },
       { role: "assistant", model: GEMMA, content: "Look at you. Was it the one with the coffee shots?" },
@@ -79,6 +83,9 @@ async function phoneShots(browser, base) {
   await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openSettings"); await page.waitForTimeout(400);
   await page.click(top + " >> text=Memory"); await shot("memory");
   await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openCompanions"); await shot("companions");
+  await page.click(top + ' button[aria-label="Options for Seraphine"]'); await page.waitForTimeout(400); await page.click("button:has-text(\"Edit\"):visible"); await page.waitForTimeout(500);
+  await page.evaluate(() => { const r = document.querySelector('section.page.on:last-of-type input[aria-label="Hue"]'); r.value = 262; r.dispatchEvent(new Event("input")); }); await shot("char-edit");
+  await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openLive"); await page.waitForTimeout(1200); await shot("live-soon");
   await ctx.close();
 }
 
@@ -205,6 +212,38 @@ async function compose(browser, base) {
     <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:46px">
     ${more.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 334)}</div>`).join("")}
     </div></div>`, 1700), 1700);
+
+  const chars = [["companions", "Your characters", "Give each one a face"], ["char-edit", "Any photo, any color", "Add a picture and pick a tone"], ["companion", "Their own voice", "Each keeps its own chats"]];
+  await render("characters.png", artPage(`<div style="position:relative;padding:90px 120px 100px;overflow:hidden"><div class="glow"></div>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:70px">
+    ${chars.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 380)}</div>`).join("")}
+    </div></div>`, 1700), 1700);
+
+  const svg = d => `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const mic = svg('<path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/>');
+  const end = svg('<path d="M10.1 13.9a14 14 0 0 0 3.732 2.668 1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2 18 18 0 0 1-12.728-5.272"/><path d="M22 2 2 22"/><path d="M4.76 13.582A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 .244.473"/>');
+  const cam = svg('<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/>');
+  const live = `<div class="phone" style="width:430px"><div style="position:relative;width:412px;height:892px;border-radius:36px;overflow:hidden;background:radial-gradient(70% 45% at 50% 38%,rgba(150,110,255,.38),rgba(0,0,0,0) 70%),radial-gradient(90% 60% at 50% 100%,rgba(60,70,255,.25),rgba(0,0,0,0) 70%),#050507">
+      <img src="/docs/art/characters/seraphine-full.webp" style="position:absolute;left:50%;top:70px;height:1240px;transform:translateX(-50%);filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))">
+      <div style="position:absolute;inset:auto 0 0 0;height:420px;background:linear-gradient(180deg,rgba(5,5,7,0),rgba(5,5,7,.85) 45%,#050507)"></div>
+      <div style="position:absolute;top:22px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 6px;border-radius:999px;background:rgba(20,20,24,.6);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,.08)">
+          <img src="/docs/art/characters/av-seraphine.webp" style="width:30px;height:30px;border-radius:50%;box-shadow:0 0 0 1.5px #b89cff"><b style="font-size:16px;font-weight:600">Seraphine</b>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#b89cff;font-weight:600"><i style="width:7px;height:7px;border-radius:50%;background:#7ee8a0;box-shadow:0 0 10px #7ee8a0"></i>Live</span></div></div>
+      <div style="position:absolute;left:26px;right:26px;bottom:150px;padding:16px 18px;border-radius:20px;background:rgba(22,22,28,.72);backdrop-filter:blur(16px);box-shadow:0 0 0 1px rgba(255,255,255,.08);font-size:17px;line-height:1.45;color:#ececea">You're back! Tell me everything. Did the client love the edit?</div>
+      <div style="position:absolute;left:0;right:0;bottom:46px;display:flex;justify-content:center;gap:26px">
+        <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${mic}</div>
+        <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#ff5a5f;color:#fff">${end}</div>
+        <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${cam}</div></div>
+    </div></div>`;
+  await render("live.png", artPage(`<div style="position:relative;padding:90px 110px 100px;overflow:hidden"><div class="glow"></div>
+    <div style="position:relative;display:grid;grid-template-columns:1fr 430px 380px;gap:56px;align-items:center">
+      <div><div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:28px">Coming soon · Beta</div>
+        <div style="font-size:76px;font-weight:600;letter-spacing:-.04em;line-height:1.02">Live<br>Characters</div>
+        <div style="font-size:26px;color:#9a9a98;margin-top:24px;line-height:1.45;max-width:17em">A real virtual character you can see, hear and talk to, face to face. Private, like the rest of Vesper.</div></div>
+      ${live}
+      <div><div class="cap" style="font-size:22px">In the sidebar now</div><p class="sub" style="margin-bottom:28px">A first look while we build it</p>${phone("live-soon", 360)}</div>
+    </div></div>`, 1640), 1640);
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
   const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };

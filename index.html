@@ -244,6 +244,33 @@ svg{display:block}
 .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:17px;color:#0b0b0c;flex:0 0 auto;letter-spacing:-.01em}
 .avatar.sm{width:22px;height:22px;font-size:11px}
 .avatar.lg{width:64px;height:64px;font-size:26px}
+.avatar.xl{width:108px;height:108px;font-size:42px}
+.avatar.photo{background-size:cover;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--ring)}
+.avatar.sm.photo{box-shadow:0 0 0 1.5px var(--ring)}
+.av-edit{position:relative;border-radius:50%}
+.av-edit .cam{position:absolute;right:-2px;bottom:-2px;width:34px;height:34px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;box-shadow:0 0 0 3px var(--bg)}
+.av-edit .cam .ic{width:17px;height:17px}
+.av-acts{display:flex;gap:6px}
+.av-acts button{height:34px;padding:0 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--fg-soft)}
+.av-acts button:active{background:var(--raised)}
+.tone{padding:16px 16px 18px;display:flex;flex-direction:column;gap:18px}
+.tone label{display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--muted)}
+.tone input{-webkit-appearance:none;appearance:none;width:100%;height:14px;border-radius:999px;margin:0;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.tone input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:30px;height:30px;border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 28%,transparent),0 6px 16px rgba(0,0,0,.55);cursor:grab}
+.tone input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 28%,transparent)}
+.tone input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 45%,transparent)}
+.hue-in{background:linear-gradient(90deg,#ff8a8a,#ffc46b,#f5ec7a,#7ee8a0,#6ee0e0,#6ea8ff,#a98cff,#f59ae6,#ff8a8a)}
+.d-new .beta{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent);padding:3px 8px;border-radius:999px}
+.soon{display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 20px 40px;gap:12px}
+.soon .orb{position:relative;width:200px;height:200px;display:grid;place-items:center;margin-bottom:18px;animation:drift 6s ease-in-out infinite}
+.soon .orb::before{content:"";position:absolute;inset:-10px;border-radius:50%;background:radial-gradient(closest-side,var(--glow,rgba(110,140,255,.38)),transparent 72%);animation:breathe 4s ease-in-out infinite}
+.soon .orb img{position:relative;width:150px;height:auto;filter:drop-shadow(0 16px 44px var(--glow,rgba(110,140,255,.38)));animation:spin 18s linear infinite}
+.soon h3{margin:0;font-size:28px;font-weight:600;letter-spacing:-.03em}
+.soon p{margin:0;color:var(--muted);font-size:15px;max-width:30ch;line-height:1.5}
+.soon .chip{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent);padding:4px 10px;border-radius:999px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:1;transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.soon .orb,.soon .orb::before,.soon .orb img{animation:none}}
 .comp-list{display:flex;flex-direction:column;gap:8px}
 .comp{display:flex;align-items:center;gap:4px;padding:6px 6px 6px 8px;border-radius:20px;background:var(--surface);border:1px solid var(--line-soft)}
 .comp .go{flex:1;min-width:0;display:flex;align-items:center;gap:14px;text-align:left;padding:8px 6px;border-radius:14px}
@@ -448,6 +475,7 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></symbol>
   <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 01-3-4 4.17 4.17 0 01-3 4"/><path d="M17.707 6.294A3 3 0 1012 5a3 3 0 10-5.707 1.294"/><path d="M17.996 5.125a4 4 0 012.526 5.77"/><path d="M18 18a4 4 0 002-7.465"/><path d="M19.967 17.482a4 4 0 11-7.967.517 4 4 0 11-7.967-.517"/><path d="M6 18a4 4 0 01-2-7.465"/><path d="M6.004 5.125a4 4 0 00-2.526 5.77"/></symbol>
   <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
   <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
   <symbol id="i-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></symbol>
@@ -500,6 +528,7 @@ select.input{appearance:none;background-image:none}
   <label class="d-search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="chatSearch" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></label>
   <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
   <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
+  <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="beta">Beta</span></button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot"><button id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
 </aside>
@@ -1620,8 +1649,40 @@ async function shareChat(c){
 
 /* characters */
 const COMP_COLORS = ["#6ea8ff", "#f0c26b", "#f5a3b6", "#c7cad3", "#5fe0a6", "#b69cff", "#ff9f6b"];
-function avatar(k, size){ return h("span", {class:"avatar" + (size ? " " + size : ""), style:"background:" + (k.color || COMP_COLORS[0]), "aria-hidden":"true", text:(k.name || "?").trim().charAt(0).toUpperCase()}); }
+const PHOTO_RE = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
+function paintAvatar(el, k){
+  const col = k.color || COMP_COLORS[0], ph = PHOTO_RE.test(k.photo || "");
+  el.classList.toggle("photo", ph);
+  el.style.setProperty("--ring", col); el.style.backgroundColor = col;
+  el.style.backgroundImage = ph ? 'url("' + k.photo + '")' : "";
+  el.textContent = ph ? "" : ((k.name || "?").trim().charAt(0).toUpperCase() || "?");
+}
+function avatar(k, size){ const el = h("span", {class:"avatar" + (size ? " " + size : ""), "aria-hidden":"true"}); paintAvatar(el, k); return el; }
+/* a character's color: hue and intensity, kept as a hex value */
+function hslHex(hu, sa, li){
+  sa /= 100; li /= 100; const a = sa * Math.min(li, 1 - li);
+  const f = n => { const k = (n + hu / 30) % 12; return Math.round(255 * (li - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, "0"); };
+  return "#" + f(0) + f(8) + f(4);
+}
+function hexHS(hex){
+  const n = parseInt(String(hex || COMP_COLORS[0]).slice(1), 16), r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, l = (mx + mn) / 2;
+  let hu = 0; if (d) hu = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return {h:Math.round((hu * 60 + 360) % 360), s:d ? Math.round(100 * d / (1 - Math.abs(2 * l - 1))) : 0};
+}
+async function photoData(file){
+  const bmp = await createImageBitmap(file), side = Math.min(bmp.width, bmp.height), N = Math.min(320, side);
+  const cv = document.createElement("canvas"); cv.width = cv.height = N;
+  cv.getContext("2d").drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) * 0.2, side, side, 0, 0, N, N);
+  const w = cv.toDataURL("image/webp", 0.86);
+  return w.startsWith("data:image/webp") ? w : cv.toDataURL("image/jpeg", 0.86);
+}
 $("#openCompanions").onclick = () => openCompanions(true);
+$("#openLive").onclick = () => open("live", () => makePage("Live Characters", w => {
+  w.append(h("div", {class:"soon"}, h("div", {class:"orb"}, h("img", {src:iconFile("mark.webp"), alt:"", width:"360", height:"352"})),
+    h("span", {class:"chip", text:"Beta"}), h("h3", {text:"Coming soon"}),
+    h("p", {text:"A character you can see, hear and talk to, face to face. We're building it now."})));
+}), true);
 function openCompanions(swap){
   open("companions", () => makePage("Characters", w => {
     w.append(gnote("Characters have their own personality, voice and chats. Start with one below, or create your own."));
@@ -1670,19 +1731,31 @@ function openCompEditor(id){
   open("comped:" + d.id, () => makePage(ex ? "Edit " + ex.name : "New character", (w, L) => {
     const ta = (key, ph, rows) => { const t = h("textarea", {class:"input", rows:String(rows || 3), placeholder:ph, "aria-label":ph}); t.value = d[key] || ""; t.oninput = () => { d[key] = t.value; }; return t; };
     const name = h("input", {class:"input", placeholder:"Their name", "aria-label":"Name", maxlength:"40"}); name.value = d.name;
-    const av = avatar(d, "lg");
-    name.oninput = () => { d.name = name.value; av.textContent = (d.name || "?").trim().charAt(0).toUpperCase() || "?"; };
-    const sw = h("div", {class:"swatches", role:"group", "aria-label":"Color"});
-    COMP_COLORS.forEach((col, n) => sw.append(h("button", {class:"swatch", type:"button", style:"background:" + col, "data-col":col, "aria-label":"Color " + (n + 1), "aria-pressed":String(d.color === col), onclick:() => {
-      d.color = col; av.style.background = col; sw.querySelectorAll(".swatch").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.col === col)));
-    }})));
-    w.append(h("div", {class:"comp-hero"}, av),
+    const av = avatar(d, "xl");
+    name.oninput = () => { d.name = name.value; paintAvatar(av, d); };
+    const pick = h("input", {type:"file", accept:"image/*", hidden:"", "aria-label":"Choose a photo"});
+    const acts = h("div", {class:"av-acts"});
+    const drawActs = () => { acts.innerHTML = ""; acts.append(h("button", {type:"button", text:d.photo ? "Change photo" : "Add photo", onclick:() => pick.click()}));
+      if (d.photo) acts.append(h("button", {type:"button", text:"Remove", onclick:() => { delete d.photo; paintAvatar(av, d); drawActs(); }})); };
+    pick.onchange = async () => { const f = pick.files[0]; pick.value = ""; if (!f) return;
+      try { d.photo = await photoData(f); paintAvatar(av, d); drawActs(); } catch (e) { toast("That photo couldn't be opened"); } };
+    drawActs();
+    const hs = hexHS(d.color);
+    const hue = h("input", {type:"range", class:"hue-in", min:"0", max:"359", "aria-label":"Hue"}); hue.value = hs.h;
+    const sat = h("input", {type:"range", min:"0", max:"100", "aria-label":"Intensity"}); sat.value = hs.s;
+    const tint = () => { d.color = hslHex(+hue.value, +sat.value, 72); paintAvatar(av, d);
+      [hue, sat].forEach(x => x.style.setProperty("--c", d.color));
+      sat.style.background = "linear-gradient(90deg," + hslHex(+hue.value, 0, 72) + "," + hslHex(+hue.value, 100, 72) + ")"; };
+    hue.oninput = sat.oninput = tint;
+    [hue, sat].forEach(x => x.style.setProperty("--c", d.color));
+    sat.style.background = "linear-gradient(90deg," + hslHex(hs.h, 0, 72) + "," + hslHex(hs.h, 100, 72) + ")";
+    w.append(h("div", {class:"comp-hero"}, h("button", {class:"av-edit", type:"button", "aria-label":"Choose a photo", onclick:() => pick.click()}, av, h("span", {class:"cam", html:ic("camera")})), acts, pick),
       glabel("Name"), group(h("div", {class:"field"}, name)),
+      glabel("Color"), group(h("div", {class:"tone"}, h("label", {}, h("span", {text:"Hue"}), hue), h("label", {}, h("span", {text:"Intensity"}), sat))),
       glabel("Who they are"), group(h("div", {class:"field"}, ta("about", "Personality, age, interests, what they care about", 4))),
       glabel("How they talk"), group(h("div", {class:"field"}, ta("style", "For example: warm and playful, short texts, teases a little", 3))),
       glabel("Backstory or setting, optional"), group(h("div", {class:"field"}, ta("story", "Where you are, how you know each other, anything that sets the scene", 3))),
       glabel("First message, optional"), group(h("div", {class:"field"}, ta("greeting", "What they say when a new chat starts", 2))),
-      glabel("Color"), group(sw),
       h("div", {style:"padding-top:18px"}, h("button", {class:"btn primary block", type:"button", text:ex ? "Save" : "Create character", onclick:() => {
         d.name = (d.name || "").trim(); if (!d.name) { toast("Give them a name first"); name.focus(); return; }
         const i = S.companions.findIndex(x => x.id === d.id);
@@ -2009,7 +2082,7 @@ $("#importFile").addEventListener("change", async e => {
     const j = JSON.parse(await f.text()); const list = Array.isArray(j) ? j : j.chats;
     if (!Array.isArray(list)) throw 0;
     let n = 0;
-    if (!Array.isArray(j) && Array.isArray(j.companions)) j.companions.forEach(k => { if (k && k.id && k.name && !compById(k.id)) S.companions.push({id:String(k.id), name:String(k.name).slice(0, 40), about:String(k.about || ""), style:String(k.style || ""), story:String(k.story || ""), greeting:String(k.greeting || ""), color:/^#[0-9a-f]{6}$/i.test(k.color) ? k.color : COMP_COLORS[0]}); });
+    if (!Array.isArray(j) && Array.isArray(j.companions)) j.companions.forEach(k => { if (k && k.id && k.name && !compById(k.id)) S.companions.push({id:String(k.id), name:String(k.name).slice(0, 40), about:String(k.about || ""), style:String(k.style || ""), story:String(k.story || ""), greeting:String(k.greeting || ""), color:/^#[0-9a-f]{6}$/i.test(k.color) ? k.color : COMP_COLORS[0], photo:PHOTO_RE.test(k.photo || "") && k.photo.length < 400000 ? k.photo : undefined}); });
     if (!Array.isArray(j) && Array.isArray(j.memory)) addMemories(j.memory.map(m => m && m.text).filter(Boolean).map(String));
     list.forEach(c => {
       if (!c || !c.id || !Array.isArray(c.messages) || S.chats.some(x => x.id === c.id)) return;
