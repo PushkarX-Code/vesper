@@ -62,7 +62,7 @@ These are on the way. They are not in the app yet.
 
 **Live Characters.** Characters you can see and hear, live, face to face.
 
-<p align="center"><img src="docs/studio-live.webp" alt="Live Characters, coming soon. Talk face to face." width="100%"></p>
+<p align="center"><img src="docs/studio-live.webp" alt="Live Characters, coming soon. Talk face to face with Seraphine, Aurelia and Scarlet." width="100%"></p>
 
 **Vesper Plus.** Everything in Vesper stays free. Plus adds the studios and the extras.
 
