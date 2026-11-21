@@ -48,6 +48,18 @@ In Vesper, tap **Connect a model** (or open **Settings**, then **Providers**), p
 
 That's it. Start typing.
 
+## Windows app
+
+Vesper also comes as a Windows app, built from the same code. Get the setup file from the repo's Releases page and run it. Windows may say "Windows protected your PC" because the app isn't signed yet: click More info, then Run anyway.
+
+The Windows app can run models right on your PC, with nothing to install besides Vesper:
+
+1. Open **Settings**, then **Local models**, then **Models on this PC**.
+2. Vesper reads your memory and graphics card and suggests the models that fit.
+3. Tap **Download**, then **Use**. The model runs offline, and nothing you type leaves your computer.
+
+It uses the llama.cpp engine with Vulkan, so it works on Nvidia, AMD and Intel graphics, and on the processor alone. Picking an app icon finish also changes the taskbar icon.
+
 ## Privacy
 
 * Your API key is stored only in your browser's local storage on your device.
@@ -98,6 +110,7 @@ manifest-*.webmanifest  Install settings for each finish
 design/logo/            Logo source: geometry and 3D render scene
 fonts/                  Inter variable font
 vendor/                 marked and DOMPurify
+desktop/                The Windows app (Tauri): native code, build scripts, app icons
 docs/                   Screenshots for this README
 ```
 

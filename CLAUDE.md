@@ -22,6 +22,12 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Models are keyed `provider::id` (see `mk()`). Discovered models start hidden; only shown models appear in the picker.
 - Local models are OpenAI compatible connections in `S.conns`. Calls to private addresses pass `targetAddressSpace` so Chrome allows them from the https page.
 
+## Windows app (desktop/)
+- Tauri 2 wraps the same web app: `desktop/scripts/copy-web.mjs` copies the site into `desktop/dist`. Native code is `desktop/src-tauri/src/lib.rs`: `system_info` (RAM, cores, GPU and VRAM via DXGI), `list_models`, `download_model` (Hugging Face only, resumable, `dl-progress` events), `cancel_download`, `delete_model`, `start_engine` (bundled llama-server on 127.0.0.1, GPU first then processor), `stop_engine`, `engine_status`.
+- In index.html, `DESKTOP` is true inside the app. PC models use the connection id `pc` and keys like `pc::<file>.gguf`; `pcEnsure()` starts the engine before sending. The catalog `PC_MODELS` lists verified Hugging Face GGUF files: check new entries exist before adding them.
+- `.github/workflows/desktop.yml` builds on windows-latest: it downloads the llama.cpp Vulkan build (`LLAMA_CPP_TAG`) into `desktop/src-tauri/engine/`, then `npm run build`. Pull requests get a test build; pushing a tag `desktop-vX.Y.Z` publishes a release. Bump the version in `desktop/src-tauri/tauri.conf.json`, `Cargo.toml` and `desktop/package.json` together.
+- Check native code locally with `cargo check --target x86_64-pc-windows-msvc` in `desktop/src-tauri` (after `node desktop/scripts/copy-web.mjs`).
+
 ## Releasing
 - Bump `CACHE` in `sw.js` on every release, or phones keep the old copy.
 - Test in a phone sized Playwright run (412 by 915) before pushing.
