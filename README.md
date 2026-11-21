@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://pushkarx-code.github.io/vesper/"><img src="docs/banner.webp" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
+  <a href="https://vesper-chat.netlify.app"><img src="docs/banner.webp" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
 </p>
 
 <p align="center">
-  <a href="https://pushkarx-code.github.io/vesper/"><b>Open Vesper</b></a>
+  <a href="https://vesper-chat.netlify.app"><b>Try Demo</b></a>
 </p>
 
 ## What it is
