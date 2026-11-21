@@ -1994,7 +1994,7 @@ function openSupport(swap){
     const goalSpan = h("span", {text:"raised of $" + SUPPORT.goal + " goal"});
     w.append(h("div", {class:"sup-hero"}, h("img", {src:iconFile("mark.webp"), alt:"", width:"360", height:"352"}),
       h("h2", {text:"Keep Vesper free."}),
-      h("p", {text:"Vesper is made by an independent creator. No investors, no ads, no tracking, and your chats never leave your device. If it makes your day a little better, a coffee keeps it growing."})),
+      h("p", {text:"No ads. No tracking. No investors. A coffee keeps it growing."})),
       h("div", {class:"goal"}, h("div", {class:"amt"}, amt, goalSpan), h("div", {class:"bar", role:"progressbar", "aria-label":"Support goal", "aria-valuemin":"0", "aria-valuemax":String(SUPPORT.goal), "aria-valuenow":String(SUPPORT.raised)}, fill), meta),
       glabel("What your support builds"),
       h("ul", {class:"perks"}, ...PERKS.map(([i, t, d]) => h("li", {}, h("span", {class:"pi", html:ic(i)}), h("div", {}, h("b", {text:t}), h("span", {text:d}))))),

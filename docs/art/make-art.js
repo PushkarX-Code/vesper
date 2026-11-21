@@ -289,7 +289,7 @@ async function compose(browser, base) {
   await render("support.webp", artPage(`<div style="position:relative;padding:80px 120px 90px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;display:grid;grid-template-columns:1fr 380px 380px;gap:60px;align-items:center">
       <div><div style="font-size:64px;font-weight:600;letter-spacing:-.04em;line-height:1.04">Keep Vesper<br>free.</div>
-        <div style="font-size:23px;color:#9a9a98;margin-top:22px;line-height:1.45">Support it right inside the app. The goal bar counts real Ko-fi payments, and paying never leaves Vesper.</div></div>
+        <div style="font-size:23px;color:#9a9a98;margin-top:22px;line-height:1.45">Support it inside the app, in one tap.</div></div>
       ${phone("support", 380)}${phone("support-2", 380)}</div></div>`, 1700), 1700);
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
