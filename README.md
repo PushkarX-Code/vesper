@@ -30,7 +30,7 @@ There is no backend. Nothing you type passes through a Vesper server, because th
   <img src="docs/features.png" alt="Every chat, kept. Remembers what matters. Six finishes. Tuned to you." width="100%">
 </p>
 
-Also in the box: photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
+Also in the box: a **Learn** section with short guides, real screens and honest model picks (worth it or skip), photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
 
 <p align="center">
   <img src="docs/finishes.png" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
@@ -123,6 +123,7 @@ sw.js                   Service worker for install and offline shell
 mark.webp, logo.svg     Logo: 3D render and flat version
 icon-*.png              App icons (Chrome finish)
 icons/                  Other app icon finishes
+learn/                  Screens for the in app Learn guides
 manifest-*.webmanifest  Install settings for each finish
 design/logo/            Logo source: geometry and 3D render scene
 fonts/                  Inter variable font
