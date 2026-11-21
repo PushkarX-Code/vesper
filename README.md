@@ -8,6 +8,8 @@
 
 ## What it is
 
+**Free, private AI on your phone and PC. No account, no subscription, nothing stored on a server.**
+
 Vesper is a chat app that lives in your browser and installs to your home screen like a native app. It connects straight to free AI providers (OpenRouter, Groq, Cerebras, Google Gemini and Mistral), or to models running on your own computer, so you can talk to dozens of models through one clean interface.
 
 There is no backend. Nothing you type passes through a Vesper server, because there isn't one. Your key and your chats stay on your device.
@@ -36,11 +38,23 @@ Also in the box: a **Learn** section with short guides, real screens and honest 
   <img src="docs/finishes.png" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
 </p>
 
-**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. Each keeps its own chats.
+**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. Give each one a face with any photo, and pick their color on a smooth hue and intensity slider. Each keeps its own chats.
+
+<p align="center">
+  <img src="docs/characters.png" alt="Your characters with their own photos. Any photo, any color: add a picture and pick a tone. Each keeps its own chats." width="100%">
+</p>
 
 **Memory.** Vesper saves lasting facts you share and uses them in every chat, so it doesn't have to guess. You can see, add and delete them in Settings. They stay on your device, and private chats are never remembered.
 
 **Find your model.** In Settings, Local models, tell Vesper your computer's memory and graphics card and it suggests the local models that will run well, with the command to download them.
+
+## Coming soon: Live Characters (Beta)
+
+A real virtual character you can see, hear and talk to, face to face. It will run on the same private setup as the rest of Vesper: no account, and your chats stay yours. You can already find **Live Characters** in the sidebar as a first look while we build it.
+
+<p align="center">
+  <img src="docs/live.png" alt="Live Characters, coming soon. A real virtual character you can see, hear and talk to, face to face." width="100%">
+</p>
 
 ## Get started
 
