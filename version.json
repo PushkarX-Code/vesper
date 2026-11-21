@@ -1,9 +1,9 @@
 {
-  "version": "2.2",
+  "version": "2.3",
   "notes": [
-    "New Characters page with real profile cards",
-    "Illustrated chat wallpapers that keep messages easy to read",
-    "Turns with your phone and fills the screen",
-    "Smoother, calmer motion"
+    "Wallpapers now fill the whole chat screen, in dark and light",
+    "Light wallpapers switch the chat to a light look",
+    "Haptics and pressed animations on every button",
+    "Lighter app download"
   ]
 }
