@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://pushkarx-code.github.io/vesper/"><img src="docs/banner.jpg" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
+  <a href="https://pushkarx-code.github.io/vesper/"><img src="docs/banner.webp" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
 </p>
 
 <p align="center">
@@ -17,31 +17,31 @@ There is no backend. Nothing you type passes through a Vesper server, because th
 ## Why Vesper
 
 <p align="center">
-  <img src="docs/why.jpg" alt="Why Vesper: no account, chats only on your device, dozens of free models plus your own PC, free, works offline with models on your PC, and filters are your call." width="100%">
+  <img src="docs/why.webp" alt="Why Vesper: no account, chats only on your device, dozens of free models plus your own PC, free, works offline with models on your PC, and filters are your call." width="100%">
 </p>
 
 ## A closer look
 
 <p align="center">
-  <img src="docs/showcase.jpg" alt="Ask anything. Answers, beautifully set. Every model, one tap. Characters with their own voice." width="100%">
+  <img src="docs/showcase.webp" alt="Ask anything. Answers, beautifully set. Every model, one tap. Characters with their own voice." width="100%">
 </p>
 
 ## Features
 
 <p align="center">
-  <img src="docs/features.jpg" alt="Every chat, kept. Remembers what matters. Six finishes. Tuned to you." width="100%">
+  <img src="docs/features.webp" alt="Every chat, kept. Remembers what matters. Six finishes. Tuned to you." width="100%">
 </p>
 
 Also in the box: a **Learn** section with short guides, real screens and honest model picks (worth it or skip), photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
 
 <p align="center">
-  <img src="docs/finishes.jpg" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
+  <img src="docs/finishes.webp" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
 </p>
 
 **Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. Give each one a face with any photo, and pick their color on a smooth hue and intensity slider. Each keeps its own chats.
 
 <p align="center">
-  <img src="docs/characters.jpg" alt="Your characters with their own photos. Any photo, any color: add a picture and pick a tone. Each keeps its own chats." width="100%">
+  <img src="docs/characters.webp" alt="Your characters with their own photos. Any photo, any color: add a picture and pick a tone. Each keeps its own chats." width="100%">
 </p>
 
 **Memory.** Vesper saves lasting facts you share and uses them in every chat, so it doesn't have to guess. You can see, add and delete them in Settings. They stay on your device, and private chats are never remembered.
@@ -53,7 +53,7 @@ Also in the box: a **Learn** section with short guides, real screens and honest 
 A real virtual character you can see, hear and talk to, face to face. It will run on the same private setup as the rest of Vesper: no account, and your chats stay yours. You can already find **Live Characters** in the sidebar as a first look while we build it.
 
 <p align="center">
-  <img src="docs/live.jpg" alt="Live Characters, coming soon. A real virtual character you can see, hear and talk to, face to face." width="100%">
+  <img src="docs/live.webp" alt="Live Characters, coming soon. A real virtual character you can see, hear and talk to, face to face." width="100%">
 </p>
 
 ## Get started
@@ -75,7 +75,7 @@ That's it. Start typing.
 ## Windows app
 
 <p align="center">
-  <img src="docs/windows.jpg" alt="Vesper for Windows: download a model and run it right on your PC. Offline, private, one tap." width="100%">
+  <img src="docs/windows.webp" alt="Vesper for Windows: download a model and run it right on your PC. Offline, private, one tap." width="100%">
 </p>
 
 Vesper also comes as a Windows app, built from the same code. Get the setup file from the repo's Releases page and run it. Windows may say "Windows protected your PC" because the app isn't signed yet: click More info, then Run anyway.

@@ -167,13 +167,13 @@ function artPage(body, width) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>
   @font-face{font-family:Inter;src:url("/fonts/inter-var.woff2") format("woff2");font-weight:100 900}
   *{box-sizing:border-box}
-  body{margin:0;width:${width}px;background:#000;color:#f5f5f4;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
+  html{background:transparent}body{margin:0;width:${width}px;background:transparent;color:#f5f5f4;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
   .glow{position:absolute;inset:0;background:radial-gradient(60% 55% at 70% 110%,rgba(58,60,255,.45),rgba(0,0,0,0) 70%),radial-gradient(40% 40% at 15% 0%,rgba(110,168,255,.12),rgba(0,0,0,0) 70%)}
-  .phone{width:fit-content;margin:0 auto;border-radius:36px;box-shadow:0 40px 90px rgba(0,0,0,.65)}
+  .phone{width:fit-content;margin:0 auto;border-radius:44px;padding:9px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
   .phone img{display:block;border-radius:36px}
   .cap{font-size:26px;font-weight:600;letter-spacing:-.02em;text-align:center;margin:0 0 6px}
   .sub{font-size:17px;color:#9a9a98;text-align:center;line-height:1.45;margin:0}
-  </style></head><body>${body}</body></html>`;
+  .card{background:#000;border-radius:36px;overflow:hidden}</style></head><body><div class="card">${body}</div></body></html>`;
 }
 const img = name => "/docs/art/shots/" + name + ".png";
 const phone = (name, w) => `<div class="phone"><img src="${img(name)}" style="width:${w}px"></div>`;
@@ -185,10 +185,14 @@ async function compose(browser, base) {
     fs.writeFileSync(path.join(__dirname, "_page.html"), html);
     await page.setViewportSize({ width, height: 400 });
     await page.goto(base + "docs/art/_page.html"); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(400);
-    await page.screenshot({ path: path.join(OUT, file), fullPage: true, type: "jpeg", quality: 88 });
+    if (file.endsWith(".jpg")) { await page.screenshot({ path: path.join(OUT, file), fullPage: true, type: "jpeg", quality: 88 }); return; }
+    const png = (await page.screenshot({ fullPage: true, omitBackground: true })).toString("base64");
+    const webp = await page.evaluate(async b64 => { const im = new Image(); im.src = "data:image/png;base64," + b64; await im.decode();
+      const c = document.createElement("canvas"); c.width = im.width; c.height = im.height; c.getContext("2d").drawImage(im, 0, 0); return c.toDataURL("image/webp", 0.9); }, png);
+    fs.writeFileSync(path.join(OUT, file), Buffer.from(webp.split(",")[1], "base64"));
   };
 
-  await render("banner.jpg", artPage(`<div style="position:relative;height:760px;overflow:hidden">
+  await render("banner.webp", artPage(`<div style="position:relative;height:760px;overflow:hidden">
     <div class="glow"></div>
     <div style="position:absolute;left:96px;top:150px;width:630px">
       <img src="/icons/chrome/icon-512.png" style="width:132px;height:132px;display:block;margin-bottom:34px;filter:drop-shadow(0 18px 50px rgba(80,100,255,.45))">
@@ -201,19 +205,19 @@ async function compose(browser, base) {
   </div>`, 1600), 1600);
 
   const shows = [["home", "Ask anything", "Free models, one clean place"], ["chat-thinking", "Answers, beautifully set", "See how it thought, copy any part"], ["models", "Every model, one tap", "Switch providers when one runs out"], ["companion", "Characters", "Personalities with their own voice"]];
-  await render("showcase.jpg", artPage(`<div style="position:relative;padding:90px 70px 100px;overflow:hidden"><div class="glow"></div>
+  await render("showcase.webp", artPage(`<div style="position:relative;padding:90px 70px 100px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:46px">
     ${shows.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 334)}</div>`).join("")}
     </div></div>`, 1700), 1700);
 
   const more = [["drawer", "Every chat, kept", "Search, rename and find anything"], ["memory", "Remembers what matters", "Facts you share stay on your device"], ["icons", "Six finishes", "Each one recolors the whole app"], ["settings", "Tuned to you", "Personalize, response style and more"]];
-  await render("features.jpg", artPage(`<div style="position:relative;padding:90px 70px 100px;overflow:hidden"><div class="glow" style="transform:scaleX(-1)"></div>
+  await render("features.webp", artPage(`<div style="position:relative;padding:90px 70px 100px;overflow:hidden"><div class="glow" style="transform:scaleX(-1)"></div>
     <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:46px">
     ${more.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 334)}</div>`).join("")}
     </div></div>`, 1700), 1700);
 
   const chars = [["companions", "Your characters", "Give each one a face"], ["char-edit", "Any photo, any color", "Add a picture and pick a tone"], ["companion", "Their own voice", "Each keeps its own chats"]];
-  await render("characters.jpg", artPage(`<div style="position:relative;padding:90px 120px 100px;overflow:hidden"><div class="glow"></div>
+  await render("characters.webp", artPage(`<div style="position:relative;padding:90px 120px 100px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:70px">
     ${chars.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 380)}</div>`).join("")}
     </div></div>`, 1700), 1700);
@@ -236,7 +240,7 @@ async function compose(browser, base) {
         <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${cam}</div></div>
     </div></div>`;
   const side = (html, z, dx) => `<div style="position:relative;z-index:${z};transform:translateX(${dx}px) scale(${z === 2 ? 1 : .86});transform-origin:center;${z === 2 ? "" : "filter:brightness(.78)"}">${html}</div>`;
-  await render("live.jpg", artPage(`<div style="position:relative;height:1100px;padding:0 90px;overflow:hidden;display:flex;align-items:center;gap:40px"><div class="glow"></div>
+  await render("live.webp", artPage(`<div style="position:relative;height:1100px;padding:0 90px;overflow:hidden;display:flex;align-items:center;gap:40px"><div class="glow"></div>
     <div style="position:relative;flex:0 0 470px">
       <div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:28px">Coming soon · Beta</div>
       <div style="font-size:84px;font-weight:600;letter-spacing:-.04em;line-height:1.02">Live<br>Characters</div>
@@ -249,7 +253,7 @@ async function compose(browser, base) {
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
   const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };
-  await render("finishes.jpg", artPage(`<div style="position:relative;padding:80px 70px 70px;overflow:hidden"><div class="glow"></div>
+  await render("finishes.webp", artPage(`<div style="position:relative;padding:80px 70px 70px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;text-align:center;font-size:44px;font-weight:600;letter-spacing:-.03em">Pick your finish</div>
     <p class="sub" style="position:relative;font-size:20px;margin:12px 0 54px">The icon and the whole app change together.</p>
     <div style="position:relative;display:flex;justify-content:center;gap:34px">
@@ -258,7 +262,7 @@ async function compose(browser, base) {
     <div style="position:relative;display:flex;justify-content:center;gap:46px;margin-top:70px">${phone("home-gold", 300)}${phone("chat-emerald", 300)}</div>
   </div>`, 1700), 1700);
 
-  await render("windows.jpg", artPage(`<div style="position:relative;padding:80px 90px 90px;overflow:hidden"><div class="glow"></div>
+  await render("windows.webp", artPage(`<div style="position:relative;padding:80px 90px 90px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;text-align:center;font-size:44px;font-weight:600;letter-spacing:-.03em">Vesper for Windows</div>
     <p class="sub" style="position:relative;font-size:20px;margin:12px 0 46px">Download a model and run it right on your PC. Offline, private, one tap.</p>
     <div style="position:relative;margin:0 auto;width:1280px;border-radius:14px;overflow:hidden;box-shadow:0 50px 120px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.1)">
@@ -274,7 +278,7 @@ async function compose(browser, base) {
     ["Offline", "No", "Yes, with models on your PC"],
     ["Filters", "Set by the company", "Your call, with Freeform models"]
   ];
-  await render("why.jpg", artPage(`<div style="position:relative;padding:80px 110px 90px;overflow:hidden"><div class="glow"></div>
+  await render("why.webp", artPage(`<div style="position:relative;padding:80px 110px 90px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;text-align:center;font-size:48px;font-weight:600;letter-spacing:-.035em">Why Vesper</div>
     <p class="sub" style="position:relative;font-size:21px;margin:12px 0 50px">Private by design, free by default, yours to shape.</p>
     <div style="position:relative;border:1px solid #26262a;border-radius:28px;overflow:hidden;background:#0b0b0d">
