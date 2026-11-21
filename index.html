@@ -293,6 +293,41 @@ details.more-opts .group{margin-top:8px}
 .pcm .btn{height:38px;padding:0 14px;font-size:14px;flex:0 0 auto}
 .pcm .btn.on{background:color-mix(in srgb,var(--accent) 18%,var(--raised));color:var(--fg)}
 
+/* learn */
+.learn-hero{padding:8px 4px 6px}
+.learn-hero h3{margin:0;font-size:26px;font-weight:600;letter-spacing:-.025em}
+.learn-hero p{margin:6px 0 0;color:var(--muted);font-size:15px;line-height:1.5}
+.lcards{display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px}
+@media (min-width:620px){.lcards{grid-template-columns:1fr 1fr}}
+.lcard{text-align:left;border-radius:22px;overflow:hidden;background:var(--surface);border:1px solid var(--line-soft);display:flex;flex-direction:column;transition:transform .15s}
+.lcard:active{transform:scale(.985)}
+.lthumb{position:relative;height:168px;overflow:hidden;background:radial-gradient(80% 90% at 85% 110%,color-mix(in srgb,var(--accent) 45%,transparent),transparent 70%),linear-gradient(160deg,var(--raised-2),#050506)}
+.lthumb img.shot{position:absolute;right:18px;top:22px;width:46%;border-radius:14px 14px 0 0;box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08)}
+.lthumb .logos{position:absolute;left:16px;bottom:16px;display:flex;gap:6px}
+.lthumb .mins{position:absolute;left:16px;top:16px;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);font-size:12.5px;font-weight:500;color:#e8e8e6}
+.lthumb .mins .ic{width:13px;height:13px}
+.lcard .lbody{padding:14px 16px 16px}
+.lcard .lbody b{display:block;font-size:16.5px;font-weight:600;letter-spacing:-.01em}
+.lcard .lbody span{display:block;font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.blogo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.blogo svg{width:19px;height:19px}
+.blogo.txt{font-size:10.5px;font-weight:700;letter-spacing:-.01em;color:#fff}
+.lstep{display:flex;flex-direction:column;gap:12px;padding:18px 0;border-top:1px solid var(--line-soft)}
+.lstep:first-of-type{border-top:0}
+.lstep .n{display:flex;align-items:center;gap:12px}
+.lstep .n i{width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:14px;flex:0 0 auto}
+.lstep .n b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.lstep p{margin:0;color:var(--fg-soft);font-size:15px;line-height:1.6}
+.lstep img{width:min(300px,78%);align-self:center;border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08)}
+.verdict{display:flex;gap:12px;align-items:flex-start;padding:14px 16px}
+.verdict .tx{flex:1;min-width:0}
+.verdict .tx b{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:600}
+.verdict .tx p{margin:3px 0 0;font-size:13.5px;color:var(--muted);line-height:1.5}
+.vtag{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:999px;font-size:11.5px;font-weight:600}
+.vtag .ic{width:12px;height:12px}
+.vtag.yes{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.vtag.no{background:color-mix(in srgb,var(--danger) 14%,transparent);color:var(--danger)}
+
 /* app icon picker */
 .icons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
 .ico{display:flex;flex-direction:column;align-items:center;gap:9px;padding:14px 6px 12px;border-radius:18px;border:1px solid transparent;font-size:14px;font-weight:500;color:var(--fg-soft);transition:background .15s,border-color .15s}
@@ -420,6 +455,10 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-volume-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></symbol>
   <symbol id="i-share-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-graduation-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
+  <symbol id="i-circle-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
   <symbol id="i-corner-down-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/></symbol>
   </defs>
 </svg>
@@ -462,7 +501,7 @@ select.input{appearance:none;background-image:none}
   <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
   <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
   <div class="chat-list" id="chatList"></div>
-  <div class="d-foot"><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
+  <div class="d-foot"><button id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
 </aside>
 
 <input type="file" id="importFile" accept="application/json,.json" hidden>
@@ -927,7 +966,7 @@ function renderHero(){
   const main = h("div", {class:"hero-main", html:`<img class="mark" src="${iconFile("mark.webp")}" alt="" width="360" height="352" decoding="async">`});
   if (!anyReady()) {
     main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Connect a free AI model to start. It takes about a minute."}),
-      h("div", {class:"cta"}, h("button", {class:"btn primary block", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost block", type:"button", text:"Use a local model", onclick:() => openLocal()})));
+      h("div", {class:"cta"}, h("button", {class:"btn primary block", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost block", type:"button", text:"Use a local model", onclick:() => openLocal()}), h("button", {class:"btn ghost block", type:"button", html:ic("graduation-cap") + "New here? Learn the basics", onclick:() => openLearn()})));
     hero.append(main);
   } else {
     if (privateMode) main.append(h("h1", {html:"Private chat<i>.</i>"}), h("p", {text:"This chat won't be saved to your history."}));
@@ -1282,6 +1321,7 @@ function renderSettingsRoot(w){
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
   ));
+  w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()})));
   w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version 2.0"})),
     gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
 }
@@ -1831,6 +1871,105 @@ function openPC(swap){
     return L;
   }, swap);
 }
+
+const BRANDS = {
+  googlegemini:{name:"Google Gemini", hex:"#8E75B2", d:"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"},
+  google:{name:"Google", hex:"#4285F4", d:"M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"},
+  meta:{name:"Meta", hex:"#0467DF", d:"M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"},
+  mistralai:{name:"Mistral AI", hex:"#FA520F", d:"M17.143 3.429v3.428h-3.429v3.429h-3.428V6.857H6.857V3.43H3.43v13.714H0v3.428h10.286v-3.428H6.857v-3.429h3.429v3.429h3.429v-3.429h3.428v3.429h-3.428v3.428H24v-3.428h-3.43V3.429z"},
+  nvidia:{name:"NVIDIA", hex:"#76B900", d:"M8.948 8.798v-1.43a6.7 6.7 0 0 1 .424-.018c3.922-.124 6.493 3.374 6.493 3.374s-2.774 3.851-5.75 3.851c-.398 0-.787-.062-1.158-.185v-4.346c1.528.185 1.837.857 2.747 2.385l2.04-1.714s-1.492-1.952-4-1.952a6.016 6.016 0 0 0-.796.035m0-4.735v2.138l.424-.027c5.45-.185 9.01 4.47 9.01 4.47s-4.08 4.964-8.33 4.964c-.37 0-.733-.035-1.095-.097v1.325c.3.035.61.062.91.062 3.957 0 6.82-2.023 9.593-4.408.459.371 2.34 1.263 2.73 1.652-2.633 2.208-8.772 3.984-12.253 3.984-.335 0-.653-.018-.971-.053v1.864H24V4.063zm0 10.326v1.131c-3.657-.654-4.673-4.46-4.673-4.46s1.758-1.944 4.673-2.262v1.237H8.94c-1.528-.186-2.73 1.245-2.73 1.245s.68 2.412 2.739 3.11M2.456 10.9s2.164-3.197 6.5-3.533V6.201C4.153 6.59 0 10.653 0 10.653s2.35 6.802 8.948 7.42v-1.237c-4.84-.6-6.492-5.936-6.492-5.936z"},
+  qwen:{name:"Qwen", hex:"#6950EF", d:"M23.919 14.545 20.817 9.17l1.47-2.544a.56.56 0 0 0 0-.566l-1.633-2.83a.57.57 0 0 0-.49-.283h-6.207L12.487.402a.57.57 0 0 0-.49-.284H8.732a.56.56 0 0 0-.49.284L5.139 5.775h-2.94a.56.56 0 0 0-.49.284L.077 8.887a.56.56 0 0 0 0 .567L3.18 14.83l-1.47 2.545a.56.56 0 0 0 0 .566l1.634 2.83a.57.57 0 0 0 .49.283h6.205l1.47 2.545a.57.57 0 0 0 .49.284h3.266a.57.57 0 0 0 .49-.284l3.104-5.375h2.94a.57.57 0 0 0 .49-.283l1.634-2.828a.55.55 0 0 0-.004-.568M8.733.686l1.634 2.828-1.634 2.828H21.8L20.164 9.17H7.425L5.63 6.06Zm1.306 19.801-6.205-.002 1.634-2.83h3.265L2.201 6.344h3.267q3.182 5.517 6.367 11.032zm10.124-5.66L18.53 12l-6.532 11.315-1.634-2.83c2.129-3.673 4.25-7.351 6.373-11.028h3.592l3.102 5.374z"},
+  openrouter:{name:"OpenRouter", hex:"#94A3B8", d:"M16.778 1.844v1.919q-.569-.026-1.138-.032-.708-.008-1.415.037c-1.93.126-4.023.728-6.149 2.237-2.911 2.066-2.731 1.95-4.14 2.75-.396.223-1.342.574-2.185.798-.841.225-1.753.333-1.751.333v4.229s.768.108 1.61.333c.842.224 1.789.575 2.185.799 1.41.798 1.228.683 4.14 2.75 2.126 1.509 4.22 2.11 6.148 2.236.88.058 1.716.041 2.555.005v1.918l7.222-4.168-7.222-4.17v2.176c-.86.038-1.611.065-2.278.021-1.364-.09-2.417-.357-3.979-1.465-2.244-1.593-2.866-2.027-3.68-2.508.889-.518 1.449-.906 3.822-2.59 1.56-1.109 2.614-1.377 3.978-1.466.667-.044 1.418-.017 2.278.02v2.176L24 6.014Z"},
+  huggingface:{name:"Hugging Face", hex:"#FFD21E", d:"M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624"},
+  ollama:{name:"Ollama", hex:"#000000", d:"M16.361 10.26a.894.894 0 0 0-.558.47l-.072.148.001.207c0 .193.004.217.059.353.076.193.152.312.291.448.24.238.51.3.872.205a.86.86 0 0 0 .517-.436.752.752 0 0 0 .08-.498c-.064-.453-.33-.782-.724-.897a1.06 1.06 0 0 0-.466 0zm-9.203.005c-.305.096-.533.32-.65.639a1.187 1.187 0 0 0-.06.52c.057.309.31.59.598.667.362.095.632.033.872-.205.14-.136.215-.255.291-.448.055-.136.059-.16.059-.353l.001-.207-.072-.148a.894.894 0 0 0-.565-.472 1.02 1.02 0 0 0-.474.007Zm4.184 2c-.131.071-.223.25-.195.383.031.143.157.288.353.407.105.063.112.072.117.136.004.038-.01.146-.029.243-.02.094-.036.194-.036.222.002.074.07.195.143.253.064.052.076.054.255.059.164.005.198.001.264-.03.169-.082.212-.234.15-.525-.052-.243-.042-.28.087-.355.137-.08.281-.219.324-.314a.365.365 0 0 0-.175-.48.394.394 0 0 0-.181-.033c-.126 0-.207.03-.355.124l-.085.053-.053-.032c-.219-.13-.259-.145-.391-.143a.396.396 0 0 0-.193.032zm.39-2.195c-.373.036-.475.05-.654.086-.291.06-.68.195-.951.328-.94.46-1.589 1.226-1.787 2.114-.04.176-.045.234-.045.53 0 .294.005.357.043.524.264 1.16 1.332 2.017 2.714 2.173.3.033 1.596.033 1.896 0 1.11-.125 2.064-.727 2.493-1.571.114-.226.169-.372.22-.602.039-.167.044-.23.044-.523 0-.297-.005-.355-.045-.531-.288-1.29-1.539-2.304-3.072-2.497a6.873 6.873 0 0 0-.855-.031zm.645.937a3.283 3.283 0 0 1 1.44.514c.223.148.537.458.671.662.166.251.26.508.303.82.02.143.01.251-.043.482-.08.345-.332.705-.672.957a3.115 3.115 0 0 1-.689.348c-.382.122-.632.144-1.525.138-.582-.006-.686-.01-.853-.042-.57-.107-1.022-.334-1.35-.68-.264-.28-.385-.535-.45-.946-.03-.192.025-.509.137-.776.136-.326.488-.73.836-.963.403-.269.934-.46 1.422-.512.187-.02.586-.02.773-.002zm-5.503-11a1.653 1.653 0 0 0-.683.298C5.617.74 5.173 1.666 4.985 2.819c-.07.436-.119 1.04-.119 1.503 0 .544.064 1.24.155 1.721.02.107.031.202.023.208a8.12 8.12 0 0 1-.187.152 5.324 5.324 0 0 0-.949 1.02 5.49 5.49 0 0 0-.94 2.339 6.625 6.625 0 0 0-.023 1.357c.091.78.325 1.438.727 2.04l.13.195-.037.064c-.269.452-.498 1.105-.605 1.732-.084.496-.095.629-.095 1.294 0 .67.009.803.088 1.266.095.555.288 1.143.503 1.534.071.128.243.393.264.407.007.003-.014.067-.046.141a7.405 7.405 0 0 0-.548 1.873c-.062.417-.071.552-.071.991 0 .56.031.832.148 1.279L3.42 24h1.478l-.05-.091c-.297-.552-.325-1.575-.068-2.597.117-.472.25-.819.498-1.296l.148-.29v-.177c0-.165-.003-.184-.057-.293a.915.915 0 0 0-.194-.25 1.74 1.74 0 0 1-.385-.543c-.424-.92-.506-2.286-.208-3.451.124-.486.329-.918.544-1.154a.787.787 0 0 0 .223-.531c0-.195-.07-.355-.224-.522a3.136 3.136 0 0 1-.817-1.729c-.14-.96.114-2.005.69-2.834.563-.814 1.353-1.336 2.237-1.475.199-.033.57-.028.776.01.226.04.367.028.512-.041.179-.085.268-.19.374-.431.093-.215.165-.333.36-.576.234-.29.46-.489.822-.729.413-.27.884-.467 1.352-.561.17-.035.25-.04.569-.04.319 0 .398.005.569.04a4.07 4.07 0 0 1 1.914.997c.117.109.398.457.488.602.034.057.095.177.132.267.105.241.195.346.374.43.14.068.286.082.503.045.343-.058.607-.053.943.016 1.144.23 2.14 1.173 2.581 2.437.385 1.108.276 2.267-.296 3.153-.097.15-.193.27-.333.419-.301.322-.301.722-.001 1.053.493.539.801 1.866.708 3.036-.062.772-.26 1.463-.533 1.854a2.096 2.096 0 0 1-.224.258.916.916 0 0 0-.194.25c-.054.109-.057.128-.057.293v.178l.148.29c.248.476.38.823.498 1.295.253 1.008.231 2.01-.059 2.581a.845.845 0 0 0-.044.098c0 .006.329.009.732.009h.73l.02-.074.036-.134c.019-.076.057-.3.088-.516.029-.217.029-1.016 0-1.258-.11-.875-.295-1.57-.597-2.226-.032-.074-.053-.138-.046-.141.008-.005.057-.074.108-.152.376-.569.607-1.284.724-2.228.031-.26.031-1.378 0-1.628-.083-.645-.182-1.082-.348-1.525a6.083 6.083 0 0 0-.329-.7l-.038-.064.131-.194c.402-.604.636-1.262.727-2.04a6.625 6.625 0 0 0-.024-1.358 5.512 5.512 0 0 0-.939-2.339 5.325 5.325 0 0 0-.95-1.02 8.097 8.097 0 0 1-.186-.152.692.692 0 0 1 .023-.208c.208-1.087.201-2.443-.017-3.503-.19-.924-.535-1.658-.98-2.082-.354-.338-.716-.482-1.15-.455-.996.059-1.8 1.205-2.116 3.01a6.805 6.805 0 0 0-.097.726c0 .036-.007.066-.015.066a.96.96 0 0 1-.149-.078A4.857 4.857 0 0 0 12 3.03c-.832 0-1.687.243-2.456.698a.958.958 0 0 1-.148.078c-.008 0-.015-.03-.015-.066a6.71 6.71 0 0 0-.097-.725C8.997 1.392 8.337.319 7.46.048a2.096 2.096 0 0 0-.585-.041Zm.293 1.402c.248.197.523.759.682 1.388.03.113.06.244.069.292.007.047.026.152.041.233.067.365.098.76.102 1.24l.002.475-.12.175-.118.178h-.278c-.324 0-.646.041-.954.124l-.238.06c-.033.007-.038-.003-.057-.144a8.438 8.438 0 0 1 .016-2.323c.124-.788.413-1.501.696-1.711.067-.05.079-.049.157.013zm9.825-.012c.17.126.358.46.498.888.28.854.36 2.028.212 3.145-.019.14-.024.151-.057.144l-.238-.06a3.693 3.693 0 0 0-.954-.124h-.278l-.119-.178-.119-.175.002-.474c.004-.669.066-1.19.214-1.772.157-.623.434-1.185.68-1.382.078-.062.09-.063.159-.012z"}
+};
+// Brands without a free logo get a clean name badge instead of an imitation.
+const BADGES = {openai:{name:"OpenAI", bg:"#0f0f10", txt:"OpenAI"}, groq:{name:"Groq", bg:"#f55036", txt:"Groq"}, cerebras:{name:"Cerebras", bg:"#f05a28", txt:"CS"}};
+function brandLogo(id){
+  const b = BRANDS[id];
+  if (b) {
+    const dark = id === "ollama" || id === "openrouter";
+    return h("span", {class:"blogo", title:b.name, style:"background:" + (dark ? "#1b1b1e" : b.hex + "22"), html:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${dark ? "#f5f5f4" : b.hex}" d="${b.d}"/></svg>`});
+  }
+  const t = BADGES[id] || {name:id, bg:"#222", txt:id};
+  return h("span", {class:"blogo txt", title:t.name, style:"background:" + t.bg, text:t.txt});
+}
+
+/* ---------- Learn: short guides with real screens ---------- */
+const LEARN = [
+  {id:"start", title:"Start chatting in a minute", sub:"Get a free key and send your first message.", mins:2, shot:"connect-2", logos:["openrouter", "googlegemini", "mistralai"], go:["Connect a model", () => openProviders()], steps:[
+    ["connect-1", "Tap Connect a model", "On the welcome screen, tap Connect a model. Vesper talks to free AI providers, so all you need is a free key from one of them."],
+    ["connect-2", "Pick a provider", "OpenRouter is the easiest start: one key opens many free models. Groq is the fastest. Google Gemini can read photos. You can add more later."],
+    ["connect-3", "Paste your free key", "Tap Open to get your key on the provider's site, copy it, paste it here, then tap Save key and Test. The key stays on your device."],
+    ["connect-4", "Say hello", "Back on the home screen, type anything or tap a suggestion. That's it."]]},
+  {id:"models", title:"Pick the right cloud model", sub:"Which free model to use for what.", mins:3, shot:"models-1", logos:["googlegemini", "meta", "nvidia", "openrouter"], go:["Open the model picker", () => openModels()], steps:[
+    ["models-1", "Open the model picker", "Tap the model name in the message box. Models are grouped by provider and the check marks the one in use. Your pick sticks to each chat."],
+    [null, "Match the model to the job", "Use Gemini 2.5 Flash for photos and everyday questions, Llama 3.3 70B on Groq when you want instant replies, GPT OSS 120B on Cerebras for hard reasoning, and Auto when you just want something that works."],
+    [null, "Hit a limit? Switch", "Every free plan has a daily cap. When one runs out, tap Change model on the message and pick another provider. Connecting two or three providers means you never stop."]]},
+  {id:"pc", title:"Run AI on your own PC", sub:"Private, offline and free for good.", mins:3, shot:"pc-1", logos:["qwen", "google", "huggingface"], go:["Find my model", () => (DESKTOP ? openPC() : openAdvisor())], steps:[
+    ["pc-1", "Open Models on this PC", "In the Vesper app for Windows, go to Settings, Local models, Models on this PC. Vesper reads your memory and graphics card and shows what fits."],
+    [null, "Download the best fit", "Tap Download on the Best for this PC pick. Models come straight from Hugging Face, and a broken download picks up where it stopped."],
+    [null, "Tap Use and chat", "The first message loads the model, which takes a few seconds. After that it runs offline and nothing you type leaves your PC."],
+    ["advisor", "On a phone instead?", "Open Which model fits my computer in Local models. It gives you the exact Ollama command for your PC, then you connect to it over WiFi."]]},
+  {id:"worth", title:"Which models are worth it", sub:"Honest picks, and what to skip.", mins:4, shot:"advisor", logos:["qwen", "google", "meta", "nvidia"], go:["Find my model", () => (DESKTOP ? openPC() : openAdvisor())], verdicts:[
+    ["On your PC", [
+      [1, "qwen", "Qwen 3 14B", "The sweet spot. Smart and steady with a 12 GB graphics card or 32 GB of memory."],
+      [1, "google", "Gemma 3 12B", "The best writer at its size. Great for long chats and stories."],
+      [1, "openai", "GPT OSS 20B", "The strongest reasoning that still fits a gaming PC. Wants 16 GB."],
+      [1, "qwen", "Qwen 3 30B", "Feels like a much bigger model but runs fast. Wants 24 GB or more."],
+      [1, "qwen", "Qwen 3 4B", "The best small model. Use it on laptops with 8 GB."],
+      [0, "meta", "Llama 3.2 3B", "Too small for real work, it makes things up. Take Qwen 3 4B instead."],
+      [0, "meta", "Llama 3.1 8B", "Older now. Qwen 3 8B is better at the same size."],
+      [0, "meta", "70B models on a normal PC", "They crawl at about a word a second. Use a cloud model for that size."],
+      [0, "huggingface", "Anything bigger than your memory", "It spills onto the disk and becomes unusable. Trust the Best for this PC pick."]]],
+    ["In the cloud", [
+      [1, "googlegemini", "Gemini 2.5 Flash", "Smart, quick, and it reads photos."],
+      [1, "meta", "Llama 3.3 70B on Groq", "The fastest replies you will see."],
+      [1, "openai", "GPT OSS 120B on Cerebras", "A big reasoning model that is still fast."],
+      [1, "openrouter", "Auto on OpenRouter", "When one free model is busy, it picks another."],
+      [0, "openrouter", "Paid models", "The free ones cover almost everything. Paid ones spend credits fast."]]]
+  ]},
+  {id:"chars", title:"Make a Character", sub:"Personalities with their own voice.", mins:2, shot:"characters-1", logos:[], go:["Open Characters", () => openCompanions()], steps:[
+    ["characters-1", "Start with a ready one", "Open Characters from the menu. Tap any character under Explore, like Quest the adventure narrator, and it starts talking right away."],
+    ["characters-2", "Or create your own", "Tap Create your own. Give them a name, who they are and how they talk. A first message sets the scene."],
+    ["characters-3", "Every character keeps its own chats", "Their chats show their color in your history. Edit them any time from the dots next to their name."]]},
+  {id:"memory", title:"Teach Vesper about you", sub:"Memory and personal instructions.", mins:2, shot:"memory-1", logos:[], go:["Open Memory", () => openMemory()], steps:[
+    ["memory-2", "Just tell it", "Share something lasting, like your work or your name, and Vesper saves it. Memory updated shows under the reply. Tap it to see what was saved."],
+    ["memory-1", "Check and edit", "Settings, Memory lists everything it knows. Delete anything, or add facts yourself. It all stays on your device, and private chats are never remembered."],
+    ["personalize", "Set how it replies", "Settings, Personalize: tell it about you and how you like answers, for example short and direct."]]},
+  {id:"attach", title:"Photos, files and voice", sub:"Show it, tell it, hear it back.", mins:2, shot:"attach-1", logos:["googlegemini"], go:null, steps:[
+    ["attach-1", "Attach a photo or file", "Tap the paperclip. Photos are shrunk on your device before sending. Text files like notes, captions or code are read as text. Pick a model that can see, like Gemini 2.5 Flash, for photos."],
+    [null, "Talk instead of typing", "On your phone, tap the microphone next to send and speak. Tap it again to stop."],
+    [null, "Hear the answer", "Tap the speaker under any reply to have it read aloud by your device's voice."]]},
+  {id:"yours", title:"Make it yours", sub:"Finishes, styles and handy settings.", mins:1, shot:"finish", logos:[], go:["Choose a finish", () => openIcons()], steps:[
+    ["finish", "Pick a finish", "Settings, App icon. Each finish changes the logo and the colors of the whole app."],
+    [null, "Tune the replies", "Settings, Response style sets how creative and how long replies are. Enter key sends switches what Enter does."],
+    [null, "Keep things tidy", "Pin important chats to the top, search your history, and export a backup from Settings, Data."]]}
+];
+const learnImg = n => "learn/" + n + ".jpg";
+function openLearn(swap){
+  open("learn", () => makePage("Learn", w => {
+    w.append(h("div", {class:"learn-hero"}, h("h3", {text:"Learn Vesper"}), h("p", {text:"Short guides with real screens. Most take a minute or two."})));
+    const grid = h("div", {class:"lcards"});
+    LEARN.forEach(g => grid.append(h("button", {class:"lcard", type:"button", onclick:() => openGuide(g)},
+      h("div", {class:"lthumb"}, h("img", {class:"shot", src:learnImg(g.shot), alt:"", loading:"lazy"}),
+        h("span", {class:"mins", html:ic("clock") + g.mins + " min"}), g.logos.length ? h("div", {class:"logos"}, ...g.logos.map(brandLogo)) : null),
+      h("div", {class:"lbody"}, h("b", {text:g.title}), h("span", {text:g.sub})))));
+    w.append(grid);
+  }), swap);
+}
+function openGuide(g){
+  open("guide:" + g.id, () => makePage(g.title, w => {
+    w.append(h("div", {class:"lthumb", style:"border-radius:22px;height:190px"}, h("img", {class:"shot", src:learnImg(g.shot), alt:""}), h("span", {class:"mins", html:ic("clock") + g.mins + " min"}), g.logos.length ? h("div", {class:"logos"}, ...g.logos.map(brandLogo)) : null),
+      h("div", {class:"learn-hero", style:"padding-top:16px"}, h("p", {text:g.sub})));
+    if (g.steps) g.steps.forEach(([img, t, d], i) => w.append(h("div", {class:"lstep"}, h("div", {class:"n"}, h("i", {text:String(i + 1)}), h("b", {text:t})), h("p", {text:d}), img ? h("img", {src:learnImg(img), alt:t, loading:"lazy"}) : null)));
+    if (g.verdicts) g.verdicts.forEach(([label, list]) => w.append(glabel(label), group(...list.map(([yes, brand, name, why]) => h("div", {class:"verdict"}, brandLogo(brand),
+      h("div", {class:"tx"}, h("b", {}, h("span", {text:name}), h("span", {class:"vtag " + (yes ? "yes" : "no"), html:ic(yes ? "circle-check" : "circle-x") + (yes ? "Worth it" : "Skip")})), h("p", {text:why})))))));
+    if (g.verdicts) w.append(gnote("Our picks as of November 2026. Models improve fast, so Vesper's Best for this PC suggestions always come first."));
+    if (g.go) w.append(h("div", {style:"padding-top:20px"}, h("button", {class:"btn primary block", type:"button", text:g.go[0], onclick:g.go[1]})));
+  }));
+}
+$("#openLearn").onclick = () => openLearn(true);
 
 /* app icon */
 function applyIcon(){

@@ -82,6 +82,48 @@ async function phoneShots(browser, base) {
   await ctx.close();
 }
 
+// Screens for the in app Learn guides: small JPEGs in /learn
+async function learnShots(browser, base) {
+  const LEARN = path.join(ROOT, "learn");
+  fs.mkdirSync(LEARN, { recursive: true });
+  const ctx = await browser.newContext({ viewport: { width: 412, height: 892 }, deviceScaleFactor: 1.5, hasTouch: true, isMobile: true, serviceWorkers: "block", timezoneId: "UTC" });
+  const page = await ctx.newPage();
+  await page.clock.install({ time: NOW });
+  const top = "section.page.on:last-of-type";
+  const load = async (state) => {
+    await page.goto(base); await page.evaluate(s => { localStorage.clear(); if (s) localStorage.setItem("vesper.v1", JSON.stringify(s)); }, state || null);
+    await page.goto(base); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(500);
+  };
+  const shot = async name => { await page.waitForTimeout(450); await page.screenshot({ path: path.join(LEARN, name + ".jpg"), type: "jpeg", quality: 78 }); };
+  const settings = async () => { await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openSettings"); await page.waitForTimeout(450); };
+
+  await load(null); await shot("connect-1");
+  await page.click("text=Connect a model"); await shot("connect-2");
+  await page.click(top + " >> text=OpenRouter"); await shot("connect-3");
+  await load(DEMO); await shot("connect-4");
+  await page.click("#modelChip"); await shot("models-1");
+  await load(DEMO); await settings(); await page.click(top + " >> text=Local models"); await page.waitForTimeout(400);
+  await page.click(top + " >> text=Which model fits my computer?"); await page.waitForTimeout(300);
+  await page.click(top + " .seg >> nth=0 >> text=32 GB"); await page.click(top + " .seg >> nth=1 >> text=12"); await shot("advisor");
+  await load(DEMO); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openCompanions"); await shot("characters-1");
+  await page.click(top + ' button:has-text("Create your own")'); await page.waitForTimeout(400);
+  await page.fill(top + ' input[aria-label="Name"]', "Juno"); await page.fill(top + " textarea >> nth=0", "A dry witted film buff who knows every behind the scenes story.");
+  await page.fill(top + " textarea >> nth=1", "Quick, funny, a little sarcastic."); await shot("characters-2");
+  await load(Object.assign({}, DEMO, { current: "c2" })); await shot("characters-3");
+  await load(DEMO); await settings(); await page.click(top + " >> text=Memory"); await shot("memory-1");
+  const memChat = JSON.parse(JSON.stringify(DEMO));
+  memChat.chats.unshift({ id: "c9", title: "About me", model: GEMMA, updated: NOW, messages: [
+    { role: "user", content: "I make short video ads, mostly for skincare brands." },
+    { role: "assistant", model: GEMMA, saved: 1, content: "Nice. Skincare ads live or die on the first second and the texture shots. Want hooks, shot lists or captions next?" }] });
+  memChat.current = "c9"; await load(memChat); await shot("memory-2");
+  await load(DEMO); await settings(); await page.click(top + " >> text=Personalize"); await shot("personalize");
+  await load(DEMO);
+  await page.setInputFiles("#attachFile", [{ name: "shot.jpg", mimeType: "image/jpeg", buffer: fs.readFileSync(path.join(ROOT, "docs", "art", "sample-photo.jpg")) }, { name: "brief.txt", mimeType: "text/plain", buffer: Buffer.from("Launch brief") }]);
+  await page.fill("#input", "Write three captions for this shot"); await shot("attach-1");
+  await load(DEMO); await settings(); await page.click(top + " >> text=App icon"); await shot("finish");
+  await ctx.close();
+}
+
 async function desktopShot(browser, base) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2, serviceWorkers: "block" });
   const page = await ctx.newPage();
@@ -110,6 +152,7 @@ async function desktopShot(browser, base) {
   await page.click("section.page.on:last-of-type >> text=Local models"); await page.waitForTimeout(400);
   await page.click("section.page.on:last-of-type >> text=Models on this PC"); await page.waitForTimeout(900);
   await page.screenshot({ path: path.join(SHOTS, "desktop-pc.png") });
+  await page.screenshot({ path: path.join(ROOT, "learn", "pc-1.jpg"), type: "jpeg", quality: 78, clip: { x: 300, y: 0, width: 680, height: 800 } });
   await ctx.close();
 }
 
@@ -226,6 +269,7 @@ async function compose(browser, base) {
   const browser = await chromium.launch();
   try {
     await phoneShots(browser, base);
+    await learnShots(browser, base);
     await desktopShot(browser, base);
     await compose(browser, base);
   } finally {
