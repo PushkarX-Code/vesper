@@ -259,8 +259,8 @@ async function compose(browser, base) {
   const chk = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ea8ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
   const nav = `<div style="position:absolute;left:0;right:0;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:28px 56px">
       <div style="display:flex;align-items:center;gap:12px;font-size:21px;font-weight:600"><img src="/icons/chrome/icon-192.png" style="width:32px;height:32px;border-radius:9px">Vesper</div>
-      <div style="display:flex;gap:36px;font-size:15.5px;color:#b9b9b6"><span>Chat</span><span>Characters</span><span>Studio</span><span>Plus</span></div>
-      <div style="display:flex;gap:12px;font-size:15px;font-weight:500"><span style="padding:11px 18px;border-radius:999px;color:#e9e9e7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)">Contact us</span><span style="padding:11px 20px;border-radius:999px;background:#f5f5f4;color:#000">Join the waitlist</span></div></div>`;
+      <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:36px;font-size:15.5px;color:#b9b9b6"><span>Chat</span><span>Characters</span><span>Studio</span><span>Plus</span></div>
+      <div style="font-size:15px;font-weight:500"><span style="padding:11px 20px;border-radius:999px;background:#f5f5f4;color:#000">Join the waitlist</span></div></div>`;
   const chip = t => `<div style="display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:8px 14px;border-radius:999px;margin-bottom:26px"><i style="width:7px;height:7px;border-radius:50%;background:#6ea8ff"></i>${t}</div>`;
   const h1 = t => `<div style="font-size:74px;font-weight:600;letter-spacing:-.045em;line-height:1.02">${t}</div>`;
   const sub = t => `<div style="font-size:21px;color:#b4b4b1;line-height:1.5;margin-top:22px;max-width:30em">${t}</div>`;
@@ -308,8 +308,8 @@ async function compose(browser, base) {
           ${list(["Image Studio and Video Studio credits", "Live Characters with voice", "Premium characters", "Sync across your devices", "Priority help from the team"])}
           <div style="margin-top:22px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;font-weight:600;padding:15px;border-radius:14px;background:linear-gradient(135deg,#f5f5f4,#f0c26b);color:#000"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>You're on the list</div></div>
         <div style="width:300px;padding:30px 32px;border-radius:26px;background:rgba(18,18,22,.9);box-shadow:0 0 0 1px rgba(255,255,255,.09);display:flex;flex-direction:column">
-          <div style="font-size:19px;font-weight:600">Business</div><div style="font-size:16.5px;color:#b4b4b1;line-height:1.55;margin:14px 0 auto">Teams, agencies and custom characters for your brand. Let's talk.</div>
-          <div style="margin-top:22px;text-align:center;font-size:16px;font-weight:600;padding:15px;border-radius:14px;color:#f5f5f4;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)">Contact us</div></div>
+          <div style="font-size:19px;font-weight:600">Business</div><div style="font-size:16.5px;color:#b4b4b1;line-height:1.55;margin:14px 0 auto">Teams, agencies and custom characters made for your brand.</div>
+          <div style="margin-top:22px;text-align:center;font-size:16px;font-weight:600;padding:15px;border-radius:14px;color:#f5f5f4;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)">Join the waitlist</div></div>
       </div>`), 1640), 1640);
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
