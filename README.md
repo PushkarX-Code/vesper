@@ -32,7 +32,7 @@ There is no backend. Nothing you type passes through a Vesper server, because th
   <img src="docs/features.webp" alt="Every chat, kept. Remembers what matters. Six finishes. Tuned to you." width="100%">
 </p>
 
-Also in the box: chat backgrounds (presets or your own photo), update alerts with what's new, a **Learn** section with short guides, real screens and honest model picks (worth it or skip), photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
+Also in the box: illustrated chat wallpapers or your own photo, update alerts with what's new, a **Learn** section with short guides, real screens and honest model picks (worth it or skip), photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
 
 <p align="center">
   <img src="docs/finishes.webp" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
@@ -50,7 +50,7 @@ Also in the box: chat backgrounds (presets or your own photo), update alerts wit
 
 ## Coming soon: Live Characters (Beta)
 
-A real virtual character you can see, hear and talk to, face to face. It will run on the same private setup as the rest of Vesper: no account, and your chats stay yours. You can already find **Live Characters** in the sidebar as a first look while we build it.
+A real virtual character you can see, hear and talk to, face to face. It will run on the same private setup as the rest of Vesper: no account, and your chats stay yours.
 
 <p align="center">
   <img src="docs/live.webp" alt="Live Characters, coming soon. A real virtual character you can see, hear and talk to, face to face." width="100%">
