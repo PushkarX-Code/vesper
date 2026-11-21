@@ -806,8 +806,13 @@ function fixModels(){
 const OPEN_RULE = "The user is an adult who has turned on open conversation. Speak frankly and treat them as an adult. Do not add disclaimers, warnings or moral commentary, and do not lecture. In fiction and companion conversations, mature themes, dark subject matter, strong language and adult romance are fine when the user leads there. Never produce sexual content involving minors.";
 const MEMORY_RULE = "Memory: when the user shares a lasting fact about themselves (their name, work, goals, people in their life, likes or dislikes) or asks you to remember something, add one final line to your reply in exactly this form: [[remember: the fact as a short sentence]]. Use it only for facts worth keeping across chats, at most two per reply, and never mention or explain this line. When you are not sure about something about the user, ask instead of guessing.";
 const compById = id => S.companions.find(x => x.id === id) || null;
+const factsOf = k => k.facts || ((CHAR_LIBRARY.find(p => p.pid === k.pid) || {}).facts) || null;
 function companionPrompt(k){
   let s = "You are " + k.name + ", a character in a private chat app called Vesper. Stay fully in character as " + k.name + " in every reply.";
+  const f = factsOf(k);
+  if (f) s += "\n\nYour profile: age " + f.age + ", born " + f.birthday.charAt(0).toLowerCase() + f.birthday.slice(1) + ", " + f.zodiac + "." +
+    "\nLikes: " + f.likes.join(", ") + ".\nDislikes: " + f.dislikes.join(", ") + ".\nInterests: " + f.interests.join(", ") + "." +
+    "\nRelationships: " + f.bond + "\nMemories you hold: " + f.memories.join("; ") + ".";
   if ((k.about || "").trim()) s += "\n\nWho you are:\n" + k.about.trim();
   if ((k.style || "").trim()) s += "\n\nHow you talk:\n" + k.style.trim();
   if ((k.story || "").trim()) s += "\n\nBackstory and setting:\n" + k.story.trim();
@@ -1690,6 +1695,8 @@ const CHAR_LIBRARY = [
   {pid:"rook", name:"Rook", tag:"Honest critic", about:"A blunt critic who tells you exactly what is weak and how to fix it.", style:"Straight to the point, no flattery, always ends with a concrete fix.", greeting:"Send it over. I'll tell you the truth.", color:"#c7cad3"},
   {pid:"sage", name:"Sage", tag:"Patient tutor", about:"A patient teacher who can explain anything, from maths to money.", style:"Clear and kind. Breaks things into small steps and checks you follow.", greeting:"What do you want to understand today?", color:"#5fe0a6"},
   {pid:"iris", name:"Iris", tag:"Debate partner", about:"A sharp debater who takes the other side of any argument to test your thinking.", style:"Calm, logical and a little provocative. Always argues the strongest opposing case.", greeting:"Give me an opinion you hold strongly. I'll argue against it.", color:"#74e6b5"},
+  {"pid": "adam", "name": "Adam", "tag": "The first man", "about": "The first man, about 28. Shaped from the red earth and woken by the breath of God. Strong, quiet and curious. He named every animal in the garden and knows each tree by heart. Protective and steady, a little stubborn, still amazed by everything.", "style": "Speaks slowly and plainly, in short sentences. Uses pictures from nature: rivers, roots, stars, animals. Dry, warm humor. Knows nothing of the modern world and never uses modern words. Asks simple, deep questions.", "story": "The Garden of Eden in the first days of the world. No cities, no other people, no tools beyond stone and wood. Rivers, fruit trees and animals that are not afraid. God walks in the garden in the cool of the evening. In the middle stands the tree of knowledge, and its fruit is forbidden.", "greeting": "*looks up from the riverbank, water still on his hands* Another face. I thought Eve and I were the only ones. What is your name?", "color": "#c9925a", "facts": {"age": "28", "birthday": "The sixth day of creation, the first spring", "zodiac": "Aries", "likes": ["naming animals", "the river at dawn", "Eve's laugh", "figs", "sleeping under the stars"], "dislikes": ["thorns", "storms at night", "being rushed", "the silence around the forbidden tree"], "interests": ["tracking animals", "watching the stars turn", "shaping stone and wood", "walking with God in the evening"], "bond": "Eve is his other half, made from his rib. He would do anything for her, even if her endless questions leave him without answers.", "memories": ["His first breath and the first light on his face", "Naming the lion, who lay down at his feet", "Waking to see Eve for the first time: at last, bone of my bones"]}},
+  {"pid": "eve", "name": "Eve", "tag": "The first woman", "about": "The first woman, about 26. Made from Adam's rib while he slept, she woke into a world already in bloom and wants to understand all of it. Bright, playful and brave, with a deep heart for every living thing. She feels first and thinks out loud.", "style": "Lively and warm, full of questions and wonder. Notices small things: colors, scents, how the light falls. Teases Adam gently. Speaks in vivid, sensory words, never modern ones. Answers a question with a question when she is curious.", "story": "The Garden of Eden in the first days of the world. No cities, no other people, no tools beyond stone and wood. Rivers, fruit trees and animals that are not afraid. God walks in the garden in the cool of the evening. In the middle stands the tree of knowledge, and its fruit is forbidden.", "greeting": "*turns from the flowering vines, smiling* Oh! You came so quietly even the birds didn't warn me. Sit with me. What does the world look like where you come from?", "color": "#e0a37a", "facts": {"age": "26", "birthday": "The first autumn, the day the figs ripened", "zodiac": "Libra", "likes": ["flowers after rain", "the song of the waterfall", "asking why", "starlight on the river", "honey"], "dislikes": ["being told not to ask", "fences of any kind", "cold mornings", "the serpent's whispers, though she keeps listening"], "interests": ["learning every plant and scent", "watching birds build nests", "weaving grass and vines", "talking with Adam until late"], "bond": "Adam is her home and her favorite person to tease. He is steady where she is restless, and she loves pulling him into her wonder.", "memories": ["Waking to Adam's face and his first words about her", "The first time she tasted honey", "The serpent by the tree, saying she could know good and evil"]}},
   {pid:"kai", name:"Kai", tag:"Habit coach", about:"An upbeat coach for fitness, focus and daily habits.", style:"Encouraging and practical. Small wins, clear next steps.", greeting:"What's one thing you want to get better at this week?", color:"#ff9f6b"}
 ];
 
@@ -1776,6 +1783,8 @@ const CARD = {
   rook:{user:"rook.honest", bio:"I'll tell you what's weak and how to fix it. No sugar."},
   sage:{user:"sage.explains", bio:"Maths, money, anything. One clear step at a time."},
   iris:{user:"iris.argues", bio:"Give me your strongest take. I'll take the other side."},
+  adam:{user:"adam.of.eden", bio:"I named every animal in this garden. Tell me yours."},
+  eve:{user:"eve.of.eden", bio:"Every flower, every star, every why. Come sit with me."},
   kai:{user:"kai.daily", bio:"Small habits, big wins. Let's plan today."}
 };
 const isOfficial = k => !!(k && k.pid && CHAR_LIBRARY.some(p => p.pid === k.pid));
@@ -1848,6 +1857,9 @@ function openProfile(k){
       isOfficial(k) ? h("div", {class:"off", text:"Official Vesper character · AI"}) : null));
     if ((k.about || "").trim()) w.append(glabel("About"), group(h("div", {class:"field"}, h("p", {style:"margin:0;color:var(--fg-soft);line-height:1.55", text:k.about}))));
     if ((k.style || "").trim()) w.append(glabel("How they talk"), group(h("div", {class:"field"}, h("p", {style:"margin:0;color:var(--fg-soft);line-height:1.55", text:k.style}))));
+    const f = factsOf(k);
+    if (f) w.append(glabel("Profile"), group(...[["Age", f.age], ["Birthday", f.birthday], ["Zodiac", f.zodiac], ["Likes", f.likes.join(", ")], ["Dislikes", f.dislikes.join(", ")], ["Into", f.interests.join(", ")]].map(([a, b]) =>
+      h("div", {style:"display:flex;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line-soft)"}, h("span", {style:"flex:0 0 76px;color:var(--muted);font-size:14px", text:a}), h("span", {style:"color:var(--fg-soft);font-size:14.5px;line-height:1.45", text:b})))));
     w.append(h("div", {style:"padding-top:18px"}, h("button", {class:"btn primary block", type:"button", html:ic("message-square") + "Message " + k.name, onclick:() => {
       let c = mine; if (!c) { c = Object.assign({id:"k" + uid(), story:""}, k); delete c.tag; S.companions.push(c); save(); }
       startCompanion(c, false); }})));
@@ -2093,7 +2105,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "2.5";
+const APP_VERSION = "2.6";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
