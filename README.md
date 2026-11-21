@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://pushkarx-code.github.io/vesper/"><img src="docs/banner.png" alt="Vesper. A fast, private AI chat app for your phone. Free models, your own key, no servers." width="100%"></a>
+  <a href="https://pushkarx-code.github.io/vesper/"><img src="docs/banner.png" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
 </p>
 
 <p align="center">
@@ -15,16 +15,20 @@ There is no backend. Nothing you type passes through a Vesper server, because th
 ## A closer look
 
 <p align="center">
-  <img src="docs/showcase.png" alt="Every model, one tap. Your chats, your phone. Answers, beautifully set. Your key, your rules." width="100%">
+  <img src="docs/showcase.png" alt="Ask anything. Answers, beautifully set. Every model, one tap. Companions with their own voice." width="100%">
 </p>
 
 ## Features
 
 <p align="center">
-  <img src="docs/features.png" alt="Streaming replies. Any OpenRouter model. Private by design. Every chat, kept. Installs like an app. Tuned to you." width="100%">
+  <img src="docs/features.png" alt="Every chat, kept. Remembers what matters. Seven finishes. Tuned to you." width="100%">
 </p>
 
 Also in the box: edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald or Aurora. Each one recolors the whole app.
+
+<p align="center">
+  <img src="docs/finishes.png" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald and Aurora. The icon and the whole app change together." width="100%">
+</p>
 
 **Companions.** Create personalities with their own name, character, way of talking and first message. Each keeps its own chats.
 
@@ -49,6 +53,10 @@ In Vesper, tap **Connect a model** (or open **Settings**, then **Providers**), p
 That's it. Start typing.
 
 ## Windows app
+
+<p align="center">
+  <img src="docs/windows.png" alt="Vesper for Windows: download a model and run it right on your PC. Offline, private, one tap." width="100%">
+</p>
 
 Vesper also comes as a Windows app, built from the same code. Get the setup file from the repo's Releases page and run it. Windows may say "Windows protected your PC" because the app isn't signed yet: click More info, then Run anyway.
 
@@ -95,6 +103,7 @@ Vesper can talk to a model running on your own computer through Ollama, LM Studi
 * [Inter](https://rsms.me/inter/) is the typeface, served from `fonts/`. Icons come from [Lucide](https://lucide.dev).
 * No third party requests besides the AI provider you pick.
 * A small service worker and a web manifest make it installable.
+* The README pictures are real screenshots with demo data, made by `node docs/art/make-art.js`.
 * Hosted for free on GitHub Pages.
 
 ### Project structure
