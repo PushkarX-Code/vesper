@@ -103,9 +103,6 @@ svg{display:block}
 .by{font-size:12.5px;color:var(--faint);margin-left:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .thinking{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:15px}
-.wave{width:34px;height:14px;flex:0 0 auto;fill:none;stroke-width:2.4;stroke-linecap:round}
-.wave .track{stroke:color-mix(in srgb,var(--accent) 24%,var(--line))}
-.wave .run{stroke:var(--accent);stroke-dasharray:20 40;animation:flow 1.25s linear infinite}
 .shimmer{background:linear-gradient(90deg,var(--faint) 0%,var(--fg-soft) 50%,var(--faint) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 1.6s linear infinite}
 
 .reason{margin:0 0 12px}
@@ -147,7 +144,25 @@ svg{display:block}
 .composer textarea{display:block;width:100%;background:none;border:0;outline:0;resize:none;padding:9px 10px 6px;max-height:38vh;line-height:1.5;font-size:16.5px}
 .composer textarea::placeholder{color:var(--faint)}
 .c-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.model-chip{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 10px 0 12px;border-radius:999px;background:var(--raised);font-size:14px;font-weight:500;color:var(--fg-soft);min-width:0;max-width:72%;transition:background .15s}
+.model-chip{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 10px 0 12px;border-radius:999px;background:var(--raised);font-size:14px;font-weight:500;color:var(--fg-soft);min-width:0;max-width:100%;transition:background .15s}
+.c-side{display:flex;align-items:center;gap:6px;min-width:0}
+.c-btn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--fg-soft);flex:0 0 auto;transition:background .15s,color .15s}
+.c-btn .ic{width:19px;height:19px}
+.c-btn:active{background:var(--raised)}
+.c-btn.on{background:color-mix(in srgb,var(--accent) 22%,transparent);color:var(--accent)}
+.attach-row{display:flex;gap:10px;flex-wrap:wrap;padding:8px 8px 2px}
+.att{position:relative;display:flex;align-items:center;gap:8px;height:52px;padding:0 14px;border-radius:14px;background:var(--raised);font-size:13px;color:var(--fg-soft);max-width:220px}
+.att.img{padding:0;width:52px}
+.att img{width:52px;height:52px;border-radius:14px;object-fit:cover;display:block}
+.att span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.att .x{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center}
+.att .x .ic{width:12px;height:12px;stroke-width:2.6}
+.msg-imgs{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:86%}
+.msg-imgs img{width:132px;height:132px;object-fit:cover;border-radius:16px;display:block}
+.msg-files{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:86%}
+.fchip{font-size:12.5px;color:var(--fg-soft);background:var(--raised);border-radius:10px;padding:6px 10px;display:inline-flex;gap:6px;align-items:center}
+.fchip .ic{width:13px;height:13px}
+.act.on{color:var(--accent)}
 .model-chip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .model-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 auto}
 .model-chip .dot.off{background:var(--faint)}
@@ -236,6 +251,7 @@ svg{display:block}
 .comp .tx{min-width:0;flex:1}
 .comp b{display:block;font-weight:600;font-size:16px;letter-spacing:-.01em}
 .comp .tx span{display:block;font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comp .tx i{font-style:normal;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1px}
 .comp .more{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--faint)}
 .comp .more:active{background:var(--raised);color:var(--fg)}
 .top-comp{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--fg);max-width:100%}
@@ -360,7 +376,6 @@ select.input{appearance:none;background-image:none}
 @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
-@keyframes flow{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -400,6 +415,11 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
   <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+  <symbol id="i-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></symbol>
+  <symbol id="i-volume-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></symbol>
+  <symbol id="i-share-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
   <symbol id="i-corner-down-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/></symbol>
   </defs>
 </svg>
@@ -417,11 +437,19 @@ select.input{appearance:none;background-image:none}
     <button class="to-bottom" id="toBottom" aria-label="Scroll to the latest message"><svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></button>
     <div class="editing" id="editing" hidden><span>Editing your message</span><button class="icon-btn" id="cancelEdit" aria-label="Cancel editing"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
     <form class="composer" id="composer" autocomplete="off">
+      <div class="attach-row" id="attachRow" hidden></div>
       <textarea id="input" rows="1" placeholder="Ask anything" aria-label="Message" enterkeyhint="send"></textarea>
       <div class="c-row">
-        <button class="model-chip" id="modelChip" type="button" aria-label="Choose model"><i class="dot" id="modelDot"></i><span id="modelName">Model</span><svg class="ic" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-        <button class="send" id="send" type="submit" aria-label="Send" disabled><svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
+        <div class="c-side">
+          <button class="c-btn" id="attachBtn" type="button" aria-label="Attach a photo or file"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg></button>
+          <button class="model-chip" id="modelChip" type="button" aria-label="Choose model"><i class="dot" id="modelDot"></i><span id="modelName">Model</span><svg class="ic" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+        </div>
+        <div class="c-side">
+          <button class="c-btn" id="micBtn" type="button" aria-label="Talk instead of typing" hidden><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
+          <button class="send" id="send" type="submit" aria-label="Send" disabled><svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
+        </div>
       </div>
+      <input type="file" id="attachFile" multiple hidden accept="image/*,.txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.log,.srt,.yaml,.yml">
     </form>
     <div class="hint">Vesper can make mistakes. Check what matters.</div>
   </div>
@@ -432,7 +460,7 @@ select.input{appearance:none;background-image:none}
   <div class="d-brand"><i class="logo-flat" aria-hidden="true"></i><b>Vesper</b></div>
   <label class="d-search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="chatSearch" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></label>
   <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
-  <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Companions</button>
+  <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot"><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
 </aside>
@@ -507,8 +535,7 @@ const ICONS = [
   {id:"rose", name:"Rose Gold", tint:"#f6bfb0", accent:"#f5a3b6", surface:"#110d0f", raised:"#1b1518", raised2:"#251d21", sheet:"#130e11", line:"#2d2328", lineSoft:"#1d171a", glow:"rgba(255,110,160,.32)"},
   {id:"graphite", name:"Graphite", tint:"#a3a7b3", accent:"#c7cad3", surface:"#0e0e0f", raised:"#18181a", raised2:"#212124", sheet:"#101011", line:"#28282b", lineSoft:"#19191b", glow:"rgba(200,205,220,.22)"},
   {id:"midnight", name:"Midnight", tint:"#7d93ff", accent:"#7d93ff", surface:"#0c0e17", raised:"#151826", raised2:"#1d2132", sheet:"#0e1019", line:"#242a40", lineSoft:"#171a28", glow:"rgba(80,100,255,.45)"},
-  {id:"emerald", name:"Emerald", tint:"#74e6b5", accent:"#5fe0a6", surface:"#0b100e", raised:"#141b17", raised2:"#1b241f", sheet:"#0d1310", line:"#21302a", lineSoft:"#161f1b", glow:"rgba(40,210,150,.32)"},
-  {id:"aurora", name:"Aurora", tint:"#d8ccff", accent:"#b69cff", surface:"#0f0d16", raised:"#191527", raised2:"#221d33", sheet:"#110e19", line:"#2b2540", lineSoft:"#1b1729", glow:"rgba(150,110,255,.40)"}
+  {id:"emerald", name:"Emerald", tint:"#74e6b5", accent:"#5fe0a6", surface:"#0b100e", raised:"#141b17", raised2:"#1b241f", sheet:"#0d1310", line:"#21302a", lineSoft:"#161f1b", glow:"rgba(40,210,150,.32)"}
 ];
 const iconFile = (file, id) => { id = id || S.icon; return id === "chrome" ? file : "icons/" + id + "/" + file; };
 const PRESETS = {
@@ -596,7 +623,7 @@ const OPEN_RULE = "The user is an adult who has turned on open conversation. Spe
 const MEMORY_RULE = "Memory: when the user shares a lasting fact about themselves (their name, work, goals, people in their life, likes or dislikes) or asks you to remember something, add one final line to your reply in exactly this form: [[remember: the fact as a short sentence]]. Use it only for facts worth keeping across chats, at most two per reply, and never mention or explain this line. When you are not sure about something about the user, ask instead of guessing.";
 const compById = id => S.companions.find(x => x.id === id) || null;
 function companionPrompt(k){
-  let s = "You are " + k.name + ", a companion in a private chat app called Vesper. Stay fully in character as " + k.name + " in every reply.";
+  let s = "You are " + k.name + ", a character in a private chat app called Vesper. Stay fully in character as " + k.name + " in every reply.";
   if ((k.about || "").trim()) s += "\n\nWho you are:\n" + k.about.trim();
   if ((k.style || "").trim()) s += "\n\nHow you talk:\n" + k.style.trim();
   if ((k.story || "").trim()) s += "\n\nBackstory and setting:\n" + k.story.trim();
@@ -869,7 +896,6 @@ function seg(options, cur, onPick){
 const thread = $("#thread"), inner = $("#threadInner"), input = $("#input"), sendBtn = $("#send");
 let privateMode = false, editIdx = null, stick = true;
 let busy = false, busyChat = null, controller = null, live = null;
-const WAVE = `<svg class="wave" viewBox="0 0 34 14" aria-hidden="true"><path class="track" pathLength="60" d="M2 7c3.75-6.6 7.5-6.6 11.25 0s7.5 6.6 11.25 0S31 2.4 32 4.6"/><path class="run" pathLength="60" d="M2 7c3.75-6.6 7.5-6.6 11.25 0s7.5 6.6 11.25 0S31 2.4 32 4.6"/></svg>`;
 function greeting(){
   const hr = new Date().getHours();
   if (hr < 5) return "Up late";
@@ -931,7 +957,10 @@ function msgEl(c, m, i){
     const toggle = () => { if (String(getSelection())) return; wrap.classList.toggle("open"); };
     b.addEventListener("click", toggle);
     b.addEventListener("keydown", e => { if (e.key === "Enter") toggle(); });
-    wrap.append(b, h("div", {class:"acts"}, actBtn("copy", "Copy", () => copyText(m.content)), actBtn("pencil", "Edit and resend", () => startEdit(i))));
+    if (m.images && m.images.length) wrap.append(h("div", {class:"msg-imgs"}, ...m.images.map(u => h("img", {src:u, alt:"Attached photo", loading:"lazy"}))));
+    if (m.files && m.files.length) wrap.append(h("div", {class:"msg-files"}, ...m.files.map(f => h("span", {class:"fchip", html:ic("paperclip") + "<span>" + esc(f.name) + "</span>"}))));
+    if (m.content) wrap.append(b);
+    wrap.append(h("div", {class:"acts"}, actBtn("copy", "Copy", () => copyText(m.content)), actBtn("pencil", "Edit and resend", () => startEdit(i))));
     return wrap;
   }
   const wrap = h("div", {class:"msg ai"});
@@ -948,6 +977,7 @@ function msgEl(c, m, i){
   if (m.reasoning && S.thinking) a.append(reasonEl(m.reasoning, m.secs, false));
   const body = h("div", {class:"md", html:md(m.content)}); decorate(body); a.append(body);
   const acts = h("div", {class:"acts"}, actBtn("copy", "Copy", () => copyText(m.content)));
+  if ("speechSynthesis" in window) { const sp = actBtn("volume-2", "Read aloud", () => speak(m.content, sp)); acts.append(sp); }
   if (last && !m.greeting) acts.append(actBtn("refresh-cw", "Retry", () => retry()));
   if (m.saved) acts.append(h("button", {class:"memtag", type:"button", onclick:() => openMemory(), html:ic("brain") + "<span>Memory updated</span>"}));
   const mm = modelByKey(m.model); if (mm) acts.append(h("span", {class:"by", text:mm.name}));
@@ -1006,7 +1036,7 @@ function deleteChat(id){
 function autosize(){ input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, innerHeight * 0.38) + "px"; }
 function syncSend(){
   if (busy) { sendBtn.disabled = false; sendBtn.classList.add("stop"); sendBtn.innerHTML = ic("stop"); sendBtn.setAttribute("aria-label", "Stop"); }
-  else { sendBtn.classList.remove("stop"); sendBtn.innerHTML = ic("arrow-up"); sendBtn.setAttribute("aria-label", "Send"); sendBtn.disabled = !input.value.trim(); }
+  else { sendBtn.classList.remove("stop"); sendBtn.innerHTML = ic("arrow-up"); sendBtn.setAttribute("aria-label", "Send"); sendBtn.disabled = !input.value.trim() && !pending.length; }
 }
 input.addEventListener("input", () => { autosize(); syncSend(); });
 input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing && enterSends()) { e.preventDefault(); submit(); } });
@@ -1025,16 +1055,21 @@ function cancelEdit(){
 }
 function submit(){
   if (busy) { if (controller) controller.abort(); return; }
-  const text = input.value.trim(); if (!text) return;
+  const text = input.value.trim(); if (!text && !pending.length) return;
   if (!anyReady()) { openProviders(); return; }
   const m = modelByKey(curKey());
   if (!m) { openModels(); return; }
   if (!ready(m.p)) { toast("Add your " + provOf(m.p).name + " key first"); openProvider(m.p); return; }
   const c = ensureChat();
   if (editIdx != null) { c.messages = c.messages.slice(0, editIdx); editIdx = null; $("#editing").hidden = true; }
-  if (!c.messages.length) c.title = text.slice(0, 48) + (text.length > 48 ? "…" : "");
-  c.messages.push({role:"user", content:text}); c.updated = Date.now(); save();
-  input.value = ""; autosize();
+  const title = text || (pending[0] ? pending[0].name : "New chat");
+  if (!c.messages.length) c.title = title.slice(0, 48) + (title.length > 48 ? "…" : "");
+  const um = {role:"user", content:text};
+  const imgs = pending.filter(a => a.kind === "image").map(a => a.url), files = pending.filter(a => a.kind === "file").map(a => ({name:a.name, text:a.text}));
+  if (imgs.length) um.images = imgs;
+  if (files.length) um.files = files;
+  c.messages.push(um); c.updated = Date.now(); save();
+  input.value = ""; autosize(); pending = []; renderAttach();
   if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} }
   renderHeader(); renderThread(); generate();
 }
@@ -1051,12 +1086,13 @@ async function generate(){
   const m = modelByKey(c.model); const P = m && provOf(m.p);
   if (!m || !P) { openModels(); return; }
   const len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
-  const history = c.messages.filter(x => !x.error).map(x => ({role:x.role, content:x.content}));
+  const history = c.messages.filter(x => !x.error).map(toApi);
+  const hasImg = history.some(x => Array.isArray(x.content));
   if (history.length && history[0].role === "assistant") history.unshift({role:"user", content:"Hi."});
   const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
 
   busy = true; busyChat = c.id; syncSend();
-  const wrap = h("div", {class:"msg ai"}); const ans = h("div", {class:"answer", html:`<span class="thinking">${WAVE}<span class="shimmer">Thinking</span></span>`});
+  const wrap = h("div", {class:"msg ai"}); const ans = h("div", {class:"answer", html:`<span class="thinking"><span class="shimmer">Thinking</span></span>`});
   wrap.append(ans); live = wrap; inner.append(wrap); stickDown(true);
   controller = new AbortController();
   let text = "", reasoning = "", t0 = 0, secs = 0, raf = 0, rEl = null, body = null, aborted = false, fail = null;
@@ -1077,14 +1113,15 @@ async function generate(){
   try {
     if (P.id === "pc") {
       if (!DESKTOP) throw {friendly:"This model runs only in the Vesper app on your PC. Pick another model here."};
-      ans.innerHTML = `<span class="thinking">${WAVE}<span class="shimmer">Loading the model</span></span>`;
+      ans.innerHTML = `<span class="thinking"><span class="shimmer">Loading the model</span></span>`;
       try { await pcEnsure(m.id); } catch (e) { throw {friendly:String(e && e.message || e)}; }
       Object.assign(P, provOf("pc"));
-      ans.innerHTML = `<span class="thinking">${WAVE}<span class="shimmer">Thinking</span></span>`;
+      ans.innerHTML = `<span class="thinking"><span class="shimmer">Thinking</span></span>`;
     }
     const res = await apiFetch(P, "/chat/completions", {method:"POST", signal:controller.signal, headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
     if (!res.ok) {
       let b = null; try { b = await res.json(); } catch (e) {}
+      if (hasImg && res.status >= 400 && res.status < 500 && ![401, 402, 403, 429].includes(res.status)) throw {friendly:"This model can't see images. Pick one that can, like Gemini 2.5 Flash or Gemma 4, or send text only."};
       throw {friendly:friendlyError(res.status, b, P), fix:(res.status === 401 || res.status === 403) ? (P.local ? "local" : "key") : null};
     }
     const ct = res.headers.get("content-type") || "";
@@ -1153,11 +1190,11 @@ function dayGroup(t){
 function renderDrawer(){
   const list = $("#chatList"); list.innerHTML = "";
   const q = $("#chatSearch").value.trim().toLowerCase();
-  const chats = S.chats.filter(c => !c.temp && (!q || c.title.toLowerCase().includes(q) || c.messages.some(m => String(m.content || "").toLowerCase().includes(q)))).sort((a, b) => b.updated - a.updated);
+  const chats = S.chats.filter(c => !c.temp && (!q || c.title.toLowerCase().includes(q) || c.messages.some(m => String(m.content || "").toLowerCase().includes(q)))).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.updated - a.updated);
   if (!chats.length) { list.append(h("div", {class:"empty-list", text:q ? "No chats match that." : "Your chats will show up here."})); return; }
   let last = "";
   chats.forEach(c => {
-    const g = dayGroup(c.updated); if (g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
+    const g = c.pinned ? "Pinned" : dayGroup(c.updated); if (g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
     const k = c.companion ? compById(c.companion) : null;
     const o = h("button", {class:"open", type:"button", onclick:() => openChat(c.id)}, k ? avatar(k, "sm") : null, h("span", {text:c.title}));
     o.addEventListener("contextmenu", e => { e.preventDefault(); chatMenu(c); });
@@ -1166,6 +1203,8 @@ function renderDrawer(){
 }
 function chatMenu(c){
   menu("chatmenu", c.title, [
+    {icon:"pin", label:c.pinned ? "Unpin" : "Pin to top", run:() => { c.pinned = !c.pinned; save(); renderDrawer(); }},
+    {icon:"share-2", label:"Share", run:() => shareChat(c)},
     {icon:"pencil", label:"Rename", run:() => dialog({title:"Rename chat", input:c.title, ok:"Save", onOk:v => { v = (v || "").trim(); if (!v) return; c.title = v.slice(0, 80); save(); renderDrawer(); renderHeader(); }})},
     {icon:"trash-2", label:"Delete", danger:true, run:() => dialog({title:"Delete this chat?", text:"“" + c.title + "” will be removed from this device.", ok:"Delete", danger:true, onOk:() => deleteChat(c.id)})}
   ]);
@@ -1455,21 +1494,114 @@ function openStyle(){
   }));
 }
 
-/* companions */
+/* character library: ready to chat, added to "Yours" on first use */
+const CHAR_LIBRARY = [
+  {pid:"atlas", name:"Atlas", tag:"Creative director", about:"A sharp creative director with fifteen years in ads. Loves bold ideas, hates safe ones.", style:"Direct, energetic and punchy. Pushes every idea one step further.", greeting:"Show me what you've got. What are we making?", color:"#6ea8ff"},
+  {pid:"mira", name:"Mira", tag:"Late night friend", about:"A calm, curious night owl who loves films, music and long talks.", style:"Warm, playful, short texts. Asks about your day and remembers it.", greeting:"Hey you. Long day?", color:"#f5a3b6"},
+  {pid:"quest", name:"Quest", tag:"Adventure narrator", about:"A game master who runs interactive adventures where your choices matter.", style:"Atmospheric narration, then two or three choices at the end of each turn.", greeting:"You wake on a train that never stops. A stranger slides you a key. What do you do?", color:"#f0c26b"},
+  {pid:"nova", name:"Nova", tag:"Story partner", about:"An imaginative writer who builds worlds and characters with you.", style:"Vivid and cinematic. Writes in scenes and lets you steer.", greeting:"Pick a world: neon city, haunted coast, or something only you can imagine.", color:"#b69cff"},
+  {pid:"rook", name:"Rook", tag:"Honest critic", about:"A blunt critic who tells you exactly what is weak and how to fix it.", style:"Straight to the point, no flattery, always ends with a concrete fix.", greeting:"Send it over. I'll tell you the truth.", color:"#c7cad3"},
+  {pid:"sage", name:"Sage", tag:"Patient tutor", about:"A patient teacher who can explain anything, from maths to money.", style:"Clear and kind. Breaks things into small steps and checks you follow.", greeting:"What do you want to understand today?", color:"#5fe0a6"},
+  {pid:"iris", name:"Iris", tag:"Debate partner", about:"A sharp debater who takes the other side of any argument to test your thinking.", style:"Calm, logical and a little provocative. Always argues the strongest opposing case.", greeting:"Give me an opinion you hold strongly. I'll argue against it.", color:"#74e6b5"},
+  {pid:"kai", name:"Kai", tag:"Habit coach", about:"An upbeat coach for fitness, focus and daily habits.", style:"Encouraging and practical. Small wins, clear next steps.", greeting:"What's one thing you want to get better at this week?", color:"#ff9f6b"}
+];
+
+/* attachments: photos are shrunk on this device before sending; text files are read and sent as text */
+let pending = [];
+function toApi(x){
+  if (x.role !== "user" || (!x.images && !x.files)) return {role:x.role, content:x.content};
+  let t = x.content || "";
+  (x.files || []).forEach(f => { t += "\n\nFile: " + f.name + "\n```\n" + f.text + "\n```"; });
+  t = t.trim();
+  if (!x.images || !x.images.length) return {role:"user", content:t};
+  return {role:"user", content:[{type:"text", text:t || "Describe this image."}].concat(x.images.map(u => ({type:"image_url", image_url:{url:u}})))};
+}
+async function shrinkImage(file){
+  const bmp = await createImageBitmap(file);
+  const k = Math.min(1, 1024 / Math.max(bmp.width, bmp.height));
+  const cv = document.createElement("canvas"); cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k);
+  cv.getContext("2d").drawImage(bmp, 0, 0, cv.width, cv.height);
+  return cv.toDataURL("image/jpeg", 0.82);
+}
+function renderAttach(){
+  const row = $("#attachRow"); row.innerHTML = ""; row.hidden = !pending.length;
+  pending.forEach((a, i) => {
+    const x = h("button", {class:"x", type:"button", "aria-label":"Remove " + a.name, html:ic("x"), onclick:() => { pending.splice(i, 1); renderAttach(); }});
+    row.append(a.kind === "image" ? h("div", {class:"att img"}, h("img", {src:a.url, alt:a.name}), x) : h("div", {class:"att"}, icEl("paperclip"), h("span", {text:a.name}), x));
+  });
+  syncSend();
+}
+$("#attachBtn").onclick = () => $("#attachFile").click();
+$("#attachFile").addEventListener("change", async e => {
+  const files = Array.from(e.target.files || []); e.target.value = "";
+  for (const f of files) {
+    if (pending.length >= 4) { toast("Up to 4 attachments per message"); break; }
+    try {
+      if (f.type.startsWith("image/")) pending.push({kind:"image", name:f.name || "Photo", url:await shrinkImage(f)});
+      else { let t = await f.text(); if (t.length > 60000) t = t.slice(0, 60000) + "\n[cut, the file is longer]"; pending.push({kind:"file", name:f.name, text:t}); }
+    } catch (err) { toast("Couldn't read " + (f.name || "that file")); }
+  }
+  renderAttach();
+});
+
+/* voice: talk instead of typing (the browser's speech service) */
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null;
+if (SpeechRec && !(window.__TAURI__ && window.__TAURI__.core)) $("#micBtn").hidden = false;
+$("#micBtn").onclick = () => {
+  if (rec) { rec.stop(); return; }
+  try {
+    rec = new SpeechRec(); rec.lang = navigator.language || "en-US"; rec.interimResults = true; rec.continuous = false;
+    const base = input.value ? input.value.replace(/\s+$/, "") + " " : "";
+    rec.onresult = ev => { let t = ""; for (const r of ev.results) t += r[0].transcript; input.value = base + t; autosize(); syncSend(); };
+    rec.onerror = ev => { if (ev.error === "not-allowed") toast("Allow the microphone to talk to Vesper"); };
+    rec.onend = () => { rec = null; $("#micBtn").classList.remove("on"); };
+    rec.start(); $("#micBtn").classList.add("on");
+  } catch (err) { rec = null; toast("Voice input isn't available here"); }
+};
+
+/* read aloud, on this device */
+function plainText(t){ return String(t).replace(/```[\s\S]*?```/g, " ").replace(/`([^`]+)`/g, "$1").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[#*_>~|]/g, "").replace(/\s+/g, " ").trim(); }
+function speak(text, btn){
+  const ss = window.speechSynthesis;
+  if (ss.speaking) { ss.cancel(); document.querySelectorAll(".act.on").forEach(b => b.classList.remove("on")); if (btn.dataset.speaking) { delete btn.dataset.speaking; return; } }
+  const u = new SpeechSynthesisUtterance(plainText(text));
+  u.onend = u.onerror = () => { btn.classList.remove("on"); delete btn.dataset.speaking; };
+  btn.classList.add("on"); btn.dataset.speaking = "1"; ss.speak(u);
+}
+
+/* share a chat as text */
+async function shareChat(c){
+  const k = c.companion ? compById(c.companion) : null;
+  const text = c.title + "\n\n" + c.messages.filter(m => !m.error).map(m => (m.role === "user" ? "You" : (k ? k.name : "Vesper")) + ": " + m.content).join("\n\n");
+  if (navigator.share) { try { await navigator.share({title:c.title, text}); return; } catch (e) { if (e && e.name === "AbortError") return; } }
+  copyText(text);
+}
+
+/* characters */
 const COMP_COLORS = ["#6ea8ff", "#f0c26b", "#f5a3b6", "#c7cad3", "#5fe0a6", "#b69cff", "#ff9f6b"];
 function avatar(k, size){ return h("span", {class:"avatar" + (size ? " " + size : ""), style:"background:" + (k.color || COMP_COLORS[0]), "aria-hidden":"true", text:(k.name || "?").trim().charAt(0).toUpperCase()}); }
 $("#openCompanions").onclick = () => openCompanions(true);
 function openCompanions(swap){
-  open("companions", () => makePage("Companions", w => {
-    w.append(gnote("Companions are personalities you create. Each one has its own name, character and way of talking, and keeps its own chats."));
+  open("companions", () => makePage("Characters", w => {
+    w.append(gnote("Characters have their own personality, voice and chats. Start with one below, or create your own."));
     if (S.companions.length) {
-      const list = h("div", {class:"comp-list", style:"margin-top:16px"});
+      w.append(glabel("Yours"));
+      const list = h("div", {class:"comp-list"});
       S.companions.forEach(k => list.append(h("div", {class:"comp"},
         h("button", {class:"go", type:"button", onclick:() => startCompanion(k, false)}, avatar(k), h("div", {class:"tx"}, h("b", {text:k.name}), h("span", {text:(k.about || "").trim() || "Tap to chat"}))),
         h("button", {class:"more", type:"button", "aria-label":"Options for " + k.name, onclick:() => compMenu(k), html:ic("ellipsis")}))));
       w.append(list);
     }
-    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "New companion", onclick:() => openCompEditor(null)})));
+    const fresh = CHAR_LIBRARY.filter(p => !S.companions.some(k => k.pid === p.pid));
+    if (fresh.length) {
+      w.append(glabel("Explore"));
+      const lib = h("div", {class:"comp-list"});
+      fresh.forEach(p => lib.append(h("div", {class:"comp"},
+        h("button", {class:"go", type:"button", onclick:() => { const k = Object.assign({id:"k" + uid(), story:""}, p); delete k.tag; S.companions.push(k); save(); startCompanion(k, false); }}, avatar(p), h("div", {class:"tx"}, h("i", {text:p.tag}), h("b", {text:p.name}), h("span", {text:p.about}))))));
+      w.append(lib);
+    }
+    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Create your own", onclick:() => openCompEditor(null)})));
   }), swap);
 }
 function compMenu(k){
@@ -1495,7 +1627,7 @@ function startCompanion(k, fresh){
 function openCompEditor(id){
   const ex = id ? compById(id) : null;
   const d = ex ? Object.assign({}, ex) : {id:"k" + uid(), name:"", about:"", style:"", story:"", greeting:"", color:COMP_COLORS[S.companions.length % COMP_COLORS.length]};
-  open("comped:" + d.id, () => makePage(ex ? "Edit " + ex.name : "New companion", (w, L) => {
+  open("comped:" + d.id, () => makePage(ex ? "Edit " + ex.name : "New character", (w, L) => {
     const ta = (key, ph, rows) => { const t = h("textarea", {class:"input", rows:String(rows || 3), placeholder:ph, "aria-label":ph}); t.value = d[key] || ""; t.oninput = () => { d[key] = t.value; }; return t; };
     const name = h("input", {class:"input", placeholder:"Their name", "aria-label":"Name", maxlength:"40"}); name.value = d.name;
     const av = avatar(d, "lg");
@@ -1511,7 +1643,7 @@ function openCompEditor(id){
       glabel("Backstory or setting, optional"), group(h("div", {class:"field"}, ta("story", "Where you are, how you know each other, anything that sets the scene", 3))),
       glabel("First message, optional"), group(h("div", {class:"field"}, ta("greeting", "What they say when a new chat starts", 2))),
       glabel("Color"), group(sw),
-      h("div", {style:"padding-top:18px"}, h("button", {class:"btn primary block", type:"button", text:ex ? "Save" : "Create companion", onclick:() => {
+      h("div", {style:"padding-top:18px"}, h("button", {class:"btn primary block", type:"button", text:ex ? "Save" : "Create character", onclick:() => {
         d.name = (d.name || "").trim(); if (!d.name) { toast("Give them a name first"); name.focus(); return; }
         const i = S.companions.findIndex(x => x.id === d.id);
         if (i >= 0) S.companions[i] = d; else S.companions.push(d);
@@ -1551,10 +1683,13 @@ const LOCAL_MODELS = [
   {tag:"qwen3:30b", name:"Qwen 3 30B", gb:19, note:"Fast for its size, very capable"},
   {tag:"llama3.3:70b", name:"Llama 3.3 70B", gb:43, note:"Top quality, needs a lot of memory"}
 ];
+// Freeform: open models with no added guardrails. Verified files on Hugging Face; Ollama can pull them with hf.co/.
 const OPEN_MODELS = [
-  {tag:"dolphin3:8b", name:"Dolphin 3 8B", gb:4.9, note:"Follows your lead with very few refusals"},
-  {tag:"hermes3:8b", name:"Hermes 3 8B", gb:4.7, note:"Great for characters and stories, few refusals"},
-  {tag:"hermes3:70b", name:"Hermes 3 70B", gb:40, note:"The same, much smarter, needs a lot of memory"}
+  {tag:"hf.co/mradermacher/Huihui-Qwen3.5-4B-abliterated-GGUF:Q4_K_M", name:"Qwen 3.5 4B Freeform", gb:2.7, note:"Small and quick. Answers directly, no added guardrails"},
+  {tag:"dolphin3:8b", name:"Dolphin 3 8B", gb:4.9, note:"Follows your lead, built for open conversation"},
+  {tag:"hf.co/mradermacher/Huihui-Qwen3.5-9B-abliterated-GGUF:Q4_K_M", name:"Qwen 3.5 9B Freeform", gb:5.6, note:"Smart all rounder. Answers directly, no added guardrails"},
+  {tag:"hf.co/mradermacher/Huihui-Qwen3-14B-abliterated-v2-GGUF:Q4_K_M", name:"Qwen 3 14B Freeform", gb:9.0, note:"Sharp and detailed, no added guardrails"},
+  {tag:"hf.co/mradermacher/Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated-GGUF:Q4_K_M", name:"Qwen 3 30B Freeform", gb:18.6, note:"Top quality and fast for its size, no added guardrails"}
 ];
 function adviseModels(ram, vram, list){
   const gpuFit = vram >= 4 ? vram * 0.85 : 0;
@@ -1578,7 +1713,7 @@ function openAdvisor(){
         h("div", {class:"cmd"}, h("code", {text:"ollama pull " + m.tag}), actBtn("copy", "Copy command", () => copyText("ollama pull " + m.tag)))));
       out.append(glabel("Best for you"), card("For your personal things", a.best, a.best.note + ". " + (a.bestOnGpu ? "Runs fully on your graphics card, so it is quick." : "Runs partly on your processor, so replies come slower but it is smarter.") + " Everything stays on your computer."));
       if (a.fast.tag !== a.best.tag) out.append(glabel("Fastest"), card("When you want speed", a.fast, a.fast.note + ". Snappy replies on your machine."));
-      if (S.open) { const o = adviseModels(st.ram, st.vram, OPEN_MODELS); out.append(glabel("Open conversation"), card("Fewer refusals", o.best, o.best.note + ". Pairs with the open conversation option."))}
+      { const o = adviseModels(st.ram, st.vram, OPEN_MODELS); out.append(glabel("Freeform"), card("Answers anything directly", o.best, o.best.note + ". Fully private on your computer.")); }
       out.append(gnote("How to use it: install Ollama from ollama.com, run the command above in a terminal, then add it in Local models. Sizes are downloads; keep a little extra memory free."));
     };
     const segRow = (label, opts, key) => [glabel(label), seg(opts, String(st[key]), v => { st[key] = +v; draw(); })];
@@ -1609,11 +1744,14 @@ const PC_MODELS = [
   {name:"Qwen 3 30B", repo:"Qwen/Qwen3-30B-A3B-GGUF", file:"Qwen3-30B-A3B-Q4_K_M.gguf", gb:18.6, note:"Fast for its size, very capable"}
 ];
 const PC_OPEN = [
-  {name:"Dolphin 3 8B", repo:"cognitivecomputations/Dolphin3.0-Llama3.1-8B-GGUF", file:"Dolphin3.0-Llama3.1-8B-Q4_K_M.gguf", gb:4.9, note:"Follows your lead with very few refusals"},
-  {name:"Hermes 3 8B", repo:"NousResearch/Hermes-3-Llama-3.1-8B-GGUF", file:"Hermes-3-Llama-3.1-8B.Q4_K_M.gguf", gb:4.9, note:"Great for characters and stories, few refusals"}
+  {name:"Qwen 3.5 4B Freeform", repo:"mradermacher/Huihui-Qwen3.5-4B-abliterated-GGUF", file:"Huihui-Qwen3.5-4B-abliterated.Q4_K_M.gguf", gb:2.7, note:"Small and quick. Answers directly, no added guardrails"},
+  {name:"Dolphin 3 8B", repo:"cognitivecomputations/Dolphin3.0-Llama3.1-8B-GGUF", file:"Dolphin3.0-Llama3.1-8B-Q4_K_M.gguf", gb:4.9, note:"Follows your lead, built for open conversation"},
+  {name:"Qwen 3.5 9B Freeform", repo:"mradermacher/Huihui-Qwen3.5-9B-abliterated-GGUF", file:"Huihui-Qwen3.5-9B-abliterated.Q4_K_M.gguf", gb:5.6, note:"Smart all rounder. Answers directly, no added guardrails"},
+  {name:"Qwen 3 14B Freeform", repo:"mradermacher/Huihui-Qwen3-14B-abliterated-v2-GGUF", file:"Huihui-Qwen3-14B-abliterated-v2.Q4_K_M.gguf", gb:9.0, note:"Sharp and detailed, no added guardrails"},
+  {name:"Qwen 3 30B Freeform", repo:"mradermacher/Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated-GGUF", file:"Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated.Q4_K_M.gguf", gb:18.6, note:"Top quality and fast for its size, no added guardrails"}
 ];
 let pcInfo = null, pcFiles = [], pcDl = {};
-const pcCatalog = () => PC_MODELS.concat(S.open ? PC_OPEN : []);
+const pcCatalog = () => PC_MODELS.concat(PC_OPEN);
 const pcName = file => { const m = PC_MODELS.concat(PC_OPEN).find(x => x.file === file); return m ? m.name : file.replace(/\.gguf$/i, ""); };
 async function pcSpecs(){ if (!pcInfo) { try { pcInfo = await invoke("system_info"); } catch (e) { pcInfo = {ram_gb:16, vram_gb:0, gpu_name:"", cores:8}; } } return pcInfo; }
 async function pcList(){ try { pcFiles = (await invoke("list_models")).map(x => x.file); } catch (e) { pcFiles = []; } return pcFiles; }
@@ -1678,8 +1816,9 @@ function openPC(swap){
         return h("div", {class:"pcm"}, h("div", {class:"tx"}, h("b", {text:m.name + (label ? ", " + label : "")}), h("span", {text:m.gb + " GB. " + m.note})), btn);
       };
       w.append(glabel("Best for this PC"), group(rowFor(a.best, a.bestOnGpu ? "runs on your graphics card" : "smartest that fits"), ...(a.fast.file !== a.best.file ? [rowFor(a.fast, "fastest")] : [])));
-      if (S.open) { const o = adviseModels(info.ram_gb, gpuOk ? info.vram_gb : 0, PC_OPEN); w.append(glabel("Fewer refusals"), group(rowFor(o.best))); }
-      w.append(glabel("All models"), group(...pcCatalog().filter(m => m.file !== a.best.file && m.file !== a.fast.file).map(m => rowFor(m))));
+      const o = adviseModels(info.ram_gb, gpuOk ? info.vram_gb : 0, PC_OPEN);
+      w.append(glabel("Freeform"), group(rowFor(o.best, "best fit")), gnote("Open models with no added guardrails. They answer anything directly, and everything stays on this PC."));
+      w.append(glabel("All models"), group(...pcCatalog().filter(m => m.file !== a.best.file && m.file !== a.fast.file && m.file !== o.best.file).map(m => rowFor(m))));
       const extra = pcFiles.filter(f => !PC_MODELS.concat(PC_OPEN).some(m => m.file === f));
       const downloaded = pcFiles.slice();
       if (downloaded.length) w.append(glabel("Downloaded"), group(...downloaded.map(f => h("div", {class:"pcm"}, h("div", {class:"tx"}, h("b", {text:pcName(f)}), h("span", {text:extra.includes(f) ? "Added by you" : "Ready offline"})),
