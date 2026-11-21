@@ -12,25 +12,31 @@ Vesper is a chat app that lives in your browser and installs to your home screen
 
 There is no backend. Nothing you type passes through a Vesper server, because there isn't one. Your key and your chats stay on your device.
 
+## Why Vesper
+
+<p align="center">
+  <img src="docs/why.png" alt="Why Vesper: no account, chats only on your device, dozens of free models plus your own PC, free, works offline with models on your PC, and filters are your call." width="100%">
+</p>
+
 ## A closer look
 
 <p align="center">
-  <img src="docs/showcase.png" alt="Ask anything. Answers, beautifully set. Every model, one tap. Companions with their own voice." width="100%">
+  <img src="docs/showcase.png" alt="Ask anything. Answers, beautifully set. Every model, one tap. Characters with their own voice." width="100%">
 </p>
 
 ## Features
 
 <p align="center">
-  <img src="docs/features.png" alt="Every chat, kept. Remembers what matters. Seven finishes. Tuned to you." width="100%">
+  <img src="docs/features.png" alt="Every chat, kept. Remembers what matters. Six finishes. Tuned to you." width="100%">
 </p>
 
-Also in the box: edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald or Aurora. Each one recolors the whole app.
+Also in the box: photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
 
 <p align="center">
-  <img src="docs/finishes.png" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald and Aurora. The icon and the whole app change together." width="100%">
+  <img src="docs/finishes.png" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
 </p>
 
-**Companions.** Create personalities with their own name, character, way of talking and first message. Each keeps its own chats.
+**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. Each keeps its own chats.
 
 **Memory.** Vesper saves lasting facts you share and uses them in every chat, so it doesn't have to guess. You can see, add and delete them in Settings. They stay on your device, and private chats are never remembered.
 
@@ -65,6 +71,8 @@ The Windows app can run models right on your PC, with nothing to install besides
 1. Open **Settings**, then **Local models**, then **Models on this PC**.
 2. Vesper reads your memory and graphics card and suggests the models that fit.
 3. Tap **Download**, then **Use**. The model runs offline, and nothing you type leaves your computer.
+
+The **Freeform** section lists open models with no added guardrails. They answer anything directly, and everything stays on your PC.
 
 It uses the llama.cpp engine with Vulkan, so it works on Nvidia, AMD and Intel graphics, and on the processor alone. Picking an app icon finish also changes the taskbar icon.
 
@@ -103,7 +111,7 @@ Vesper can talk to a model running on your own computer through Ollama, LM Studi
 * [Inter](https://rsms.me/inter/) is the typeface, served from `fonts/`. Icons come from [Lucide](https://lucide.dev).
 * No third party requests besides the AI provider you pick.
 * A small service worker and a web manifest make it installable.
-* The README pictures are real screenshots with demo data, made by `node docs/art/make-art.js`.
+* The README pictures and the promo slides in `docs/promo/` are real screenshots with demo data, made by `node docs/art/make-art.js`.
 * Hosted for free on GitHub Pages.
 
 ### Project structure

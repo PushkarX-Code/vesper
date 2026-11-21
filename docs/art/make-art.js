@@ -31,8 +31,8 @@ const DEMO = {
     { id: "m4", text: "Is building an app called Vesper.", at: NOW }
   ],
   companions: [
-    { id: "k1", name: "Mira", about: "A calm, curious night owl who loves films and late talks.", style: "Warm, playful, short texts.", story: "", greeting: "Hey you. Long day?", color: "#f5a3b6" },
-    { id: "k2", name: "Atlas", about: "A sharp creative director who pushes your ideas further.", style: "Direct and full of energy.", story: "", greeting: "", color: "#6ea8ff" }
+    { id: "k1", pid: "mira", name: "Mira", about: "A calm, curious night owl who loves films and late talks.", style: "Warm, playful, short texts.", story: "", greeting: "Hey you. Long day?", color: "#f5a3b6" },
+    { id: "k2", pid: "atlas", name: "Atlas", about: "A sharp creative director who pushes your ideas further.", style: "Direct and full of energy.", story: "", greeting: "", color: "#6ea8ff" }
   ],
   chats: [
     { id: "c1", title: "Hooks for a skincare ad", model: GEMMA, updated: NOW - 60e3, messages: [
@@ -151,20 +151,20 @@ async function compose(browser, base) {
     <div style="position:absolute;right:80px;top:150px">${phone("home", 330)}</div>
   </div>`, 1600), 1600);
 
-  const shows = [["home", "Ask anything", "Free models, one clean place"], ["chat-thinking", "Answers, beautifully set", "See how it thought, copy any part"], ["models", "Every model, one tap", "Switch providers when one runs out"], ["companion", "Companions", "Personalities with their own voice"]];
+  const shows = [["home", "Ask anything", "Free models, one clean place"], ["chat-thinking", "Answers, beautifully set", "See how it thought, copy any part"], ["models", "Every model, one tap", "Switch providers when one runs out"], ["companion", "Characters", "Personalities with their own voice"]];
   await render("showcase.png", artPage(`<div style="position:relative;padding:90px 70px 100px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:46px">
     ${shows.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 334)}</div>`).join("")}
     </div></div>`, 1700), 1700);
 
-  const more = [["drawer", "Every chat, kept", "Search, rename and find anything"], ["memory", "Remembers what matters", "Facts you share stay on your device"], ["icons", "Seven finishes", "Each one recolors the whole app"], ["settings", "Tuned to you", "Personalize, response style and more"]];
+  const more = [["drawer", "Every chat, kept", "Search, rename and find anything"], ["memory", "Remembers what matters", "Facts you share stay on your device"], ["icons", "Six finishes", "Each one recolors the whole app"], ["settings", "Tuned to you", "Personalize, response style and more"]];
   await render("features.png", artPage(`<div style="position:relative;padding:90px 70px 100px;overflow:hidden"><div class="glow" style="transform:scaleX(-1)"></div>
     <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:46px">
     ${more.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 334)}</div>`).join("")}
     </div></div>`, 1700), 1700);
 
-  const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald", "aurora"];
-  const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald", aurora: "Aurora" };
+  const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
+  const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };
   await render("finishes.png", artPage(`<div style="position:relative;padding:80px 70px 70px;overflow:hidden"><div class="glow"></div>
     <div style="position:relative;text-align:center;font-size:44px;font-weight:600;letter-spacing:-.03em">Pick your finish</div>
     <p class="sub" style="position:relative;font-size:20px;margin:12px 0 54px">The icon and the whole app change together.</p>
@@ -181,6 +181,42 @@ async function compose(browser, base) {
       <div style="height:40px;background:#1b1b1e;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:14px;color:#cfcfcc"><img src="/icon-192.png" style="width:18px;height:18px">Vesper<span style="margin-left:auto;letter-spacing:18px;color:#8a8a8a">─ ☐ ✕</span></div>
       <img src="${img("desktop-pc")}" style="display:block;width:1280px">
     </div></div>`, 1460), 1460);
+  // why Vesper: honest comparison with typical AI chat apps
+  const rows = [
+    ["Account", "Sign up required", "None. Open and chat"],
+    ["Your chats", "Stored on their servers", "Only on your device"],
+    ["Models", "One company's models", "Dozens of free models, plus your own PC"],
+    ["Price", "Monthly plan for the good stuff", "Free"],
+    ["Offline", "No", "Yes, with models on your PC"],
+    ["Filters", "Set by the company", "Your call, with Freeform models"]
+  ];
+  await render("why.png", artPage(`<div style="position:relative;padding:80px 110px 90px;overflow:hidden"><div class="glow"></div>
+    <div style="position:relative;text-align:center;font-size:48px;font-weight:600;letter-spacing:-.035em">Why Vesper</div>
+    <p class="sub" style="position:relative;font-size:21px;margin:12px 0 50px">Private by design, free by default, yours to shape.</p>
+    <div style="position:relative;border:1px solid #26262a;border-radius:28px;overflow:hidden;background:#0b0b0d">
+      <div style="display:grid;grid-template-columns:1.1fr 1.6fr 1.9fr;font-size:17px;font-weight:600;color:#8d8d8a;padding:22px 34px;border-bottom:1px solid #1d1d20">
+        <div></div><div>Typical AI chat apps</div><div style="color:#6ea8ff;display:flex;align-items:center;gap:10px"><img src="/icon-192.png" style="width:26px;height:26px;border-radius:7px">Vesper</div></div>
+      ${rows.map(([k, a, v], i) => `<div style="display:grid;grid-template-columns:1.1fr 1.6fr 1.9fr;align-items:center;padding:22px 34px;font-size:21px;${i ? "border-top:1px solid #18181b" : ""}">
+        <div style="color:#cfcfcc;font-weight:500">${k}</div><div style="color:#77777a">${a}</div><div style="font-weight:600;display:flex;align-items:center;gap:12px"><span style="width:24px;height:24px;border-radius:50%;background:rgba(110,168,255,.16);color:#6ea8ff;display:grid;place-items:center;font-size:15px">✓</span>${v}</div></div>`).join("")}
+    </div></div>`, 1500), 1500);
+
+  // portrait promo slides, 1080 by 1350
+  fs.mkdirSync(path.join(OUT, "promo"), { recursive: true });
+  const slide = (title, sub, inner) => artPage(`<div style="position:relative;width:1080px;height:1350px;overflow:hidden"><div class="glow"></div>
+    <div style="position:absolute;left:0;right:0;top:92px;text-align:center;padding:0 80px">
+      <div style="display:inline-flex;align-items:center;gap:12px;font-size:24px;font-weight:600;color:#cfcfcc;margin-bottom:34px"><img src="/icon-192.png" style="width:40px;height:40px;border-radius:11px">Vesper</div>
+      <div style="font-size:76px;font-weight:600;letter-spacing:-.04em;line-height:1.04">${title}</div>
+      <div style="font-size:28px;color:#9a9a98;margin-top:22px;line-height:1.4">${sub}</div></div>
+    ${inner}</div>`, 1080);
+  const phoneAt = (name, w, top, x) => `<div style="position:absolute;top:${top}px;left:${x}px">${phone(name, w)}</div>`;
+  await render("promo/1-every-ai.png", slide("Every AI.<br>One private app.", "Dozens of free models. No account, no subscription.",
+    phoneAt("chat", 400, 520, 120) + phoneAt("models", 400, 600, 560)), 1080);
+  await render("promo/2-private.png", slide("Your chats never<br>leave your phone.", "No servers, no tracking. Keys, chats and memory stay on your device.",
+    phoneAt("drawer", 400, 560, 120) + phoneAt("memory", 400, 620, 560)), 1080);
+  await render("promo/3-your-pc.png", slide("Run AI on your PC.<br>Offline.", "Vesper for Windows picks models that fit your computer and runs them right there.",
+    `<div style="position:absolute;left:60px;right:60px;top:600px;border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.1)"><img src="${img("desktop-pc")}" style="display:block;width:960px"></div>`), 1080);
+  await render("promo/4-characters.png", slide("Characters with<br>real personality.", "Pick a ready character or create your own. Each keeps its own chats.",
+    phoneAt("companions", 400, 540, 120) + phoneAt("companion", 400, 610, 560)), 1080);
   await ctx.close();
 }
 
