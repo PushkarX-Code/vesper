@@ -15,6 +15,7 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 ## How the UI works
 - Every panel (drawer, bottom sheet, full screen page, dialog) is a layer opened with `open(id, factory, swap)` and closed with `closeTop()` or `closeAll()`. Layers sit in one stack mirrored in browser history, so Android back closes the top one.
 - A layer ignores taps while it slides in (`.settling`) and the moment it starts closing. Opens requested during a close wait in a queue. Keep this, it fixes taps landing on the wrong thing.
+- App icon finishes: `ICONS` in index.html. Chrome uses the root icons and `manifest.webmanifest`; each other finish has `icons/<id>/` (icons, mark, preview) and `manifest-<id>.webmanifest`. All manifests share `"id": "./"` so switching never makes a second app. Render new finishes with `design/logo/r3d.html` (tint, glow, mid, base, rim params).
 - Models are keyed `provider::id` (see `mk()`). Discovered models start hidden; only shown models appear in the picker.
 - Local models are OpenAI compatible connections in `S.conns`. Calls to private addresses pass `targetAddressSpace` so Chrome allows them from the https page.
 

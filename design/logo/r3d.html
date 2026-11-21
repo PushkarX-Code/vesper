@@ -22,8 +22,8 @@ const env = new THREE.Scene(); env.background = new THREE.Color(0x020203);
 const box = (w,h,col,pos,look) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w,h), new THREE.MeshBasicMaterial({color:col, side:THREE.DoubleSide})); m.position.set(...pos); m.lookAt(...look); env.add(m); };
 box(7,1.6,new THREE.Color(9,9,9.5),[0,5,1],[0,0,0]);
 box(0.7,7,new THREE.Color(7,7,7.5),[-5,0.5,2],[0,0,0]);
-box(0.9,7,new THREE.Color(1.2,1.8,7),[5,0,1],[0,0,0]);
-box(8,2,new THREE.Color(0.6,0.8,4),[0,-5,0],[0,0,0]);
+{ const rc = new THREE.Color(q.get("rim")||"#2d44ff"); box(0.9,7,new THREE.Color(rc.r*7,rc.g*7,rc.b*7),[5,0,1],[0,0,0]); }
+{ const rc = new THREE.Color(q.get("rim")||"#2d44ff"); box(8,2,new THREE.Color(rc.r*4,rc.g*4,rc.b*4),[0,-5,0],[0,0,0]); }
 box(2.5,2.5,new THREE.Color(3,3,3.4),[1.5,2,6],[0,0,0]);
 { // big gradient softbox in front and above: gives the faces a sheen
   const c2 = document.createElement("canvas"); c2.width = 4; c2.height = 256; const x = c2.getContext("2d");
@@ -35,10 +35,10 @@ box(2.5,2.5,new THREE.Color(3,3,3.4),[1.5,2,6],[0,0,0]);
 scene.environment = pm.fromScene(env, 0.02).texture;
 // backdrop: deep gradient with a glow
 const cv = document.createElement("canvas"); cv.width = cv.height = 1024; const g = cv.getContext("2d");
-const BG = {blue:["#05060d","#0c1240","#3a3cff"], violet:["#06050c","#1d0f45","#7a4dff"], black:["#000","#050507","#14161f"]}[bg];
+const BG = q.get("glow") ? [q.get("base")||"#05060d", q.get("mid"), q.get("glow")] : {blue:["#05060d","#0c1240","#3a3cff"], violet:["#06050c","#1d0f45","#7a4dff"], black:["#000","#050507","#14161f"]}[bg];
 g.fillStyle = BG[0]; g.fillRect(0,0,1024,1024);
 let rg = g.createRadialGradient(512,1100,40,512,1100,900); rg.addColorStop(0,BG[2]); rg.addColorStop(0.45,BG[1]); rg.addColorStop(1,"rgba(0,0,0,0)"); g.fillStyle = rg; g.fillRect(0,0,1024,1024);
-rg = g.createRadialGradient(512,470,10,512,470,560); rg.addColorStop(0,"rgba(110,130,255,"+(q.get("halo")||"0.28")+")"); rg.addColorStop(1,"rgba(0,0,0,0)"); g.fillStyle = rg; g.fillRect(0,0,1024,1024);
+rg = g.createRadialGradient(512,470,10,512,470,560); const hx=(BG[2]||"#6e82ff").replace("#",""); const hr=parseInt(hx.slice(0,2),16),hg=parseInt(hx.slice(2,4),16),hb=parseInt(hx.slice(4,6),16); rg.addColorStop(0,"rgba("+Math.round(hr*0.6+100*0.4)+","+Math.round(hg*0.6+110*0.4)+","+Math.round(hb*0.6+140*0.4)+","+(q.get("halo")||"0.28")+")"); rg.addColorStop(1,"rgba(0,0,0,0)"); g.fillStyle = rg; g.fillRect(0,0,1024,1024);
 const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace;
 const plane = new THREE.Mesh(new THREE.PlaneGeometry(14,14), new THREE.MeshBasicMaterial({map:tex, toneMapped:false})); plane.position.z = -3; if (!transparent) scene.add(plane);
 // geometry
@@ -51,6 +51,7 @@ const materials = {
   pearl: new THREE.MeshPhysicalMaterial({color:0xeef1ff, metalness:0.15, roughness:0.22, clearcoat:1, clearcoatRoughness:0.06, iridescence:0.35, iridescenceIOR:1.3, envMapIntensity:1.3}),
   ink: new THREE.MeshPhysicalMaterial({color:0x2c46ff, metalness:0.2, roughness:0.18, clearcoat:1, clearcoatRoughness:0.08, envMapIntensity:1.2, iridescence:0.4})
 };
+if (q.get("tint")) { const m = materials[mat]; m.color = new THREE.Color(q.get("tint")); if (q.get("rough")) m.roughness = +q.get("rough"); if (q.get("irid")) { m.iridescence = +q.get("irid"); } }
 for (const p of polys) {
   const s = new THREE.Shape(); p.forEach(([x,y],i) => { const X = (x-256)/110, Y = -(y-256)/110; i ? s.lineTo(X,Y) : s.moveTo(X,Y); });
   const geo = new THREE.ExtrudeGeometry(s, {depth:0.32, bevelEnabled:true, bevelThickness:0.14, bevelSize:0.075, bevelSegments:10, curveSegments:24});
@@ -67,8 +68,8 @@ if (q.get("core")) { // the evening star: a small glowing four point star in the
 const pivot = new THREE.Group(); pivot.add(group); group.rotation.set(0,0,0);
 scene.add(pivot);
 const key = new THREE.DirectionalLight(0xffffff, 0.6); key.position.set(-3,4,5); scene.add(key);
-const rim = new THREE.DirectionalLight(0x6f86ff, 2.0); rim.position.set(3,-2,-2); scene.add(rim);
-const fill = new THREE.PointLight(0x8aa0ff, 8, 12); fill.position.set(0,-2.5,2.5); scene.add(fill);
+const rim = new THREE.DirectionalLight(new THREE.Color(q.get("rim")||"#6f86ff"), 2.0); rim.position.set(3,-2,-2); scene.add(rim);
+const fill = new THREE.PointLight(new THREE.Color(q.get("rim")||"#8aa0ff"), 8, 12); fill.position.set(0,-2.5,2.5); scene.add(fill);
 const cam = new THREE.PerspectiveCamera(view === "hero" ? 30 : 22, 1, 0.1, 100);
 if (view === "hero") { cam.position.set(0,0,9.6); pivot.rotation.set(-0.3, 0.32, 0.06); }
 else if (view === "icon") { cam.position.set(0,0,+(q.get("cz")||13.2)); pivot.rotation.set(-0.2, 0.22, 0.03); }

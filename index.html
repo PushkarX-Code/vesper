@@ -8,9 +8,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" id="lnkManifest" href="manifest.webmanifest">
+<link rel="icon" id="lnkIcon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" id="lnkTouch" href="icon-192.png">
 <link rel="preload" href="fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="mark.webp" type="image/webp">
 <style>
@@ -177,7 +177,7 @@ svg{display:block}
   padding:max(12px,env(safe-area-inset-top,0px)) 10px max(10px,env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
 .drawer.on{transform:none}
 .d-brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px}
-.d-brand img{height:24px;width:24px}
+.logo-flat{display:block;width:24px;height:24px;flex:0 0 auto;background:var(--logo,#f5f5f4);-webkit-mask:url(logo.svg) center/contain no-repeat;mask:url(logo.svg) center/contain no-repeat}
 .d-brand b{font-size:19px;font-weight:600;letter-spacing:-.02em}
 .d-search{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:0 12px;height:44px;margin-bottom:6px}
 .d-search .ic{width:17px;height:17px;color:var(--faint)}
@@ -224,6 +224,13 @@ svg{display:block}
 .mrow:active{background:var(--raised)}
 .mrow.danger b,.mrow.danger > .ic{color:var(--danger)}
 .mempty{color:var(--muted);font-size:14.5px;padding:14px 12px}
+
+/* app icon picker */
+.icons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
+.ico{display:flex;flex-direction:column;align-items:center;gap:9px;padding:14px 6px 12px;border-radius:18px;border:1px solid transparent;font-size:14px;font-weight:500;color:var(--fg-soft);transition:background .15s,border-color .15s}
+.ico img{width:72px;height:72px;border-radius:17px;box-shadow:0 10px 24px rgba(0,0,0,.55)}
+.ico:active{background:var(--raised)}
+.ico[aria-pressed="true"]{border-color:color-mix(in srgb,var(--accent) 70%,transparent);background:var(--raised);color:var(--fg)}
 
 /* full screen page */
 .page{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;transform:translateX(100%);padding-top:env(safe-area-inset-top,0px)}
@@ -338,6 +345,7 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></symbol>
   <symbol id="i-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></symbol>
   <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 01-3-4 4.17 4.17 0 01-3 4"/><path d="M17.707 6.294A3 3 0 1012 5a3 3 0 10-5.707 1.294"/><path d="M17.996 5.125a4 4 0 012.526 5.77"/><path d="M18 18a4 4 0 002-7.465"/><path d="M19.967 17.482a4 4 0 11-7.967.517 4 4 0 11-7.967-.517"/><path d="M6 18a4 4 0 01-2-7.465"/><path d="M6.004 5.125a4 4 0 00-2.526 5.77"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
   <symbol id="i-corner-down-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/></symbol>
   </defs>
 </svg>
@@ -367,7 +375,7 @@ select.input{appearance:none;background-image:none}
 
 <div class="scrim" id="drawerScrim"></div>
 <aside class="drawer layer" id="drawer" aria-label="Chats" inert>
-  <div class="d-brand"><img src="logo.svg" alt="" width="24" height="24"><b>Vesper</b></div>
+  <div class="d-brand"><i class="logo-flat" aria-hidden="true"></i><b>Vesper</b></div>
   <label class="d-search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="chatSearch" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></label>
   <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
   <div class="chat-list" id="chatList"></div>
@@ -436,6 +444,17 @@ const SUGGEST = [
   {title:"Explain simply", sub:"anything, in plain words", prompt:"I want something explained in plain words. Ask me what the topic is first."},
   {title:"Plan my day", sub:"hour by hour, realistic", prompt:"Help me plan my day hour by hour. Ask me what I need to get done first."}
 ];
+// App icon finishes. Chrome lives at the root; the others in icons/<id>/ with their own manifest.
+const ICONS = [
+  {id:"chrome", name:"Chrome", tint:"#f5f5f4"},
+  {id:"gold", name:"Gold", tint:"#f3cd85"},
+  {id:"rose", name:"Rose Gold", tint:"#f6bfb0"},
+  {id:"graphite", name:"Graphite", tint:"#a3a7b3"},
+  {id:"midnight", name:"Midnight", tint:"#7d93ff"},
+  {id:"emerald", name:"Emerald", tint:"#74e6b5"},
+  {id:"aurora", name:"Aurora", tint:"#d8ccff"}
+];
+const iconFile = (file, id) => { id = id || S.icon; return id === "chrome" ? file : "icons/" + id + "/" + file; };
 const PRESETS = {
   ollama:{label:"Ollama", name:"Ollama", port:11434},
   lmstudio:{label:"LM Studio", name:"LM Studio", port:1234},
@@ -486,6 +505,7 @@ function load(){
   s.len = LENGTHS.some(l => l.id === s.len) ? s.len : "normal";
   s.enter = typeof s.enter === "boolean" ? s.enter : null;
   s.thinking = s.thinking !== false;
+  s.icon = ICONS.some(i => i.id === s.icon) ? s.icon : "chrome";
   if (!s.models.some(m => mk(m) === s.model)) s.model = mk(s.models.find(m => ready(m.p, s)) || s.models[0]);
   s.chats = Array.isArray(s.chats) ? s.chats.filter(c => c && c.id && Array.isArray(c.messages)) : [];
   s.chats.forEach(c => {
@@ -785,7 +805,7 @@ function renderChip(){
 function renderHero(){
   inner.innerHTML = "";
   const hero = h("div", {class:"hero"});
-  const main = h("div", {class:"hero-main", html:`<img class="mark" src="mark.webp" alt="" width="360" height="352" decoding="async">`});
+  const main = h("div", {class:"hero-main", html:`<img class="mark" src="${iconFile("mark.webp")}" alt="" width="360" height="352" decoding="async">`});
   if (!anyReady()) {
     main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Connect a free AI model to start. It takes about a minute."}),
       h("div", {class:"cta"}, h("button", {class:"btn primary block", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost block", type:"button", text:"Use a local model", onclick:() => openLocal()})));
@@ -1098,6 +1118,9 @@ function renderSettingsRoot(w){
     row({icon:"laptop", title:"Local models", sub:"Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
     row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()})
   ));
+  w.append(glabel("Appearance"), group(
+    row({icon:"palette", title:"App icon", sub:"Exclusive finishes", val:(ICONS.find(i => i.id === S.icon) || ICONS[0]).name, onclick:() => openIcons()})
+  ));
   w.append(glabel("Chat"), group(
     row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
     row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
@@ -1316,6 +1339,26 @@ function openStyle(){
   }));
 }
 
+/* app icon */
+function applyIcon(){
+  const i = ICONS.find(x => x.id === S.icon) || ICONS[0];
+  $("#lnkManifest").href = i.id === "chrome" ? "manifest.webmanifest" : "manifest-" + i.id + ".webmanifest";
+  $("#lnkIcon").href = iconFile("icon-192.png"); $("#lnkTouch").href = iconFile("icon-192.png");
+  document.documentElement.style.setProperty("--logo", i.tint);
+  const hm = document.querySelector(".hero .mark"); if (hm) hm.src = iconFile("mark.webp");
+}
+function openIcons(){
+  open("icons", () => makePage("App icon", (w, L) => {
+    const grid = h("div", {class:"icons", role:"group", "aria-label":"App icon"});
+    ICONS.forEach(i => grid.append(h("button", {class:"ico", type:"button", "aria-pressed":String(S.icon === i.id), onclick:() => {
+      if (S.icon === i.id) return;
+      S.icon = i.id; save(); applyIcon(); L.refresh(); toast(i.name + " icon set");
+    }}, h("img", {src:"icons/" + i.id + "/preview.webp", alt:"", width:"72", height:"72", loading:"lazy"}), h("span", {text:i.name}))));
+    w.append(glabel("Choose a finish"), group(grid),
+      gnote("Changes the logo in the app and the browser tab right away. Your home screen icon changes when you add Vesper to your home screen again: remove it, then use Add to Home screen in Chrome."));
+  }));
+}
+
 /* data */
 function exportChats(){
   const data = {app:"Vesper", version:2, exported:new Date().toISOString(), chats:S.chats.filter(c => !c.temp)};
@@ -1347,6 +1390,7 @@ function toast(t){ const el = $("#toast"); el.textContent = t; el.classList.add(
 /* boot */
 function syncEnterHint(){ input.setAttribute("enterkeyhint", enterSends() ? "send" : "enter"); }
 syncEnterHint();
+applyIcon();
 history.replaceState({vd:0}, "");
 refreshMain();
 if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));

@@ -24,7 +24,7 @@ There is no backend. Nothing you type passes through a Vesper server, because th
   <img src="docs/features.png" alt="Streaming replies. Any OpenRouter model. Private by design. Every chat, kept. Installs like an app. Tuned to you." width="100%">
 </p>
 
-Also in the box: edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app.
+Also in the box: edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald or Aurora.
 
 ## Get started
 
@@ -86,7 +86,9 @@ index.html              The whole app: layout, styles and logic
 manifest.webmanifest    Install settings (name, icons, colours)
 sw.js                   Service worker for install and offline shell
 mark.webp, logo.svg     Logo: 3D render and flat version
-icon-*.png              App icons
+icon-*.png              App icons (Chrome finish)
+icons/                  Other app icon finishes
+manifest-*.webmanifest  Install settings for each finish
 design/logo/            Logo source: geometry and 3D render scene
 fonts/                  Inter variable font
 vendor/                 marked and DOMPurify
