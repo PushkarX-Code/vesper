@@ -68,6 +68,10 @@ These are on the way. Each has its own page in the app sidebar, where you can jo
 
 <p align="center"><img src="docs/studio-plus.webp" alt="Vesper Plus, coming soon. More power, same privacy." width="100%"></p>
 
+## Support Vesper
+
+Vesper is free, with no ads and no tracking. If it helps you, you can support it right inside the app (sidebar, Support Vesper) or on [Ko-fi](https://ko-fi.com/buymeacofi).
+
 ## Contact us
 
 Questions, ideas, problems or business? [Open an issue on GitHub](https://github.com/PushkarX-Code/vesper/issues) and we will get back to you. In the app: Settings, About, Contact us.

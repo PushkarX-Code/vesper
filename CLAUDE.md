@@ -37,5 +37,6 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 ## Releasing
 - Bump `CACHE` in `sw.js` on every release, or phones keep the old copy.
 - For a release users should see, bump `APP_VERSION` in index.html and `version.json` together and write short notes in `version.json`: open apps show an Update available popup with those notes.
+- Support page: `openSupport()` shows the goal from `version.json` (`support.raised`, `support.goal`); update `raised` there when real support comes in, no app release needed. Payment runs in the Ko-fi panel iframe (`SUPPORT.kofi`, ko-fi.com/buymeacofi).
 - Test in a phone sized Playwright run (412 by 915) before pushing.
 - Always deploy every release to Netlify too (site `vesper-chat`, https://vesper-chat.netlify.app, the README Try Demo link): run `node desktop/scripts/copy-web.mjs`, add a `netlify.toml` (publish ".", no-cache for sw.js and version.json) to `desktop/dist`, then deploy that folder with the Netlify MCP deploy-site command (prefix it with `NODE_USE_ENV_PROXY=1`). Never upload the repo root: `desktop/` holds gigabytes of build output.
