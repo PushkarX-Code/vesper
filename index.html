@@ -125,7 +125,7 @@ svg{display:block}
 /* empty state */
 .hero{flex:1;display:flex;flex-direction:column;min-height:100%}
 .hero-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:28px 0 20px}
-.hero .mark{height:62px;width:auto;filter:drop-shadow(0 10px 34px color-mix(in srgb,var(--accent) 42%,transparent));animation:drift 7s ease-in-out infinite}
+.hero .mark{height:84px;width:auto;filter:drop-shadow(0 14px 40px rgba(110,140,255,.38));animation:drift 7s ease-in-out infinite}
 .hero h1{font-size:clamp(28px,8vw,36px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin:10px 0 0;text-wrap:balance}
 .hero h1 i{font-style:normal;color:var(--accent)}
 .hero p{margin:0;color:var(--muted);font-size:15.5px;max-width:34ch}
@@ -177,7 +177,7 @@ svg{display:block}
   padding:max(12px,env(safe-area-inset-top,0px)) 10px max(10px,env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
 .drawer.on{transform:none}
 .d-brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px}
-.d-brand img{height:24px;width:auto}
+.d-brand img{height:24px;width:24px}
 .d-brand b{font-size:19px;font-weight:600;letter-spacing:-.02em}
 .d-search{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:0 12px;height:44px;margin-bottom:6px}
 .d-search .ic{width:17px;height:17px;color:var(--faint)}
@@ -367,7 +367,7 @@ select.input{appearance:none;background-image:none}
 
 <div class="scrim" id="drawerScrim"></div>
 <aside class="drawer layer" id="drawer" aria-label="Chats" inert>
-  <div class="d-brand"><img src="mark.webp" alt="" width="420" height="336" decoding="async"><b>Vesper</b></div>
+  <div class="d-brand"><img src="logo.svg" alt="" width="24" height="24"><b>Vesper</b></div>
   <label class="d-search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="chatSearch" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></label>
   <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
   <div class="chat-list" id="chatList"></div>
@@ -785,7 +785,7 @@ function renderChip(){
 function renderHero(){
   inner.innerHTML = "";
   const hero = h("div", {class:"hero"});
-  const main = h("div", {class:"hero-main", html:`<img class="mark" src="mark.webp" alt="" width="420" height="336" decoding="async">`});
+  const main = h("div", {class:"hero-main", html:`<img class="mark" src="mark.webp" alt="" width="360" height="352" decoding="async">`});
   if (!anyReady()) {
     main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Connect a free AI model to start. It takes about a minute."}),
       h("div", {class:"cta"}, h("button", {class:"btn primary block", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost block", type:"button", text:"Use a local model", onclick:() => openLocal()})));

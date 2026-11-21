@@ -9,7 +9,7 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - No dashes in written copy: no hyphens between words and no en or em dashes, in the app, README or images. Short, direct wording.
 - Neutral wording. No persona, roleplay or "uncensored" language anywhere.
 - Never commit or paste API keys.
-- Design: pure black, quiet, premium, Grok like feel but original. Accent blue `#6ea8ff` from the logo. The logo is `mark.webp`.
+- Design: pure black, quiet, premium, Grok like feel but original. Accent blue `#6ea8ff`. The logo is five curved chrome blades around a star shaped opening: `mark.webp` (3D), `logo.svg` (flat), source in `design/logo/`.
 - Ships as a PWA (the owner cannot sideload APKs).
 
 ## How the UI works

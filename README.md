@@ -85,7 +85,9 @@ Vesper can talk to a model running on your own computer through Ollama, LM Studi
 index.html              The whole app: layout, styles and logic
 manifest.webmanifest    Install settings (name, icons, colours)
 sw.js                   Service worker for install and offline shell
-mark.webp, icon-*.png   Logo and app icons
+mark.webp, logo.svg     Logo: 3D render and flat version
+icon-*.png              App icons
+design/logo/            Logo source: geometry and 3D render scene
 fonts/                  Inter variable font
 vendor/                 marked and DOMPurify
 docs/                   Screenshots for this README
