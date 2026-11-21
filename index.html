@@ -125,7 +125,7 @@ svg{display:block}
 /* empty state */
 .hero{flex:1;display:flex;flex-direction:column;min-height:100%}
 .hero-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:28px 0 20px}
-.hero .mark{height:84px;width:auto;filter:drop-shadow(0 14px 40px rgba(110,140,255,.38));animation:drift 7s ease-in-out infinite}
+.hero .mark{height:84px;width:auto;filter:drop-shadow(0 14px 40px var(--glow,rgba(110,140,255,.38)));animation:drift 7s ease-in-out infinite}
 .hero h1{font-size:clamp(28px,8vw,36px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin:10px 0 0;text-wrap:balance}
 .hero h1 i{font-style:normal;color:var(--accent)}
 .hero p{margin:0;color:var(--muted);font-size:15.5px;max-width:34ch}
@@ -224,6 +224,47 @@ svg{display:block}
 .mrow:active{background:var(--raised)}
 .mrow.danger b,.mrow.danger > .ic{color:var(--danger)}
 .mempty{color:var(--muted);font-size:14.5px;padding:14px 12px}
+
+/* companions */
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:17px;color:#0b0b0c;flex:0 0 auto;letter-spacing:-.01em}
+.avatar.sm{width:22px;height:22px;font-size:11px}
+.avatar.lg{width:64px;height:64px;font-size:26px}
+.comp-list{display:flex;flex-direction:column;gap:8px}
+.comp{display:flex;align-items:center;gap:4px;padding:6px 6px 6px 8px;border-radius:20px;background:var(--surface);border:1px solid var(--line-soft)}
+.comp .go{flex:1;min-width:0;display:flex;align-items:center;gap:14px;text-align:left;padding:8px 6px;border-radius:14px}
+.comp .go:active{background:var(--raised)}
+.comp .tx{min-width:0;flex:1}
+.comp b{display:block;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.comp .tx span{display:block;font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comp .more{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--faint)}
+.comp .more:active{background:var(--raised);color:var(--fg)}
+.top-comp{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--fg);max-width:100%}
+.top-comp span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci .open{display:flex;align-items:center;gap:9px}
+.ci .open > span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.swatches{display:flex;gap:12px;flex-wrap:wrap;padding:14px 16px}
+.swatch{width:38px;height:38px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);outline:2px solid transparent;outline-offset:3px;transition:outline-color .15s}
+.swatch[aria-pressed="true"]{outline-color:var(--fg)}
+.comp-hero{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 0 4px}
+/* memory */
+.memtag{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;font-size:12.5px;color:var(--muted);margin-left:6px}
+.memtag .ic{width:14px;height:14px;color:var(--accent)}
+.memtag:active{background:var(--raised)}
+.memrow{display:flex;align-items:flex-start;gap:10px;padding:12px 8px 12px 16px}
+.memrow p{flex:1;margin:4px 0 0;font-size:15px;line-height:1.5;color:var(--fg-soft);overflow-wrap:anywhere}
+/* model advisor */
+.rec{padding:16px;display:flex;flex-direction:column;gap:8px}
+.rec .k{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.rec b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.rec p{margin:0;font-size:14px;color:var(--muted);line-height:1.5}
+.cmd{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:6px 6px 6px 12px;margin-top:4px}
+.cmd code{flex:1;font-family:var(--mono);font-size:13px;color:var(--fg-soft);overflow-x:auto;white-space:nowrap}
+details.more-opts{margin-top:22px}
+details.more-opts summary{list-style:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--faint);padding:6px;display:inline-flex;align-items:center;gap:6px}
+details.more-opts summary::-webkit-details-marker{display:none}
+details.more-opts summary .ic{width:15px;height:15px;transition:transform .2s}
+details.more-opts[open] summary .ic{transform:rotate(180deg)}
+details.more-opts .group{margin-top:8px}
 
 /* app icon picker */
 .icons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
@@ -346,6 +387,8 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></symbol>
   <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 01-3-4 4.17 4.17 0 01-3 4"/><path d="M17.707 6.294A3 3 0 1012 5a3 3 0 10-5.707 1.294"/><path d="M17.996 5.125a4 4 0 012.526 5.77"/><path d="M18 18a4 4 0 002-7.465"/><path d="M19.967 17.482a4 4 0 11-7.967.517 4 4 0 11-7.967-.517"/><path d="M6 18a4 4 0 01-2-7.465"/><path d="M6.004 5.125a4 4 0 00-2.526 5.77"/></symbol>
   <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
   <symbol id="i-corner-down-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/></symbol>
   </defs>
 </svg>
@@ -378,6 +421,7 @@ select.input{appearance:none;background-image:none}
   <div class="d-brand"><i class="logo-flat" aria-hidden="true"></i><b>Vesper</b></div>
   <label class="d-search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="chatSearch" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></label>
   <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
+  <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Companions</button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot"><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
 </aside>
@@ -445,14 +489,15 @@ const SUGGEST = [
   {title:"Plan my day", sub:"hour by hour, realistic", prompt:"Help me plan my day hour by hour. Ask me what I need to get done first."}
 ];
 // App icon finishes. Chrome lives at the root; the others in icons/<id>/ with their own manifest.
+// Each finish also themes the app: accent, surfaces, lines and the glow behind the logo.
 const ICONS = [
-  {id:"chrome", name:"Chrome", tint:"#f5f5f4"},
-  {id:"gold", name:"Gold", tint:"#f3cd85"},
-  {id:"rose", name:"Rose Gold", tint:"#f6bfb0"},
-  {id:"graphite", name:"Graphite", tint:"#a3a7b3"},
-  {id:"midnight", name:"Midnight", tint:"#7d93ff"},
-  {id:"emerald", name:"Emerald", tint:"#74e6b5"},
-  {id:"aurora", name:"Aurora", tint:"#d8ccff"}
+  {id:"chrome", name:"Chrome", tint:"#f5f5f4", accent:"#6ea8ff", surface:"#0f0f11", raised:"#18181b", raised2:"#222226", sheet:"#111113", line:"#26262a", lineSoft:"#1a1a1d", glow:"rgba(110,140,255,.38)"},
+  {id:"gold", name:"Gold", tint:"#f3cd85", accent:"#f0c26b", surface:"#110f0b", raised:"#1b1913", raised2:"#25221a", sheet:"#13110c", line:"#2c2820", lineSoft:"#1d1a14", glow:"rgba(255,170,70,.34)"},
+  {id:"rose", name:"Rose Gold", tint:"#f6bfb0", accent:"#f5a3b6", surface:"#110d0f", raised:"#1b1518", raised2:"#251d21", sheet:"#130e11", line:"#2d2328", lineSoft:"#1d171a", glow:"rgba(255,110,160,.32)"},
+  {id:"graphite", name:"Graphite", tint:"#a3a7b3", accent:"#c7cad3", surface:"#0e0e0f", raised:"#18181a", raised2:"#212124", sheet:"#101011", line:"#28282b", lineSoft:"#19191b", glow:"rgba(200,205,220,.22)"},
+  {id:"midnight", name:"Midnight", tint:"#7d93ff", accent:"#7d93ff", surface:"#0c0e17", raised:"#151826", raised2:"#1d2132", sheet:"#0e1019", line:"#242a40", lineSoft:"#171a28", glow:"rgba(80,100,255,.45)"},
+  {id:"emerald", name:"Emerald", tint:"#74e6b5", accent:"#5fe0a6", surface:"#0b100e", raised:"#141b17", raised2:"#1b241f", sheet:"#0d1310", line:"#21302a", lineSoft:"#161f1b", glow:"rgba(40,210,150,.32)"},
+  {id:"aurora", name:"Aurora", tint:"#d8ccff", accent:"#b69cff", surface:"#0f0d16", raised:"#191527", raised2:"#221d33", sheet:"#110e19", line:"#2b2540", lineSoft:"#1b1729", glow:"rgba(150,110,255,.40)"}
 ];
 const iconFile = (file, id) => { id = id || S.icon; return id === "chrome" ? file : "icons/" + id + "/" + file; };
 const PRESETS = {
@@ -506,6 +551,10 @@ function load(){
   s.enter = typeof s.enter === "boolean" ? s.enter : null;
   s.thinking = s.thinking !== false;
   s.icon = ICONS.some(i => i.id === s.icon) ? s.icon : "chrome";
+  s.memOn = s.memOn !== false;
+  s.memory = Array.isArray(s.memory) ? s.memory.filter(m => m && m.text) : [];
+  s.companions = Array.isArray(s.companions) ? s.companions.filter(x => x && x.id && x.name) : [];
+  s.open = s.open === true;
   if (!s.models.some(m => mk(m) === s.model)) s.model = mk(s.models.find(m => ready(m.p, s)) || s.models[0]);
   s.chats = Array.isArray(s.chats) ? s.chats.filter(c => c && c.id && Array.isArray(c.messages)) : [];
   s.chats.forEach(c => {
@@ -532,11 +581,41 @@ function fixModels(){
   if (!S.models.some(m => mk(m) === S.model)) S.model = mk(S.models.find(m => ready(m.p) && !isHidden(m)) || S.models[0]);
   S.chats.forEach(c => { if (!S.models.some(m => mk(m) === c.model)) c.model = S.model; });
 }
-function systemPrompt(){
-  let s = SYSTEM;
+const OPEN_RULE = "The user is an adult who has turned on open conversation. Speak frankly and treat them as an adult. Do not add disclaimers, warnings or moral commentary, and do not lecture. In fiction and companion conversations, mature themes, dark subject matter, strong language and adult romance are fine when the user leads there. Never produce sexual content involving minors.";
+const MEMORY_RULE = "Memory: when the user shares a lasting fact about themselves (their name, work, goals, people in their life, likes or dislikes) or asks you to remember something, add one final line to your reply in exactly this form: [[remember: the fact as a short sentence]]. Use it only for facts worth keeping across chats, at most two per reply, and never mention or explain this line. When you are not sure about something about the user, ask instead of guessing.";
+const compById = id => S.companions.find(x => x.id === id) || null;
+function companionPrompt(k){
+  let s = "You are " + k.name + ", a companion in a private chat app called Vesper. Stay fully in character as " + k.name + " in every reply.";
+  if ((k.about || "").trim()) s += "\n\nWho you are:\n" + k.about.trim();
+  if ((k.style || "").trim()) s += "\n\nHow you talk:\n" + k.style.trim();
+  if ((k.story || "").trim()) s += "\n\nBackstory and setting:\n" + k.story.trim();
+  s += "\n\nTalk like a real person in a natural conversation, not like an assistant. Keep replies conversational and in character, match the user's energy, and remember what was said earlier in the chat. Don't step out of character to add notes or disclaimers. If the user sincerely asks whether you are an AI, answer honestly, then carry on.";
+  return s;
+}
+function systemPrompt(c){
+  const k = c && c.companion ? compById(c.companion) : null;
+  let s = k ? companionPrompt(k) : SYSTEM;
   if (S.about.trim()) s += "\n\nAbout the user:\n" + S.about.trim();
   if (S.respond.trim()) s += "\n\nHow the user wants replies:\n" + S.respond.trim();
+  if (S.open) s += "\n\n" + OPEN_RULE;
+  if (S.memOn && !(c && c.temp)) {
+    if (S.memory.length) s += "\n\nWhat you remember about the user from earlier chats (treat it as true unless they correct it):\n" + S.memory.map(m => "- " + m.text).join("\n");
+    s += "\n\n" + MEMORY_RULE;
+  }
   return s;
+}
+/* memory: the model marks lasting facts with [[remember: ...]]; they are saved on this device and hidden from the reply */
+const REM = /\[\[\s*remember\s*:\s*([^\]]+?)\s*\]\]/gi;
+const visibleText = t => t.replace(REM, "").replace(/\[\[[^\]]*$/, "").replace(/\s+$/, "");
+function addMemories(list){
+  const added = [];
+  list.forEach(f => {
+    f = f.replace(/\s+/g, " ").trim().slice(0, 240); if (!f) return;
+    if (S.memory.some(m => m.text.toLowerCase() === f.toLowerCase())) return;
+    S.memory.push({id:uid(), text:f, at:Date.now()}); added.push(f);
+  });
+  if (S.memory.length > 300) S.memory = S.memory.slice(-300);
+  return added;
 }
 
 /* ---------- network ---------- */
@@ -791,10 +870,13 @@ function refreshMain(){ renderHeader(); renderThread(); renderChip(); syncSend()
 function renderHeader(){
   const c = chat(); const empty = !c || !c.messages.length;
   const center = $("#topCenter"); center.innerHTML = "";
+  const k = c && c.companion ? compById(c.companion) : null;
   if (privateMode) center.append(h("span", {class:"priv", html:ic("ghost") + "<span>Private chat</span>"}));
+  else if (k) center.append(h("span", {class:"top-comp"}, avatar(k, "sm"), h("span", {text:k.name})));
   else if (!empty) center.append(h("span", {class:"top-title", text:c.title}));
+  input.placeholder = k ? "Message " + k.name : "Ask anything";
   const right = $("#topRight"); right.innerHTML = "";
-  if (empty && anyReady()) right.append(h("button", {class:"icon-btn" + (privateMode ? " on" : ""), type:"button", "aria-pressed":String(privateMode), "aria-label":"Private chat", onclick:togglePrivate, html:ic("ghost")}));
+  if (empty && anyReady() && !k) right.append(h("button", {class:"icon-btn" + (privateMode ? " on" : ""), type:"button", "aria-pressed":String(privateMode), "aria-label":"Private chat", onclick:togglePrivate, html:ic("ghost")}));
   else if (!empty) right.append(iconBtn("square-pen", "New chat", () => newChat()));
 }
 function renderChip(){
@@ -855,7 +937,8 @@ function msgEl(c, m, i){
   if (m.reasoning && S.thinking) a.append(reasonEl(m.reasoning, m.secs, false));
   const body = h("div", {class:"md", html:md(m.content)}); decorate(body); a.append(body);
   const acts = h("div", {class:"acts"}, actBtn("copy", "Copy", () => copyText(m.content)));
-  if (last) acts.append(actBtn("refresh-cw", "Retry", () => retry()));
+  if (last && !m.greeting) acts.append(actBtn("refresh-cw", "Retry", () => retry()));
+  if (m.saved) acts.append(h("button", {class:"memtag", type:"button", onclick:() => openMemory(), html:ic("brain") + "<span>Memory updated</span>"}));
   const mm = modelByKey(m.model); if (mm) acts.append(h("span", {class:"by", text:mm.name}));
   wrap.append(a, acts);
   return wrap;
@@ -879,7 +962,7 @@ $("#toBottom").onclick = () => thread.scrollTo({top:thread.scrollHeight, behavio
 addEventListener("resize", () => stickDown(false));
 
 /* chats */
-function leaveTemp(){ S.chats = S.chats.filter(c => !c.temp || c.id === busyChat); }
+function leaveTemp(){ S.chats = S.chats.filter(c => c.id === busyChat || (!c.temp && (c.messages.length || !c.companion))); }
 function newChat(){
   if (busy) controller && controller.abort();
   leaveTemp(); S.current = null; privateMode = false; cancelEdit(); save();
@@ -958,7 +1041,8 @@ async function generate(){
   if (!m || !P) { openModels(); return; }
   const len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
   const history = c.messages.filter(x => !x.error).map(x => ({role:x.role, content:x.content}));
-  const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt()}].concat(history)};
+  if (history.length && history[0].role === "assistant") history.unshift({role:"user", content:"Hi."});
+  const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
 
   busy = true; busyChat = c.id; syncSend();
   const wrap = h("div", {class:"msg ai"}); const ans = h("div", {class:"answer", html:`<span class="thinking">${WAVE}<span class="shimmer">Thinking</span></span>`});
@@ -974,7 +1058,7 @@ async function generate(){
     }
     if (text) {
       if (!body) { if (!rEl) ans.innerHTML = ""; body = h("div", {class:"md"}); ans.append(body); }
-      body.innerHTML = md(text); decorate(body);
+      body.innerHTML = md(visibleText(text)); decorate(body);
     }
     if (wrap.isConnected) stickDown(false);
   };
@@ -1014,8 +1098,15 @@ async function generate(){
     else fail = err && err.friendly ? err : {friendly:netError(P), fix:P.local ? "local" : null};
   }
   if (raf) cancelAnimationFrame(raf);
+  let found = [], added = [];
+  if (text) {
+    text = text.replace(REM, (_, f) => { found.push(f); return ""; }).replace(/\[\[[^\]]*$/, "").replace(/\n{3,}/g, "\n\n").trim();
+    if (found.length && S.memOn && !c.temp) added = addMemories(found);
+    if (!text && found.length) text = added.length ? "Got it. I'll remember that." : "Okay.";
+  }
   if (text.trim()) {
     const out = {role:"assistant", content:text, model:mk(m)};
+    if (added.length) out.saved = added.length;
     if (reasoning) { out.reasoning = reasoning.slice(0, 20000); out.secs = secs || Math.max(1, Math.round((performance.now() - (t0 || performance.now())) / 1000)); }
     c.messages.push(out);
   } else if (aborted) c.messages.push({role:"assistant", error:true, content:"You stopped this reply.", model:mk(m)});
@@ -1049,7 +1140,8 @@ function renderDrawer(){
   let last = "";
   chats.forEach(c => {
     const g = dayGroup(c.updated); if (g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
-    const o = h("button", {class:"open", type:"button", text:c.title, onclick:() => openChat(c.id)});
+    const k = c.companion ? compById(c.companion) : null;
+    const o = h("button", {class:"open", type:"button", onclick:() => openChat(c.id)}, k ? avatar(k, "sm") : null, h("span", {text:c.title}));
     o.addEventListener("contextmenu", e => { e.preventDefault(); chatMenu(c); });
     list.append(h("div", {class:"ci" + (c.id === S.current ? " active" : "")}, o, h("button", {class:"more", type:"button", "aria-label":"Options for " + c.title, onclick:() => chatMenu(c), html:ic("ellipsis")})));
   });
@@ -1122,6 +1214,7 @@ function renderSettingsRoot(w){
     row({icon:"palette", title:"App icon", sub:"Exclusive finishes", val:(ICONS.find(i => i.id === S.icon) || ICONS[0]).name, onclick:() => openIcons()})
   ));
   w.append(glabel("Chat"), group(
+    row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
     row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
     row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
     switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }}),
@@ -1195,6 +1288,7 @@ function openLocal(swap){
     w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. Your computer can stay offline. It only needs to be on the same WiFi as this phone."));
     if (S.conns.length) w.append(glabel("Your connections"), group(...S.conns.map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => openConn(c.id)}))));
     w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Add a local model", onclick:() => openConn(null)})));
+    w.append(glabel("Not sure which model?"), group(row({icon:"cpu", title:"Which model fits my computer?", sub:"Picks based on your memory and graphics card", onclick:() => openAdvisor()})));
   }), swap);
 }
 function localTips(kind){
@@ -1326,6 +1420,9 @@ function openPersonal(){
     w.append(glabel("What should Vesper know about you?"), group(h("div", {class:"field"}, about)),
       glabel("How should Vesper reply?"), group(h("div", {class:"field"}, respond)),
       gnote("Sent with every chat. Leave both empty for a normal chat."));
+    w.append(h("details", {class:"more-opts"}, h("summary", {html:"<span>More options</span>" + ic("chevron-down")}),
+      group(switchRow({title:"Open conversation", sub:"Adults only. No disclaimers or lectures, mature themes allowed in stories.", get:() => S.open, set:v => { S.open = v; save(); }})),
+      gnote("By turning this on you confirm you are 18 or older. Cloud providers still apply their own rules. Local models follow only what you set.")));
   }));
 }
 function openStyle(){
@@ -1339,12 +1436,149 @@ function openStyle(){
   }));
 }
 
+/* companions */
+const COMP_COLORS = ["#6ea8ff", "#f0c26b", "#f5a3b6", "#c7cad3", "#5fe0a6", "#b69cff", "#ff9f6b"];
+function avatar(k, size){ return h("span", {class:"avatar" + (size ? " " + size : ""), style:"background:" + (k.color || COMP_COLORS[0]), "aria-hidden":"true", text:(k.name || "?").trim().charAt(0).toUpperCase()}); }
+$("#openCompanions").onclick = () => openCompanions(true);
+function openCompanions(swap){
+  open("companions", () => makePage("Companions", w => {
+    w.append(gnote("Companions are personalities you create. Each one has its own name, character and way of talking, and keeps its own chats."));
+    if (S.companions.length) {
+      const list = h("div", {class:"comp-list", style:"margin-top:16px"});
+      S.companions.forEach(k => list.append(h("div", {class:"comp"},
+        h("button", {class:"go", type:"button", onclick:() => startCompanion(k, false)}, avatar(k), h("div", {class:"tx"}, h("b", {text:k.name}), h("span", {text:(k.about || "").trim() || "Tap to chat"}))),
+        h("button", {class:"more", type:"button", "aria-label":"Options for " + k.name, onclick:() => compMenu(k), html:ic("ellipsis")}))));
+      w.append(list);
+    }
+    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "New companion", onclick:() => openCompEditor(null)})));
+  }), swap);
+}
+function compMenu(k){
+  menu("compmenu", k.name, [
+    {icon:"square-pen", label:"New chat", run:() => startCompanion(k, true)},
+    {icon:"pencil", label:"Edit", run:() => openCompEditor(k.id)},
+    {icon:"trash-2", label:"Delete", danger:true, run:() => dialog({title:"Delete " + k.name + "?", text:"Their chats stay in your history as normal chats.", ok:"Delete", danger:true, onOk:() => {
+      S.companions = S.companions.filter(x => x.id !== k.id); save(); renderDrawer(); toast(k.name + " deleted");
+    }})}
+  ]);
+}
+function startCompanion(k, fresh){
+  leaveTemp(); privateMode = false; cancelEdit();
+  let c = fresh ? null : S.chats.filter(x => x.companion === k.id).sort((a, b) => b.updated - a.updated)[0];
+  if (!c) {
+    c = {id:uid(), title:k.name, model:S.model, companion:k.id, messages:[], updated:Date.now()};
+    if ((k.greeting || "").trim()) c.messages.push({role:"assistant", content:k.greeting.trim(), greeting:true});
+    S.chats.unshift(c);
+  }
+  S.current = c.id; S.model = c.model; save();
+  closeAll(); refreshMain();
+}
+function openCompEditor(id){
+  const ex = id ? compById(id) : null;
+  const d = ex ? Object.assign({}, ex) : {id:"k" + uid(), name:"", about:"", style:"", story:"", greeting:"", color:COMP_COLORS[S.companions.length % COMP_COLORS.length]};
+  open("comped:" + d.id, () => makePage(ex ? "Edit " + ex.name : "New companion", (w, L) => {
+    const ta = (key, ph, rows) => { const t = h("textarea", {class:"input", rows:String(rows || 3), placeholder:ph, "aria-label":ph}); t.value = d[key] || ""; t.oninput = () => { d[key] = t.value; }; return t; };
+    const name = h("input", {class:"input", placeholder:"Their name", "aria-label":"Name", maxlength:"40"}); name.value = d.name;
+    const av = avatar(d, "lg");
+    name.oninput = () => { d.name = name.value; av.textContent = (d.name || "?").trim().charAt(0).toUpperCase() || "?"; };
+    const sw = h("div", {class:"swatches", role:"group", "aria-label":"Color"});
+    COMP_COLORS.forEach((col, n) => sw.append(h("button", {class:"swatch", type:"button", style:"background:" + col, "data-col":col, "aria-label":"Color " + (n + 1), "aria-pressed":String(d.color === col), onclick:() => {
+      d.color = col; av.style.background = col; sw.querySelectorAll(".swatch").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.col === col)));
+    }})));
+    w.append(h("div", {class:"comp-hero"}, av),
+      glabel("Name"), group(h("div", {class:"field"}, name)),
+      glabel("Who they are"), group(h("div", {class:"field"}, ta("about", "Personality, age, interests, what they care about", 4))),
+      glabel("How they talk"), group(h("div", {class:"field"}, ta("style", "For example: warm and playful, short texts, teases a little", 3))),
+      glabel("Backstory or setting, optional"), group(h("div", {class:"field"}, ta("story", "Where you are, how you know each other, anything that sets the scene", 3))),
+      glabel("First message, optional"), group(h("div", {class:"field"}, ta("greeting", "What they say when a new chat starts", 2))),
+      glabel("Color"), group(sw),
+      h("div", {style:"padding-top:18px"}, h("button", {class:"btn primary block", type:"button", text:ex ? "Save" : "Create companion", onclick:() => {
+        d.name = (d.name || "").trim(); if (!d.name) { toast("Give them a name first"); name.focus(); return; }
+        const i = S.companions.findIndex(x => x.id === d.id);
+        if (i >= 0) S.companions[i] = d; else S.companions.push(d);
+        save(); renderDrawer(); renderHeader(); closeTop(); toast(ex ? "Saved" : d.name + " is ready");
+      }})));
+  }));
+}
+
+/* memory page */
+function openMemory(){
+  open("memory", () => makePage("Memory", (w, L) => {
+    w.append(group(switchRow({icon:"brain", title:"Use memory", sub:"Remember things you share, across chats", get:() => S.memOn, set:v => { S.memOn = v; save(); }})),
+      gnote("Vesper saves lasting facts you share and uses them in every chat, so it doesn't have to guess. Everything stays on this device. Private chats are never remembered."));
+    const addIn = h("input", {class:"input", placeholder:"Add something to remember", "aria-label":"Add a memory"});
+    const add = () => { const v = addIn.value.trim(); if (!v) return; addMemories([v]); save(); L.refresh(); toast("Saved to memory"); };
+    addIn.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); add(); } });
+    w.append(glabel("Add"), group(h("div", {class:"field"}, h("div", {class:"inrow"}, addIn, h("button", {class:"btn", type:"button", text:"Add", onclick:add})))));
+    if (S.memory.length) {
+      w.append(glabel(S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered")), group(...S.memory.slice().reverse().map(m => h("div", {class:"memrow"}, h("p", {text:m.text}),
+        actBtn("trash-2", "Forget this", () => { S.memory = S.memory.filter(x => x.id !== m.id); save(); L.refresh(); })))));
+      w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn danger block", type:"button", text:"Forget everything", onclick:() => dialog({title:"Forget everything?", text:"Vesper will forget every saved fact. Your chats stay.", ok:"Forget all", danger:true, onOk:() => { S.memory = []; save(); toast("Memory cleared"); }})})));
+    } else w.append(gnote("Nothing saved yet. Tell Vesper about yourself, or say remember this."));
+  }));
+}
+
+/* local model advisor: rule of thumb, a model needs about its download size in free memory */
+const LOCAL_MODELS = [
+  {tag:"llama3.2:3b", name:"Llama 3.2 3B", gb:2.0, note:"Tiny and quick, fine for simple chats"},
+  {tag:"qwen3:4b", name:"Qwen 3 4B", gb:2.6, note:"Small but sharp, good reasoning for its size"},
+  {tag:"gemma3:4b", name:"Gemma 3 4B", gb:3.3, note:"Small, friendly and well rounded"},
+  {tag:"llama3.1:8b", name:"Llama 3.1 8B", gb:4.9, note:"Reliable everyday model"},
+  {tag:"qwen3:8b", name:"Qwen 3 8B", gb:5.2, note:"Strong all rounder, thinks before it answers"},
+  {tag:"gemma3:12b", name:"Gemma 3 12B", gb:8.1, note:"Natural writing, great for long chats"},
+  {tag:"qwen3:14b", name:"Qwen 3 14B", gb:9.3, note:"Smart and steady, good with details"},
+  {tag:"gpt-oss:20b", name:"GPT OSS 20B", gb:14, note:"Big brain, strong reasoning"},
+  {tag:"gemma3:27b", name:"Gemma 3 27B", gb:17, note:"Excellent writing and memory for details"},
+  {tag:"qwen3:30b", name:"Qwen 3 30B", gb:19, note:"Fast for its size, very capable"},
+  {tag:"llama3.3:70b", name:"Llama 3.3 70B", gb:43, note:"Top quality, needs a lot of memory"}
+];
+const OPEN_MODELS = [
+  {tag:"dolphin3:8b", name:"Dolphin 3 8B", gb:4.9, note:"Follows your lead with very few refusals"},
+  {tag:"hermes3:8b", name:"Hermes 3 8B", gb:4.7, note:"Great for characters and stories, few refusals"},
+  {tag:"hermes3:70b", name:"Hermes 3 70B", gb:40, note:"The same, much smarter, needs a lot of memory"}
+];
+function adviseModels(ram, vram, list){
+  const gpuFit = vram >= 4 ? vram * 0.85 : 0;
+  const cpuFit = ram * 0.5;
+  const fits = gb => gb <= Math.max(gpuFit, cpuFit);
+  const okList = list.filter(m => fits(m.gb));
+  const best = okList[okList.length - 1] || list[0];
+  const fastPool = gpuFit ? list.filter(m => m.gb <= gpuFit) : list.filter(m => m.gb <= Math.min(cpuFit, 5.5));
+  const fast = fastPool[fastPool.length - 1] || list[0];
+  return {best, fast, bestOnGpu:!!gpuFit && best.gb <= gpuFit};
+}
+function openAdvisor(){
+  const st = {ram:16, vram:8};
+  open("advisor", () => makePage("Find your model", w => {
+    const out = h("div");
+    const draw = () => {
+      out.innerHTML = "";
+      const a = adviseModels(st.ram, st.vram, LOCAL_MODELS);
+      const card = (k, m, why) => group(h("div", {class:"rec"}, h("div", {class:"k", text:k}), h("b", {text:m.name + ", about " + m.gb + " GB"}), h("p", {text:why}),
+        h("div", {class:"cmd"}, h("code", {text:"ollama pull " + m.tag}), actBtn("copy", "Copy command", () => copyText("ollama pull " + m.tag)))));
+      out.append(glabel("Best for you"), card("For your personal things", a.best, a.best.note + ". " + (a.bestOnGpu ? "Runs fully on your graphics card, so it is quick." : "Runs partly on your processor, so replies come slower but it is smarter.") + " Everything stays on your computer."));
+      if (a.fast.tag !== a.best.tag) out.append(glabel("Fastest"), card("When you want speed", a.fast, a.fast.note + ". Snappy replies on your machine."));
+      if (S.open) { const o = adviseModels(st.ram, st.vram, OPEN_MODELS); out.append(glabel("Open conversation"), card("Fewer refusals", o.best, o.best.note + ". Pairs with the open conversation option."))}
+      out.append(gnote("How to use it: install Ollama from ollama.com, run the command above in a terminal, then add it in Local models. Sizes are downloads; keep a little extra memory free."));
+    };
+    const segRow = (label, opts, key) => [glabel(label), seg(opts, String(st[key]), v => { st[key] = +v; draw(); })];
+    w.append(gnote("Tell Vesper about your computer and it picks the models that will run well. For anything personal, a model on your own computer is the most private choice: nothing leaves your home."));
+    w.append(...segRow("System memory (RAM)", [{id:"8", label:"8 GB"}, {id:"16", label:"16 GB"}, {id:"32", label:"32 GB"}, {id:"64", label:"64 GB+"}], "ram"));
+    w.append(...segRow("Graphics card memory (VRAM)", [{id:"0", label:"None"}, {id:"4", label:"4"}, {id:"8", label:"6 to 8"}, {id:"12", label:"12"}, {id:"16", label:"16"}, {id:"24", label:"24+"}], "vram"));
+    w.append(gnote("Not sure? On Windows open Task Manager, then Performance. Memory shows your RAM and GPU shows Dedicated GPU memory."));
+    w.append(out); draw();
+  }));
+}
+
 /* app icon */
 function applyIcon(){
   const i = ICONS.find(x => x.id === S.icon) || ICONS[0];
   $("#lnkManifest").href = i.id === "chrome" ? "manifest.webmanifest" : "manifest-" + i.id + ".webmanifest";
   $("#lnkIcon").href = iconFile("icon-192.png"); $("#lnkTouch").href = iconFile("icon-192.png");
-  document.documentElement.style.setProperty("--logo", i.tint);
+  const st = document.documentElement.style;
+  st.setProperty("--logo", i.tint); st.setProperty("--accent", i.accent); st.setProperty("--glow", i.glow);
+  st.setProperty("--surface", i.surface); st.setProperty("--raised", i.raised); st.setProperty("--raised-2", i.raised2);
+  st.setProperty("--sheet", i.sheet); st.setProperty("--line", i.line); st.setProperty("--line-soft", i.lineSoft);
   const hm = document.querySelector(".hero .mark"); if (hm) hm.src = iconFile("mark.webp");
 }
 function openIcons(){
@@ -1355,13 +1589,13 @@ function openIcons(){
       S.icon = i.id; save(); applyIcon(); L.refresh(); toast(i.name + " icon set");
     }}, h("img", {src:"icons/" + i.id + "/preview.webp", alt:"", width:"72", height:"72", loading:"lazy"}), h("span", {text:i.name}))));
     w.append(glabel("Choose a finish"), group(grid),
-      gnote("Changes the logo in the app and the browser tab right away. Your home screen icon changes when you add Vesper to your home screen again: remove it, then use Add to Home screen in Chrome."));
+      gnote("Changes the logo and the colors of the whole app right away. Your home screen icon changes when you add Vesper to your home screen again: remove it, then use Add to Home screen in Chrome."));
   }));
 }
 
 /* data */
 function exportChats(){
-  const data = {app:"Vesper", version:2, exported:new Date().toISOString(), chats:S.chats.filter(c => !c.temp)};
+  const data = {app:"Vesper", version:3, exported:new Date().toISOString(), chats:S.chats.filter(c => !c.temp && c.messages.length), companions:S.companions, memory:S.memory};
   const a = h("a", {href:URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], {type:"application/json"})), download:"vesper-chats-" + new Date().toISOString().slice(0, 10) + ".json"});
   document.body.append(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
@@ -1373,9 +1607,11 @@ $("#importFile").addEventListener("change", async e => {
     const j = JSON.parse(await f.text()); const list = Array.isArray(j) ? j : j.chats;
     if (!Array.isArray(list)) throw 0;
     let n = 0;
+    if (!Array.isArray(j) && Array.isArray(j.companions)) j.companions.forEach(k => { if (k && k.id && k.name && !compById(k.id)) S.companions.push({id:String(k.id), name:String(k.name).slice(0, 40), about:String(k.about || ""), style:String(k.style || ""), story:String(k.story || ""), greeting:String(k.greeting || ""), color:/^#[0-9a-f]{6}$/i.test(k.color) ? k.color : COMP_COLORS[0]}); });
+    if (!Array.isArray(j) && Array.isArray(j.memory)) addMemories(j.memory.map(m => m && m.text).filter(Boolean).map(String));
     list.forEach(c => {
       if (!c || !c.id || !Array.isArray(c.messages) || S.chats.some(x => x.id === c.id)) return;
-      const nc = {id:String(c.id), title:String(c.title || "Imported chat"), model:c.model, updated:+c.updated || Date.now(),
+      const nc = {id:String(c.id), title:String(c.title || "Imported chat"), model:c.model, updated:+c.updated || Date.now(), companion:c.companion && compById(String(c.companion)) ? String(c.companion) : undefined,
         messages:c.messages.filter(m => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string").map(m => Object.assign({}, m))};
       S.chats.push(nc); n++;
     });

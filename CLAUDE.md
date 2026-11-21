@@ -7,7 +7,7 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Settings is always shown with the real gear icon: the Lucide `settings` gear, symbol `#i-settings`. Never a sun, dial, sliders or any other icon for Settings.
 - Fonts: Inter (standard AI app sans). No serif fonts anywhere, and no monospace for labels (monospace only inside code).
 - No dashes in written copy: no hyphens between words and no en or em dashes, in the app, README or images. Short, direct wording.
-- Neutral wording. No persona, roleplay or "uncensored" language anywhere.
+- Neutral wording. No "roleplay" or "uncensored" wording anywhere. The owner wants Companions (custom personalities) and a hidden adult option, named neutrally: "Companions" and "Open conversation" (Settings, Personalize, More options; no pop up). The open option only removes disclaimers and allows mature themes for adults; never write prompts meant to defeat a provider's safety rules, and never allow sexual content involving minors.
 - Never commit or paste API keys.
 - Design: pure black, quiet, premium, Grok like feel but original. Accent blue `#6ea8ff`. The logo is five curved chrome blades around a star shaped opening: `mark.webp` (3D), `logo.svg` (flat), source in `design/logo/`.
 - Ships as a PWA (the owner cannot sideload APKs).
@@ -16,6 +16,9 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Every panel (drawer, bottom sheet, full screen page, dialog) is a layer opened with `open(id, factory, swap)` and closed with `closeTop()` or `closeAll()`. Layers sit in one stack mirrored in browser history, so Android back closes the top one.
 - A layer ignores taps while it slides in (`.settling`) and the moment it starts closing. Opens requested during a close wait in a queue. Keep this, it fixes taps landing on the wrong thing.
 - App icon finishes: `ICONS` in index.html. Chrome uses the root icons and `manifest.webmanifest`; each other finish has `icons/<id>/` (icons, mark, preview) and `manifest-<id>.webmanifest`. All manifests share `"id": "./"` so switching never makes a second app. Render new finishes with `design/logo/r3d.html` (tint, glow, mid, base, rim params).
+- Each app icon finish also themes the app: `applyIcon()` sets --accent, --surface, --raised, --line and --glow from `ICONS`.
+- Memory: the model ends a reply with `[[remember: fact]]` when it learns something lasting (see MEMORY_RULE). `generate()` strips the tag, saves to `S.memory`, and `systemPrompt()` sends saved facts with every chat. Private chats never save.
+- Companions live in `S.companions`; a chat with `companion` set uses `companionPrompt()` instead of the Vesper prompt.
 - Models are keyed `provider::id` (see `mk()`). Discovered models start hidden; only shown models appear in the picker.
 - Local models are OpenAI compatible connections in `S.conns`. Calls to private addresses pass `targetAddressSpace` so Chrome allows them from the https page.
 
