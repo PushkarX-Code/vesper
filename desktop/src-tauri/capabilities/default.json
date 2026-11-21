@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "What the Vesper window may do: the core app features, events for download progress, and changing its own icon.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-set-icon"
+  ]
+}

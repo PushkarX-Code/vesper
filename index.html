@@ -266,6 +266,17 @@ details.more-opts summary .ic{width:15px;height:15px;transition:transform .2s}
 details.more-opts[open] summary .ic{transform:rotate(180deg)}
 details.more-opts .group{margin-top:8px}
 
+/* models on this PC (Windows app) */
+.pcspec{display:flex;align-items:center;gap:14px;padding:16px}
+.pcspec .tx b{display:block;font-weight:600;font-size:16px}
+.pcspec .tx span{display:block;font-size:13.5px;color:var(--muted);margin-top:2px}
+.pcm{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 16px}
+.pcm .tx{flex:1;min-width:0}
+.pcm .tx b{display:block;font-weight:500;font-size:15.5px}
+.pcm .tx span{display:block;font-size:13px;color:var(--muted)}
+.pcm .btn{height:38px;padding:0 14px;font-size:14px;flex:0 0 auto}
+.pcm .btn.on{background:color-mix(in srgb,var(--accent) 18%,var(--raised));color:var(--fg)}
+
 /* app icon picker */
 .icons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
 .ico{display:flex;flex-direction:column;align-items:center;gap:9px;padding:14px 6px 12px;border-radius:18px;border:1px solid transparent;font-size:14px;font-weight:500;color:var(--fg-soft);transition:background .15s,border-color .15s}
@@ -1064,6 +1075,13 @@ async function generate(){
   };
   const sched = () => { if (!raf) raf = requestAnimationFrame(paint); };
   try {
+    if (P.id === "pc") {
+      if (!DESKTOP) throw {friendly:"This model runs only in the Vesper app on your PC. Pick another model here."};
+      ans.innerHTML = `<span class="thinking">${WAVE}<span class="shimmer">Loading the model</span></span>`;
+      try { await pcEnsure(m.id); } catch (e) { throw {friendly:String(e && e.message || e)}; }
+      Object.assign(P, provOf("pc"));
+      ans.innerHTML = `<span class="thinking">${WAVE}<span class="shimmer">Thinking</span></span>`;
+    }
     const res = await apiFetch(P, "/chat/completions", {method:"POST", signal:controller.signal, headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
     if (!res.ok) {
       let b = null; try { b = await res.json(); } catch (e) {}
@@ -1207,7 +1225,7 @@ function renderSettingsRoot(w){
   const lenL = (LENGTHS.find(l => l.id === S.len) || LENGTHS[1]).label;
   w.append(glabel("Models"), group(
     row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
-    row({icon:"laptop", title:"Local models", sub:"Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
+    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
     row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()})
   ));
   w.append(glabel("Appearance"), group(
@@ -1285,8 +1303,9 @@ function openProvider(pid, swap){
 /* local models */
 function openLocal(swap){
   open("local", () => makePage("Local models", w => {
+    if (DESKTOP) w.append(glabel("On this PC"), group(row({icon:"cpu", title:"Models on this PC", sub:"Download and run models right here, offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()})), glabel("Other computers and servers"));
     w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. Your computer can stay offline. It only needs to be on the same WiFi as this phone."));
-    if (S.conns.length) w.append(glabel("Your connections"), group(...S.conns.map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => openConn(c.id)}))));
+    if (S.conns.some(c => c.id !== "pc")) w.append(glabel("Your connections"), group(...S.conns.filter(c => c.id !== "pc").map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => openConn(c.id)}))));
     w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Add a local model", onclick:() => openConn(null)})));
     w.append(glabel("Not sure which model?"), group(row({icon:"cpu", title:"Which model fits my computer?", sub:"Picks based on your memory and graphics card", onclick:() => openAdvisor()})));
   }), swap);
@@ -1548,6 +1567,7 @@ function adviseModels(ram, vram, list){
   return {best, fast, bestOnGpu:!!gpuFit && best.gb <= gpuFit};
 }
 function openAdvisor(){
+  if (DESKTOP) { openPC(); return; }
   const st = {ram:16, vram:8};
   open("advisor", () => makePage("Find your model", w => {
     const out = h("div");
@@ -1570,6 +1590,109 @@ function openAdvisor(){
   }));
 }
 
+/* ---------- Windows app (Tauri): models that run on this PC ---------- */
+const TAURI = window.__TAURI__ || null;
+const DESKTOP = !!(TAURI && TAURI.core && TAURI.core.invoke);
+const invoke = (cmd, args) => TAURI.core.invoke(cmd, args || {});
+const HF = (repo, file) => "https://huggingface.co/" + repo + "/resolve/main/" + file + "?download=true";
+// Verified Q4 GGUF files on Hugging Face. gb is the download size.
+const PC_MODELS = [
+  {name:"Llama 3.2 3B", repo:"bartowski/Llama-3.2-3B-Instruct-GGUF", file:"Llama-3.2-3B-Instruct-Q4_K_M.gguf", gb:2.0, note:"Tiny and quick, fine for simple chats"},
+  {name:"Gemma 3 4B", repo:"ggml-org/gemma-3-4b-it-GGUF", file:"gemma-3-4b-it-Q4_K_M.gguf", gb:2.5, note:"Small, friendly and well rounded"},
+  {name:"Qwen 3 4B", repo:"Qwen/Qwen3-4B-GGUF", file:"Qwen3-4B-Q4_K_M.gguf", gb:2.5, note:"Small but sharp, thinks before it answers"},
+  {name:"Llama 3.1 8B", repo:"bartowski/Meta-Llama-3.1-8B-Instruct-GGUF", file:"Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf", gb:4.9, note:"Reliable everyday model"},
+  {name:"Qwen 3 8B", repo:"Qwen/Qwen3-8B-GGUF", file:"Qwen3-8B-Q4_K_M.gguf", gb:5.0, note:"Strong all rounder"},
+  {name:"Gemma 3 12B", repo:"ggml-org/gemma-3-12b-it-GGUF", file:"gemma-3-12b-it-Q4_K_M.gguf", gb:7.3, note:"Natural writing, great for long chats"},
+  {name:"Qwen 3 14B", repo:"Qwen/Qwen3-14B-GGUF", file:"Qwen3-14B-Q4_K_M.gguf", gb:9.0, note:"Smart and steady, good with details"},
+  {name:"GPT OSS 20B", repo:"ggml-org/gpt-oss-20b-GGUF", file:"gpt-oss-20b-MXFP4.gguf", gb:12.1, note:"Big brain, strong reasoning"},
+  {name:"Gemma 3 27B", repo:"ggml-org/gemma-3-27b-it-GGUF", file:"gemma-3-27b-it-Q4_K_M.gguf", gb:16.5, note:"Excellent writing and memory for details"},
+  {name:"Qwen 3 30B", repo:"Qwen/Qwen3-30B-A3B-GGUF", file:"Qwen3-30B-A3B-Q4_K_M.gguf", gb:18.6, note:"Fast for its size, very capable"}
+];
+const PC_OPEN = [
+  {name:"Dolphin 3 8B", repo:"cognitivecomputations/Dolphin3.0-Llama3.1-8B-GGUF", file:"Dolphin3.0-Llama3.1-8B-Q4_K_M.gguf", gb:4.9, note:"Follows your lead with very few refusals"},
+  {name:"Hermes 3 8B", repo:"NousResearch/Hermes-3-Llama-3.1-8B-GGUF", file:"Hermes-3-Llama-3.1-8B.Q4_K_M.gguf", gb:4.9, note:"Great for characters and stories, few refusals"}
+];
+let pcInfo = null, pcFiles = [], pcDl = {};
+const pcCatalog = () => PC_MODELS.concat(S.open ? PC_OPEN : []);
+const pcName = file => { const m = PC_MODELS.concat(PC_OPEN).find(x => x.file === file); return m ? m.name : file.replace(/\.gguf$/i, ""); };
+async function pcSpecs(){ if (!pcInfo) { try { pcInfo = await invoke("system_info"); } catch (e) { pcInfo = {ram_gb:16, vram_gb:0, gpu_name:"", cores:8}; } } return pcInfo; }
+async function pcList(){ try { pcFiles = (await invoke("list_models")).map(x => x.file); } catch (e) { pcFiles = []; } return pcFiles; }
+function pcConn(){
+  let c = S.conns.find(x => x.id === "pc");
+  if (!c) { c = {id:"pc", kind:"builtin", name:"This PC", base:"http://127.0.0.1:1/v1", key:""}; S.conns.unshift(c); }
+  return c;
+}
+function pcRegister(file){
+  pcConn();
+  if (!S.models.some(m => m.p === "pc" && m.id === file)) S.models.push({p:"pc", id:file, name:pcName(file), note:"On this PC"});
+}
+function pcUse(file){
+  pcRegister(file); S.model = "pc::" + file; const c = chat(); if (c) c.model = S.model;
+  save(); renderChip(); toast("Using " + pcName(file));
+}
+// Make sure the engine is running with this model, then point the "This PC" connection at it.
+async function pcEnsure(file){
+  const st = await invoke("engine_status");
+  let port = st.running && st.model === file ? st.port : 0;
+  if (!port) { const info = await pcSpecs(); port = await invoke("start_engine", {file, ctx:8192, gpu:info.vram_gb >= 3}); }
+  pcConn().base = "http://127.0.0.1:" + port + "/v1"; save();
+}
+async function pcDownload(m, L){
+  if (pcDl[m.file]) return;
+  pcDl[m.file] = {done:0, total:m.gb * 1073741824};
+  L.refresh();
+  try {
+    await invoke("download_model", {url:HF(m.repo, m.file), file:m.file});
+    delete pcDl[m.file]; await pcList(); pcRegister(m.file); save();
+    toast(m.name + " is ready");
+  } catch (e) {
+    delete pcDl[m.file];
+    if (String(e) !== "cancelled") toast("Download failed: " + String(e).slice(0, 80));
+  }
+  if (L.el.isConnected) L.refresh();
+}
+if (DESKTOP && TAURI.event) TAURI.event.listen("dl-progress", ev => {
+  const d = ev.payload || {}; if (!d.file) return;
+  pcDl[d.file] = {done:d.done, total:d.total || (pcDl[d.file] && pcDl[d.file].total) || 1};
+  const pct = Math.min(100, Math.floor(d.done / Math.max(1, pcDl[d.file].total) * 100));
+  document.querySelectorAll("[data-dl]").forEach(b => { if (b.dataset.dl === d.file) b.textContent = pct + "%"; });
+});
+function openPC(swap){
+  open("pc", () => {
+    const L = makePage("Models on this PC", (w, L) => {
+      const info = pcInfo, have = new Set(pcFiles);
+      if (!info) { w.append(gnote("Checking your computer…")); return; }
+      const gpuOk = info.vram_gb >= 2;
+      w.append(group(h("div", {class:"pcspec"}, icEl("cpu"), h("div", {class:"tx"},
+        h("b", {text:Math.round(info.ram_gb) + " GB memory, " + info.cores + " cores"}),
+        h("span", {text:gpuOk ? info.gpu_name + " with " + Math.round(info.vram_gb) + " GB" : "No dedicated graphics card found. Models run on the processor."})))),
+        gnote("Models here run entirely on this computer. Nothing you type leaves it, so this is the right place for personal things. Works offline once a model is downloaded."));
+      const a = adviseModels(info.ram_gb, gpuOk ? info.vram_gb : 0, PC_MODELS);
+      const cur = curKey();
+      const rowFor = (m, label) => {
+        const used = cur === "pc::" + m.file, dl = pcDl[m.file];
+        let btn;
+        if (dl) btn = h("button", {class:"btn", type:"button", "data-dl":m.file, title:"Tap to cancel", text:Math.floor(dl.done / Math.max(1, dl.total) * 100) + "%", onclick:() => invoke("cancel_download", {file:m.file})});
+        else if (have.has(m.file)) btn = h("button", {class:"btn" + (used ? " on" : ""), type:"button", text:used ? "In use" : "Use", disabled:used ? true : null, onclick:() => { pcUse(m.file); L.refresh(); }});
+        else btn = h("button", {class:"btn primary", type:"button", text:"Download", onclick:() => pcDownload(m, L)});
+        return h("div", {class:"pcm"}, h("div", {class:"tx"}, h("b", {text:m.name + (label ? ", " + label : "")}), h("span", {text:m.gb + " GB. " + m.note})), btn);
+      };
+      w.append(glabel("Best for this PC"), group(rowFor(a.best, a.bestOnGpu ? "runs on your graphics card" : "smartest that fits"), ...(a.fast.file !== a.best.file ? [rowFor(a.fast, "fastest")] : [])));
+      if (S.open) { const o = adviseModels(info.ram_gb, gpuOk ? info.vram_gb : 0, PC_OPEN); w.append(glabel("Fewer refusals"), group(rowFor(o.best))); }
+      w.append(glabel("All models"), group(...pcCatalog().filter(m => m.file !== a.best.file && m.file !== a.fast.file).map(m => rowFor(m))));
+      const extra = pcFiles.filter(f => !PC_MODELS.concat(PC_OPEN).some(m => m.file === f));
+      const downloaded = pcFiles.slice();
+      if (downloaded.length) w.append(glabel("Downloaded"), group(...downloaded.map(f => h("div", {class:"pcm"}, h("div", {class:"tx"}, h("b", {text:pcName(f)}), h("span", {text:extra.includes(f) ? "Added by you" : "Ready offline"})),
+        actBtn("trash-2", "Delete " + pcName(f), () => dialog({title:"Delete " + pcName(f) + "?", text:"Frees up the disk space. You can download it again any time.", ok:"Delete", danger:true, onOk:async () => {
+          try { await invoke("delete_model", {file:f}); } catch (e) {}
+          S.models = S.models.filter(m => !(m.p === "pc" && m.id === f)); fixModels(); save(); renderChip(); await pcList(); L.refresh();
+        }}))))));
+    });
+    Promise.all([pcSpecs(), pcList()]).then(() => { if (L.el.isConnected) L.refresh(); });
+    return L;
+  }, swap);
+}
+
 /* app icon */
 function applyIcon(){
   const i = ICONS.find(x => x.id === S.icon) || ICONS[0];
@@ -1580,6 +1703,7 @@ function applyIcon(){
   st.setProperty("--surface", i.surface); st.setProperty("--raised", i.raised); st.setProperty("--raised-2", i.raised2);
   st.setProperty("--sheet", i.sheet); st.setProperty("--line", i.line); st.setProperty("--line-soft", i.lineSoft);
   const hm = document.querySelector(".hero .mark"); if (hm) hm.src = iconFile("mark.webp");
+  if (DESKTOP && TAURI.window) fetch(iconFile("icon-512.png")).then(r => r.arrayBuffer()).then(b => TAURI.window.getCurrentWindow().setIcon(new Uint8Array(b))).catch(() => {});
 }
 function openIcons(){
   open("icons", () => makePage("App icon", (w, L) => {
@@ -1589,7 +1713,7 @@ function openIcons(){
       S.icon = i.id; save(); applyIcon(); L.refresh(); toast(i.name + " icon set");
     }}, h("img", {src:"icons/" + i.id + "/preview.webp", alt:"", width:"72", height:"72", loading:"lazy"}), h("span", {text:i.name}))));
     w.append(glabel("Choose a finish"), group(grid),
-      gnote("Changes the logo and the colors of the whole app right away. Your home screen icon changes when you add Vesper to your home screen again: remove it, then use Add to Home screen in Chrome."));
+      gnote(DESKTOP ? "Changes the logo, the taskbar icon and the colors of the whole app right away." : "Changes the logo and the colors of the whole app right away. Your home screen icon changes when you add Vesper to your home screen again: remove it, then use Add to Home screen in Chrome."));
   }));
 }
 
@@ -1629,7 +1753,8 @@ syncEnterHint();
 applyIcon();
 history.replaceState({vd:0}, "");
 refreshMain();
-if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+if (DESKTOP) pcList();
+else if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 })();
 </script>
 </body>
