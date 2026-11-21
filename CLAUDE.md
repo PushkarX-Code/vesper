@@ -18,7 +18,7 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - App icon finishes: `ICONS` in index.html. Chrome uses `icons/chrome/` and `manifest.webmanifest`; each other finish has `icons/<id>/` (icons, mark, preview) and `manifest-<id>.webmanifest`. All manifests share `"id": "./"` so switching never makes a second app. Render new finishes with `design/logo/r3d.html` (tint, glow, mid, base, rim params).
 - Each app icon finish also themes the app: `applyIcon()` sets --accent, --surface, --raised, --line and --glow from `ICONS`.
 - Memory: the model ends a reply with `[[remember: fact]]` when it learns something lasting (see MEMORY_RULE). `generate()` strips the tag, saves to `S.memory`, and `systemPrompt()` sends saved facts with every chat. Private chats never save.
-- Characters live in `S.companions` (`CHAR_LIBRARY` holds the ready ones, matched by `pid`); a chat with `companion` set uses `companionPrompt()` instead of the Vesper prompt.
+- Characters live in `S.companions` (`CHAR_LIBRARY` holds the ready ones, matched by `pid`, with portraits in `chars/<pid>.webp`; only these get the Verified by Vesper badge, and their profile says AI); a chat with `companion` set uses `companionPrompt()` instead of the Vesper prompt.
 - Freeform models (open models with no added guardrails) are `PC_OPEN` and `OPEN_MODELS`. Always word them professionally: "Freeform", "no added guardrails". Never "uncensored".
 - Attachments: photos are shrunk to 1024 px JPEG and sent as image_url parts; text files are inlined as text (`toApi()`).
 - Learn: guides live in `LEARN` in index.html, screens in `learn/*.jpg` made by `node docs/art/make-art.js`. Brand logos come from Simple Icons (CC0) in `BRANDS`; brands without a free logo (OpenAI, Groq, Cerebras) get a name badge in `BADGES`, never an imitation.
@@ -34,4 +34,5 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 
 ## Releasing
 - Bump `CACHE` in `sw.js` on every release, or phones keep the old copy.
+- For a release users should see, bump `APP_VERSION` in index.html and `version.json` together and write short notes in `version.json`: open apps show an Update available popup with those notes.
 - Test in a phone sized Playwright run (412 by 915) before pushing.
