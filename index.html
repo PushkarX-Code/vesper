@@ -245,7 +245,7 @@ svg{display:block}
 .avatar.sm{width:22px;height:22px;font-size:11px}
 .avatar.lg{width:64px;height:64px;font-size:26px}
 .avatar.xl{width:108px;height:108px;font-size:42px}
-.avatar.photo{background-size:cover;background-position:center;background-repeat:no-repeat;box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--ring)}
+.avatar.photo{background-size:cover;background-position:50% 22%;background-repeat:no-repeat;box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--ring)}
 .avatar.sm.photo{box-shadow:0 0 0 1.5px var(--ring)}
 .av-edit{position:relative;border-radius:50%}
 .av-edit .cam{position:absolute;right:-2px;bottom:-2px;width:34px;height:34px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;box-shadow:0 0 0 3px var(--bg)}
@@ -284,15 +284,26 @@ svg{display:block}
 .cgo .ic{width:16px;height:16px}
 .cgo:active{transform:scale(.98);background:var(--raised-2)}
 @media (hover:hover){.ccard:hover{transform:translateY(-2px);border-color:var(--line);box-shadow:0 12px 30px rgba(0,0,0,.45)}.ccard:hover .cphoto img.in{transform:scale(1.02)}.cgo:hover{background:var(--raised-2)}.btn:hover{filter:brightness(1.08)}}
-.thread.wall .msg.ai .answer{background:rgba(12,12,14,.86);border-radius:6px 20px 20px 20px;padding:10px 14px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);width:fit-content;max-width:100%}
-.thread.wall .bubble{box-shadow:0 1px 2px rgba(0,0,0,.25)}
-.thread.wall .acts{background:rgba(12,12,14,.6);border-radius:12px;width:fit-content}
+.app.wall .top{background:color-mix(in srgb,var(--bg) 58%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2)}
+.app.wall .composer-wrap{background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 55%,transparent) 45%)}
+.app.wall .composer{background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.app.lightwall{--bg:#f4f1ec;--surface:#ffffff;--raised:#ebe7e0;--raised-2:#e0dbd2;--line:#d9d3c8;--line-soft:#e6e1d8;--fg:#141416;--fg-soft:#2b2b2f;--muted:#636168;--faint:#8b888e;color:var(--fg)}
+.app.lightwall .send{color:#fff}
+.app.lightwall .composer:focus-within{border-color:#c9c2b6}
+.app.lightwall .msg.ai .answer{background:rgba(255,255,255,.94)!important;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.app.lightwall .bubble{background:color-mix(in srgb,var(--accent) 24%,#fff)}
+.app.lightwall .acts{background:rgba(255,255,255,.75)!important}
+.app.wall .msg.ai .answer{background:rgba(12,12,14,.86);border-radius:6px 20px 20px 20px;padding:10px 14px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);width:fit-content;max-width:100%}
+.app.wall .bubble{box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.app.wall .acts{background:rgba(12,12,14,.6);border-radius:12px;width:fit-content}
 .bgs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
 .bgs button{aspect-ratio:9/14;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);position:relative;overflow:hidden;font-size:12.5px;color:var(--fg-soft);display:flex;flex-direction:column;gap:6px;padding:12px 8px 30px;transition:box-shadow .18s var(--ease),transform .18s var(--ease)}
 .bgs button:active{transform:scale(.97)}
 .bgs .pa,.bgs .pu{display:block;height:14px;border-radius:7px 7px 7px 2px;background:rgba(14,14,16,.86);width:72%}
 .bgs .pa.s{width:48%}
 .bgs .pu{align-self:flex-end;width:58%;border-radius:7px 7px 2px 7px;background:#3a3a40}
+.bgs .lt .pa{background:rgba(255,255,255,.95)}
+.bgs .lt .pu{background:#b9d3ff}
 .bgs .nm{position:absolute;left:0;right:0;bottom:0;padding:5px 0 7px;background:rgba(0,0,0,.55);color:#f1f1ef;font-weight:500;text-align:center}
 .bgs button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--accent)}
 .bgs button .ic{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:24px;height:24px}
@@ -470,7 +481,12 @@ select.input{appearance:none;background-image:none}
 @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.icon-btn,.c-btn,.act,.model-chip,.d-new,.mrow,.row,.sg,.ci .open,.lcard,.swatch{transition:transform .16s var(--ease),background .16s,color .16s,border-color .16s}
+.icon-btn:active,.c-btn:active,.act:active,.send:active{transform:scale(.92)}
+.model-chip:active,.d-new:active,.mrow:active,.ci .open:active{transform:scale(.98)}
+.row:active,.sg:active,.lcard:active{transform:scale(.985)}
+@media (hover:hover){.sg:hover,.lcard:hover{transform:translateY(-2px)}.icon-btn:hover,.c-btn:hover{background:var(--raised)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.12s!important;transition-duration:.12s!important}}
 </style>
 </head>
 <body>
@@ -511,6 +527,7 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
   <symbol id="i-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
   <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></symbol>
+  <symbol id="i-vibrate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 8 2 2-2 2 2 2-2 2"/><path d="m22 8-2 2 2 2-2 2 2 2"/><rect width="8" height="14" x="8" y="5" rx="1"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
   <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
   <symbol id="i-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></symbol>
@@ -693,7 +710,8 @@ function load(){
   s.icon = ICONS.some(i => i.id === s.icon) ? s.icon : "chrome";
   s.memOn = s.memOn !== false;
   s.memory = Array.isArray(s.memory) ? s.memory.filter(m => m && m.text) : [];
-  s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","cream","sage","geo","organic","mono","ocean","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"none", dim:35};
+  s.haptics = s.haptics !== false;
+  s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","night","geo","organic","mono","ocean","cream","sage","paper","sky","blush","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"none", dim:35};
   s.companions = Array.isArray(s.companions) ? s.companions.filter(x => x && x.id && x.name) : [];
   s.open = s.open === true;
   if (!s.models.some(m => mk(m) === s.model)) s.model = mk(s.models.find(m => ready(m.p, s)) || s.models[0]);
@@ -1375,6 +1393,7 @@ function renderSettingsRoot(w){
     row({icon:"image", title:"Chat background", sub:"Wallpaper behind your chats", val:(CHAT_BGS.find(b => b.id === S.bg.id) || CHAT_BGS[0]).name, onclick:() => openBackground()})
   ));
   w.append(glabel("Chat"), group(
+    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
     row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
     row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
     row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
@@ -1745,7 +1764,7 @@ function openCompanions(swap){
     const grid = h("div", {class:"cgrid"});
     CHAR_LIBRARY.forEach(p => {
       const k = S.companions.find(x => x.pid === p.pid) || p, c = CARD[p.pid] || {};
-      const img = h("img", {src:PHOTO_RE.test(k.photo || "") ? k.photo : "chars/" + p.pid + "-card.webp", alt:k.name, loading:"lazy", decoding:"async", width:"345", height:"432"});
+      const img = h("img", {src:PHOTO_RE.test(k.photo || "") ? k.photo : "chars/" + p.pid + ".webp", alt:k.name, loading:"lazy", decoding:"async", width:"345", height:"432"});
       img.onload = () => img.classList.add("in"); img.onerror = () => img.classList.add("in");
       if (img.complete) img.classList.add("in");
       grid.append(h("article", {class:"ccard"},
@@ -1863,36 +1882,46 @@ const COZY = ["chat","phones","cup","zap","spark","plus","wave","dot"];
 const CHAT_BGS = [
   {id:"none", name:"None", base:"#000", css:""},
   {id:"classic", name:"Classic", base:"#0b141a", css:pattern(SOCIAL, "rgba(255,255,255,.07)")},
-  {id:"cream", name:"Cream", base:"#f3ece0", light:true, css:pattern(SOCIAL, "#ddd0bc")},
-  {id:"sage", name:"Sage", base:"#d5e0c9", light:true, css:pattern(COZY, "#a9b99a")},
+  {id:"night", name:"Night", base:"#050506", css:pattern(SOCIAL, "rgba(255,255,255,.055)")},
   {id:"geo", name:"Geometric", base:"#0e1621", css:pattern(["dia","tri","ring","sq","plus","dot"], "rgba(120,170,255,.10)", .8)},
   {id:"organic", name:"Organic", base:"#0d1a17", css:pattern(["blob","wave","dot","ring"], "rgba(110,220,170,.08)", 1.2)},
   {id:"mono", name:"Mono", base:"#121214", css:pattern(["plus","dot","ring","sq"], "rgba(255,255,255,.06)", .7)},
   {id:"ocean", name:"Ocean", base:"#0b1b2b", css:pattern(COZY, "rgba(120,190,255,.10)")},
+  {id:"cream", name:"Cream", base:"#f3ece0", light:true, css:pattern(SOCIAL, "#ddd0bc")},
+  {id:"sage", name:"Sage", base:"#d5e0c9", light:true, css:pattern(COZY, "#a9b99a")},
+  {id:"paper", name:"Paper", base:"#f6f6f4", light:true, css:pattern(SOCIAL, "#e2e2de")},
+  {id:"sky", name:"Sky", base:"#e4eef8", light:true, css:pattern(COZY, "#c3d5e8")},
+  {id:"blush", name:"Blush", base:"#f6e7e9", light:true, css:pattern(SOCIAL, "#e8cdd1")},
   {id:"photo", name:"Your photo", base:"#000", css:""}
 ];
 function bgCss(b){ b = b || S.bg; const p = CHAT_BGS.find(x => x.id === b.id) || CHAT_BGS[0];
   if (b.id === "photo") { if (!/^data:image\/jpeg;base64,/.test(b.photo || "")) return "";
     const d = "linear-gradient(rgba(0,0,0," + (b.dim / 100) + "),rgba(0,0,0," + (b.dim / 100) + "))"; return d + ',url("' + b.photo + '") center/cover no-repeat,#000'; }
   return p.css ? p.css + "," + p.base : ""; }
-function applyBg(){ const v = bgCss(); thread.style.background = v; thread.classList.toggle("wall", !!v); }
+function applyBg(){
+  const v = bgCss(), app = $("#app"), p = CHAT_BGS.find(x => x.id === S.bg.id) || CHAT_BGS[0];
+  thread.style.background = ""; app.style.background = v;
+  app.classList.toggle("wall", !!v); app.classList.toggle("lightwall", !!v && !!p.light);
+  const tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.content = v ? p.base : "#000000";
+}
 function openBackground(){
   open("chatbg", () => makePage("Chat background", (w, L) => {
     const pick = h("input", {type:"file", accept:"image/*", hidden:""});
     pick.onchange = async () => { const f = pick.files[0]; pick.value = ""; if (!f) return;
       try { S.bg = {id:"photo", photo:await shrinkImage(f), dim:S.bg.dim}; save(); applyBg(); L.refresh(); } catch (e) { toast("That photo couldn't be opened"); } };
-    const grid = h("div", {class:"bgs", role:"group", "aria-label":"Backgrounds"});
+    const grids = {dark:h("div", {class:"bgs", role:"group", "aria-label":"Dark wallpapers"}), light:h("div", {class:"bgs", role:"group", "aria-label":"Light wallpapers"})};
     CHAT_BGS.forEach(b => {
+      const grid = b.light ? grids.light : grids.dark;
       const look = b.id === "photo" ? (S.bg.photo ? bgCss({id:"photo", photo:S.bg.photo, dim:S.bg.dim}) : "var(--raised)") : (b.css ? bgCss({id:b.id}) : "#000");
       const chat = b.id === "photo" && !S.bg.photo ? ic("plus") : '<i class="pa"></i><i class="pu"></i><i class="pa s"></i>';
-      grid.append(h("button", {type:"button", style:"background:" + look, "aria-pressed":String(S.bg.id === b.id), "aria-label":b.name, html:chat + '<span class="nm">' + b.name + '</span>', onclick:() => {
+      grid.append(h("button", {type:"button", class:b.light ? "lt" : "", style:"background:" + look, "aria-pressed":String(S.bg.id === b.id), "aria-label":b.name, html:chat + '<span class="nm">' + b.name + '</span>', onclick:() => {
         if (b.id === "photo" && !S.bg.photo) { pick.click(); return; }
         S.bg.id = b.id; save(); applyBg(); L.refresh(); }}));
     });
     const dim = h("input", {type:"range", min:"0", max:"80", "aria-label":"Dim"}); dim.value = S.bg.dim;
     dim.oninput = () => { S.bg.dim = +dim.value; applyBg(); }; dim.onchange = () => { save(); L.refresh(); };
     dim.style.setProperty("--c", "var(--fg)"); dim.style.background = "linear-gradient(90deg,#5a5a60,#0a0a0c)";
-    w.append(gnote("Pick a background for your chats. It stays on this device."), group(grid), pick,
+    w.append(gnote("Pick a wallpaper for your chats. It fills the whole chat screen and stays on this device."), glabel("Dark"), group(grids.dark), glabel("Light"), group(grids.light), pick,
       ...(S.bg.id === "photo" ? [glabel("Dim"), group(h("div", {class:"tone"}, h("label", {}, h("span", {text:"Darker photos keep text easy to read"}), dim)))] : []));
     if (S.bg.photo) w.append(h("div", {style:"padding-top:14px;display:flex;gap:10px"},
       h("button", {class:"btn ghost block", type:"button", text:"Choose another photo", onclick:() => pick.click()}),
@@ -1901,7 +1930,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "2.2";
+const APP_VERSION = "2.3";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
@@ -1929,6 +1958,11 @@ function showUpdate(v){
 }
 addEventListener("load", () => setTimeout(() => checkUpdate(false), 2500));
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") checkUpdate(false); });
+
+/* haptics: a short tick on taps where the phone supports it */
+const buzz = ms => { if (S.haptics && navigator.vibrate) try { navigator.vibrate(ms); } catch (e) {} };
+document.addEventListener("click", e => { const b = e.target.closest("button,[role=switch],.switch,a"); if (b) buzz(b.matches(".send,.primary,.cgo") ? 14 : 7); }, true);
+document.addEventListener("change", e => { if (e.target.matches('input[type="range"]')) buzz(5); }, true);
 
 /* memory page */
 function openMemory(){
