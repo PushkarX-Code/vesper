@@ -251,6 +251,67 @@ async function compose(browser, base) {
       ${side(liveCall("scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)", "Bold take incoming. Your second hook was better. Fight me."), 1, -60)}
     </div></div>`, 1900), 1900);
 
+  // Coming soon landing pages, each on an Apple style display
+  const mac = inner => `<div style="position:relative;height:960px;padding-top:80px;overflow:hidden"><div class="glow"></div>
+    <div style="position:relative;width:1500px;margin:0 auto;padding:22px;border-radius:46px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08)">
+      <i style="position:absolute;top:8px;left:50%;width:7px;height:7px;margin-left:-3px;border-radius:50%;background:#1d1d22;box-shadow:inset 0 0 0 1.5px #2e2e35"></i>
+      <div style="position:relative;width:1456px;height:880px;border-radius:26px;overflow:hidden;background:#000">${inner}</div></div></div>`;
+  const chk = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ea8ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  const nav = `<div style="position:absolute;left:0;right:0;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:28px 56px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:21px;font-weight:600"><img src="/icons/chrome/icon-192.png" style="width:32px;height:32px;border-radius:9px">Vesper</div>
+      <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:36px;font-size:15.5px;color:#b9b9b6"><span>Chat</span><span>Characters</span><span>Studio</span><span>Plus</span></div>
+      <div style="font-size:15px;font-weight:500"><span style="padding:11px 20px;border-radius:999px;background:#f5f5f4;color:#000">Join the waitlist</span></div></div>`;
+  const chip = t => `<div style="display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:8px 14px;border-radius:999px;margin-bottom:26px"><i style="width:7px;height:7px;border-radius:50%;background:#6ea8ff"></i>${t}</div>`;
+  const h1 = t => `<div style="font-size:74px;font-weight:600;letter-spacing:-.045em;line-height:1.02">${t}</div>`;
+  const sub = t => `<div style="font-size:21px;color:#b4b4b1;line-height:1.5;margin-top:22px;max-width:30em">${t}</div>`;
+  const prompt = (ph, chips) => `<div style="margin-top:38px;width:640px;padding:14px 14px 14px 22px;border-radius:22px;background:rgba(20,20,24,.72);backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 30px 60px rgba(0,0,0,.5)">
+      <div style="font-size:17px;color:#e6e6e4;padding:6px 0 16px">${ph}</div>
+      <div style="display:flex;align-items:center;gap:8px">${chips.map(c => `<span style="font-size:13.5px;color:#cfcfcc;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.08)">${c}</span>`).join("")}
+      <span style="margin-left:auto;font-size:15px;font-weight:600;padding:11px 20px;border-radius:14px;background:#f5f5f4;color:#000">Generate</span></div></div>`;
+  const studio = (bgImg, c, title, text, ph, chips) => mac(`<img src="${bgImg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.82) 36%,rgba(0,0,0,.25) 68%,rgba(0,0,0,.05) 100%),linear-gradient(180deg,rgba(0,0,0,.55),transparent 22%)"></div>
+      ${nav}<div style="position:absolute;left:64px;top:210px;z-index:2">${chip(c)}${h1(title)}${sub(text)}${prompt(ph, chips)}</div>`);
+  await render("studio-image.webp", artPage(studio("/docs/art/studio/image.webp", "Coming soon · Image Studio", "Any image.<br>One sentence.",
+    "Posters, products, portraits and whole worlds. Describe it and Vesper renders it in seconds.",
+    "A perfume bottle on red petals, warm studio light", ["Cinematic", "Product", "Anime", "Poster", "4:5"]), 1640), 1640);
+  await render("studio-video.webp", artPage(studio("/docs/art/studio/video.webp", "Coming soon · Video Studio", "Direct videos<br>with words.",
+    "Ads, reels and stories with real camera moves. Describe the shot and get the clip, ready to post.",
+    "Slow push in on a woman in the rain, neon street, night", ["10 sec", "9:16", "Handheld", "Sound on"]), 1640), 1640);
+  const trio = [["aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.30)"], ["seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.40)"], ["scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)"]];
+  await render("studio-live.webp", artPage(mac(`<div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 78% 45%,rgba(110,120,255,.26),transparent 70%),#050507"></div>${nav}
+      <div style="position:absolute;left:64px;top:220px;z-index:2;width:540px">${chip("Coming soon · Live Characters")}${h1("Talk face<br>to face.")}${sub("Characters you can see and hear, live. Each with a real personality, a voice and their own story.")}
+        <div style="display:flex;gap:12px;margin-top:38px;font-size:16px;font-weight:600"><span style="padding:15px 24px;border-radius:999px;background:#f5f5f4;color:#000">Join the waitlist</span><span style="padding:15px 24px;border-radius:999px;color:#e9e9e7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)">Meet the characters</span></div></div>
+      <div style="position:absolute;right:50px;top:130px;display:flex;align-items:flex-end;gap:18px">
+      ${trio.map(([id, n, col, glow], i) => `<div style="position:relative;width:${i === 1 ? 270 : 230}px;height:${i === 1 ? 600 : 540}px;border-radius:24px;overflow:hidden;background:radial-gradient(70% 50% at 50% 35%,${glow},transparent 75%),#0b0b10;box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px ${i === 1 ? col : "rgba(255,255,255,.08)"}">
+        <img src="/docs/art/characters/${id}-full.webp" style="position:absolute;left:50%;top:26px;height:${i === 1 ? 980 : 880}px;transform:translateX(-50%)">
+        <div style="position:absolute;inset:auto 0 0 0;padding:60px 18px 16px;background:linear-gradient(transparent,rgba(5,5,8,.92));display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600">${n}
+        <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:${i === 1 ? "#7ee8a0" : col}"><i style="width:7px;height:7px;border-radius:50%;background:${i === 1 ? "#7ee8a0" : col};${i === 1 ? "box-shadow:0 0 10px #7ee8a0" : ""}"></i>${i === 1 ? "Live" : "Soon"}</span></div></div>`).join("")}
+      </div>`), 1640), 1640);
+  // a frozen confetti burst: seeded so every render matches
+  const confetti = (x0, y0) => { let r = 7; const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
+    const cols = ["#6ea8ff", "#f0c26b", "#ffffff", "#b89cff", "#7ee8a0", "#ffd9a0"];
+    return Array.from({ length: 90 }, () => { const a = Math.PI * 2 * rnd(), d = 200 + rnd() * 520, x = x0 + Math.cos(a) * d * 1.35, y = y0 + Math.sin(a) * d * .9 + rnd() * 40;
+      const w = 5 + rnd() * 6, h = rnd() < .3 ? w : 10 + rnd() * 10, o = Math.max(.45, 1.1 - d / 800);
+      return `<i style="position:absolute;left:${x.toFixed(0)}px;top:${y.toFixed(0)}px;width:${w.toFixed(1)}px;height:${h.toFixed(1)}px;border-radius:${h === w ? "50%" : "2px"};background:${cols[Math.floor(rnd() * cols.length)]};opacity:${o.toFixed(2)};transform:rotate(${(rnd() * 360).toFixed(0)}deg);box-shadow:0 0 8px rgba(255,255,255,.15)"></i>`; }).join(""); };
+  const list = items => items.map(t => `<div style="display:flex;align-items:center;gap:12px;font-size:16.5px;color:#dcdcd9;padding:7px 0">${chk}${t}</div>`).join("");
+  await render("studio-plus.webp", artPage(mac(`<div style="position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 0%,rgba(110,168,255,.22),transparent 70%),radial-gradient(40% 40% at 80% 100%,rgba(240,194,107,.10),transparent 70%),#050507"></div>${nav}
+      <div style="position:absolute;left:0;right:0;top:118px;text-align:center">${chip("Coming soon · Vesper Plus")}
+        <div style="font-size:70px;font-weight:600;letter-spacing:-.045em;background:linear-gradient(180deg,#ffffff,#9fb8e6);-webkit-background-clip:text;background-clip:text;color:transparent">More power, same privacy.</div>
+        <div style="font-size:20px;color:#a9a9a6;margin-top:14px">Everything in Vesper stays free. Plus adds the studios and the extras.</div></div>
+      ${confetti(778, 560)}<div style="position:absolute;left:0;right:0;top:330px;display:flex;justify-content:center;gap:24px">
+        <div style="width:400px;padding:30px 32px;border-radius:26px;background:rgba(18,18,22,.9);box-shadow:0 0 0 1px rgba(255,255,255,.09)">
+          <div style="font-size:19px;font-weight:600">Free</div><div style="font-size:44px;font-weight:600;letter-spacing:-.03em;margin:8px 0 2px">Forever</div><div style="font-size:15px;color:#8f8f8c;margin-bottom:18px">What you have today</div>
+          ${list(["Dozens of free AI models", "Characters and memory", "Models on your own PC", "No account, chats on your device"])}</div>
+        <div style="position:relative;width:420px;padding:30px 32px;border-radius:26px;background:linear-gradient(#111118,#111118) padding-box,linear-gradient(140deg,#6ea8ff,#f0c26b 60%,#6ea8ff) border-box;border:1.5px solid transparent;box-shadow:0 30px 80px rgba(70,90,255,.25)">
+          <span style="position:absolute;top:28px;right:30px;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#000;background:#f0c26b;padding:6px 12px;border-radius:999px">Most loved</span>
+          <div style="font-size:19px;font-weight:600">Plus</div><div style="font-size:44px;font-weight:600;letter-spacing:-.03em;margin:8px 0 2px">At launch</div><div style="font-size:15px;color:#8f8f8c;margin-bottom:18px">Join the waitlist for early access</div>
+          ${list(["Image Studio and Video Studio credits", "Live Characters with voice", "Premium characters", "Sync across your devices", "Priority help from the team"])}
+          <div style="margin-top:22px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;font-weight:600;padding:15px;border-radius:14px;background:linear-gradient(135deg,#f5f5f4,#f0c26b);color:#000"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>You're on the list</div></div>
+        <div style="width:300px;padding:30px 32px;border-radius:26px;background:rgba(18,18,22,.9);box-shadow:0 0 0 1px rgba(255,255,255,.09);display:flex;flex-direction:column">
+          <div style="font-size:19px;font-weight:600">Business</div><div style="font-size:16.5px;color:#b4b4b1;line-height:1.55;margin:14px 0 auto">Teams, agencies and custom characters made for your brand.</div>
+          <div style="margin-top:22px;text-align:center;font-size:16px;font-weight:600;padding:15px;border-radius:14px;color:#f5f5f4;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)">Join the waitlist</div></div>
+      </div>`), 1640), 1640);
+
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
   const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };
   await render("finishes.webp", artPage(`<div style="position:relative;padding:80px 70px 70px;overflow:hidden"><div class="glow"></div>
@@ -313,9 +374,11 @@ async function compose(browser, base) {
   const base = "http://localhost:8791/";
   const browser = await chromium.launch();
   try {
-    await phoneShots(browser, base);
-    await learnShots(browser, base);
-    await desktopShot(browser, base);
+    if (process.env.ONLY !== "landing") {
+      await phoneShots(browser, base);
+      await learnShots(browser, base);
+      await desktopShot(browser, base);
+    }
     await compose(browser, base);
   } finally {
     await browser.close(); server.close();
