@@ -1406,7 +1406,7 @@ function renderSettingsRoot(w){
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
   ));
   w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()})));
-  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)})),
+  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)}), row({icon:"message-square", title:"Contact us", sub:"Questions, ideas or problems", onclick:() => window.open("https://github.com/PushkarX-Code/vesper/issues", "_blank")})),
     gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
 }
 function creativityWord(t){ return t < 0.45 ? "Focused" : t < 1.05 ? "Balanced" : "Wild"; }

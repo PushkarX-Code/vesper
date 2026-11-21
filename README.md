@@ -48,13 +48,29 @@ Also in the box: illustrated chat wallpapers or your own photo, update alerts wi
 
 **Find your model.** In Settings, Local models, tell Vesper your computer's memory and graphics card and it suggests the local models that will run well, with the command to download them.
 
-## Coming soon: Live Characters (Beta)
+## Coming soon
 
-A real virtual character you can see, hear and talk to, face to face. It will run on the same private setup as the rest of Vesper: no account, and your chats stay yours.
+These are on the way. They are not in the app yet.
 
-<p align="center">
-  <img src="docs/live.webp" alt="Live Characters, coming soon. A real virtual character you can see, hear and talk to, face to face." width="100%">
-</p>
+**Image Studio.** Any image from one sentence: posters, products, portraits and whole worlds.
+
+<p align="center"><img src="docs/studio-image.webp" alt="Image Studio, coming soon. Any image from one sentence." width="100%"></p>
+
+**Video Studio.** Ads, reels and stories with real camera moves. Describe the shot and get the clip.
+
+<p align="center"><img src="docs/studio-video.webp" alt="Video Studio, coming soon. Direct videos with words." width="100%"></p>
+
+**Live Characters.** Characters you can see and hear, live, face to face.
+
+<p align="center"><img src="docs/studio-live.webp" alt="Live Characters, coming soon. Talk face to face." width="100%"></p>
+
+**Vesper Plus.** Everything in Vesper stays free. Plus adds the studios and the extras.
+
+<p align="center"><img src="docs/studio-plus.webp" alt="Vesper Plus, coming soon. More power, same privacy." width="100%"></p>
+
+## Contact us
+
+Questions, ideas, problems or business? [Open an issue on GitHub](https://github.com/PushkarX-Code/vesper/issues) and we will get back to you. In the app: Settings, About, Contact us.
 
 ## Get started
 
