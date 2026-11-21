@@ -598,7 +598,7 @@ function systemPrompt(c){
   if (S.about.trim()) s += "\n\nAbout the user:\n" + S.about.trim();
   if (S.respond.trim()) s += "\n\nHow the user wants replies:\n" + S.respond.trim();
   if (S.open) s += "\n\n" + OPEN_RULE;
-  if (S.memOn) {
+  if (S.memOn && !(c && c.temp)) {
     if (S.memory.length) s += "\n\nWhat you remember about the user from earlier chats (treat it as true unless they correct it):\n" + S.memory.map(m => "- " + m.text).join("\n");
     s += "\n\n" + MEMORY_RULE;
   }
@@ -876,7 +876,7 @@ function renderHeader(){
   else if (!empty) center.append(h("span", {class:"top-title", text:c.title}));
   input.placeholder = k ? "Message " + k.name : "Ask anything";
   const right = $("#topRight"); right.innerHTML = "";
-  if (empty && anyReady()) right.append(h("button", {class:"icon-btn" + (privateMode ? " on" : ""), type:"button", "aria-pressed":String(privateMode), "aria-label":"Private chat", onclick:togglePrivate, html:ic("ghost")}));
+  if (empty && anyReady() && !k) right.append(h("button", {class:"icon-btn" + (privateMode ? " on" : ""), type:"button", "aria-pressed":String(privateMode), "aria-label":"Private chat", onclick:togglePrivate, html:ic("ghost")}));
   else if (!empty) right.append(iconBtn("square-pen", "New chat", () => newChat()));
 }
 function renderChip(){
@@ -962,7 +962,7 @@ $("#toBottom").onclick = () => thread.scrollTo({top:thread.scrollHeight, behavio
 addEventListener("resize", () => stickDown(false));
 
 /* chats */
-function leaveTemp(){ S.chats = S.chats.filter(c => !c.temp || c.id === busyChat); }
+function leaveTemp(){ S.chats = S.chats.filter(c => c.id === busyChat || (!c.temp && (c.messages.length || !c.companion))); }
 function newChat(){
   if (busy) controller && controller.abort();
   leaveTemp(); S.current = null; privateMode = false; cancelEdit(); save();
@@ -1041,6 +1041,7 @@ async function generate(){
   if (!m || !P) { openModels(); return; }
   const len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
   const history = c.messages.filter(x => !x.error).map(x => ({role:x.role, content:x.content}));
+  if (history.length && history[0].role === "assistant") history.unshift({role:"user", content:"Hi."});
   const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
 
   busy = true; busyChat = c.id; syncSend();
@@ -1097,11 +1098,15 @@ async function generate(){
     else fail = err && err.friendly ? err : {friendly:netError(P), fix:P.local ? "local" : null};
   }
   if (raf) cancelAnimationFrame(raf);
-  let found = [];
-  if (text) { text = text.replace(REM, (_, f) => { found.push(f); return ""; }).replace(/\n{3,}/g, "\n\n").trim(); if (!text && found.length) text = "Got it. I'll remember that."; }
+  let found = [], added = [];
+  if (text) {
+    text = text.replace(REM, (_, f) => { found.push(f); return ""; }).replace(/\[\[[^\]]*$/, "").replace(/\n{3,}/g, "\n\n").trim();
+    if (found.length && S.memOn && !c.temp) added = addMemories(found);
+    if (!text && found.length) text = added.length ? "Got it. I'll remember that." : "Okay.";
+  }
   if (text.trim()) {
     const out = {role:"assistant", content:text, model:mk(m)};
-    if (found.length && S.memOn && !c.temp) { const added = addMemories(found); if (added.length) out.saved = added.length; }
+    if (added.length) out.saved = added.length;
     if (reasoning) { out.reasoning = reasoning.slice(0, 20000); out.secs = secs || Math.max(1, Math.round((performance.now() - (t0 || performance.now())) / 1000)); }
     c.messages.push(out);
   } else if (aborted) c.messages.push({role:"assistant", error:true, content:"You stopped this reply.", model:mk(m)});
@@ -1590,7 +1595,7 @@ function openIcons(){
 
 /* data */
 function exportChats(){
-  const data = {app:"Vesper", version:2, exported:new Date().toISOString(), chats:S.chats.filter(c => !c.temp)};
+  const data = {app:"Vesper", version:3, exported:new Date().toISOString(), chats:S.chats.filter(c => !c.temp && c.messages.length), companions:S.companions, memory:S.memory};
   const a = h("a", {href:URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], {type:"application/json"})), download:"vesper-chats-" + new Date().toISOString().slice(0, 10) + ".json"});
   document.body.append(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
@@ -1602,9 +1607,11 @@ $("#importFile").addEventListener("change", async e => {
     const j = JSON.parse(await f.text()); const list = Array.isArray(j) ? j : j.chats;
     if (!Array.isArray(list)) throw 0;
     let n = 0;
+    if (!Array.isArray(j) && Array.isArray(j.companions)) j.companions.forEach(k => { if (k && k.id && k.name && !compById(k.id)) S.companions.push({id:String(k.id), name:String(k.name).slice(0, 40), about:String(k.about || ""), style:String(k.style || ""), story:String(k.story || ""), greeting:String(k.greeting || ""), color:/^#[0-9a-f]{6}$/i.test(k.color) ? k.color : COMP_COLORS[0]}); });
+    if (!Array.isArray(j) && Array.isArray(j.memory)) addMemories(j.memory.map(m => m && m.text).filter(Boolean).map(String));
     list.forEach(c => {
       if (!c || !c.id || !Array.isArray(c.messages) || S.chats.some(x => x.id === c.id)) return;
-      const nc = {id:String(c.id), title:String(c.title || "Imported chat"), model:c.model, updated:+c.updated || Date.now(),
+      const nc = {id:String(c.id), title:String(c.title || "Imported chat"), model:c.model, updated:+c.updated || Date.now(), companion:c.companion && compById(String(c.companion)) ? String(c.companion) : undefined,
         messages:c.messages.filter(m => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string").map(m => Object.assign({}, m))};
       S.chats.push(nc); n++;
     });
