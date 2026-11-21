@@ -24,7 +24,13 @@ There is no backend. Nothing you type passes through a Vesper server, because th
   <img src="docs/features.png" alt="Streaming replies. Any OpenRouter model. Private by design. Every chat, kept. Installs like an app. Tuned to you." width="100%">
 </p>
 
-Also in the box: edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald or Aurora.
+Also in the box: edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight, Emerald or Aurora. Each one recolors the whole app.
+
+**Companions.** Create personalities with their own name, character, way of talking and first message. Each keeps its own chats.
+
+**Memory.** Vesper saves lasting facts you share and uses them in every chat, so it doesn't have to guess. You can see, add and delete them in Settings. They stay on your device, and private chats are never remembered.
+
+**Find your model.** In Settings, Local models, tell Vesper your computer's memory and graphics card and it suggests the local models that will run well, with the command to download them.
 
 ## Get started
 
