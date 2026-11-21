@@ -235,16 +235,17 @@ async function compose(browser, base) {
         <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#ff5a5f;color:#fff">${end}</div>
         <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${cam}</div></div>
     </div></div>`;
-  await render("live.png", artPage(`<div style="position:relative;padding:90px 80px 100px;overflow:hidden"><div class="glow"></div>
-    <div style="position:relative;text-align:center;margin-bottom:64px">
-      <div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:24px">Coming soon · Beta</div>
-      <div style="font-size:72px;font-weight:600;letter-spacing:-.04em;line-height:1.04">Live Characters</div>
-      <div style="font-size:24px;color:#9a9a98;margin-top:18px;line-height:1.45">A real virtual character you can see, hear and talk to, face to face.</div></div>
-    <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:60px">
-      ${liveCall("seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.38)", "You're back! Tell me everything. Did the client love the edit?")}
-      ${liveCall("aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.3)", "Close your eyes. We're in Kyoto, and the lanterns just came on.")}
-      ${liveCall("scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)", "Bold take incoming. Your second hook was better. Fight me.")}
-    </div></div>`, 1580), 1580);
+  const side = (html, z, dx) => `<div style="position:relative;z-index:${z};transform:translateX(${dx}px) scale(${z === 2 ? 1 : .86});transform-origin:center;${z === 2 ? "" : "filter:brightness(.78)"}">${html}</div>`;
+  await render("live.png", artPage(`<div style="position:relative;height:1100px;padding:0 90px;overflow:hidden;display:flex;align-items:center;gap:40px"><div class="glow"></div>
+    <div style="position:relative;flex:0 0 470px">
+      <div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:28px">Coming soon · Beta</div>
+      <div style="font-size:84px;font-weight:600;letter-spacing:-.04em;line-height:1.02">Live<br>Characters</div>
+      <div style="font-size:26px;color:#9a9a98;margin-top:24px;line-height:1.45">A real virtual character you can see, hear and talk to, face to face. Private, like the rest of Vesper.</div></div>
+    <div style="position:relative;flex:1;display:flex;align-items:center;justify-content:flex-start">
+      ${side(liveCall("aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.3)", "Close your eyes. We're in Kyoto, and the lanterns just came on."), 1, 60)}
+      ${side(liveCall("seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.38)", "You're back! Tell me everything. Did the client love the edit?"), 2, 0)}
+      ${side(liveCall("scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)", "Bold take incoming. Your second hook was better. Fight me."), 1, -60)}
+    </div></div>`, 1900), 1900);
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
   const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };
