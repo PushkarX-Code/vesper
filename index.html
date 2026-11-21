@@ -1976,7 +1976,7 @@ function openLanding(id){
 ["image", "video", "live", "plus"].forEach(id => { $("#open" + id[0].toUpperCase() + id.slice(1)).onclick = () => openLanding(id); });
 
 /* support: goal bar plus the Ko-fi panel inside the app */
-const SUPPORT = {raised:12, goal:250, kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
+const SUPPORT = {raised:0, goal:250, api:"https://vesper-chat.netlify.app/api/support", kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
 const PERKS = [
   ["sparkles", "Studios, sooner", "Image Studio and Video Studio move up the list"],
   ["users", "Live Characters with real voices", "Seraphine, Aurelia and Scarlet, face to face"],
@@ -2001,8 +2001,9 @@ function openSupport(swap){
       h("button", {class:"btn gold block", type:"button", html:ic("coffee") + "Support with Ko-fi", onclick:() => openKofi()}),
       h("p", {class:"sup-note", text:"Secure payment by Ko-fi. Vesper never sees your card."}));
     paint(SUPPORT);
-    fetch((DESKTOP ? "https://pushkarx-code.github.io/vesper/" : "") + "version.json?t=" + Date.now(), {cache:"no-store"}).then(r => r.json()).then(v => {
-      if (v && v.support && +v.support.goal > 0) { const g = {raised:+v.support.raised || 0, goal:+v.support.goal}; goalSpan.textContent = "raised of $" + g.goal + " goal"; paint(g); }
+    // live total from Ko-fi, counted by the Netlify function (only completed payments)
+    fetch(SUPPORT.api, {cache:"no-store"}).then(r => r.json()).then(v => {
+      if (v && +v.goal > 0) { const g = {raised:Math.max(0, +v.raised || 0), goal:+v.goal}; goalSpan.textContent = "raised of $" + g.goal + " goal"; paint(g); }
     }).catch(() => {});
   }), swap);
 }

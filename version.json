@@ -4,9 +4,5 @@
     "New: Support Vesper, right inside the app",
     "Pay in a tap with Ko-fi, without leaving Vesper",
     "See what your support builds next"
-  ],
-  "support": {
-    "raised": 12,
-    "goal": 250
-  }
+  ]
 }
