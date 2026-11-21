@@ -9,10 +9,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" id="lnkManifest" href="manifest.webmanifest">
-<link rel="icon" id="lnkIcon" href="icon-192.png" type="image/png">
-<link rel="apple-touch-icon" id="lnkTouch" href="icon-192.png">
+<link rel="icon" id="lnkIcon" href="icons/chrome/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" id="lnkTouch" href="icons/chrome/icon-192.png">
 <link rel="preload" href="fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="mark.webp" type="image/webp">
+<link rel="preload" as="image" href="icons/chrome/mark.webp" type="image/webp">
 <style>
 /* Vesper. One column chat: header, thread, composer. Pure black, Inter, one blue accent from the logo.
    Every panel (drawer, sheet, page, dialog) is a "layer": it cannot be tapped while it animates or once it closes. */
@@ -192,7 +192,7 @@ svg{display:block}
   padding:max(12px,env(safe-area-inset-top,0px)) 10px max(10px,env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
 .drawer.on{transform:none}
 .d-brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px}
-.logo-flat{display:block;width:24px;height:24px;flex:0 0 auto;background:var(--logo,#f5f5f4);-webkit-mask:url(logo.svg) center/contain no-repeat;mask:url(logo.svg) center/contain no-repeat}
+.logo-flat{display:block;width:24px;height:24px;flex:0 0 auto;background:var(--logo,#f5f5f4);-webkit-mask:url(icons/logo.svg) center/contain no-repeat;mask:url(icons/logo.svg) center/contain no-repeat}
 .d-brand b{font-size:19px;font-weight:600;letter-spacing:-.02em}
 .d-search{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:0 12px;height:44px;margin-bottom:6px}
 .d-search .ic{width:17px;height:17px;color:var(--faint)}
@@ -605,7 +605,7 @@ const ICONS = [
   {id:"midnight", name:"Midnight", tint:"#7d93ff", accent:"#7d93ff", surface:"#0c0e17", raised:"#151826", raised2:"#1d2132", sheet:"#0e1019", line:"#242a40", lineSoft:"#171a28", glow:"rgba(80,100,255,.45)"},
   {id:"emerald", name:"Emerald", tint:"#74e6b5", accent:"#5fe0a6", surface:"#0b100e", raised:"#141b17", raised2:"#1b241f", sheet:"#0d1310", line:"#21302a", lineSoft:"#161f1b", glow:"rgba(40,210,150,.32)"}
 ];
-const iconFile = (file, id) => { id = id || S.icon; return id === "chrome" ? file : "icons/" + id + "/" + file; };
+const iconFile = (file, id) => { id = id || S.icon; return "icons/" + id + "/" + file; };
 const PRESETS = {
   ollama:{label:"Ollama", name:"Ollama", port:11434},
   lmstudio:{label:"LM Studio", name:"LM Studio", port:1234},

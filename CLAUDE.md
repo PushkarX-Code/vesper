@@ -9,13 +9,13 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - No dashes in written copy: no hyphens between words and no en or em dashes, in the app, README or images. Short, direct wording.
 - Neutral wording. No "roleplay" or "uncensored" wording anywhere. The owner wants Characters (custom personalities, shown as "Characters"; the code still calls them companions) and a hidden adult option, named neutrally: "Characters" and "Open conversation" (Settings, Personalize, More options; no pop up). The open option only removes disclaimers and allows mature themes for adults; never write prompts meant to defeat a provider's safety rules, and never allow sexual content involving minors.
 - Never commit or paste API keys.
-- Design: pure black, quiet, premium, Grok like feel but original. Accent blue `#6ea8ff`. The logo is five curved chrome blades around a star shaped opening: `mark.webp` (3D), `logo.svg` (flat), source in `design/logo/`.
+- Design: pure black, quiet, premium, Grok like feel but original. Accent blue `#6ea8ff`. The logo is five curved chrome blades around a star shaped opening: `icons/chrome/mark.webp` (3D), `icons/logo.svg` (flat), source in `design/logo/`.
 - Ships as a PWA (the owner cannot sideload APKs).
 
 ## How the UI works
 - Every panel (drawer, bottom sheet, full screen page, dialog) is a layer opened with `open(id, factory, swap)` and closed with `closeTop()` or `closeAll()`. Layers sit in one stack mirrored in browser history, so Android back closes the top one.
 - A layer ignores taps while it slides in (`.settling`) and the moment it starts closing. Opens requested during a close wait in a queue. Keep this, it fixes taps landing on the wrong thing.
-- App icon finishes: `ICONS` in index.html. Chrome uses the root icons and `manifest.webmanifest`; each other finish has `icons/<id>/` (icons, mark, preview) and `manifest-<id>.webmanifest`. All manifests share `"id": "./"` so switching never makes a second app. Render new finishes with `design/logo/r3d.html` (tint, glow, mid, base, rim params).
+- App icon finishes: `ICONS` in index.html. Chrome uses `icons/chrome/` and `manifest.webmanifest`; each other finish has `icons/<id>/` (icons, mark, preview) and `manifest-<id>.webmanifest`. All manifests share `"id": "./"` so switching never makes a second app. Render new finishes with `design/logo/r3d.html` (tint, glow, mid, base, rim params).
 - Each app icon finish also themes the app: `applyIcon()` sets --accent, --surface, --raised, --line and --glow from `ICONS`.
 - Memory: the model ends a reply with `[[remember: fact]]` when it learns something lasting (see MEMORY_RULE). `generate()` strips the tag, saves to `S.memory`, and `systemPrompt()` sends saved facts with every chat. Private chats never save.
 - Characters live in `S.companions` (`CHAR_LIBRARY` holds the ready ones, matched by `pid`); a chat with `companion` set uses `companionPrompt()` instead of the Vesper prompt.
