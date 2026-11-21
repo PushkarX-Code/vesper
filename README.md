@@ -32,13 +32,13 @@ There is no backend. Nothing you type passes through a Vesper server, because th
   <img src="docs/features.webp" alt="Every chat, kept. Remembers what matters. Six finishes. Tuned to you." width="100%">
 </p>
 
-Also in the box: a **Learn** section with short guides, real screens and honest model picks (worth it or skip), photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
+Also in the box: chat backgrounds (presets or your own photo), update alerts with what's new, a **Learn** section with short guides, real screens and honest model picks (worth it or skip), photo and file attachments, talk instead of typing, read aloud, pinned chats, share a chat, edit and resend, retry, copy, code blocks with a copy button, a private chat that is never saved, chat search, rename, export and import, a collapsible view of a model's thinking, and plain language errors that tell you what to do when a free model is busy or gone. The Android back button closes panels like a native app. Pick an app icon finish in Settings: Chrome, Gold, Rose Gold, Graphite, Midnight or Emerald. Each one recolors the whole app.
 
 <p align="center">
   <img src="docs/finishes.webp" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
 </p>
 
-**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. Give each one a face with any photo, and pick their color on a smooth hue and intensity slider. Each keeps its own chats.
+**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. The eight ready characters are verified by Vesper and have their own profiles. Give your own characters a face with any photo, and pick their color on a smooth hue and intensity slider. Each keeps its own chats.
 
 <p align="center">
   <img src="docs/characters.webp" alt="Your characters with their own photos. Any photo, any color: add a picture and pick a tone. Each keeps its own chats." width="100%">
@@ -136,6 +136,8 @@ manifest.webmanifest    Install settings (name, icons, colours)
 sw.js                   Service worker for install and offline shell
 icons/                  Logo and app icons for every finish
 learn/                  Screens for the in app Learn guides
+chars/                  Portraits of the ready characters
+version.json            Current version and notes for update alerts
 manifest-*.webmanifest  Install settings for each finish
 design/logo/            Logo source: geometry and 3D render scene
 fonts/                  Inter variable font
