@@ -22,8 +22,8 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Freeform models (open models with no added guardrails) are `PC_OPEN` and `OPEN_MODELS`. Always word them professionally: "Freeform", "no added guardrails". Never "uncensored".
 - Attachments: photos are shrunk to 1024 px JPEG and sent as image_url parts; text files are inlined as text (`toApi()`).
 - Learn: guides live in `LEARN` in index.html, screens in `learn/*.jpg` made by `node docs/art/make-art.js`. Brand logos come from Simple Icons (CC0) in `BRANDS`; brands without a free logo (OpenAI, Groq, Cerebras) get a name badge in `BADGES`, never an imitation.
-- Chat wallpapers: `CHAT_BGS` are repeating SVG doodle patterns built by `pattern()`, or the user's photo. They paint `#thread` only; `.thread.wall` gives answers a dark bubble so text stays readable.
-- No coming soon pages in the app: only ship features that work.
+- Chat wallpapers: `CHAT_BGS` are repeating SVG doodle patterns built by `pattern()`, or the user's photo. They paint the whole chat screen (`#app`) behind a glass header and composer; light ones switch the chat to `.lightwall`.
+- Coming soon features (Image Studio, Video Studio, Live Characters, Vesper Plus) are landing pages in `LANDINGS` with art in `studio/`. Join the waitlist only saves `S.waitlist` on the device and plays `confetti()`; nothing is sent anywhere. Never fake the feature itself (no pretend Generate buttons).
 - The Thinking indicator is the shimmering word only. No wave or line animation.
 - Models are keyed `provider::id` (see `mk()`). Discovered models start hidden; only shown models appear in the picker.
 - Local models are OpenAI compatible connections in `S.conns`. Calls to private addresses pass `targetAddressSpace` so Chrome allows them from the https page.
@@ -38,3 +38,4 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Bump `CACHE` in `sw.js` on every release, or phones keep the old copy.
 - For a release users should see, bump `APP_VERSION` in index.html and `version.json` together and write short notes in `version.json`: open apps show an Update available popup with those notes.
 - Test in a phone sized Playwright run (412 by 915) before pushing.
+- Always deploy every release to Netlify too (site `vesper-chat`, https://vesper-chat.netlify.app, the README Try Demo link): run `node desktop/scripts/copy-web.mjs`, add a `netlify.toml` (publish ".", no-cache for sw.js and version.json) to `desktop/dist`, then deploy that folder with the Netlify MCP deploy-site command (prefix it with `NODE_USE_ENV_PROXY=1`). Never upload the repo root: `desktop/` holds gigabytes of build output.
