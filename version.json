@@ -1,9 +1,8 @@
 {
-  "version": "2.3",
+  "version": "2.4",
   "notes": [
-    "Wallpapers now fill the whole chat screen, in dark and light",
-    "Light wallpapers switch the chat to a light look",
-    "Haptics and pressed animations on every button",
-    "Lighter app download"
+    "Image Studio, Video Studio, Live Characters and Vesper Plus are in the sidebar",
+    "Join a waitlist with one tap, no email needed",
+    "We'll tell you here the moment each one is ready"
   ]
 }

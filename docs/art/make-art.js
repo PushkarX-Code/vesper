@@ -222,34 +222,6 @@ async function compose(browser, base) {
     ${chars.map(([n, c, s]) => `<div><div class="cap">${c}</div><p class="sub" style="margin-bottom:34px">${s}</p>${phone(n, 380)}</div>`).join("")}
     </div></div>`, 1700), 1700);
 
-  const svg = d => `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
-  const mic = svg('<path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/>');
-  const end = svg('<path d="M10.1 13.9a14 14 0 0 0 3.732 2.668 1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2 18 18 0 0 1-12.728-5.272"/><path d="M22 2 2 22"/><path d="M4.76 13.582A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 .244.473"/>');
-  const cam = svg('<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/>');
-  const liveCall = (n, name, col, glow, line) => `<div class="phone"><div style="position:relative;width:412px;height:892px;border-radius:36px;overflow:hidden;background:radial-gradient(70% 45% at 50% 38%,${glow},rgba(0,0,0,0) 70%),radial-gradient(90% 60% at 50% 100%,rgba(60,70,255,.22),rgba(0,0,0,0) 70%),#050507">
-      <img src="/docs/art/characters/${n}-full.webp" style="position:absolute;left:50%;top:70px;height:1240px;transform:translateX(-50%);filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))">
-      <div style="position:absolute;inset:auto 0 0 0;height:420px;background:linear-gradient(180deg,rgba(5,5,7,0),rgba(5,5,7,.85) 45%,#050507)"></div>
-      <div style="position:absolute;top:22px;left:0;right:0;display:flex;justify-content:center">
-        <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 6px;border-radius:999px;background:rgba(20,20,24,.6);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,.08)">
-          <span style="width:30px;height:30px;border-radius:50%;background:${col} url(/docs/art/characters/av-${n}.webp) center/cover;box-shadow:0 0 0 1.5px ${col}"></span><b style="font-size:16px;font-weight:600">${name}</b>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:${col};font-weight:600"><i style="width:7px;height:7px;border-radius:50%;background:#7ee8a0;box-shadow:0 0 10px #7ee8a0"></i>Live</span></div></div>
-      <div style="position:absolute;left:26px;right:26px;bottom:150px;padding:16px 18px;border-radius:20px;background:rgba(22,22,28,.72);backdrop-filter:blur(16px);box-shadow:0 0 0 1px rgba(255,255,255,.08);font-size:17px;line-height:1.45;color:#ececea">${line}</div>
-      <div style="position:absolute;left:0;right:0;bottom:46px;display:flex;justify-content:center;gap:26px">
-        <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${mic}</div>
-        <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#ff5a5f;color:#fff">${end}</div>
-        <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${cam}</div></div>
-    </div></div>`;
-  const side = (html, z, dx) => `<div style="position:relative;z-index:${z};transform:translateX(${dx}px) scale(${z === 2 ? 1 : .86});transform-origin:center;${z === 2 ? "" : "filter:brightness(.78)"}">${html}</div>`;
-  await render("live.webp", artPage(`<div style="position:relative;height:1100px;padding:0 90px;overflow:hidden;display:flex;align-items:center;gap:40px"><div class="glow"></div>
-    <div style="position:relative;flex:0 0 470px">
-      <div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:28px">Coming soon · Beta</div>
-      <div style="font-size:84px;font-weight:600;letter-spacing:-.04em;line-height:1.02">Live<br>Characters</div>
-      <div style="font-size:26px;color:#9a9a98;margin-top:24px;line-height:1.45">A real virtual character you can see, hear and talk to, face to face. Private, like the rest of Vesper.</div></div>
-    <div style="position:relative;flex:1;display:flex;align-items:center;justify-content:flex-start">
-      ${side(liveCall("aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.3)", "Close your eyes. We're in Kyoto, and the lanterns just came on."), 1, 60)}
-      ${side(liveCall("seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.38)", "You're back! Tell me everything. Did the client love the edit?"), 2, 0)}
-      ${side(liveCall("scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)", "Bold take incoming. Your second hook was better. Fight me."), 1, -60)}
-    </div></div>`, 1900), 1900);
 
   // Coming soon landing pages, each on an Apple style display
   const mac = inner => `<div style="position:relative;height:960px;padding-top:80px;overflow:hidden"><div class="glow"></div>
@@ -271,10 +243,10 @@ async function compose(browser, base) {
   const studio = (bgImg, c, title, text, ph, chips) => mac(`<img src="${bgImg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
       <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.82) 36%,rgba(0,0,0,.25) 68%,rgba(0,0,0,.05) 100%),linear-gradient(180deg,rgba(0,0,0,.55),transparent 22%)"></div>
       ${nav}<div style="position:absolute;left:64px;top:210px;z-index:2">${chip(c)}${h1(title)}${sub(text)}${prompt(ph, chips)}</div>`);
-  await render("studio-image.webp", artPage(studio("/docs/art/studio/image.webp", "Coming soon · Image Studio", "Any image.<br>One sentence.",
+  await render("studio-image.webp", artPage(studio("/studio/image.webp", "Coming soon · Image Studio", "Any image.<br>One sentence.",
     "Posters, products, portraits and whole worlds. Describe it and Vesper renders it in seconds.",
     "A perfume bottle on red petals, warm studio light", ["Cinematic", "Product", "Anime", "Poster", "4:5"]), 1640), 1640);
-  await render("studio-video.webp", artPage(studio("/docs/art/studio/video.webp", "Coming soon · Video Studio", "Direct videos<br>with words.",
+  await render("studio-video.webp", artPage(studio("/studio/video.webp", "Coming soon · Video Studio", "Direct videos<br>with words.",
     "Ads, reels and stories with real camera moves. Describe the shot and get the clip, ready to post.",
     "Slow push in on a woman in the rain, neon street, night", ["10 sec", "9:16", "Handheld", "Sound on"]), 1640), 1640);
   const trio = [["aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.30)"], ["seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.40)"], ["scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)"]];
@@ -283,7 +255,7 @@ async function compose(browser, base) {
         <div style="display:flex;gap:12px;margin-top:38px;font-size:16px;font-weight:600"><span style="padding:15px 24px;border-radius:999px;background:#f5f5f4;color:#000">Join the waitlist</span><span style="padding:15px 24px;border-radius:999px;color:#e9e9e7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)">Meet the characters</span></div></div>
       <div style="position:absolute;right:50px;top:130px;display:flex;align-items:flex-end;gap:18px">
       ${trio.map(([id, n, col, glow], i) => `<div style="position:relative;width:${i === 1 ? 270 : 230}px;height:${i === 1 ? 600 : 540}px;border-radius:24px;overflow:hidden;background:radial-gradient(70% 50% at 50% 35%,${glow},transparent 75%),#0b0b10;box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px ${i === 1 ? col : "rgba(255,255,255,.08)"}">
-        <img src="/docs/art/characters/${id}-full.webp" style="position:absolute;left:50%;top:26px;height:${i === 1 ? 980 : 880}px;transform:translateX(-50%)">
+        <img src="/studio/${id}.webp" style="position:absolute;left:50%;top:26px;height:${i === 1 ? 980 : 880}px;transform:translateX(-50%)">
         <div style="position:absolute;inset:auto 0 0 0;padding:60px 18px 16px;background:linear-gradient(transparent,rgba(5,5,8,.92));display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600">${n}
         <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:${i === 1 ? "#7ee8a0" : col}"><i style="width:7px;height:7px;border-radius:50%;background:${i === 1 ? "#7ee8a0" : col};${i === 1 ? "box-shadow:0 0 10px #7ee8a0" : ""}"></i>${i === 1 ? "Live" : "Soon"}</span></div></div>`).join("")}
       </div>`), 1640), 1640);

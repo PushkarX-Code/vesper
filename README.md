@@ -50,7 +50,7 @@ Also in the box: illustrated chat wallpapers or your own photo, update alerts wi
 
 ## Coming soon
 
-These are on the way. They are not in the app yet.
+These are on the way. Each has its own page in the app sidebar, where you can join the waitlist with one tap (no email, nothing leaves your device).
 
 **Image Studio.** Any image from one sentence: posters, products, portraits and whole worlds.
 
@@ -152,6 +152,7 @@ manifest.webmanifest    Install settings (name, icons, colours)
 sw.js                   Service worker for install and offline shell
 icons/                  Logo and app icons for every finish
 learn/                  Screens for the in app Learn guides
+studio/                 Art for the coming soon pages
 chars/                  Portraits of the ready characters
 version.json            Current version and notes for update alerts
 manifest-*.webmanifest  Install settings for each finish
