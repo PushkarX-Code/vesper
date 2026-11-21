@@ -85,7 +85,6 @@ async function phoneShots(browser, base) {
   await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openCompanions"); await shot("companions");
   await page.click(top + ' button[aria-label="Options for Seraphine"]'); await page.waitForTimeout(400); await page.click("button:has-text(\"Edit\"):visible"); await page.waitForTimeout(500);
   await page.evaluate(() => { const r = document.querySelector('section.page.on:last-of-type input[aria-label="Hue"]'); r.value = 262; r.dispatchEvent(new Event("input")); }); await shot("char-edit");
-  await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openLive"); await page.waitForTimeout(1200); await shot("live-soon");
   await ctx.close();
 }
 
@@ -170,7 +169,7 @@ function artPage(body, width) {
   *{box-sizing:border-box}
   body{margin:0;width:${width}px;background:#000;color:#f5f5f4;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
   .glow{position:absolute;inset:0;background:radial-gradient(60% 55% at 70% 110%,rgba(58,60,255,.45),rgba(0,0,0,0) 70%),radial-gradient(40% 40% at 15% 0%,rgba(110,168,255,.12),rgba(0,0,0,0) 70%)}
-  .phone{border-radius:44px;padding:9px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
+  .phone{width:fit-content;margin:0 auto;border-radius:44px;padding:9px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
   .phone img{display:block;border-radius:36px}
   .cap{font-size:26px;font-weight:600;letter-spacing:-.02em;text-align:center;margin:0 0 6px}
   .sub{font-size:17px;color:#9a9a98;text-align:center;line-height:1.45;margin:0}
@@ -223,27 +222,29 @@ async function compose(browser, base) {
   const mic = svg('<path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/>');
   const end = svg('<path d="M10.1 13.9a14 14 0 0 0 3.732 2.668 1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2 18 18 0 0 1-12.728-5.272"/><path d="M22 2 2 22"/><path d="M4.76 13.582A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 .244.473"/>');
   const cam = svg('<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/>');
-  const live = `<div class="phone" style="width:430px"><div style="position:relative;width:412px;height:892px;border-radius:36px;overflow:hidden;background:radial-gradient(70% 45% at 50% 38%,rgba(150,110,255,.38),rgba(0,0,0,0) 70%),radial-gradient(90% 60% at 50% 100%,rgba(60,70,255,.25),rgba(0,0,0,0) 70%),#050507">
-      <img src="/docs/art/characters/seraphine-full.webp" style="position:absolute;left:50%;top:70px;height:1240px;transform:translateX(-50%);filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))">
+  const liveCall = (n, name, col, glow, line) => `<div class="phone"><div style="position:relative;width:412px;height:892px;border-radius:36px;overflow:hidden;background:radial-gradient(70% 45% at 50% 38%,${glow},rgba(0,0,0,0) 70%),radial-gradient(90% 60% at 50% 100%,rgba(60,70,255,.22),rgba(0,0,0,0) 70%),#050507">
+      <img src="/docs/art/characters/${n}-full.webp" style="position:absolute;left:50%;top:70px;height:1240px;transform:translateX(-50%);filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))">
       <div style="position:absolute;inset:auto 0 0 0;height:420px;background:linear-gradient(180deg,rgba(5,5,7,0),rgba(5,5,7,.85) 45%,#050507)"></div>
-      <div style="position:absolute;top:22px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:10px">
+      <div style="position:absolute;top:22px;left:0;right:0;display:flex;justify-content:center">
         <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 6px;border-radius:999px;background:rgba(20,20,24,.6);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,.08)">
-          <img src="/docs/art/characters/av-seraphine.webp" style="width:30px;height:30px;border-radius:50%;box-shadow:0 0 0 1.5px #b89cff"><b style="font-size:16px;font-weight:600">Seraphine</b>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#b89cff;font-weight:600"><i style="width:7px;height:7px;border-radius:50%;background:#7ee8a0;box-shadow:0 0 10px #7ee8a0"></i>Live</span></div></div>
-      <div style="position:absolute;left:26px;right:26px;bottom:150px;padding:16px 18px;border-radius:20px;background:rgba(22,22,28,.72);backdrop-filter:blur(16px);box-shadow:0 0 0 1px rgba(255,255,255,.08);font-size:17px;line-height:1.45;color:#ececea">You're back! Tell me everything. Did the client love the edit?</div>
+          <span style="width:30px;height:30px;border-radius:50%;background:${col} url(/docs/art/characters/av-${n}.webp) center/cover;box-shadow:0 0 0 1.5px ${col}"></span><b style="font-size:16px;font-weight:600">${name}</b>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:${col};font-weight:600"><i style="width:7px;height:7px;border-radius:50%;background:#7ee8a0;box-shadow:0 0 10px #7ee8a0"></i>Live</span></div></div>
+      <div style="position:absolute;left:26px;right:26px;bottom:150px;padding:16px 18px;border-radius:20px;background:rgba(22,22,28,.72);backdrop-filter:blur(16px);box-shadow:0 0 0 1px rgba(255,255,255,.08);font-size:17px;line-height:1.45;color:#ececea">${line}</div>
       <div style="position:absolute;left:0;right:0;bottom:46px;display:flex;justify-content:center;gap:26px">
         <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${mic}</div>
         <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#ff5a5f;color:#fff">${end}</div>
         <div style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(40,40,46,.8);box-shadow:0 0 0 1px rgba(255,255,255,.1)">${cam}</div></div>
     </div></div>`;
-  await render("live.png", artPage(`<div style="position:relative;padding:90px 110px 100px;overflow:hidden"><div class="glow"></div>
-    <div style="position:relative;display:grid;grid-template-columns:1fr 430px 380px;gap:56px;align-items:center">
-      <div><div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:28px">Coming soon · Beta</div>
-        <div style="font-size:76px;font-weight:600;letter-spacing:-.04em;line-height:1.02">Live<br>Characters</div>
-        <div style="font-size:26px;color:#9a9a98;margin-top:24px;line-height:1.45;max-width:17em">A real virtual character you can see, hear and talk to, face to face. Private, like the rest of Vesper.</div></div>
-      ${live}
-      <div><div class="cap" style="font-size:22px">In the sidebar now</div><p class="sub" style="margin-bottom:28px">A first look while we build it</p>${phone("live-soon", 360)}</div>
-    </div></div>`, 1640), 1640);
+  await render("live.png", artPage(`<div style="position:relative;padding:90px 80px 100px;overflow:hidden"><div class="glow"></div>
+    <div style="position:relative;text-align:center;margin-bottom:64px">
+      <div style="display:inline-block;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6ea8ff;background:rgba(110,168,255,.14);padding:7px 14px;border-radius:999px;margin-bottom:24px">Coming soon · Beta</div>
+      <div style="font-size:72px;font-weight:600;letter-spacing:-.04em;line-height:1.04">Live Characters</div>
+      <div style="font-size:24px;color:#9a9a98;margin-top:18px;line-height:1.45">A real virtual character you can see, hear and talk to, face to face.</div></div>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:60px">
+      ${liveCall("seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.38)", "You're back! Tell me everything. Did the client love the edit?")}
+      ${liveCall("aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.3)", "Close your eyes. We're in Kyoto, and the lanterns just came on.")}
+      ${liveCall("scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)", "Bold take incoming. Your second hook was better. Fight me.")}
+    </div></div>`, 1580), 1580);
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
   const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };
