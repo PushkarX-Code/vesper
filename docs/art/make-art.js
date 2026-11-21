@@ -169,7 +169,7 @@ function artPage(body, width) {
   *{box-sizing:border-box}
   body{margin:0;width:${width}px;background:#000;color:#f5f5f4;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
   .glow{position:absolute;inset:0;background:radial-gradient(60% 55% at 70% 110%,rgba(58,60,255,.45),rgba(0,0,0,0) 70%),radial-gradient(40% 40% at 15% 0%,rgba(110,168,255,.12),rgba(0,0,0,0) 70%)}
-  .phone{width:fit-content;margin:0 auto;border-radius:44px;padding:9px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
+  .phone{width:fit-content;margin:0 auto;border-radius:36px;box-shadow:0 40px 90px rgba(0,0,0,.65)}
   .phone img{display:block;border-radius:36px}
   .cap{font-size:26px;font-weight:600;letter-spacing:-.02em;text-align:center;margin:0 0 6px}
   .sub{font-size:17px;color:#9a9a98;text-align:center;line-height:1.45;margin:0}
@@ -298,7 +298,7 @@ async function compose(browser, base) {
   await render("promo/2-private.jpg", slide("Your chats never<br>leave your phone.", "No servers, no tracking. Keys, chats and memory stay on your device.",
     phoneAt("drawer", 400, 560, 120) + phoneAt("memory", 400, 620, 560)), 1080);
   await render("promo/3-your-pc.jpg", slide("Run AI on your PC.<br>Offline.", "Vesper for Windows picks models that fit your computer and runs them right there.",
-    `<div style="position:absolute;left:60px;right:60px;top:600px;border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.1)"><img src="${img("desktop-pc")}" style="display:block;width:960px"></div>`), 1080);
+    `<div style="position:absolute;left:60px;right:60px;top:600px;border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7)"><img src="${img("desktop-pc")}" style="display:block;width:960px"></div>`), 1080);
   await render("promo/4-characters.jpg", slide("Characters with<br>real personality.", "Pick a ready character or create your own. Each keeps its own chats.",
     phoneAt("companions", 400, 540, 120) + phoneAt("companion", 400, 610, 560)), 1080);
   await ctx.close();
