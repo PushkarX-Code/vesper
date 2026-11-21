@@ -85,6 +85,8 @@ async function phoneShots(browser, base) {
   await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openCompanions"); await shot("companions");
   await page.click(top + ' button[aria-label="Options for Seraphine"]'); await page.waitForTimeout(400); await page.click("button:has-text(\"Edit\"):visible"); await page.waitForTimeout(500);
   await page.evaluate(() => { const r = document.querySelector('section.page.on:last-of-type input[aria-label="Hue"]'); r.value = 262; r.dispatchEvent(new Event("input")); }); await shot("char-edit");
+  await load({ current: null }); await page.click("#openDrawer"); await page.waitForTimeout(400); await page.click("#openSupport"); await page.waitForTimeout(1600); await shot("support");
+  await page.evaluate(() => document.querySelector("section.page.on:last-of-type .page-body").scrollTop = 2000); await shot("support-2");
   await ctx.close();
 }
 
@@ -283,6 +285,12 @@ async function compose(browser, base) {
           <div style="font-size:19px;font-weight:600">Business</div><div style="font-size:16.5px;color:#b4b4b1;line-height:1.55;margin:14px 0 auto">Teams, agencies and custom characters made for your brand.</div>
           <div style="margin-top:22px;text-align:center;font-size:16px;font-weight:600;padding:15px;border-radius:14px;color:#f5f5f4;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)">Join the waitlist</div></div>
       </div>`), 1640), 1640);
+
+  await render("support.webp", artPage(`<div style="position:relative;padding:80px 120px 90px;overflow:hidden"><div class="glow"></div>
+    <div style="position:relative;display:grid;grid-template-columns:1fr 380px 380px;gap:60px;align-items:center">
+      <div><div style="font-size:64px;font-weight:600;letter-spacing:-.04em;line-height:1.04">Keep Vesper<br>free.</div>
+        <div style="font-size:23px;color:#9a9a98;margin-top:22px;line-height:1.45">Support it inside the app, in one tap.</div></div>
+      ${phone("support", 380)}${phone("support-2", 380)}</div></div>`, 1700), 1700);
 
   const fin = ["chrome", "gold", "rose", "graphite", "midnight", "emerald"];
   const finNames = { chrome: "Chrome", gold: "Gold", rose: "Rose Gold", graphite: "Graphite", midnight: "Midnight", emerald: "Emerald" };

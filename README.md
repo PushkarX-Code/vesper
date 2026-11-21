@@ -68,6 +68,12 @@ These are on the way. Each has its own page in the app sidebar, where you can jo
 
 <p align="center"><img src="docs/studio-plus.webp" alt="Vesper Plus, coming soon. More power, same privacy." width="100%"></p>
 
+## Support Vesper
+
+Vesper is free, with no ads and no tracking. If it helps you, you can support it right inside the app (sidebar, Support Vesper) or on [Ko-fi](https://ko-fi.com/buymeacofi).
+
+<p align="center"><img src="docs/support.webp" alt="Support Vesper inside the app: a live goal bar, what support builds, and Ko-fi payment without leaving the app." width="100%"></p>
+
 ## Contact us
 
 Questions, ideas, problems or business? [Open an issue on GitHub](https://github.com/PushkarX-Code/vesper/issues) and we will get back to you. In the app: Settings, About, Contact us.
@@ -153,6 +159,7 @@ sw.js                   Service worker for install and offline shell
 icons/                  Logo and app icons for every finish
 learn/                  Screens for the in app Learn guides
 studio/                 Art for the coming soon pages
+netlify/                Ko-fi counter function and Netlify deploy setup
 chars/                  Portraits of the ready characters
 version.json            Current version and notes for update alerts
 manifest-*.webmanifest  Install settings for each finish

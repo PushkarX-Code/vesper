@@ -302,6 +302,26 @@ svg{display:block}
 .plan .pr{font-size:30px;font-weight:600;letter-spacing:-.03em;margin:6px 0 2px}
 .plan .pn{font-size:13.5px;color:var(--faint);margin-bottom:14px}
 .plan .feat{margin-bottom:16px}
+.sup-hero{text-align:center;padding:26px 6px 4px;background:radial-gradient(60% 70% at 50% 0%,rgba(240,194,107,.14),transparent 70%)}
+.sup-hero img{width:96px;height:auto;filter:drop-shadow(0 14px 40px var(--glow,rgba(110,140,255,.38)))}
+.sup-hero h2{margin:16px 0 10px;font-size:32px;font-weight:600;letter-spacing:-.035em;line-height:1.08}
+.sup-hero p{margin:0 auto;max-width:34ch;color:var(--fg-soft);font-size:15.5px;line-height:1.55}
+.goal{margin:22px 0 18px;padding:20px;border-radius:22px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.goal .amt{display:flex;align-items:baseline;gap:8px}
+.goal .amt b{font-size:34px;font-weight:600;letter-spacing:-.03em}
+.goal .amt span{color:var(--muted);font-size:15px}
+.bar{height:12px;border-radius:999px;background:var(--raised);overflow:hidden;margin:14px 0 9px}
+.bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#6ea8ff,#f0c26b);box-shadow:0 0 14px rgba(240,194,107,.5);transition:width 1.2s var(--ease)}
+.goal .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--faint)}
+.perks{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:12px}
+.perks li{display:flex;gap:12px;align-items:flex-start}
+.perks .pi{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:0 0 auto;background:rgba(240,194,107,.12);color:#f0c26b}
+.perks .pi .ic{width:18px;height:18px}
+.perks b{display:block;font-size:15px;font-weight:600}
+.perks span{display:block;font-size:13.5px;color:var(--muted);line-height:1.4}
+.btn.gold{background:linear-gradient(135deg,#f7e3b5,#f0c26b);color:#000;height:54px;font-weight:600}
+.sup-note{margin:10px 0 0;text-align:center;font-size:12.5px;color:var(--faint)}
+.kofi{display:block;width:100%;height:min(640px,70dvh);border:0;border-radius:16px;background:#f9f9f9}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
 .confetti i{position:absolute;display:block}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
@@ -563,6 +583,8 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
   <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></symbol>
   <symbol id="i-vibrate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 8 2 2-2 2 2 2-2 2"/><path d="m22 8-2 2 2 2-2 2 2 2"/><rect width="8" height="14" x="8" y="5" rx="1"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
   <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
   <symbol id="i-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></symbol>
@@ -619,6 +641,7 @@ select.input{appearance:none;background-image:none}
   <button class="d-new" id="openVideo"><svg class="ic" aria-hidden="true"><use href="#i-clapperboard"/></svg>Video Studio<span class="tagp">Soon</span></button>
   <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
   <button class="d-new" id="openPlus"><svg class="ic" aria-hidden="true"><use href="#i-crown"/></svg>Vesper Plus<span class="tagp gold">New</span></button>
+  <button class="d-new" id="openSupport"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg>Support Vesper</button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot"><button id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
 </aside>
@@ -1446,7 +1469,7 @@ function renderSettingsRoot(w){
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
   ));
   w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()})));
-  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)}), row({icon:"message-square", title:"Contact us", sub:"Questions, ideas or problems", onclick:() => window.open("https://github.com/PushkarX-Code/vesper/issues", "_blank")})),
+  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()}), row({icon:"message-square", title:"Contact us", sub:"Questions, ideas or problems", onclick:() => window.open("https://github.com/PushkarX-Code/vesper/issues", "_blank")})),
     gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
 }
 function creativityWord(t){ return t < 0.45 ? "Focused" : t < 1.05 ? "Balanced" : "Wild"; }
@@ -1952,6 +1975,44 @@ function openLanding(id){
 }
 ["image", "video", "live", "plus"].forEach(id => { $("#open" + id[0].toUpperCase() + id.slice(1)).onclick = () => openLanding(id); });
 
+/* support: goal bar plus the Ko-fi panel inside the app */
+const SUPPORT = {raised:0, goal:250, api:"https://vesper-chat.netlify.app/api/support", kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
+const PERKS = [
+  ["sparkles", "Studios, sooner", "Image Studio and Video Studio move up the list"],
+  ["users", "Live Characters with real voices", "Seraphine, Aurelia and Scarlet, face to face"],
+  ["circle-check", "New verified characters every month", "Fresh personalities, made with care"],
+  ["download", "Vesper in the app stores", "Play Store and Microsoft Store versions"],
+  ["heart", "Free forever, no ads, no tracking", "Your support keeps it that way"],
+  ["crown", "Supporter perks", "Early access to new features and your name on the thanks wall, if you like"]
+];
+function openSupport(swap){
+  open("support", () => makePage("Support Vesper", w => {
+    const amt = h("b"), meta = h("div", {class:"meta"}), fill = h("i");
+    const paint = g => { const pct = Math.min(100, g.raised / g.goal * 100);
+      amt.textContent = "$" + g.raised.toLocaleString(); meta.innerHTML = ""; meta.append(h("span", {text:Math.round(pct) + "% of the goal"}), h("span", {text:"$" + Math.max(0, g.goal - g.raised).toLocaleString() + " to go"}));
+      requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = Math.max(3, pct) + "%"; })); };
+    const goalSpan = h("span", {text:"raised of $" + SUPPORT.goal + " goal"});
+    w.append(h("div", {class:"sup-hero"}, h("img", {src:iconFile("mark.webp"), alt:"", width:"360", height:"352"}),
+      h("h2", {text:"Keep Vesper free."}),
+      h("p", {text:"No ads. No tracking. No investors. A coffee keeps it growing."})),
+      h("div", {class:"goal"}, h("div", {class:"amt"}, amt, goalSpan), h("div", {class:"bar", role:"progressbar", "aria-label":"Support goal", "aria-valuemin":"0", "aria-valuemax":String(SUPPORT.goal), "aria-valuenow":String(SUPPORT.raised)}, fill), meta),
+      glabel("What your support builds"),
+      h("ul", {class:"perks"}, ...PERKS.map(([i, t, d]) => h("li", {}, h("span", {class:"pi", html:ic(i)}), h("div", {}, h("b", {text:t}), h("span", {text:d}))))),
+      h("button", {class:"btn gold block", type:"button", html:ic("coffee") + "Support with Ko-fi", onclick:() => openKofi()}),
+      h("p", {class:"sup-note", text:"Secure payment by Ko-fi. Vesper never sees your card."}));
+    paint(SUPPORT);
+    // live total from Ko-fi, counted by the Netlify function (only completed payments)
+    fetch(SUPPORT.api, {cache:"no-store"}).then(r => r.json()).then(v => {
+      if (v && +v.goal > 0) { const g = {raised:Math.max(0, +v.raised || 0), goal:+v.goal}; goalSpan.textContent = "raised of $" + g.goal + " goal"; paint(g); }
+    }).catch(() => {});
+  }), swap);
+}
+function openKofi(){
+  open("kofi", () => { const L = makeSheet("Support Vesper");
+    L.body.append(h("iframe", {class:"kofi", src:SUPPORT.kofi, title:"Support Vesper on Ko-fi", allow:"payment"})); return L; });
+}
+$("#openSupport").onclick = () => openSupport(true);
+
 /* chat background, like a phone wallpaper */
 const DOODLE = {
   chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/>',
@@ -2032,7 +2093,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "2.4";
+const APP_VERSION = "2.5";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
