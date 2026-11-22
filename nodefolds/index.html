@@ -78,7 +78,7 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .story{height:460vh}
 .story .pin{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;width:min(1180px,100% - 40px);margin:0 auto;overflow:visible}
 .texts{position:relative;height:300px}
-.tx{position:absolute;inset:0}.desktop-copy{display:none}
+.tx{position:absolute;inset:0}
 .ticks{display:flex;gap:8px;margin-top:8px}.ticks i{position:relative;width:46px;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.ticks i b{position:absolute;inset:0;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
 .stage{position:relative;height:min(80svh,740px);display:grid;place-items:center;perspective:1600px}
 .glow{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(110,168,255,.38),transparent 70%)}
@@ -90,20 +90,7 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .sbar .sic{display:flex;align-items:center;gap:1.4cqw}.sbar svg{height:2.9cqw;width:auto;fill:currentColor}.sbar svg:last-child{height:3.3cqw}
 .shots{position:absolute;left:0;right:0;top:6.4cqh;bottom:0;overflow:hidden}
 .screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
-.desktop-stage{display:none;position:relative;width:100%;max-width:1040px;perspective:1600px}
-.desktop-window{position:relative;padding:9px;border-radius:20px;background:linear-gradient(145deg,#3a3b40,#111216 30%,#292a30);box-shadow:0 55px 130px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.22);overflow:hidden}
-.desktop-toolbar{height:34px;display:flex;align-items:center;gap:8px;padding:0 10px 8px;color:#a8a8ae;font-size:11px;letter-spacing:.02em}
-.traffic{display:flex;gap:7px}.traffic i{display:block;width:11px;height:11px;border-radius:50%;box-shadow:inset 0 1px 1px rgba(0,0,0,.22)}.traffic i:nth-child(1){background:#ff5f57}.traffic i:nth-child(2){background:#febc2e}.traffic i:nth-child(3){background:#28c840}
-.desktop-title{position:absolute;left:50%;transform:translateX(-50%);font-size:11px;color:#8c8d94}
-.desktop-viewport{position:relative;aspect-ratio:16/9;border-radius:11px;overflow:hidden;background:#050506;box-shadow:0 0 0 1px rgba(255,255,255,.1)}.desktop-viewport::after{content:"";position:absolute;inset:0 52% 0 0;background:linear-gradient(90deg,#050506 0%,rgba(5,5,6,.96) 58%,rgba(5,5,6,.58) 84%,transparent 100%);z-index:3;pointer-events:none}
-.desktop-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;opacity:0;transform:translateY(10px) scale(1.025);will-change:transform,opacity}
-.desktop-base{height:8px;margin:0 20%;border-radius:0 0 10px 10px;background:linear-gradient(#414248,#18191d);box-shadow:0 10px 28px rgba(0,0,0,.5)}
-.desktop-stage .glow{width:105%;filter:blur(24px)}
-@media (min-width:1200px){
-  .story .pin{grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);gap:clamp(44px,6vw,100px);width:min(1500px,100% - 80px)}
-  .story .texts{height:350px}.story .texts h2{font-size:clamp(44px,5vw,72px)}.story .texts .sub{max-width:440px}.mobile-copy{display:none}.desktop-copy{display:block}
-  .stage{display:none}.desktop-stage{display:block;height:auto;align-self:center;z-index:1}
-}@media (max-width:860px){
+@media (max-width:860px){
   .story .pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;padding:92px 0 24px}
   .stage{height:min(52svh,560px);order:-1;perspective:none}
   .device{border-radius:34px;padding:7px}.screen{border-radius:28px}
@@ -230,10 +217,10 @@ footer a:hover{color:#fff}
   <div>
     <div class="eyebrow">Vesper by Node Folds</div>
     <div class="texts">
-      <div class="tx m"><div class="mobile-copy"><h2>Every free AI.<br>One private app.</h2><p class="sub">Gemini, Llama, Qwen, Mistral and dozens more. Switch with one tap when one runs out.</p></div><div class="desktop-copy"><h2>Your AI.<br>On your PC.</h2><p class="sub">Vesper finds the models that fit your hardware and runs them locally, even without internet.</p></div></div>
-      <div class="tx m"><div class="mobile-copy"><h2>Answers,<br>beautifully set.</h2><p class="sub">See how it thought, copy any part, keep every chat on your device.</p></div><div class="desktop-copy"><h2>Private when<br>you choose.</h2><p class="sub">Local models run on your PC. When you choose a cloud model, your request goes directly to that provider.</p></div></div>
-      <div class="tx m"><div class="mobile-copy"><h2>Characters with<br>a real voice.</h2><p class="sub">Ten verified personalities with their own stories. Or create your own.</p></div><div class="desktop-copy"><h2>Your keys.<br>Your providers.</h2><p class="sub">Connect with your own provider key. Your requests go straight to the service you choose.</p></div></div>
-      <div class="tx m"><div class="mobile-copy"><h2>Make it<br>yours.</h2><p class="sub">Six finishes that recolor the whole app, wallpapers for every mood, and memory that learns.</p></div><div class="desktop-copy"><h2>Built to<br>keep growing.</h2><p class="sub">More tools and improvements are on the way, with free updates for Vesper.</p></div></div>
+      <div class="tx m"><h2>Every free AI.<br>One private app.</h2><p class="sub">Gemini, Llama, Qwen, Mistral and dozens more. Switch with one tap when one runs out.</p></div>
+      <div class="tx m"><h2>Answers,<br>beautifully set.</h2><p class="sub">See how it thought, copy any part, keep every chat on your device.</p></div>
+      <div class="tx m"><h2>Characters with<br>a real voice.</h2><p class="sub">Ten verified personalities with their own stories. Or create your own.</p></div>
+      <div class="tx m"><h2>Make it<br>yours.</h2><p class="sub">Six finishes that recolor the whole app, wallpapers for every mood, and memory that learns.</p></div>
     </div>
     <div class="ticks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
   </div>
@@ -243,19 +230,6 @@ footer a:hover{color:#fff}
     <img class="m" src="img/companions.webp" alt="Vesper characters" width="760" height="1645">
     <img class="m" src="img/icons.webp" alt="Vesper app icon finishes" width="760" height="1645">
   </div></div></div></div>
-  <div class="desktop-stage" id="desktopDevice" aria-label="Vesper desktop app preview">
-    <div class="glow"></div>
-    <div class="desktop-window">
-      <div class="desktop-toolbar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><span class="desktop-title">Vesper</span></div>
-      <div class="desktop-viewport">
-        <img class="desktop-shot" src="img/desktop-local.webp" alt="Vesper selecting a local model for a PC" width="1456" height="819" loading="lazy">
-        <img class="desktop-shot" src="img/desktop-private.webp" alt="A private conversation in Vesper" width="1456" height="819" loading="lazy">
-        <img class="desktop-shot" src="img/desktop-providers.webp" alt="Vesper connecting directly to an AI provider" width="1456" height="819" loading="lazy">
-        <img class="desktop-shot" src="img/desktop-updates.webp" alt="New Vesper features and updates" width="1456" height="819" loading="lazy">
-      </div>
-    </div>
-    <div class="desktop-base" aria-hidden="true"></div>
-  </div>
 </div></section>
 
 <section class="scene mani" id="principles"><div class="pin"><div class="wrap">
@@ -407,7 +381,6 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
       // Keep the page readable without scroll-driven movement when motion is reduced.
       txs.forEach((el, i) => { el.style.display = i ? "none" : ""; });
       shots.forEach((el, i) => { el.style.display = i ? "none" : ""; });
-      desktopShots.forEach((el, i) => { el.style.opacity = i ? 0 : 1; });
       ticks.forEach((el, i) => { el.style.transform = i ? "scaleX(0)" : "scaleX(1)"; });
       words.forEach(el => { el.style.opacity = 1; });
       return;
@@ -429,23 +402,12 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
       : "translateY(" + ((1 - seE) * 28) + "vh) rotateX(" + ((1 - seE) * 32) + "deg) rotateY(" + (-12 + sp * 24) + "deg) scale(" + (.84 + seE * .12 + Math.sin(sp * Math.PI) * .04) + ")";
     $("#sglow").style.opacity = seE; $("#sglow").style.transform = "scale(" + (.6 + seE * .5 + sp * .2) + ")";
     const f = sp * 3.6;
-    if (innerWidth >= 1200) {
-      const tilt = 1 - seE;
-      $("#desktopDevice").style.transform = "translateY(" + (tilt * 12) + "vh) rotateX(" + (tilt * 7) + "deg) rotateY(" + (-5 + sp * 10) + "deg) scale(" + (.94 + seE * .06) + ")";
-    }
     // each new screen slides up over the last one; the one below sinks back a little
     shots.forEach((img, i) => { const inn = i === 0 ? 1 : ease(clamp((f - i + .55) / .55)), cov = i === 3 ? 0 : ease(clamp((f - i - .45) / .55));
       img.style.zIndex = i; img.style.transform = "translateY(" + ((1 - inn) * 100) + "%) scale(" + (1 - cov * .08) + ")"; img.style.opacity = 1 - cov * .45; });
     txs.forEach((t, i) => { const d = f - i; const a = Math.abs(i === 0 ? Math.max(0, d) : (i === 3 ? Math.min(0, d) : d)); const o = clamp(1 - (a - .3) / .2);
       t.style.opacity = o * clamp(seE * 1.4); t.style.transform = "translateY(" + (-d * 40) + "px)"; t.style.pointerEvents = o > .5 ? "auto" : "none"; });
     ticks.forEach((b, i) => b.style.transform = "scaleX(" + clamp(f - i + .5) + ")");
-    const chapter = Math.min(3, Math.max(0, f)), from = Math.floor(chapter), to = Math.min(3, from + 1), blendStory = chapter - from;
-    desktopShots.forEach((img, i) => {
-      const opacity = i === from ? 1 - blendStory : (i === to ? blendStory : 0);
-      img.style.zIndex = i === to ? 2 : 1;
-      img.style.opacity = opacity;
-      img.style.transform = "translateY(" + ((1 - opacity) * 12) + "px) scale(" + (1.025 + opacity * .025) + ")";
-    });
     // principles: words light up as you read
     const mp = sm("mani", R[2].p), lit = mp * 1.15 * words.length;
     words.forEach((w, i) => w.style.opacity = .13 + .87 * clamp(lit - i));
