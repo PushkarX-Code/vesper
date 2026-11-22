@@ -153,7 +153,7 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .btn.xl{height:62px;font-size:19px;box-shadow:0 18px 50px rgba(255,255,255,.12)}
 .btn.xl:hover{box-shadow:0 22px 70px rgba(255,255,255,.2)}
 .dlnote{font-size:14px;color:var(--muted)}.dlnote a.gh{display:inline-flex;align-items:center;gap:6px;color:#e8e8e6;margin-left:6px}.dlnote a.gh:hover{color:#fff}
-#dlBig{padding:0 34px 0 30px;gap:12px}#dlBig i{display:grid;place-items:center;width:24px;height:24px;filter:grayscale(1) brightness(0)}#dlBig i.color{filter:none}#dlBig i svg,#dlBig i img{width:22px!important;height:auto}
+#dlBig{padding:0 34px 0 30px;gap:12px}#dlBig i{display:grid;place-items:center;width:24px;height:24px;filter:grayscale(1) brightness(0)}#dlBig i.color{filter:none}#dlBig i{transform:translateY(-1.5px)}#dlBig i.apple{transform:translateY(-2px)}#dlBig i.win{transform:translateY(-.9px)}#dlBig i svg,#dlBig i img{width:22px!important;height:auto}
 #dlBig span{font-size:19px;font-weight:600;letter-spacing:-.01em}
 .btn.sm{height:38px;padding:0 18px;font-size:14px;margin-top:18px}
 .plat b{display:block;font-size:18px;margin-top:14px}.plat>span:not(.btn){font-size:13.5px;color:var(--muted);margin-top:2px}
@@ -334,7 +334,7 @@ document.getElementById("pgrid").innerHTML = PRODUCTS.map(p => '<article class="
   else if (/iPhone|iPad|Macintosh/i.test(ua)) pick = LINKS.appstore ? ["appstore", "Download on the", "App Store", "appstore"] : ["apple", "Get Vesper for", /iPad/i.test(ua) ? "iPad" : (/iPhone/i.test(ua) ? "iPhone" : "Mac"), "web"];
   else if (/Android/i.test(ua)) pick = LINKS.playstore ? ["playimg", "Get it on", "Google Play", "playstore"] : ["playimg", "Get Vesper for", "Android", "android"];
   else pick = ["github", "Get Vesper on", "GitHub", "github"];
-  document.getElementById("dlIc").innerHTML = IC[pick[0]]; document.getElementById("dlIc").classList.toggle("color", pick[0] === "playimg");
+  document.getElementById("dlIc").innerHTML = IC[pick[0]]; document.getElementById("dlIc").classList.toggle("color", pick[0] === "playimg"); document.getElementById("dlIc").classList.toggle("apple", pick[0] === "apple"); document.getElementById("dlIc").classList.toggle("win", pick[0] === "windows");
   document.getElementById("dlTxt").textContent = pick[1] + " " + pick[2]; b.dataset.link = pick[3];
   if (pick[0] === "apple") document.getElementById("dlNote").firstChild.textContent = /Macintosh/i.test(ua) && !/iPad/i.test(ua) ? "Opens in Safari. Choose File, Add to Dock. " : "Opens in Safari. Tap Share, then Add to Home Screen. ";
 })();
