@@ -86,8 +86,9 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .screen{position:relative;width:100%;height:100%;border-radius:37px;overflow:hidden;background:#000}
 .screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 @media (max-width:860px){
-  .story .pin{grid-template-columns:1fr;grid-template-rows:1fr auto;gap:0;padding:84px 0 28px}
-  .stage{height:58svh;order:-1}
+  .story .pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;padding:92px 0 24px}
+  .stage{height:min(52svh,560px);order:-1;perspective:none}
+  .device{border-radius:34px;padding:7px}.screen{border-radius:28px}
   .texts{height:190px}
   .story h2{font-size:34px}.story .sub{font-size:16px;margin-top:10px}
 }
@@ -151,7 +152,7 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 #dlBig span{font-size:19px;font-weight:600;letter-spacing:-.01em}
 .btn.sm{height:38px;padding:0 18px;font-size:14px;margin-top:18px}
 .plat b{display:block;font-size:18px;margin-top:14px}.plat>span:not(.btn){font-size:13.5px;color:var(--muted);margin-top:2px}
-.plat svg{width:30px;height:30px;color:#fff;margin:0 auto}.plat.soon{opacity:.55}
+.plat svg{width:30px;height:30px;color:#fff;margin:0 auto}.plat img.pl{height:30px;width:auto;margin:0 auto}.plat.soon{opacity:.55}
 .end{padding:16vh 0 10vh;text-align:center}
 footer{padding:30px 0 48px;color:var(--muted);font-size:12.5px;background:#0a0a0c;border-top:1px solid var(--line);position:relative;z-index:1}
 footer .fine{margin:0 0 22px;padding-bottom:18px;border-bottom:1px solid var(--line);line-height:1.6}
@@ -161,7 +162,7 @@ footer .fine{margin:0 0 22px;padding-bottom:18px;border-bottom:1px solid var(--l
 .dir a{display:block;padding:4px 0;color:var(--muted)}
 .social{display:flex;gap:10px;padding:20px 0}
 .social a{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line);color:#d8d8d5;transition:background .2s,color .2s}
-.social a:hover{background:rgba(255,255,255,.08);color:#fff}.social svg{width:17px;height:17px}.social img{width:18px;height:auto}
+.social a:hover{background:rgba(255,255,255,.08);color:#fff}.social svg{width:17px;height:17px}.social img{width:18px;height:auto;filter:grayscale(1) brightness(1.6)}
 .legal{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.legal span:last-child{display:flex;gap:18px}
 footer a:hover{color:#fff}
 @media (prefers-reduced-motion:reduce){.grain{animation:none}.ln>span,.fade,.mark .q,.mark .gl{animation-duration:.01ms!important;animation-delay:0s!important}}
@@ -257,9 +258,9 @@ footer a:hover{color:#fff}
   <p class="sub rv" style="margin:18px auto 0">Free on every screen you own. No account needed.</p>
   <div class="prow">
     <div class="plat rv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10 4.5v7H3zM11 4.3 21 3v8.5H11zM3 12.5h7v7l-7-1zM11 12.5h10V21l-10-1.4z"/></svg><b>Windows</b><span>Offline models built in</span><a class="btn w sm" data-link="windows">Download</a></div>
-    <div class="plat rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><b>Android</b><span>Open in Chrome, tap Install</span><a class="btn w sm" data-link="android">Install</a></div>
+    <div class="plat rv"><img class="pl" src="img/brand/play.png" alt=""><b>Android</b><span>Open in Chrome, tap Install</span><a class="btn w sm" data-link="android">Install</a></div>
     <div class="plat rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg><b>Web</b><span>Any browser, right now</span><a class="btn w sm" data-link="web">Open</a></div>
-    <div class="plat soon rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><b>Mac</b><span>Coming later</span><span class="btn g sm" aria-disabled="true">Soon</span></div>
+    <div class="plat soon rv"><img class="pl" src="img/brand/apple.png" alt="" style="filter:brightness(0) invert(1)"><b>Mac</b><span>Coming later</span><span class="btn g sm" aria-disabled="true">Soon</span></div>
   </div>
 </div></section>
 
@@ -326,7 +327,7 @@ document.getElementById("pgrid").innerHTML = PRODUCTS.map(p => '<article class="
   let pick;
   if (/Windows/i.test(ua)) pick = LINKS.msstore ? ["msstore", "Get it from the", "Microsoft Store", "msstore"] : ["windows", "Download for", "Windows", "windows"];
   else if (/iPhone|iPad|Macintosh/i.test(ua)) pick = LINKS.appstore ? ["appstore", "Download on the", "App Store", "appstore"] : ["apple", "Get Vesper for", /iPad/i.test(ua) ? "iPad" : (/iPhone/i.test(ua) ? "iPhone" : "Mac"), "web"];
-  else if (/Android/i.test(ua)) pick = LINKS.playstore ? ["playimg", "Get it on", "Google Play", "playstore"] : ["android", "Get Vesper for", "Android", "android"];
+  else if (/Android/i.test(ua)) pick = LINKS.playstore ? ["playimg", "Get it on", "Google Play", "playstore"] : ["playimg", "Get Vesper for", "Android", "android"];
   else pick = ["github", "Get Vesper on", "GitHub", "github"];
   document.getElementById("dlIc").innerHTML = IC[pick[0]];
   document.getElementById("dlTxt").textContent = pick[1] + " " + pick[2]; b.dataset.link = pick[3];
@@ -374,7 +375,8 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
     // story: the phone rises, turns, and the screens slide by
     const st = R[1], sp = sm("story", st.p), se = sm("storyIn", st.enter), seE = ease(se);
     const dev = $("#device");
-    dev.style.transform = "translateY(" + ((1 - seE) * 28) + "vh) rotateX(" + ((1 - seE) * 32) + "deg) rotateY(" + (-12 + sp * 24) + "deg) scale(" + (.84 + seE * .12 + Math.sin(sp * Math.PI) * .04) + ")";
+    dev.style.transform = innerWidth <= 860 ? "translateY(" + ((1 - seE) * 12) + "vh) scale(" + (.92 + seE * .08) + ")"
+      : "translateY(" + ((1 - seE) * 28) + "vh) rotateX(" + ((1 - seE) * 32) + "deg) rotateY(" + (-12 + sp * 24) + "deg) scale(" + (.84 + seE * .12 + Math.sin(sp * Math.PI) * .04) + ")";
     $("#sglow").style.opacity = seE; $("#sglow").style.transform = "scale(" + (.6 + seE * .5 + sp * .2) + ")";
     const f = sp * 3.6;
     // each new screen slides up over the last one; the one below sinks back a little
