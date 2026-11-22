@@ -3,67 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Privacy Policy · Node Folds</title>
-<meta name="description" content="How Vesper and Node Folds handle your data.">
-<meta name="theme-color" content="#000000">
+<title>Privacy · Node Folds</title>
+<meta name="description" content="A clear guide to how Vesper and Node Folds handle information.">
+<meta name="theme-color" content="#08080a">
 <link rel="icon" href="img/nf-icon.svg" type="image/svg+xml">
+<link rel="preload" href="inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:Inter;src:url(inter-var.woff2) format("woff2");font-weight:100 900;font-display:swap}
-html{background:#000;color:#f5f5f4;font-family:Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-body{margin:0}a{color:#6ea8ff}
-main{width:min(720px,100% - 40px);margin:0 auto;padding:72px 0 96px;line-height:1.65;color:#c9c9c6;font-size:16.5px}
-.top{display:inline-flex;align-items:center;gap:10px;color:#f5f5f4;text-decoration:none;font-weight:600}.top img{width:28px;height:28px;border-radius:8px}
-h1{color:#f5f5f4;font-size:44px;letter-spacing:-.03em;line-height:1.1;margin:48px 0 8px}
-h2{color:#f5f5f4;font-size:20px;letter-spacing:-.01em;margin:40px 0 8px}
-.date{color:#8e8e8b;font-size:14px;margin:0 0 32px}
-li{margin:6px 0}
+:root{color-scheme:dark;--bg:#08080a;--fg:#f5f5f4;--soft:#c6c6c9;--muted:#85858d;--line:rgba(255,255,255,.1);--blue:#83b4ff;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}body{margin:0}a{color:inherit;text-decoration:none}a:hover{color:#fff}a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+.wrap{width:min(1160px,100% - 48px);margin:auto}.topbar{height:76px;border-bottom:1px solid var(--line)}.topbar .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{display:inline-flex;align-items:center;gap:11px;font-size:15px;font-weight:600;letter-spacing:-.02em}.brand img{width:30px;height:30px;border-radius:8px}.toplinks{display:flex;align-items:center;gap:25px;color:var(--muted);font-size:13px}.toplinks a[aria-current=page]{color:var(--fg)}
+.hero{padding:82px 0 52px;border-bottom:1px solid var(--line);background:radial-gradient(60% 100% at 20% 0%,rgba(100,148,255,.11),transparent 75%)}.eyebrow{margin:0 0 18px;color:var(--blue);font-size:11px;font-weight:650;letter-spacing:.18em;text-transform:uppercase}.hero h1{max-width:820px;margin:0;font-size:clamp(52px,8vw,92px);font-weight:560;letter-spacing:-.075em;line-height:.98}.lead{max-width:760px;margin:24px 0 0;color:var(--soft);font-size:clamp(17px,2vw,20px);line-height:1.65}.meta{display:flex;align-items:center;gap:10px;margin-top:30px;color:var(--muted);font-size:12px;letter-spacing:.04em}.meta i{width:4px;height:4px;border-radius:50%;background:#62626a}
+.layout{display:grid;grid-template-columns:190px minmax(0,760px);justify-content:space-between;gap:64px;padding:58px 0 100px}.toc{position:sticky;top:28px;align-self:start;border-left:1px solid var(--line);padding-left:18px}.toc h2{margin:0 0 15px;color:var(--muted);font-size:10px;letter-spacing:.15em;text-transform:uppercase}.toc a{display:block;padding:7px 0;color:var(--muted);font-size:12.5px;line-height:1.4;transition:color .2s}.toc a:hover{color:var(--fg)}article{min-width:0}.intro{margin:0 0 38px;padding:24px 26px;border:1px solid rgba(131,180,255,.2);border-radius:18px;background:linear-gradient(130deg,rgba(131,180,255,.09),rgba(255,255,255,.025));color:var(--soft);font-size:15px;line-height:1.7}.intro strong{color:var(--fg)}.policy-section{padding:30px 0;border-top:1px solid var(--line);scroll-margin-top:24px}.policy-section h2{margin:0 0 13px;font-size:22px;font-weight:580;letter-spacing:-.035em}.policy-section p,.policy-section li{color:var(--soft);font-size:15px;line-height:1.8}.policy-section p{margin:10px 0}.policy-section ul{margin:12px 0;padding-left:20px}.policy-section li{padding-left:5px;margin:7px 0}.policy-section a,.contact-link{color:var(--blue);text-decoration:underline;text-decoration-color:rgba(131,180,255,.4);text-underline-offset:3px}.policy-section a:hover,.contact-link:hover{color:#fff;text-decoration-color:currentColor}.policy-footer{padding:28px 0 36px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.policy-footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.policy-footer nav{display:flex;gap:20px}.policy-footer a:hover{color:var(--fg)}
+@media(max-width:760px){.wrap{width:min(100% - 36px,600px)}.topbar{height:66px}.toplinks{gap:16px;font-size:12px}.hero{padding:64px 0 40px}.layout{display:block;padding:34px 0 70px}.toc{position:static;margin-bottom:34px;padding:0 0 18px;border:0;border-bottom:1px solid var(--line)}.toc h2{margin-bottom:9px}.toc nav{display:flex;gap:8px;overflow-x:auto}.toc a{flex:0 0 auto;padding:8px 11px;border:1px solid var(--line);border-radius:999px}.intro{padding:20px}.policy-section{padding:24px 0}.policy-footer .wrap{flex-direction:column}}
+@media(max-width:420px){.toplinks{gap:11px}.toplinks a:first-child{display:none}.hero h1{font-size:50px}.policy-section h2{font-size:20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
+<header class="topbar"><div class="wrap"><a class="brand" href="./"><img src="img/nf-icon-180.png" alt=""><span>Node Folds</span></a><nav class="toplinks" aria-label="Main"><a href="./">Company</a><a href="privacy" aria-current="page">Privacy</a><a href="terms">Terms</a></nav></div></header>
 <main>
-  <a class="top" href="./"><img src="img/nf-icon-180.png" alt="">Node Folds</a>
-  <h1>Privacy Policy</h1>
-  <p class="date">Updated November 22, 2026</p>
-  <p>This policy covers Vesper (the web app, Android install and Windows app) and the Node Folds website. Vesper has no accounts and Node Folds does not collect or store your chats, prompts, API keys or personal profile.</p>
-
-  <h2>What stays private</h2>
-  <p>Vesper has no analytics, ads or behavioral tracking. We do not run a chat server. When you use the website or load Vesper, the hosting and delivery services that serve those pages may process basic connection details, such as your IP address, browser information, requested page and request time, for delivery, reliability and security. Node Folds does not use that information for advertising or analytics. Those providers handle their own service logs under their own policies.</p>
-
-  <h2>What stays on your device</h2>
-  <ul>
-    <li>Your chats, characters, memory, settings and wallpapers.</li>
-    <li>Your API keys for the AI providers you choose.</li>
-    <li>On Windows, the models you download and run on your PC.</li>
-  </ul>
-  <p>Clearing the app data or uninstalling Vesper deletes all of it.</p>
-
-  <h2>Who Vesper talks to</h2>
-  <ul>
-    <li><b>The AI provider you pick.</b> When you send a message, it goes straight from your device to that provider with your key. Their privacy terms apply to that message.</li>
-    <li><b>Hugging Face</b>, only when you download a model on Windows.</li>
-    <li><b>A local model server</b> you set up yourself, if you add one.</li>
-    <li><b>Our support counter</b>, when you open the Support Vesper panel. It returns the public total and does not receive your chats or API keys.</li>
-    <li><b>Ko-fi</b>, if you choose to support us. Ko-fi processes your payment under its own privacy policy. For completed payments, Ko-fi sends our counter a webhook. We store the transaction identifier, amount, currency, payment type and timestamp in Netlify Blobs to prevent duplicate counting and maintain the total. We do not store the payer's name, email address or message in that counter.</li>
-  </ul>
-
-  <h2>Model downloads</h2>
-  <p>When you choose to download a Windows model, Vesper requests that file from Hugging Face. Your chats and API keys are not part of the model download request.</p>
-
-  <h2>Photos and files</h2>
-  <p>Photos and files you attach are sent from your device to the AI provider you picked, as part of that message. Review that provider's terms and privacy policy before sending sensitive material.</p>
-
-  <h2>Children</h2>
-  <p>Vesper is not made for children under 13 and we do not knowingly collect data from anyone.</p>
-
-  <h2>When you contact us</h2>
-  <p>If you email support or privacy, we receive the address and message you send so we can respond and handle your request. Cloudflare Email Routing forwards these messages to our mailbox provider, which processes them under its own privacy terms. Please do not include API keys or sensitive chat content in a support email.</p>
-
-  <h2>Changes</h2>
-  <p>If this policy changes, we will update this page and the date above.</p>
-
-  <h2>Contact</h2>
-  <p>Questions about privacy? Email <a href="mailto:privacy@nodefolds.com">privacy@nodefolds.com</a>. For anything else, <a href="mailto:support@nodefolds.com">support@nodefolds.com</a>.</p>
+  <section class="hero"><div class="wrap"><p class="eyebrow">Privacy at Node Folds</p><h1>Your conversations<br>stay yours.</h1><p class="lead">Vesper is built to keep chats, memory and provider keys on your device. This page explains what stays local, what leaves your device when you choose a service, and how to reach us.</p><div class="meta"><span>Updated November 22, 2026</span><i></i><span>Applies to Vesper and nodefolds.com</span></div></div></section>
+  <div class="wrap layout">
+    <aside class="toc"><h2>On this page</h2><nav aria-label="Privacy sections"><a href="#who">Who we are</a><a href="#device">Data on your device</a><a href="#services">Services you choose</a><a href="#site">Website and support</a><a href="#retention">Retention and choices</a><a href="#children">Children</a><a href="#changes">Changes and contact</a></nav></aside>
+    <article>
+      <p class="intro"><strong>The short version:</strong> Vesper has no account system and no chat server. Node Folds does not receive your conversations or provider keys. When you choose a model or another connected service, the information needed for that service goes directly to its provider.</p>
+      <section class="policy-section" id="who"><h2>1. Who we are</h2><p>Node Folds publishes Vesper and operates the Node Folds website. For questions about this policy or a privacy request, contact <a href="mailto:privacy@nodefolds.com">privacy@nodefolds.com</a>.</p><p>This policy covers the Vesper web app, its installable browser version, the Windows app, and nodefolds.com.</p></section>
+      <section class="policy-section" id="device"><h2>2. Information kept on your device</h2><p>Vesper stores your chats, characters, memory, settings, wallpapers and provider keys in app storage on your device. The Windows app also stores the model files you choose to download. Node Folds does not receive these items through a Vesper account or chat service.</p><p>Private chats are not added to saved chat history or memory. If you clear Vesper's browser or app data, the local information is removed from that device. Keep your own export if you want a backup.</p></section>
+      <section class="policy-section" id="services"><h2>3. Services you choose</h2><ul><li><strong>AI providers.</strong> When you send a prompt, the prompt, relevant conversation context, attachments and your provider key are sent from your device to the AI provider you selected. That provider handles the request under its own terms and privacy policy.</li><li><strong>Model downloads.</strong> If you download a Windows model, your device requests that file from Hugging Face. Your chats and provider keys are not part of that download request.</li><li><strong>Local model servers.</strong> If you connect a model running on a device or server you control, Vesper sends requests to the address you configured.</li><li><strong>Payments.</strong> If you choose to support Vesper, Ko-fi processes the payment under its own terms and privacy policy.</li></ul></section>
+      <section class="policy-section" id="site"><h2>4. Website, support and payments</h2><p>Cloudflare delivers the Node Folds website. Hosting and delivery providers may process connection details such as your IP address, browser and device information, requested page, and request time to provide and protect the service. Node Folds does not use this information for advertising or behavioral analytics. Each provider's own policy describes its logs and retention.</p><p>The Vesper support panel requests the public support total from our Netlify function. The request does not include your chats or provider keys. For a completed Ko-fi payment, Ko-fi sends our function a payment notification. To prevent duplicate counts and maintain totals, we store the transaction identifier, amount, currency, payment type and timestamp in Netlify Blobs. We do not store the payer's name, email address or message in that counter.</p><p>If you email us, Cloudflare Email Routing forwards your message to our mailbox provider. We receive the email address and message you send so we can respond and handle your request. Do not include a provider key or sensitive chat content in a support email.</p></section>
+      <section class="policy-section" id="retention"><h2>5. Retention and your choices</h2><p>Local Vesper data remains on your device until you remove it. Support messages are kept in our mailbox while they are useful for responding and operating support. Payment identifiers and amounts remain in the support counter while needed to prevent duplicate counting and maintain totals. Hosting and delivery providers may keep their own logs under their policies.</p><p>You can choose another AI provider, avoid sending a prompt or attachment, remove local app data, or contact us about information in a support message or payment record. We do not sell personal information or use it for targeted advertising. If local law gives you additional rights, contact us and we will handle your request under that law.</p></section>
+      <section class="policy-section" id="children"><h2>6. Children</h2><p>Vesper is not designed for children under 13. We do not knowingly collect personal information from children through a Vesper account. If you believe a child has sent us personal information by email, contact us so we can review it.</p></section>
+      <section class="policy-section" id="changes"><h2>7. Changes and contact</h2><p>We may update this page as Vesper or its services change. The date at the top shows the latest revision.</p><p>Privacy questions and requests: <a href="mailto:privacy@nodefolds.com">privacy@nodefolds.com</a>. Product support: <a href="mailto:support@nodefolds.com">support@nodefolds.com</a>.</p></section>
+    </article>
+  </div>
 </main>
+<footer class="policy-footer"><div class="wrap"><span>Copyright © 2026 Node Folds</span><nav aria-label="Legal"><a href="privacy" aria-current="page">Privacy</a><a href="terms">Terms of use</a><a href="mailto:support@nodefolds.com">Support</a></nav></div></footer>
 </body>
 </html>
 
