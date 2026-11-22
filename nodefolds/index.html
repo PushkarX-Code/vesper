@@ -168,9 +168,10 @@ footer .fine{margin:0 0 22px;padding-bottom:18px;border-bottom:1px solid var(--l
 .social{display:flex;gap:10px;padding:20px 0}
 .social a{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line);color:#d8d8d5;transition:background .2s,color .2s}
 .social a:hover{background:rgba(255,255,255,.08);color:#fff}.social svg{width:17px;height:17px}.social img{width:18px;height:auto;filter:grayscale(1) brightness(1.6)}
+.contact-email{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px;color:var(--soft)}.contact-email code{font:500 15px Inter,ui-sans-serif,system-ui,sans-serif;color:#fff}.contact-email button{font:inherit;cursor:pointer}
 .legal{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.legal span:last-child{display:flex;gap:18px}
 footer a:hover{color:#fff}
-@media (prefers-reduced-motion:reduce){.grain{animation:none}.ln>span,.fade,.mark .q,.mark .gl{animation-duration:.01ms!important;animation-delay:0s!important}}
+@media (prefers-reduced-motion:reduce){.grain{animation:none}.ln>span,.fade,.mark .q,.mark .gl{animation-duration:.01ms!important;animation-delay:0s!important}.rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
@@ -272,7 +273,15 @@ footer a:hover{color:#fff}
 <section class="end" id="support"><div class="wrap">
   <h2 class="rv">Keep it free.<br><span class="grad">Help it grow.</span></h2>
   <p class="sub rv" style="margin:20px auto 0">Node Folds is independent. No investors, no ads. If our tools make your day better, a coffee keeps them growing.</p>
-  <div class="ctas rv"><a class="btn w" data-link="kofi">Support on Ko-fi</a><a class="btn g" data-link="contact">Contact us</a></div>
+  <div class="ctas rv"><a class="btn w" data-link="kofi">Support on Ko-fi</a><a class="btn g" href="#contact">Contact us</a></div>
+</div></section>
+
+<section class="end" id="contact"><div class="wrap">
+  <div class="eyebrow rv">Support</div>
+  <h2 class="rv">Need a hand?</h2>
+  <p class="sub rv" style="margin:20px auto 0">Email us about Vesper, share feedback or report a problem. Choose the option that works on your device.</p>
+  <div class="ctas rv"><a class="btn w" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=support%40nodefolds.com" target="_blank" rel="noopener">Open Gmail</a><a class="btn g" href="https://github.com/PushkarX-Code/vesper/issues/new" target="_blank" rel="noopener">Report a problem on GitHub</a></div>
+  <div class="contact-email rv"><span>Email us at <code id="supportEmail">support@nodefolds.com</code></span><button class="btn g" id="copySupportEmail" type="button">Copy address</button><span id="copySupportStatus" role="status" aria-live="polite"></span></div>
 </div></section>
 
 <footer>
@@ -281,7 +290,7 @@ footer a:hover{color:#fff}
     <div class="dir">
       <div><h4>Explore</h4><a href="#vesper">Vesper</a><a data-link="windows">Vesper for Windows</a><a href="#vesper">Characters</a><a data-link="web">Open in browser</a></div>
       <div><h4>Coming soon</h4><a href="#studio">Image Studio</a><a href="#studio">Video Studio</a><a href="#studio">Vesper Plus</a></div>
-      <div><h4>Support</h4><a data-link="contact">Contact us</a><a data-link="contact">Report a problem</a><a data-link="kofi">Support on Ko-fi</a><a data-link="web">Learn inside Vesper</a></div>
+      <div><h4>Support</h4><a href="#contact">Contact us</a><a href="#contact">Report a problem</a><a data-link="kofi">Support on Ko-fi</a><a data-link="web">Learn inside Vesper</a></div>
       <div><h4>Node Folds</h4><a href="#top">About us</a><a href="#principles">Principles</a><a data-link="github">Open source</a><a data-link="email">Email us</a></div>
     </div>
     <div class="social"><a data-link="x" data-keep aria-label="Node Folds on X"><img src="img/brand/x.png" alt=""></a><a data-link="instagram" aria-label="Node Folds on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a><a data-link="youtube" aria-label="Node Folds on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24 24 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24 24 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a><a data-link="linkedin" aria-label="Node Folds on LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a data-link="reddit" data-keep aria-label="Node Folds on Reddit"><img src="img/brand/reddit.png" alt=""></a><a data-link="github" data-keep aria-label="Node Folds on GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.1-1.3-.3-2.5-1-3.5.3-1.2.3-2.4 0-3.5 0 0-1 0-3 1.5a13.4 13.4 0 0 0-8 0C6 2 5 2 5 2c-.3 1.1-.3 2.3 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.4.5-.7 1.1-.8 1.7-.2.6-.2 1.2-.2 1.8v4"/><path d="M9 18c-4.5 2-5-2-7-2"/></svg></a><a data-link="email" aria-label="Node Folds on Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></a></div>
@@ -297,7 +306,6 @@ const LINKS = {
   web: "https://vesper-chat.netlify.app",
   msstore: "", appstore: "", playstore: "",   // add store links here when Vesper is listed
   kofi: "https://ko-fi.com/buymeacofi",
-  contact: "mailto:support@nodefolds.com",
   github: "https://github.com/PushkarX-Code/vesper",
   privacy: "privacy",
   terms: "terms",
@@ -340,6 +348,11 @@ document.getElementById("pgrid").innerHTML = PRODUCTS.map(p => '<article class="
 })();
 document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.dataset.link]; if (u) { a.href = u; if (/^https?:/.test(u) && !u.includes(location.host)) { a.target = "_blank"; a.rel = "noopener"; } }
   else if (a.hasAttribute("data-keep")) { a.href = "#"; a.setAttribute("aria-disabled", "true"); a.title = "Coming soon"; a.addEventListener("click", e => e.preventDefault()); } else a.hidden = true; });
+document.getElementById("copySupportEmail").addEventListener("click", async () => {
+  const email = document.getElementById("supportEmail").textContent, status = document.getElementById("copySupportStatus");
+  try { await navigator.clipboard.writeText(email); status.textContent = "Copied"; }
+  catch { status.textContent = "Select and copy the address above"; }
+});
 (() => {
   const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -367,6 +380,14 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
   let maxScroll = 1; const measure = () => { maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight); };
   const at = (top, height, vh) => ({ p: clamp(-top / (height - vh)), enter: clamp(1 - top / vh) });
   function render(){
+    if (RM) {
+      // Keep the page readable without scroll-driven movement when motion is reduced.
+      txs.forEach((el, i) => { el.style.display = i ? "none" : ""; });
+      shots.forEach((el, i) => { el.style.display = i ? "none" : ""; });
+      ticks.forEach((el, i) => { el.style.transform = i ? "scaleX(0)" : "scaleX(1)"; });
+      words.forEach(el => { el.style.opacity = 1; });
+      return;
+    }
     const vh = innerHeight, y = scrollY;
     const R = [hero, story, mani, theater].map(el => { const r = el.getBoundingClientRect(); return at(r.top, r.height, vh); });
     $("#bar").style.transform = "scaleX(" + sm("bar", y / maxScroll) + ")";
@@ -405,11 +426,14 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
     tts[1].style.opacity = cut; tts[1].style.transform = "translateY(" + ((1 - cut) * 30) + "px)";
     // the rest rises in gently
   }
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {rootMargin:"0px 0px -8% 0px"});
-  rvs.forEach(el => io.observe(el));
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {rootMargin:"0px 0px -8% 0px"});
+    rvs.forEach(el => io.observe(el));
+  } else rvs.forEach(el => el.classList.add("in"));
   addEventListener("scroll", kick, {passive:true}); addEventListener("resize", () => { measure(); kick(); }); addEventListener("load", measure); measure();
   render(); kick();
 })();
 </script>
 </body>
 </html>
+
