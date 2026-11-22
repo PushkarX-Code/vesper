@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8a3d"/>
+      <stop offset=".5" stop-color="#ff4d0a"/>
+      <stop offset="1" stop-color="#c42a00"/>
+    </linearGradient>
+    <linearGradient id="white" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f1ece8"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd9c4"/>
+      <stop offset="1" stop-color="#ffb48c"/>
+    </linearGradient>
+    <mask id="mark">
+      <rect width="100" height="100" fill="#fff"/>
+      <path d="M50 8C52 38 62 48 92 50C62 52 52 62 50 92C48 62 38 52 8 50C38 48 48 38 50 8Z" fill="#000"/>
+      <rect x="48.4" width="3.2" height="100" fill="#000"/>
+      <rect y="48.4" width="100" height="3.2" fill="#000"/>
+    </mask>
+    <g id="quarter">
+      <path d="M27 8H44a6 6 0 0 1 6 6V44a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V27Z" fill="url(#white)"/>
+      <path d="M8 27 27 8V24a3 3 0 0 1-3 3Z" fill="url(#fold)"/>
+    </g>
+  </defs>
+  <rect width="100" height="100" rx="24" fill="url(#tile)"/>
+  <g transform="translate(17 17) scale(.66)" mask="url(#mark)">
+    <use href="#quarter"/>
+    <use href="#quarter" transform="rotate(90 50 50)"/>
+    <use href="#quarter" transform="rotate(180 50 50)"/>
+    <use href="#quarter" transform="rotate(270 50 50)"/>
+  </g>
+</svg>
