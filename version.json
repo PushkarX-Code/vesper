@@ -1,7 +1,7 @@
 {
-  "version": "2.6",
-  "notes": [
-    "Meet Adam and Eve, the first humans, in the Garden of Eden",
-    "Characters now have full profiles: age, birthday, zodiac, likes and more"
-  ]
+ "version": "2.7",
+ "notes": [
+  "Desktop layout: the sidebar now stays open on big screens and in the Windows app",
+  "Classic dark wallpaper is the new default"
+ ]
 }
