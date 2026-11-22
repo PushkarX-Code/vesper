@@ -12,7 +12,7 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Design: pure black, quiet, premium, Grok like feel but original. Accent blue `#6ea8ff`. The logo is five curved chrome blades around a star shaped opening: `icons/chrome/mark.webp` (3D), `icons/logo.svg` (flat), source in `design/logo/`.
 - Ships as a PWA (the owner cannot sideload APKs).
 - Screenshots for the README, stores or promos are never plain captures: always the edited, premium SaaS style art (dark backdrop, headline and short line of text, screen in a frame), like the README images from `docs/art/make-art.js`.
-- Desktop look: on wide screens and in the Windows app the sidebar stays docked on the left (`body.dock`, `applyDock()`), like a desktop chat app, never a stretched phone layout. Default wallpaper is Classic (dark).
+- Desktop look: on wide screens and in the Windows app the sidebar stays docked on the left (`body.dock`, `applyDock()`), like a desktop chat app, never a stretched phone layout. Default theme is pure black with no wallpaper (`none`); never make a textured wallpaper the default.
 
 ## How the UI works
 - Every panel (drawer, bottom sheet, full screen page, dialog) is a layer opened with `open(id, factory, swap)` and closed with `closeTop()` or `closeAll()`. Layers sit in one stack mirrored in browser history, so Android back closes the top one.

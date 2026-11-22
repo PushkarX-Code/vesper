@@ -781,7 +781,7 @@ function load(){
   s.memory = Array.isArray(s.memory) ? s.memory.filter(m => m && m.text) : [];
   s.haptics = s.haptics !== false;
   s.waitlist = s.waitlist && typeof s.waitlist === "object" ? s.waitlist : {};
-  s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","night","geo","organic","mono","ocean","cream","sage","paper","sky","blush","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"classic", dim:35};
+  s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","night","geo","organic","mono","ocean","cream","sage","paper","sky","blush","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"none", dim:35};
   s.companions = Array.isArray(s.companions) ? s.companions.filter(x => x && x.id && x.name) : [];
   s.open = s.open === true;
   if (!s.models.some(m => mk(m) === s.model)) s.model = mk(s.models.find(m => ready(m.p, s)) || s.models[0]);
