@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Contact Node Folds · Support</title>
+<meta name="description" content="Get product support, report a problem, or contact the Node Folds team.">
+<meta name="theme-color" content="#08080a">
+<link rel="icon" href="img/nodefolds-logo.svg" type="image/svg+xml">
+<link rel="preload" href="inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Inter;src:url(inter-var.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{color-scheme:dark;--bg:#08080a;--fg:#f5f5f4;--soft:#c6c6c9;--muted:#85858d;--line:rgba(255,255,255,.1);--blue:#83b4ff;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}body{margin:0}a{color:inherit;text-decoration:none}a:hover{color:#fff}a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+.wrap{width:min(1160px,100% - 48px);margin:auto}.topbar{height:76px;border-bottom:1px solid var(--line)}.topbar .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{display:inline-flex;align-items:center;gap:11px;font-size:15px;font-weight:600;letter-spacing:-.02em}.brand img{width:32px;height:32px;border-radius:9px}.toplinks{display:flex;align-items:center;gap:25px;color:var(--muted);font-size:13px}.toplinks a[aria-current=page]{color:var(--fg)}
+.hero{padding:88px 0 72px;border-bottom:1px solid var(--line);background:radial-gradient(60% 100% at 20% 0%,rgba(100,148,255,.11),transparent 75%)}.eyebrow{margin:0 0 18px;color:var(--blue);font-size:11px;font-weight:650;letter-spacing:.18em;text-transform:uppercase}.hero h1{max-width:850px;margin:0;font-size:clamp(54px,8vw,96px);font-weight:560;letter-spacing:-.075em;line-height:.98}.lead{max-width:720px;margin:24px 0 0;color:var(--soft);font-size:clamp(17px,2vw,20px);line-height:1.65}
+main .wrap{max-width:980px}.channels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:58px 0 54px}.channel{min-height:240px;padding:28px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));display:flex;flex-direction:column;align-items:flex-start;transition:transform .35s var(--ease),border-color .25s,background .25s}.channel:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.2);background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025))}.channel .label{color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}.channel h2{margin:24px 0 10px;font-size:25px;font-weight:560;letter-spacing:-.04em}.channel p{max-width:370px;margin:0;color:var(--soft);font-size:14px;line-height:1.75}.channel .action{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:22px;color:var(--blue);font-size:14px;font-weight:600}.action span{transition:transform .2s}.channel:hover .action span{transform:translateX(3px)}
+.guidance{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:36px 0 86px;border-top:1px solid var(--line)}.guidance h2{margin:0 0 13px;font-size:21px;font-weight:560;letter-spacing:-.035em}.guidance p,.guidance li{color:var(--soft);font-size:14px;line-height:1.8}.guidance ul{margin:12px 0;padding-left:20px}.guidance li{margin:6px 0}.guidance a{color:var(--blue);text-decoration:underline;text-decoration-color:rgba(131,180,255,.4);text-underline-offset:3px}
+footer{padding:26px 0 34px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.foot nav{display:flex;gap:20px}.foot a:hover{color:var(--fg)}
+@media(max-width:700px){.wrap{width:min(100% - 36px,600px)}.topbar{height:66px}.toplinks{gap:16px;font-size:12px}.hero{padding:65px 0 50px}.channels{grid-template-columns:1fr;padding:34px 0}.channel{min-height:205px;padding:24px}.guidance{grid-template-columns:1fr;gap:22px;padding:28px 0 60px}}
+@media(max-width:420px){.toplinks{gap:12px}.toplinks a:first-child{display:none}.hero h1{font-size:52px}.foot{flex-direction:column}.foot nav{gap:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap"><a class="brand" href="./"><img src="img/nodefolds-logo.svg" alt=""><span>Node Folds</span></a><nav class="toplinks" aria-label="Main"><a href="./">Company</a><a href="./#vesper">Vesper</a><a href="support" aria-current="page">Support</a><a href="privacy">Privacy</a></nav></div></header>
+<main>
+  <section class="hero"><div class="wrap"><p class="eyebrow">Node Folds support</p><h1>Contact Node Folds.</h1><p class="lead">Choose the right path for product support, problem reports, privacy requests, or business enquiries.</p></div></section>
+  <div class="wrap">
+    <section class="channels" aria-label="Contact options">
+      <article class="channel"><span class="label">Vesper product support</span><h2>Ask our support team</h2><p>Get help with Vesper, share feedback, or ask a question about using the app.</p><a class="action" href="mailto:support@nodefolds.com">Email support@nodefolds.com <span aria-hidden="true">↗</span></a></article>
+      <article class="channel" id="report"><span class="label">Technical issue</span><h2>Report a problem</h2><p>Send a bug report with steps to reproduce it. GitHub may ask you to sign in to submit or follow an issue.</p><a class="action" href="https://github.com/PushkarX-Code/vesper/issues/new" target="_blank" rel="noopener">Open Vesper issue tracker <span aria-hidden="true">↗</span></a></article>
+      <article class="channel"><span class="label">Privacy</span><h2>Privacy questions</h2><p>Contact us about a privacy request or how information is handled.</p><a class="action" href="mailto:privacy@nodefolds.com">Email privacy@nodefolds.com <span aria-hidden="true">↗</span></a></article>
+      <article class="channel"><span class="label">Company</span><h2>Business enquiries</h2><p>Reach Node Folds about partnerships, press, or other company matters.</p><a class="action" href="mailto:hello@nodefolds.com">Email hello@nodefolds.com <span aria-hidden="true">↗</span></a></article>
+    </section>
+    <section class="guidance">
+      <div><h2>Help us understand the issue</h2><p>Include your Vesper version, device and operating system, what you expected, and the steps that led to the problem. Screenshots can help when they do not show private information.</p></div>
+      <div><h2>Keep your account details private</h2><p>Vesper provider keys and chats stay on your device. Never send us a provider key, password, or private conversation. See our <a href="privacy">Privacy Policy</a> for details about information handling.</p></div>
+    </section>
+  </div>
+</main>
+<footer><div class="wrap foot"><span>Copyright © 2026 Node Folds. All rights reserved.</span><nav aria-label="Legal"><a href="privacy">Privacy Policy</a><a href="terms">Terms of use</a><a href="./">Node Folds</a></nav></div></footer>
+</body>
+</html>
