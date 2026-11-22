@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <mask id="mark">
+      <rect width="100" height="100" fill="#fff"/>
+      <path d="M50 8C52 38 62 48 92 50C62 52 52 62 50 92C48 62 38 52 8 50C38 48 48 38 50 8Z" fill="#000"/>
+      <path d="M48.4 0h3.2v100h-3.2zM0 48.4h100v3.2H0z" fill="#000"/>
+    </mask>
+    <g id="quarter" fill="#fff">
+      <path d="M27 8H44a6 6 0 0 1 6 6V44a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V27Z"/>
+      <path d="M8 27 27 8V24a3 3 0 0 1-3 3Z"/>
+    </g>
+  </defs>
+  <g transform="translate(17 17) scale(.66)" mask="url(#mark)">
+    <use href="#quarter"/>
+    <use href="#quarter" transform="rotate(90 50 50)"/>
+    <use href="#quarter" transform="rotate(180 50 50)"/>
+    <use href="#quarter" transform="rotate(270 50 50)"/>
+  </g>
+</svg>
