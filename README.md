@@ -76,7 +76,7 @@ Vesper is free, with no ads and no tracking. If it helps you, you can support it
 
 ## Contact us
 
-Questions, ideas, problems or business? [Open an issue on GitHub](https://github.com/PushkarX-Code/vesper/issues) and we will get back to you. In the app: Settings, About, Contact us.
+Questions, ideas, problems or business? Email [support@nodefolds.com](mailto:support@nodefolds.com) or [open an issue on GitHub](https://github.com/PushkarX-Code/vesper/issues). In the app: Settings, About, Contact us.
 
 ## Get started
 
