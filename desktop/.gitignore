@@ -4,3 +4,5 @@ src-tauri/target/
 src-tauri/gen/
 src-tauri/engine/*
 !src-tauri/engine/README.md
+msix-stage/
+*.msix

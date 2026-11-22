@@ -59,6 +59,17 @@ jobs:
         working-directory: desktop
         run: npm run build
 
+      - name: Build the Microsoft Store package
+        shell: pwsh
+        run: ./desktop/scripts/make-msix.ps1
+
+      - name: Keep the Store package
+        uses: actions/upload-artifact@v4
+        with:
+          name: vesper-msix
+          path: desktop/*.msix
+          if-no-files-found: error
+
       - name: Keep the installers
         uses: actions/upload-artifact@v4
         with:
