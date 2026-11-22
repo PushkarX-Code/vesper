@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Node Folds · Big ideas, folded into simple tools</title>
+<meta name="description" content="Node Folds makes private, free AI tools. Home of Vesper: every free AI in one private app, on your phone and PC.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Node Folds">
+<meta property="og:description" content="Big ideas, folded into simple tools. Home of Vesper.">
+<meta property="og:image" content="img/companions.webp">
+<link rel="icon" href="img/mark.svg" type="image/svg+xml">
+<link rel="preload" href="inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Inter;src:url(inter-var.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--bg:#000;--fg:#f5f5f4;--soft:#c9c9c6;--muted:#8e8e8b;--line:rgba(255,255,255,.09);--accent:#6ea8ff;--gold:#f0c26b;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{margin:0;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(1180px,100% - 40px);margin:0 auto}
+/* nav */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;width:min(1100px,100% - 24px);display:flex;align-items:center;justify-content:space-between;padding:10px 12px 10px 18px;border-radius:18px;background:rgba(14,14,16,.55);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 0 0 1px var(--line);transition:background .3s}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16.5px;letter-spacing:-.01em}
+.brand svg{width:26px;height:26px}
+.links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:30px;font-size:14.5px;color:var(--soft)}
+.links a{transition:color .2s}.links a:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;gap:9px;height:44px;padding:0 20px;border-radius:999px;font-size:15px;font-weight:600;transition:transform .25s var(--ease),background .2s,box-shadow .3s}
+.btn.w{background:#f5f5f4;color:#000}.btn.w:hover{box-shadow:0 10px 40px rgba(255,255,255,.18)}
+.btn.g{color:#eee;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}.btn.g:hover{background:rgba(255,255,255,.06)}
+.btn:active{transform:scale(.97)}
+.nav .btn{height:38px;padding:0 16px;font-size:14px}
+@media (max-width:760px){.links{display:none}}
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;overflow:hidden}
+.beam{position:absolute;top:0;left:50%;width:min(1100px,160vw);height:100%;transform:translateX(-50%);background:conic-gradient(from 180deg at 50% 18%,transparent 158deg,rgba(110,168,255,.20) 174deg,rgba(255,255,255,.16) 180deg,rgba(110,168,255,.20) 186deg,transparent 202deg);-webkit-mask:linear-gradient(#000 20%,transparent 85%);mask:linear-gradient(#000 20%,transparent 85%);filter:blur(10px);opacity:0;animation:beam 2.4s var(--ease) .9s forwards}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 70% 20%,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 85% 60%,rgba(255,255,255,.35),transparent),radial-gradient(1px 1px at 35% 75%,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 55% 45%,rgba(255,255,255,.25),transparent);opacity:.6}
+@keyframes beam{to{opacity:1}}
+.pill{position:relative;display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;font-size:14px;color:var(--soft);box-shadow:inset 0 0 0 1px var(--line);background:rgba(255,255,255,.03);margin-bottom:34px}
+.pill b{font-size:12.5px;color:#000;background:var(--gold);padding:4px 10px;border-radius:999px}
+.mark{position:relative;width:104px;height:104px;border-radius:28px;display:grid;place-items:center;background:linear-gradient(160deg,#1c1c22,#09090b);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 30px 80px rgba(110,168,255,.25);margin-bottom:38px}
+.mark svg{width:62px;height:62px}
+.mark .p{stroke-dasharray:200;stroke-dashoffset:200;animation:draw 1.4s var(--ease) .2s forwards}
+.mark .f{opacity:0;transform-origin:50% 50%;animation:fold 1s var(--ease) 1s forwards}
+.mark .n{opacity:0;animation:pop .6s var(--ease) 1.6s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fold{from{opacity:0;transform:scaleX(.2)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+h1{position:relative;margin:0;font-size:clamp(46px,8.6vw,116px);font-weight:600;letter-spacing:-.055em;line-height:.98}
+h1 .w{display:inline-block;opacity:0;transform:translateY(40px);filter:blur(12px);animation:rise 1.1s var(--ease) forwards}
+.grad{background:linear-gradient(120deg,#fff 10%,#9fc2ff 50%,#f0c26b 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes rise{to{opacity:1;transform:none;filter:none}}
+.lede{position:relative;max-width:620px;margin:28px auto 0;font-size:clamp(17px,2vw,21px);line-height:1.5;color:var(--muted);opacity:0;animation:rise 1s var(--ease) 1.3s forwards}
+.ctas{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:38px;opacity:0;animation:rise 1s var(--ease) 1.5s forwards}
+.scroll{position:absolute;bottom:26px;left:50%;width:24px;height:38px;margin-left:-12px;border-radius:12px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.25)}
+.scroll::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:#fff;animation:dot 1.8s var(--ease) infinite}
+@keyframes dot{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+/* sections */
+section{position:relative}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+h2{margin:0;font-size:clamp(36px,5.6vw,72px);font-weight:600;letter-spacing:-.045em;line-height:1.02}
+.sub{font-size:clamp(17px,1.7vw,20px);color:var(--muted);line-height:1.5;margin:20px 0 0;max-width:560px}
+.rv{opacity:0;transform:translateY(34px);filter:blur(10px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none;filter:none}
+/* product story, pinned */
+.story{height:380vh}
+.stick{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;width:min(1180px,100% - 40px);margin:0 auto}
+.steps{position:relative;height:340px}
+.step{position:absolute;inset:0;opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.step.on{opacity:1;transform:none}
+.dots{display:flex;gap:8px;margin-top:28px}.dots i{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.15);transition:background .4s,width .4s}.dots i.on{background:#fff;width:46px}
+.stage{position:relative;height:min(78vh,720px);display:grid;place-items:center;perspective:1400px}
+.glow{position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(110,168,255,.35),transparent);filter:blur(30px)}
+.device{position:relative;height:100%;aspect-ratio:412/892;border-radius:46px;padding:10px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 60px 120px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);transform-style:preserve-3d;will-change:transform}
+.screen{position:relative;width:100%;height:100%;border-radius:37px;overflow:hidden;background:#000}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .7s var(--ease),transform 1.2s var(--ease)}
+.screen img.on{opacity:1;transform:none}
+@media (max-width:860px){.story{height:auto}.stick{position:relative;height:auto;grid-template-columns:1fr;padding:90px 0}.steps{height:auto}.step{position:relative;opacity:1;transform:none;margin-bottom:34px}.step:not(:first-child){display:none}.dots{display:none}.stage{height:620px}}
+/* principles text reveal */
+.manifesto{padding:22vh 0}
+.manifesto p{margin:0;font-size:clamp(30px,4.6vw,60px);font-weight:600;letter-spacing:-.04em;line-height:1.12}
+.manifesto span{opacity:.14;transition:opacity .35s}
+.manifesto span.lit{opacity:1}
+/* features */
+.feats{padding:12vh 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{position:relative;padding:28px;border-radius:26px;background:#0c0c0f;box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;min-height:220px;transition:transform .4s var(--ease)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--x,50%) var(--y,0%),rgba(110,168,255,.14),transparent 45%);opacity:0;transition:opacity .4s}
+.card:hover::before{opacity:1}.card:hover{transform:translateY(-4px)}
+.card .ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:rgba(110,168,255,.12);color:var(--accent);margin-bottom:22px}
+.card h3{margin:0 0 8px;font-size:20px;font-weight:600;letter-spacing:-.02em}
+.card p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.5}
+.card.wide{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end;padding-bottom:0}
+.card.wide img{border-radius:22px 22px 0 0;box-shadow:0 0 0 1px var(--line)}
+@media (max-width:600px){.card.wide{grid-column:auto;grid-template-columns:1fr}}
+/* studio */
+.studio{padding:10vh 0}
+.shows{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:56px}
+@media (max-width:860px){.shows{grid-template-columns:1fr}}
+.show{position:relative;height:460px;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.show img{position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;will-change:transform;transition:transform .2s linear}
+.show::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.88))}
+.show .tx{position:absolute;left:28px;right:28px;bottom:26px;z-index:1}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:rgba(110,168,255,.16);padding:6px 11px;border-radius:999px;margin-bottom:12px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.show h3{margin:0;font-size:32px;font-weight:600;letter-spacing:-.035em}
+.show p{margin:8px 0 0;color:var(--soft);font-size:16px}
+.plus{margin-top:18px;padding:40px;border-radius:30px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:linear-gradient(#0d0d12,#0d0d12) padding-box,linear-gradient(120deg,#6ea8ff,#f0c26b 55%,#6ea8ff) border-box;border:1.5px solid transparent;box-shadow:0 30px 90px rgba(70,90,255,.18)}
+.plus h3{margin:0;font-size:34px;font-weight:600;letter-spacing:-.035em}
+.plus p{margin:8px 0 0;color:var(--muted);font-size:16.5px;max-width:520px}
+/* platforms */
+.plats{padding:12vh 0;text-align:center}
+.prow{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:44px}
+.plat{width:190px;padding:26px 20px;border-radius:24px;background:#0c0c0f;box-shadow:inset 0 0 0 1px var(--line)}
+.plat b{display:block;font-size:18px;margin-top:14px}.plat span{font-size:13.5px;color:var(--muted)}
+.plat svg{width:30px;height:30px;color:#fff;margin:0 auto}
+.plat.soon{opacity:.55}
+/* support and contact */
+.end{padding:14vh 0 10vh;text-align:center}
+.end .ctas{opacity:1;animation:none}
+footer{padding:40px 0 60px;color:var(--muted);font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:28px}
+footer a:hover{color:#fff}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}.rv,h1 .w,.lede,.ctas{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#bcd0f2"/><stop offset="1" stop-color="#7f9bd0"/></linearGradient>
+  <linearGradient id="under" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a6a8a"/><stop offset="1" stop-color="#2a3346"/></linearGradient></defs>
+  <symbol id="logo" viewBox="0 0 64 64"><path class="f" d="M14 13h10l26 38H40z" fill="url(#under)"/><path class="p" d="M14 51V13h10v38zM40 51V13h10v38z" fill="url(#chrome)" stroke="#fff" stroke-width=".6"/><circle class="n" cx="19" cy="13" r="3.2" fill="#6ea8ff"/><circle class="n" cx="45" cy="51" r="3.2" fill="#f0c26b"/></symbol>
+</svg>
+
+<nav class="nav">
+  <a class="brand" href="#top"><svg aria-hidden="true"><use href="#logo"/></svg>Node Folds</a>
+  <div class="links"><a href="#vesper">Vesper</a><a href="#principles">Principles</a><a href="#studio">Studio</a><a href="#platforms">Platforms</a></div>
+  <a class="btn w" href="https://vesper-chat.netlify.app">Try Vesper</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="stars"></div><div class="beam"></div>
+  <a class="pill" href="#vesper"><b>New</b>Vesper 2.6 is here →</a>
+  <div class="mark"><svg aria-hidden="true"><use href="#logo"/></svg></div>
+  <h1><span class="w" style="animation-delay:.35s">Big</span> <span class="w" style="animation-delay:.45s">ideas,</span><br><span class="w grad" style="animation-delay:.6s">folded</span> <span class="w grad" style="animation-delay:.7s">simple.</span></h1>
+  <p class="lede">Node Folds makes private, free AI tools that feel like they were made just for you. No accounts, no ads, nothing in the way.</p>
+  <div class="ctas"><a class="btn w" href="https://vesper-chat.netlify.app">Try Vesper free</a><a class="btn g" href="#vesper">See how it works</a></div>
+  <div class="scroll" aria-hidden="true"></div>
+</header>
+
+<section class="story" id="vesper">
+  <div class="stick">
+    <div>
+      <div class="eyebrow rv">Vesper by Node Folds</div>
+      <div class="steps">
+        <div class="step on"><h2>Every free AI.<br>One private app.</h2><p class="sub">Gemini, Llama, Qwen, Mistral and dozens more, side by side. Switch with one tap when one runs out.</p></div>
+        <div class="step"><h2>Answers,<br>beautifully set.</h2><p class="sub">See how it thought, copy any part, and keep every chat on your device. Nothing passes through us.</p></div>
+        <div class="step"><h2>Characters with<br>a real voice.</h2><p class="sub">Ten verified personalities with their own stories, from a creative director to the first humans in Eden. Or create your own.</p></div>
+        <div class="step"><h2>Make it<br>yours.</h2><p class="sub">Six exclusive finishes that recolor the whole app, wallpapers for every mood, and memory that learns what matters.</p></div>
+      </div>
+      <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="stage"><div class="glow"></div><div class="device" id="device"><div class="screen">
+      <img class="on" src="img/home.webp" alt="Vesper home screen" width="760" height="1645">
+      <img src="img/chat-thinking.webp" alt="A Vesper answer with its thinking" loading="lazy" width="760" height="1645">
+      <img src="img/companions.webp" alt="Vesper characters" loading="lazy" width="760" height="1645">
+      <img src="img/icons.webp" alt="Vesper app icon finishes" loading="lazy" width="760" height="1645">
+    </div></div></div>
+  </div>
+</section>
+
+<section class="manifesto" id="principles"><div class="wrap">
+  <div class="eyebrow rv">Our principles</div>
+  <p id="words">No accounts. No ads. No tracking. Your chats live on your device, your keys stay yours, and nothing you type passes through us. That is not a feature. It is the whole point.</p>
+</div></section>
+
+<section class="feats"><div class="wrap">
+  <div class="eyebrow rv">Inside Vesper</div>
+  <h2 class="rv">Small app.<br>Serious power.</h2>
+  <div class="grid">
+    <div class="card wide rv"><div><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Runs on your PC</h3><p style="padding-bottom:28px">Vesper for Windows picks models that fit your computer, downloads them in one tap and runs them offline. Nothing leaves your machine.</p></div><img src="img/desktop-pc.webp" alt="Vesper for Windows" loading="lazy" width="1400" height="823"></div>
+    <div class="card rv" style="--d:.08s"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Private by design</h3><p>There is no Vesper server. Keys and chats stay on your device, always.</p></div>
+    <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 3 6v3h8v-3c1-1 3-3 3-6a7 7 0 0 0-7-7z"/><path d="M9 22h6"/></svg></div><h3>Memory that helps</h3><p>It remembers what matters about you, so it stops guessing. You can see and delete every fact.</p></div>
+    <div class="card rv" style="--d:.08s"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>Learn as you go</h3><p>Short guides with real screens, and honest picks on which models are worth it.</p></div>
+    <div class="card rv" style="--d:.16s"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3-3a2 2 0 0 0-3 0L6 21"/></svg></div><h3>Photos and files</h3><p>Show it a picture or a document and ask anything about it.</p></div>
+  </div>
+</div></section>
+
+<section class="studio" id="studio"><div class="wrap">
+  <div class="eyebrow rv">Coming soon</div>
+  <h2 class="rv">The studio is<br>getting ready.</h2>
+  <div class="shows">
+    <div class="show rv"><img src="img/image.webp" alt="Image Studio examples" loading="lazy"><div class="tx"><span class="chip">Image Studio</span><h3>Any image. One sentence.</h3><p>Posters, products, portraits and whole worlds.</p></div></div>
+    <div class="show rv" style="--d:.1s"><img src="img/video.webp" alt="Video Studio examples" loading="lazy"><div class="tx"><span class="chip">Video Studio</span><h3>Direct videos with words.</h3><p>Ads, reels and stories with real camera moves.</p></div></div>
+  </div>
+  <div class="plus rv"><div><span class="chip" style="color:#f0c26b;background:rgba(240,194,107,.14)">Vesper Plus</span><h3>More power, same privacy.</h3><p>Everything in Vesper stays free. Plus adds the studios, premium characters and sync across your devices.</p></div><a class="btn w" href="https://vesper-chat.netlify.app">Join the waitlist in Vesper</a></div>
+</div></section>
+
+<section class="plats" id="platforms"><div class="wrap">
+  <div class="eyebrow rv">Platforms</div>
+  <h2 class="rv">Wherever you are.</h2>
+  <div class="prow">
+    <div class="plat rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg><b>Web</b><span>Any browser</span></div>
+    <div class="plat rv" style="--d:.06s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><b>Android</b><span>Install from the browser</span></div>
+    <div class="plat rv" style="--d:.12s"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10 4.5v7H3zM11 4.3 21 3v8.5H11zM3 12.5h7v7l-7-1zM11 12.5h10V21l-10-1.4z"/></svg><b>Windows</b><span>Offline models built in</span></div>
+    <div class="plat soon rv" style="--d:.18s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><b>Mac</b><span>Coming later</span></div>
+  </div>
+</div></section>
+
+<section class="end"><div class="wrap">
+  <h2 class="rv">Keep it free.<br><span class="grad">Help it grow.</span></h2>
+  <p class="sub rv" style="margin:20px auto 0">Node Folds is independent. No investors, no ads. If our tools make your day better, a coffee keeps them growing.</p>
+  <div class="ctas rv"><a class="btn w" href="https://ko-fi.com/buymeacofi">Support on Ko-fi</a><a class="btn g" href="https://github.com/PushkarX-Code/vesper/issues">Contact us</a></div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© 2026 Node Folds. Made with care.</span>
+  <span><a href="https://vesper-chat.netlify.app">Vesper</a> · <a href="https://github.com/PushkarX-Code/vesper">GitHub</a> · <a href="https://ko-fi.com/buymeacofi">Support</a></span>
+</div></footer>
+
+<script>
+(() => {
+  const rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.18, rootMargin:"0px 0px -6% 0px"});
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+  // words light up as you read
+  const wp = document.getElementById("words");
+  wp.innerHTML = wp.textContent.split(" ").map(w => "<span>" + w + "</span>").join(" ");
+  const words = [...wp.children];
+  // cursor spotlight on cards
+  document.querySelectorAll(".card").forEach(c => c.addEventListener("pointermove", e => { const r = c.getBoundingClientRect(); c.style.setProperty("--x", e.clientX - r.left + "px"); c.style.setProperty("--y", e.clientY - r.top + "px"); }));
+  const story = document.querySelector(".story"), steps = [...document.querySelectorAll(".step")], dots = [...document.querySelectorAll(".dots i")], shots = [...document.querySelectorAll(".screen img")], dev = document.getElementById("device"), shows = [...document.querySelectorAll(".show img")];
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  let cur = 0, ticking = false;
+  function frame(){
+    ticking = false;
+    const vh = innerHeight, wide = innerWidth > 860;
+    if (wide) {
+      const r = story.getBoundingClientRect(), p = clamp(-r.top / (r.height - vh), 0, 1);
+      const i = Math.min(3, Math.floor(p * 4));
+      if (i !== cur) { [steps, dots, shots].forEach(list => list.forEach((el, n) => el.classList.toggle("on", n === i))); cur = i; }
+      if (!rm) dev.style.transform = "rotateY(" + (-14 + p * 28).toFixed(2) + "deg) rotateX(" + (6 - p * 6).toFixed(2) + "deg) scale(" + (0.92 + Math.sin(p * Math.PI) * .08).toFixed(3) + ")";
+    }
+    const wr = wp.getBoundingClientRect(), wpP = clamp((vh * .85 - wr.top) / (wr.height + vh * .35), 0, 1), lit = Math.round(wpP * words.length);
+    words.forEach((w, n) => w.classList.toggle("lit", n < lit));
+    if (!rm) shows.forEach(img => { const r = img.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) img.style.transform = "translateY(" + (((r.top + r.height / 2) - vh / 2) * -.08).toFixed(1) + "px) scale(1.04)"; });
+    document.querySelector(".nav").style.background = scrollY > 40 ? "rgba(10,10,12,.78)" : "";
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, {passive:true});
+  addEventListener("resize", frame); frame();
+})();
+</script>
+</body>
+</html>
