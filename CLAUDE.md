@@ -31,7 +31,7 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 - Local models are OpenAI compatible connections in `S.conns`. Calls to private addresses pass `targetAddressSpace` so Chrome allows them from the https page.
 
 ## Node Folds site (nodefolds/)
-- Node Folds is the parent company. Its one page site lives in `nodefolds/` (plain HTML, CSS and JS, no libraries) and deploys on its own to the Netlify site `nodefolds` (https://nodefolds.netlify.app, later nodefolds.com): deploy the `nodefolds/` folder itself.
+- Node Folds is the parent company. Its site lives in `nodefolds/` (plain HTML, CSS and JS, no libraries) and is live at https://nodefolds.com (and www, which redirects). The Cloudflare Worker `nodefolds` serves the files straight from `main` on GitHub (cached 5 minutes), so merging to `main` publishes it: no deploy step and no Netlify. `/privacy` serves `privacy.html`.
 - Never show Live Characters on the site; it appears only in the README art.
 - The site showcases every Node Folds product: add products to `PRODUCTS` and outside links to `LINKS` in its script (an empty link hides it, except X, Reddit and GitHub which stay visible). The logo is `design/nodefolds/` (mark.svg, icon.svg, logo.png); the site icons are `img/nf-icon*`. Every outside logo (socials, Apple, Google Play, Windows, stores) is monochrome: black on white buttons, white on dark; only Node Folds, Vesper and the Google Play icon keep their color. Platform icons use the owner's brand files in `img/brand/` (Apple, Google Play, X, Reddit), never generic phone or download icons.
 
