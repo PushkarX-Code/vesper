@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="Vesper_App.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#101112">
+        <NavigationView
+            x:Name="ShellNavigation"
+            PaneDisplayMode="LeftCompact"
+            IsPaneToggleButtonVisible="True"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            OpenPaneLength="236"
+            CompactPaneLength="54"
+            SelectionChanged="OnNavigationSelectionChanged"
+            Background="#111213">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="New chat" Tag="chat" IsSelected="True">
+                    <NavigationViewItem.Icon><SymbolIcon Symbol="Add" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Library" Tag="library">
+                    <NavigationViewItem.Icon><SymbolIcon Symbol="Library" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Connectors" Tag="connectors">
+                    <NavigationViewItem.Icon><SymbolIcon Symbol="World" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Local AI" Tag="local">
+                    <NavigationViewItem.Icon><SymbolIcon Symbol="AllApps" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="Settings" Tag="settings">
+                    <NavigationViewItem.Icon><SymbolIcon Symbol="Setting" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+
+            <NavigationView.Content>
+                <Grid Background="#101112">
+                    <Grid x:Name="ChatPage" Visibility="Visible" Margin="36,28">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid ColumnSpacing="12">
+                            <TextBlock Text="Vesper" FontSize="16" FontWeight="SemiBold" Foreground="#F1F1EF" VerticalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                                <ComboBox x:Name="ChatProviderSelector" Width="170" PlaceholderText="Provider" SelectionChanged="OnChatProviderChanged" />
+                                <TextBox x:Name="ChatModelBox" Width="210" PlaceholderText="Model ID" Text="gpt-4o-mini" VerticalContentAlignment="Center" />
+                                <Button Content="Connect a model" Click="OnConnectModelClick" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ScrollViewer x:Name="ChatScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <StackPanel x:Name="MessagesPanel" MaxWidth="920" HorizontalAlignment="Center" Spacing="16" Margin="18,28,18,24" />
+                            </ScrollViewer>
+                            <StackPanel x:Name="WelcomePanel" VerticalAlignment="Center" HorizontalAlignment="Center" Width="680" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}" Spacing="18">
+                                <TextBlock Text="Ready when you are." FontSize="30" FontWeight="SemiBold" CharacterSpacing="-24" Foreground="#F4F4F2" HorizontalAlignment="Center" />
+                                <TextBlock Text="Choose a connected provider above and start a conversation." FontSize="14" Foreground="#A1A3A6" TextAlignment="Center" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Width="920" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}" Spacing="7">
+                            <Border Background="#171819" BorderBrush="#303235" BorderThickness="1" CornerRadius="22" Padding="16,10">
+                                <Grid ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                    <TextBox x:Name="PromptBox" PlaceholderText="Message Vesper…" AcceptsReturn="True" MinHeight="44" MaxHeight="150" BorderThickness="0" Background="Transparent" FontSize="14" Foreground="#F2F2F0" KeyDown="OnPromptKeyDown" />
+                                    <Button x:Name="SendButton" Grid.Column="1" Content="↑" Width="38" Height="38" CornerRadius="19" VerticalAlignment="Bottom" Click="OnSendClick" />
+                                </Grid>
+                            </Border>
+                            <TextBlock Text="Your provider key stays in Windows Credential Locker. Prompts go directly to your selected provider. Provider charges and limits may apply." FontSize="11" Foreground="#85878A" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ScrollViewer x:Name="ConnectorsPage" Visibility="Collapsed" Padding="38,30" VerticalScrollBarVisibility="Auto">
+                        <StackPanel MaxWidth="980" HorizontalAlignment="Left" Spacing="20">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Connect a model" FontSize="28" FontWeight="SemiBold" CharacterSpacing="-20" Foreground="#F4F4F2" />
+                                <TextBlock Text="Use your own provider account and API key. Keys are stored securely on this Windows device; Vesper does not proxy your prompts." FontSize="14" Foreground="#A1A3A6" TextWrapping="Wrap" MaxWidth="720" />
+                            </StackPanel>
+                            <Border Background="#171819" BorderBrush="#303235" BorderThickness="1" CornerRadius="14" Padding="16">
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="Model providers" FontSize="15" FontWeight="SemiBold" Foreground="#ECECEA" />
+                                    <TextBlock Text="Free quotas and API billing are controlled by each provider. A ChatGPT or Claude subscription does not include API credits." FontSize="12" Foreground="#9A9C9F" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                            <ItemsControl x:Name="ProviderCards" />
+                            <Border Background="#171819" BorderBrush="#303235" BorderThickness="1" CornerRadius="14" Padding="16">
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="App integrations" FontSize="14" FontWeight="SemiBold" Foreground="#ECECEA" />
+                                    <TextBlock Text="Google Drive, Gmail, and GitHub need separate OAuth permissions and are not connected in this preview. They will only show as available after their real authorization and data flows are implemented." FontSize="12" Foreground="#9A9C9F" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Grid x:Name="LibraryPage" Visibility="Collapsed" Margin="38,30">
+                        <StackPanel Spacing="12" MaxWidth="920" HorizontalAlignment="Left">
+                            <TextBlock Text="Library" FontSize="28" FontWeight="SemiBold" Foreground="#F4F4F2" />
+                            <TextBlock Text="Conversations are stored on this PC. Choose one to continue." FontSize="14" Foreground="#A1A3A6" />
+                            <ItemsControl x:Name="SavedChatsList" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid x:Name="LocalPage" Visibility="Collapsed" Margin="38,30">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Local AI" FontSize="28" FontWeight="SemiBold" Foreground="#F4F4F2" />
+                            <TextBlock Text="The existing Rust and llama.cpp runtime will be connected here after the native shell and provider boundary are in place." FontSize="14" Foreground="#A1A3A6" TextWrapping="Wrap" MaxWidth="680" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid x:Name="SettingsPage" Visibility="Collapsed" Margin="38,30">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" Foreground="#F4F4F2" />
+                            <TextBlock Text="Provider credentials are device-only. Account sign-in and cloud sync remain optional and are not needed to use local models." FontSize="14" Foreground="#A1A3A6" TextWrapping="Wrap" MaxWidth="680" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </NavigationView.Content>
+        </NavigationView>
+    </Grid>
+</Page>

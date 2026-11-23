@@ -1,0 +1,52 @@
+name: Native Vesper Store package
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'windows/**'
+      - '.github/workflows/native-windows-store.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install Visual Studio MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build Store upload package
+        shell: pwsh
+        run: |
+          $packageDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts\store\'
+          New-Item -ItemType Directory -Force -Path $packageDir | Out-Null
+          msbuild windows/Vesper.App/Vesper.App.csproj `
+            /restore `
+            /p:Configuration=Release `
+            /p:Platform=x64 `
+            /p:GenerateAppxPackageOnBuild=true `
+            /p:AppxPackageSigningEnabled=false `
+            /p:AppxBundle=Never `
+            /p:UapAppxPackageBuildMode=StoreUpload `
+            "/p:AppxPackageDir=$packageDir" `
+            /verbosity:minimal
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $uploads = Get-ChildItem -Path $packageDir -Recurse -Filter '*.msixupload'
+          if (-not $uploads) { throw 'The build succeeded but did not produce an .msixupload for Partner Center.' }
+
+      - name: Upload Partner Center package
+        uses: actions/upload-artifact@v4
+        with:
+          name: vesper-native-msixupload
+          path: artifacts/store/**/*.msixupload
+          if-no-files-found: error

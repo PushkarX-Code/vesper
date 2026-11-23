@@ -1,0 +1,8 @@
+.appdata/
+.cli-home/
+.nuget/
+.tmp/
+Vesper.App/bin/
+Vesper.App/obj/
+Vesper.App/AppPackages/
+artifacts/
