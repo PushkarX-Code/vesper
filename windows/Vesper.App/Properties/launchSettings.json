@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Vesper.App (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Vesper.App (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
