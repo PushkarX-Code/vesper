@@ -1,2 +1,5 @@
 # Local Netlify folder
 .netlify
+
+# Local Netlify function build dependencies
+netlify/node_modules/
