@@ -38,7 +38,7 @@ Also in the box: illustrated chat wallpapers or your own photo, update alerts wi
   <img src="docs/finishes.webp" alt="Pick your finish: Chrome, Gold, Rose Gold, Graphite, Midnight and Emerald. The icon and the whole app change together." width="100%">
 </p>
 
-**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. The eight ready characters are verified by Vesper and have their own profiles. Give your own characters a face with any photo, and pick their color on a smooth hue and intensity slider. Each keeps its own chats.
+**Characters.** Start with a ready character (a creative director, a late night friend, an adventure narrator, a tutor, an honest critic and more) or create your own with a name, personality, way of talking and first message. The ten ready characters are verified by Vesper and have their own profiles. Give your own characters a face with any photo, and pick their color on a smooth hue and intensity slider. Each keeps its own chats.
 
 <p align="center">
   <img src="docs/characters.webp" alt="Your characters with their own photos. Any photo, any color: add a picture and pick a tone. Each keeps its own chats." width="100%">

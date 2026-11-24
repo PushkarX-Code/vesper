@@ -906,7 +906,8 @@ async function discover(pid){
         .filter(m => !SKIP.test(m.id) && (!m.architecture || !m.architecture.output_modalities || m.architecture.output_modalities.includes("text")))
         .map(m => ({id:m.id, name:(m.name || m.id).replace(/\s*\(free\)\s*$/i, "").replace(/^[^:]{2,30}:\s*/, ""), note:"Free"}));
       const live = new Set(data.map(m => m.id));
-      S.models = S.models.filter(m => m.p !== "openrouter" || live.has(m.id) || DEFAULT_MODELS.some(d => d.id === m.id));
+      const inUse = new Set(S.chats.map(c => c.model));
+      S.models = S.models.filter(m => m.p !== "openrouter" || m.added || inUse.has(mk(m)) || live.has(m.id) || DEFAULT_MODELS.some(d => d.id === m.id));
     } else {
       list = data.map(m => String(m.id || m.name || "").replace(/^models\//, "")).filter(id => id && !SKIP.test(id)).map(id => ({id, name:id, note:P.local ? P.name : ""}));
     }
@@ -955,6 +956,7 @@ async function copyText(t){
    While a close is in flight, new opens wait for it to finish. */
 const DUR = 300;
 const stack = [];
+let drawerInHist = false;
 let navBusy = false, queue = [], navTimer = 0;
 const appEl = $("#app");
 function zFor(i){ return 40 + i * 3; }
@@ -985,16 +987,18 @@ function open(id, factory, swap){
   if (navBusy) { queue.push(() => open(id, factory, swap)); return; }
   if (stack.some(l => l.id === id)) return;
   const L = factory(); L.id = id;
-  if (swap && stack.length) { hideLayer(stack.pop()); stack.push(L); }
-  else { stack.push(L); history.pushState({vd:stack.length}, ""); }
+  if (swap && stack.length) { const old = stack.pop(); if (old === drawerL) drawerInHist = false; hideLayer(old); stack.push(L); history.replaceState({vd:stack.length}, ""); }
+  else { stack.push(L); if (L === drawerL) drawerInHist = true; history.pushState({vd:stack.length}, ""); }
   showLayer(L);
 }
 function closeTop(){ if (navBusy) { queue.push(closeTop); return; } if (!stack.length) return; navBusy = true; history.back(); clearTimeout(navTimer); navTimer = setTimeout(unlock, 700); }
-function closeAll(){ if (navBusy) { queue.push(closeAll); return; } if (!stack.length) return; navBusy = true; history.go(-stack.length); clearTimeout(navTimer); navTimer = setTimeout(unlock, 700); }
+function closeAll(){ if (navBusy) { queue.push(closeAll); return; } if (!stack.length) return; navBusy = true; history.go(-(stack.length + (docked() && drawerInHist ? 1 : 0))); clearTimeout(navTimer); navTimer = setTimeout(unlock, 700); }
 function unlock(){ clearTimeout(navTimer); if (!navBusy) return; navBusy = false; const q = queue; queue = []; q.forEach(f => f()); }
 addEventListener("popstate", e => {
-  const depth = (e.state && e.state.vd) || 0;
+  const raw = (e.state && e.state.vd) || 0;
+  const depth = Math.max(0, raw - (docked() && drawerInHist ? 1 : 0));
   while (stack.length > depth) hideLayer(stack.pop());
+  if (!raw) drawerInHist = false;
   const top = stack[stack.length - 1];
   if (top && top.refresh) top.refresh();
   if (!stack.length) refreshMain();
@@ -1284,7 +1288,8 @@ async function generate(){
   if (!m || !P) { openModels(); return; }
   const len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
   const history = c.messages.filter(x => !x.error).map(toApi);
-  const hasImg = history.some(x => Array.isArray(x.content));
+  const outgoing = [...c.messages].reverse().find(x => x.role === "user" && !x.error);
+  const hasImg = !!(outgoing && outgoing.images && outgoing.images.length);
   if (history.length && history[0].role === "assistant") history.unshift({role:"user", content:"Hi."});
   const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
 
@@ -1318,7 +1323,8 @@ async function generate(){
     const res = await apiFetch(P, "/chat/completions", {method:"POST", signal:controller.signal, headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
     if (!res.ok) {
       let b = null; try { b = await res.json(); } catch (e) {}
-      if (hasImg && res.status >= 400 && res.status < 500 && ![401, 402, 403, 429].includes(res.status)) throw {friendly:"This model can't see images. Pick one that can, like Gemini 2.5 Flash or Gemma 4, or send text only."};
+      const imageErr = hasImg && (res.status === 400 || res.status === 415) && /image|image_url|vision|multimodal/i.test(JSON.stringify(b));
+      if (imageErr) throw {friendly:"This model can't see images. Pick one that can, like Gemini 2.5 Flash or Gemma 4, or send text only."};
       throw {friendly:friendlyError(res.status, b, P), fix:(res.status === 401 || res.status === 403) ? (P.local ? "local" : "key") : null};
     }
     const ct = res.headers.get("content-type") || "";
@@ -1327,22 +1333,27 @@ async function generate(){
       text = msg.content || ""; reasoning = msg.reasoning || msg.reasoning_content || ""; paint();
     } else {
       const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+      const handleLine = line => {
+        if (!line.startsWith("data:")) return;
+        const data = line.slice(5).trim(); if (data === "[DONE]") return;
+        let j; try { j = JSON.parse(data); } catch (e) { return; }
+        if (j.error) throw {friendly:friendlyError(+j.error.code || 0, j, P)};
+        const d = (j.choices && j.choices[0] && j.choices[0].delta) || {};
+        const r = typeof d.reasoning === "string" ? d.reasoning : (typeof d.reasoning_content === "string" ? d.reasoning_content : "");
+        if (r) { if (!t0) t0 = performance.now(); reasoning += r; sched(); }
+        if (typeof d.content === "string" && d.content) { if (t0 && !secs) secs = Math.max(1, Math.round((performance.now() - t0) / 1000)); text += d.content; sched(); }
+      };
       while (true) {
         const {value, done} = await reader.read(); if (done) break;
         buf += dec.decode(value, {stream:true});
         let nl;
         while ((nl = buf.indexOf("\n")) >= 0) {
           const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
-          if (!line.startsWith("data:")) continue;
-          const data = line.slice(5).trim(); if (data === "[DONE]") continue;
-          let j; try { j = JSON.parse(data); } catch (e) { continue; }
-          if (j.error) throw {friendly:friendlyError(+j.error.code || 0, j, P)};
-          const d = (j.choices && j.choices[0] && j.choices[0].delta) || {};
-          const r = typeof d.reasoning === "string" ? d.reasoning : (typeof d.reasoning_content === "string" ? d.reasoning_content : "");
-          if (r) { if (!t0) t0 = performance.now(); reasoning += r; sched(); }
-          if (typeof d.content === "string" && d.content) { if (t0 && !secs) secs = Math.max(1, Math.round((performance.now() - t0) / 1000)); text += d.content; sched(); }
+          handleLine(line);
         }
       }
+      buf += dec.decode();
+      if (buf.trim()) handleLine(buf.trim());
     }
     if (!text.trim()) fail = {friendly:"The model sent an empty reply. Try again, or pick another model."};
   } catch (err) {
@@ -1379,8 +1390,8 @@ $("#chatSearch").addEventListener("input", () => renderDrawer());
 const dockMQ = matchMedia("(min-width:1024px)");
 function docked(){ return dockMQ.matches; }
 function applyDock(){ const on = docked(); document.body.classList.toggle("dock", on);
-  if (on) { const i = stack.indexOf(drawerL); if (i >= 0) { stack.splice(i, 1); drawerL.scrim.classList.remove("on"); } $("#drawer").removeAttribute("inert"); renderDrawer(); }
-  else if (!stack.includes(drawerL)) $("#drawer").setAttribute("inert", ""); }
+  if (on) { const i = stack.indexOf(drawerL); if (i >= 0) { stack.splice(i, 1); drawerL.scrim.classList.remove("on"); } $("#drawer").removeAttribute("inert"); appEl.inert = stack.length > 0; renderDrawer(); }
+  else if (!stack.includes(drawerL)) { if (drawerInHist) { stack.unshift(drawerL); showLayer(drawerL); } else $("#drawer").setAttribute("inert", ""); } }
 dockMQ.addEventListener("change", applyDock);
 function dayGroup(t){
   const d = new Date(t), now = new Date();
