@@ -13,7 +13,11 @@ use std::{
     },
     time::{Duration, Instant},
 };
-use tauri::{AppHandle, Emitter, Manager, State};
+use tauri::{
+    menu::{Menu, MenuItem},
+    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
+    AppHandle, Emitter, Manager, State, WindowEvent,
+};
 use tokio::io::AsyncWriteExt;
 
 #[derive(Default)]
@@ -366,11 +370,66 @@ pub fn run() {
             stop_engine,
             engine_status
         ])
+        .setup(|app| {
+            // Use the real bundled Vesper icon for the window and the system tray.
+            if let Some(icon) = app.default_window_icon().cloned() {
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.set_icon(icon.clone());
+                }
+                let open = MenuItem::with_id(app, "open", "Open Vesper", true, None::<&str>)?;
+                let quit = MenuItem::with_id(app, "quit", "Quit Vesper", true, None::<&str>)?;
+                let menu = Menu::with_items(app, &[&open, &quit])?;
+                TrayIconBuilder::new()
+                    .icon(icon)
+                    .tooltip("Vesper")
+                    .menu(&menu)
+                    .show_menu_on_left_click(false)
+                    .on_menu_event(|app, event| match event.id.as_ref() {
+                        "open" => {
+                            if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.unminimize();
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
+                        }
+                        "quit" => app.exit(0),
+                        _ => {}
+                    })
+                    .on_tray_icon_event(|tray, event| {
+                        if let TrayIconEvent::Click {
+                            button: MouseButton::Left,
+                            button_state: MouseButtonState::Up,
+                            ..
+                        } = event
+                        {
+                            if let Some(window) = tray.app_handle().get_webview_window("main") {
+                                let _ = window.unminimize();
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
+                        }
+                    })
+                    .build(app)?;
+            }
+            Ok(())
+        })
         .build(tauri::generate_context!())
         .expect("Vesper failed to start")
         .run(|app, event| {
-            if let tauri::RunEvent::Exit = event {
-                stop(&app.state::<AppState>());
+            match event {
+                // Closing the window sends the app to the tray instead of killing a local model.
+                tauri::RunEvent::WindowEvent {
+                    label,
+                    event: WindowEvent::CloseRequested { api, .. },
+                    ..
+                } if label == "main" => {
+                    api.prevent_close();
+                    if let Some(window) = app.get_webview_window("main") {
+                        let _ = window.hide();
+                    }
+                }
+                tauri::RunEvent::Exit => stop(&app.state::<AppState>()),
+                _ => {}
             }
         });
 }
