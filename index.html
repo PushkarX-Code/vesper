@@ -292,7 +292,7 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
 .hive button:hover{transform:scale(1.06)}
 .hive button.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--fg)}
-.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg,.gav .logo-flat{width:58%;height:58%}
+.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav .logo-flat{width:56%;height:56%}.gav img{width:62%;height:62%;object-fit:contain}.gav.fin img{width:74%;height:74%}
 .avfoot{display:flex;align-items:center;gap:8px;padding:12px 4px 2px}.avfoot .sp{flex:1}
 .avfoot .btn{height:38px;padding:0 16px;font-size:14px}
 /* settings window: header, menu with search, flat rows */
@@ -2023,23 +2023,19 @@ const WORK = ["Design", "Video and content", "Marketing", "Engineering", "Writin
 function prof(){ S.profile = S.profile || {}; return S.profile; }
 function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " " + cls : "")});
   if (pr.photo) a.append(h("img", {src:pr.photo, alt:""})); else if (pr.gen) { a.classList.add("isgen"); a.append(genAvatar(pr.gen.g, pr.gen.c)); } else if (pr.mark) a.append(h("img", {src:"icons/" + pr.mark + "/mark.webp", alt:"", class:"mk"}));
-  else if (pr.name) a.append(h("b", {text:pr.name.trim().charAt(0).toUpperCase()})); else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
+  else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
   return a; }
 async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
-// Generated avatars: one of our glyphs on a color. The first glyph is the Vesper mark.
-const AV_COLORS = ["#8b6a43", "#d65a4f", "#4f8f7a", "#5b8fd9", "#8a7a72", "#6f7782", "#d97757", "#c2577f", "#a9cfc4", "#c9c6db", "#e8a33d", "#d6608c", "#9a5a45", "#5b5873", "#e2b39d", "#7d6fc4", "#e5cbd8", "#3f8a6e", "#e07a52"];
-const AV_GLYPHS = [null,
-  '<circle cx="12" cy="7" r="4.4"/><circle cx="17" cy="12" r="4.4"/><circle cx="12" cy="17" r="4.4"/><circle cx="7" cy="12" r="4.4"/>',
-  '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
-  '<g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></g><circle cx="12" cy="12" r="2.6"/>',
-  '<circle cx="6" cy="6" r="2.4"/><circle cx="12" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="12" cy="12" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="12" cy="18" r="2.4"/><circle cx="18" cy="18" r="2.4"/>',
-  '<path d="M4 20v-6h5V9h5V4h6v16z"/>',
-  '<path d="M5 4h14v4h-4.5v8H19v4H5v-4h4.5V8H5z"/>',
-  '<rect x="4" y="4" width="7" height="7" rx="2.4"/><rect x="13" y="4" width="7" height="7" rx="2.4"/><rect x="4" y="13" width="7" height="7" rx="2.4"/><rect x="13" y="13" width="7" height="7" rx="2.4"/>'];
+// Avatars use only our own logos: the Vesper mark in many colors, the six 3D finishes and the Node Folds mark.
+const AV_COLORS = ["#2b4a8b", "#6d4bb3", "#b54a74", "#c2643a", "#b8892f", "#2f7d63", "#2c6f86", "#4a4f5c", "#7a5a43", "#8b2f3c", "#3d3a6b", "#1f5c4c", "#e8e3da", "#c9d6ea", "#efd3dc"];
+const AV_KINDS = ["vesper", "nodefolds", "chrome", "gold", "rose", "graphite", "midnight", "emerald"];
 function lightColor(hex){ const n = parseInt(hex.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; }
-function genAvatar(g, c, size){ const col = AV_COLORS[c % AV_COLORS.length], fg = lightColor(col) ? "#151515" : "#ffffff";
-  const el = h("span", {class:"gav", style:"background:" + col + ";color:" + fg + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
-  el.innerHTML = AV_GLYPHS[g % AV_GLYPHS.length] ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + AV_GLYPHS[g % AV_GLYPHS.length] + '</svg>' : '<i class="logo-flat" style="--logo:' + fg + '" aria-hidden="true"></i>';
+function genAvatar(g, c, size){
+  const kind = AV_KINDS[g % AV_KINDS.length], col = AV_COLORS[c % AV_COLORS.length], light = lightColor(col);
+  const finish = kind !== "vesper" && kind !== "nodefolds";
+  const el = h("span", {class:"gav" + (finish ? " fin" : ""), style:"background:" + (finish ? "radial-gradient(circle at 50% 35%," + col + ",#08090c 78%)" : col) + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
+  if (kind === "vesper") el.innerHTML = '<i class="logo-flat" style="--logo:' + (light ? "#141416" : "#ffffff") + '" aria-hidden="true"></i>';
+  else el.append(h("img", {src:kind === "nodefolds" ? "icons/nf-mark.svg" : "icons/" + kind + "/mark.webp", alt:"", draggable:"false"}));
   return el; }
 let avFile = null;
 function pickAvatar(after){
@@ -2052,7 +2048,8 @@ function pickAvatar(after){
 }
 function chooseAvatar(after){
   const rows = [5, 8, 9, 8, 5]; let cells = [], pick = null;
-  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5); cells = Array.from({length:n}, (_, i) => ({g:i === 17 ? 0 : Math.floor(Math.random() * AV_GLYPHS.length), c:cs[i % cs.length]})); };
+  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5), ks = AV_KINDS.map((_, i) => i);
+    cells = Array.from({length:n}, (_, i) => ({g:i === 17 ? 2 : i % 3 === 0 ? 0 : ks[Math.floor(Math.random() * ks.length)], c:cs[i % cs.length]})); };
   const cur = prof().gen; deal(); if (cur) cells[17] = {g:cur.g, c:cur.c}; pick = cells[17];
   open("avpick", () => { const L = makeSheet("Choose an avatar"), hive = h("div", {class:"hive"});
     const draw = () => { hive.innerHTML = ""; let k = 0; rows.forEach((n, r) => { const row = h("div", {class:"hr"}); for (let i = 0; i < n; i++, k++) { const cell = cells[k], d = Math.hypot(i - (n - 1) / 2, (r - 2) * 1.1), size = Math.round(Math.max(36, 78 - d * 11));
