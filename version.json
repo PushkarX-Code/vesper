@@ -1,8 +1,8 @@
 {
- "version": "3.5",
+ "version": "3.6",
  "notes": [
-  "Settings now has only Providers and Models",
-  "Model and provider actions open in the right pane, not over Settings",
-  "The same theme colors are used across the app"
+  "Every Settings section is back in the menu",
+  "Provider and model rows still open in the right pane, not over Settings",
+  "Same theme colors across the app"
  ]
 }

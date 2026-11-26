@@ -2039,28 +2039,49 @@ function inlineLayer(render, into, after){
   return L;
 }
 /* ---------- settings ---------- */
-function openSettings(swap){ open("settings", () => { const L = makePage("Settings", () => {}, {modal:true}); settingsNav(L); return L; }, swap); }
-// Settings has exactly two tabs. The left menu stays in place and every action redraws only the right pane.
+function openSettings(swap){ open("settings", () => { const L = makePage("Settings", renderSettingsRoot, {modal:true}); settingsNav(L); return L; }, swap); }
+let settingsNavApi = null;
+function settingsGo(view){ if (settingsNavApi) settingsNavApi.view(view); }
+// Every section stays in the left menu. Provider and model rows redraw the right pane instead of opening a layer.
 function settingsNav(L){
-  const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"});
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"sparkles", Extensions:"lightning", Server:"laptop", Pairing:"share-2", Browser:"share-2", Experimental:"lightning", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
-  const btns = [["providers", "Providers", "key-round"], ["models", "Models", "cpu"]].map(([id, label, icon]) =>
-    h("button", {type:"button", "aria-label":label, html:ic(icon) + "<span>" + label + "</span>", onclick:() => show(id, "home")}));
-  nav.append(...btns);
-  let tab = "providers", view = "home";
-  const go = (t, v) => show(t, v);
-  function show(t, v){
-    tab = t; view = v || "home";
-    btns.forEach((b, i) => b.classList.toggle("on", (i === 0) === (tab === "providers")));
-    L.body.innerHTML = "";
-    renderSettingsView(L.body, L, tab, view, go);
-    const sc = L.body.parentNode; if (sc) sc.scrollTop = 0;
-  }
-  L.refresh = () => show(tab, view);
-  show("providers", "home");
+  const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
+  const viewBox = h("div", {class:"settings-view", hidden:true}); L.body.append(viewBox);
+  let active = 0, currentView = "";
+  const sections = () => [...L.body.children].filter(el => el !== viewBox && el.classList.contains("glabel"));
+  const show = () => { const t = q.value.trim().toLowerCase(); let k = -1;
+    [...L.body.children].forEach(el => { if (el === viewBox) { el.hidden = true; return; } if (el.classList.contains("glabel")) k++; el.hidden = !t && k !== active; });
+    L.body.querySelectorAll(".row").forEach(r => r.style.display = !t || r.textContent.toLowerCase().includes(t) ? "" : "none");
+    if (t) { let lab = null, any = false; const flush = () => { if (lab) lab.style.display = any ? "" : "none"; };
+      [...L.body.children].forEach(el => { if (el === viewBox) return; if (el.classList.contains("glabel")) { flush(); lab = el; any = false; } else if (el.classList.contains("group")) { const v = [...el.querySelectorAll(".row")].some(r => r.style.display !== "none"); el.style.display = v ? "" : "none"; any = any || v; } else if (el.classList.contains("gnote")) el.style.display = "none"; }); flush(); }
+    else [...L.body.children].forEach(el => { if (el !== viewBox) el.style.display = ""; });
+    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); };
+  const go = (tab, view) => { if (view === "home") { const i = sections().findIndex(g => g.textContent === tab); if (i >= 0) { active = i; q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; } } else settingsGo(view); };
+  const showView = view => { currentView = view;
+    const tab = view.indexOf("prov") === 0 ? "Providers" : "Models", i = sections().findIndex(g => g.textContent === tab);
+    if (i >= 0) { active = i; q.value = ""; }
+    [...L.body.children].forEach(el => { if (el !== viewBox) el.hidden = true; });
+    viewBox.hidden = false; viewBox.innerHTML = "";
+    renderSettingsView(viewBox, L, view.indexOf("prov") === 0 ? "providers" : "models", view, go);
+    [...nav.querySelectorAll("button")].forEach((b, k) => b.classList.toggle("on", k === active));
+    scroller.scrollTop = 0; };
+  settingsNavApi = {view:showView, section:name => go(name, "home")};
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
+    sections().forEach(g => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = sections().indexOf(g); q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; }})); });
+    show(); };
+  q.addEventListener("input", show);
+  const r = L.refresh;
+  L.refresh = () => { const wasView = !viewBox.hidden, view = currentView; r(); L.body.append(viewBox); build(); if (wasView && view) showView(view); else show(); };
+  build();
 }
 function renderSettingsView(w, L, tab, view, go){
-  if (tab === "providers") return view === "home" ? openProviders(null, {into:w, nav:go}) : openProvider(view, null, {into:w, nav:go});
+  if (tab === "providers") {
+    if (view === "home" || view === "providers") return openProviders(null, {into:w, nav:go});
+    const pid = view.indexOf("prov:") === 0 ? view.slice(5) : view;
+    return openProvider(pid, null, {into:w, nav:go});
+  }
   if (view === "home") return renderModelsHome(w, L, go);
   if (view === "picker") return renderModelPicker(w, L, go);
   if (view === "manage") return manageModels(null, {into:w, nav:go});
@@ -2495,9 +2516,9 @@ function renderSettingsRoot(w){
     row({icon:"message-square", title:"Message actions", sub:"Hover a reply to copy, edit, retry or read it aloud", chev:false})
   ), gnote("Private chats start from the home screen and never touch this browser's storage."));
   w.append(glabel("Capabilities"), group(
-    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
-    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
-    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()}),
+    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => settingsGo("providers")}),
+    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => settingsGo("local")}),
+    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => settingsGo("manage")}),
     row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}),
     row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()}),
     row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()}),
@@ -2506,14 +2527,15 @@ function renderSettingsRoot(w){
   ));
   const provIds = Object.keys(PROVIDERS), provShow = S.showProviders ? provIds : provIds.slice(0, 3);
   w.append(glabel("Providers"), group(
-    ...provShow.map(pid => row({icon:"key-round", title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "API key" : "Add key", ok:ready(pid), onclick:() => openProvider(pid)})),
+    ...provShow.map(pid => row({icon:"key-round", title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "API key" : "Add key", ok:ready(pid), onclick:() => settingsGo("prov:" + pid)})),
     row({icon:"arrow-down", title:S.showProviders ? "Show fewer providers" : "Show more providers", sub:"Free providers Vesper can connect to", onclick:() => { S.showProviders = !S.showProviders; save(); again(); }})
   ), gnote("Keys are saved in this browser and sent only to the provider you pick."));
   w.append(glabel("Models"), group(
-    row({icon:"cpu", title:"Model in use", sub:modelSub, val:cm ? cm.name : "", onclick:() => openModels()}),
-    row({icon:"sliders-horizontal", title:"Shown in the picker", sub:hiddenN ? hiddenN + (hiddenN === 1 ? " discovered model is hidden" : " discovered models are hidden") : "Every discovered model is shown", val:shown + " of " + total, onclick:() => manageModels()}),
-    row({icon:"robot", title:"Find your model", sub:"A pick that fits this computer's memory and graphics", onclick:() => openAdvisor()}),
-    row({icon:"refresh-cw", title:"Discover models", sub:"Ask each connected provider for its latest list", onclick:() => openProviders()})
+    row({icon:"cpu", title:"Model in use", sub:modelSub, val:cm ? cm.name : "", onclick:() => settingsGo("picker")}),
+    row({icon:"sliders-horizontal", title:"Shown in the picker", sub:hiddenN ? hiddenN + (hiddenN === 1 ? " discovered model is hidden" : " discovered models are hidden") : "Every discovered model is shown", val:shown + " of " + total, onclick:() => settingsGo("manage")}),
+    row({icon:"robot", title:"Find your model", sub:"A pick that fits this computer's memory and graphics", onclick:() => settingsGo("advisor")}),
+    row({icon:"refresh-cw", title:"Discover models", sub:"Ask each connected provider for its latest list", onclick:() => settingsGo("providers")}),
+    row({icon:"laptop", title:"Local models", sub:"Add and manage local connections", val:S.conns.length ? String(S.conns.length) : "", onclick:() => settingsGo("local")})
   ), gnote("A model is saved as provider::id, so two providers can offer the same name. Hidden models stay available in Manage models."));
   const tlNames = ["Quiet", "Compact", "Normal", "Detailed", "Custom"];
   const tlWord = h("em", {text:tlNames[S.tlLevel] || "Normal"});
@@ -2548,7 +2570,7 @@ function renderSettingsRoot(w){
   ));
   w.append(glabel("Server"), group(
     row({icon:"laptop", title:"Local connections", sub:"Ollama, LM Studio and OpenAI compatible servers", val:S.conns.length ? String(S.conns.length) : "None", onclick:() => openLocal()}),
-    row({icon:"key-round", title:"Cloud providers", sub:"Free models from providers you connect", val:nReady ? String(nReady) : "None", onclick:() => openProviders()})
+    row({icon:"key-round", title:"Cloud providers", sub:"Free models from providers you connect", val:nReady ? String(nReady) : "None", onclick:() => settingsGo("providers")})
   ), gnote("Local calls to private addresses are allowed by the browser from this page. No server is run by Node Folds."));
   w.append(glabel("Pairing"), group(
     row({icon:"share-2", title:"Connect a local server", sub:"Pair this app with Ollama, LM Studio or another computer on your WiFi", onclick:() => openLocal()}),
@@ -3306,7 +3328,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "3.5";
+const APP_VERSION = "3.6";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;

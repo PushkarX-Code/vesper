@@ -2,19 +2,20 @@
 
 ## Current state
 
-At the owner's request, Settings now has exactly two tabs: **Providers** and **Models**. All other sections were removed from the menu. The left menu stays fixed and only the right pane changes. No row in Settings opens a sheet, page or dialog over Settings. Models is the only place to add models.
+All Settings sections are back in the left menu: General, Account, Usage, Appearance, Your Vesper, Chat, Capabilities, Providers, Models, Timeline, Create, Extensions, Server, Pairing, Browser, Notifications, Sounds, Shortcuts, Privacy, Data, Experimental, Help and About. The left menu stays fixed and only the right pane changes. Provider and model rows render inline instead of opening a layer over Settings.
 
 Implementation contract:
 
-- `openSettings()` creates `makePage("Settings", () => {}, {modal:true})` and calls `settingsNav(L)`.
-- `settingsNav(L)` builds two buttons, tracks `tab` and `view`, and replaces `L.refresh` with `show(tab, view)`. Nothing else is in the menu, including the old search box.
-- `renderSettingsView(w, L, tab, view, go)` routes to the right pane. Providers shows `openProviders()` inline or `openProvider(pid)` inline. Models shows `renderModelsHome()`, `renderModelPicker()`, `manageModels()`, `openLocal()`, `openConn(id)` or `openAdvisor()` inline.
+- `openSettings()` creates `makePage("Settings", renderSettingsRoot, {modal:true})` and calls `settingsNav(L)`.
+- `settingsNav(L)` builds the full menu from the `.glabel` headings in the rendered body, with search and the section dividers. It also creates a hidden `viewBox` for inline views.
+- Clicking a menu button shows only that section. Search looks across all sections.
+- `settingsGo(view)` calls the active settings layer's `settingsNavApi.view(view)`. Provider and model rows use it: provider keys, the model picker, Manage models, Local models, Add a local model and the advisor all render in `viewBox` through `renderSettingsView()`.
 - `inlineLayer(render, into, after)` clears the pane and calls the same render function the standalone page uses. Existing page functions accept `{into, nav}` so their logic stays in one place.
-- Each inline view has a Back row inside the right pane. The left menu buttons are the only way to switch tabs.
-- On a phone the two tabs sit in a horizontal bar above the right pane. On desktop they are in the fixed left rail.
+- Each inline view has a Back row inside the right pane that returns to its section. The left menu buttons remain available while an inline view is open.
+- `L.refresh` rebuilds the sections, reattaches `viewBox` and restores the current inline view. On a phone the menu sits in a horizontal bar above the right pane; on desktop it is the fixed left rail.
 - Theme consistency: `.page.modal .group` is transparent, `.dialog` uses `var(--sheet)` instead of a hard coded dark color, and tinted details panels use `var(--sheet)`. Do not add new overlay background colors. Modals, dialogs, sheets and panes must read as one surface.
 
-Checks after any change: open Settings, confirm only Providers and Models appear in the menu; click every row in both tabs and confirm the layer stack stays at `["Settings"]`; add a local model from the Models tab and confirm the form appears in the right pane; reload and confirm no theme surface has a different color.
+Checks after any change: open Settings, confirm every section above appears in the menu; click a provider key row and a model row and confirm the layer stack stays at `["Settings"]`; add a local model from the Models section and confirm the form appears in the right pane; use Back and confirm the section returns; reload and confirm no theme surface has a different color.
 
 ## History
 
