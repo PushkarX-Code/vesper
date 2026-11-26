@@ -41,7 +41,7 @@ img{display:block;max-width:100%}
 /* scenes */
 .scene{position:relative}
 .pin{position:sticky;top:0;height:100svh;overflow:hidden}
-#device,#ipad,#phone,#mark,#h1{will-change:transform}
+#device,#ipad,#mark,#h1{will-change:transform}
 /* hero */
 .hero{height:150vh}
 .hero .pin{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px}
@@ -147,17 +147,12 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .dtx p{margin:18px 0 0;font-size:clamp(17px,1.7vw,20px);color:var(--muted);line-height:1.5;max-width:460px}
 .dstage{position:relative;width:100%;display:grid;place-items:center;perspective:2200px}
 .dstage .device{will-change:transform}
-.duo .device.phone{position:absolute;right:-1%;bottom:-7%;width:30%;max-height:none;border-radius:clamp(22px,3.2vw,42px);padding:clamp(6px,.8vw,10px);z-index:3;box-shadow:0 60px 120px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.05)}
 .duo{position:relative;width:min(100%,calc(76svh * 1.439))}.duo #ipad{width:100%}
-.device.phone::before{display:none}
-.device.phone .screen{aspect-ratio:824/1784;border-radius:clamp(15px,2.4vw,33px)}
-.device.phone .screen img{object-position:top center}
 @media (max-width:860px){
   .theater .pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;padding:92px 0 24px}
-  .dstage{order:-1;perspective:none;padding-bottom:8%}
+  .dstage{order:-1;perspective:none}
   .dtexts{height:210px}.dtx h3{font-size:34px;margin-top:12px}.dtx p{font-size:16px;margin-top:10px}
-  .duo .device.phone{width:34%;right:2%;bottom:-6%}
-}
+  }
 .chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(110,168,255,.16);padding:6px 12px;border-radius:999px;margin-bottom:14px}
 .nextw{padding:12vh 0 8vh}
 .ngrid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:48px}
@@ -280,8 +275,7 @@ footer a:hover{color:#fff}
     </div>
   </div>
   <div class="dstage"><div class="duo">
-    <div class="device m" id="ipad"><div class="screen"><div class="shots"><img src="img/app-studio.webp" alt="Vesper Studio home" width="2200" height="1528"></div></div></div>
-    <div class="device phone m" id="phone"><div class="screen"><div class="shots"><img src="img/phone-video.webp" alt="Vesper Studio on a phone" width="824" height="1784"></div></div></div>
+    <div class="device m" id="ipad"><div class="screen"><div class="shots"><img src="img/app-studio.webp" alt="Vesper Studio home" width="2200" height="1528"><img src="img/app-video.webp" alt="Vesper Video Studio" width="2200" height="1528"></div></div></div>
   </div></div>
 </div></section>
 
@@ -396,7 +390,7 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
   // cards spotlight
   $$(".card").forEach(c => c.addEventListener("pointermove", e => { const r = c.getBoundingClientRect(); c.style.setProperty("--x", e.clientX - r.left + "px"); c.style.setProperty("--y", e.clientY - r.top + "px"); }));
   const hero = $(".hero"), story = $(".story"), mani = $(".mani"), theater = $(".theater");
-  const txs = $$(".tx"), shots = $$(".screen img"), ticks = $$(".ticks b"), tts = $$(".dtx"), rvs = $$(".rv");
+  const txs = $$(".tx"), shots = $$(".story .screen img"), ticks = $$(".ticks b"), tts = $$(".dtx"), rvs = $$(".rv");
   // smoothed values glide toward their targets, like a camera move
   const S = {}, T = {}; const k = RM ? 1 : .16;
   const sm = (key, target) => { T[key] = target; if (S[key] === undefined) S[key] = target; return S[key]; };
@@ -451,11 +445,12 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
     words.forEach((w, i) => w.style.opacity = .13 + .87 * clamp(lit - i));
     // studio: the iPad rises with Image Studio, then the phone with Video Studio slides up over it
     const th = R[3], tp = sm("theater", th.p), e1 = ease(clamp(tp / .3)), e2 = ease(clamp((tp - .45) / .3));
-    const ip = $("#ipad"), ph = $("#phone"), small = innerWidth <= 860;
-    ip.style.transform = small ? "translateY(" + ((1 - e1) * 8) + "vh) scale(" + (.94 + e1 * .06 - e2 * .03) + ")"
-      : "translateY(" + ((1 - e1) * 22) + "vh) rotateX(" + ((1 - e1) * 14) + "deg) rotateY(" + (-4 + e1 * 1.5 - e2 * 2) + "deg) translateX(" + (-e2 * 5) + "%) scale(" + (.9 + e1 * .1 - e2 * .05) + ")";
-    ip.style.opacity = .3 + e1 * .7 - e2 * .22;
-    ph.style.transform = "translateY(" + ((1 - e2) * 115) + "vh)";
+    const ip = $("#ipad"), sh = ip.querySelectorAll("img"), small = innerWidth <= 860;
+    ip.style.transform = small ? "translateY(" + ((1 - e1) * 8) + "vh) scale(" + (.94 + e1 * .06) + ")"
+      : "translateY(" + ((1 - e1) * 22) + "vh) rotateX(" + ((1 - e1) * 14) + "deg) rotateY(" + (-4 + e1 * 4) + "deg) scale(" + (.9 + e1 * .1) + ")";
+    ip.style.opacity = .3 + e1 * .7;
+    sh[0].style.transform = "scale(" + (1 - e2 * .08) + ")"; sh[0].style.opacity = 1 - e2 * .45;
+    sh[1].style.zIndex = 2; sh[1].style.transform = "translateY(" + ((1 - e2) * 100) + "%)";
     tts[0].style.opacity = clamp(e1 * 1.6) * (1 - clamp((tp - .4) / .1)); tts[0].style.transform = "translateY(" + ((1 - e1) * 30 - clamp((tp - .4) / .1) * 20) + "px)";
     tts[1].style.opacity = clamp((tp - .55) / .1); tts[1].style.transform = "translateY(" + ((1 - clamp((tp - .55) / .1)) * 30) + "px)";
     // the rest rises in gently
