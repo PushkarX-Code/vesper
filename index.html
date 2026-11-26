@@ -81,8 +81,8 @@ svg{display:block}
 
 .msg{display:flex;flex-direction:column;gap:4px;animation:rise .28s var(--ease) both}
 .msg.user{align-items:flex-end}
-.bubble{max-width:86%;background:var(--raised);padding:10px 16px;border-radius:22px 22px 8px 22px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5;cursor:pointer}
-.answer{min-width:0;font-size:16.5px;line-height:1.65;overflow-wrap:anywhere}
+.bubble{font-size:var(--msgfs,16px);max-width:86%;background:var(--raised);padding:10px 16px;border-radius:22px 22px 8px 22px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5;cursor:pointer}
+.answer{min-width:0;font-size:var(--msgfs,16.5px);line-height:1.65;overflow-wrap:anywhere}
 .answer p{margin:0 0 .85em}
 .answer .md > :last-child{margin-bottom:0}
 .answer strong{font-weight:600}
@@ -840,6 +840,8 @@ details.more-opts .group{margin-top:8px}
 body.dock .page:not(.modal) .page-body:has(.lcards,.cgrid,.spg){padding:8px clamp(24px,3vw,56px) 56px}
 body.dock .page:not(.modal) .wrap:has(.lcards,.cgrid,.spg){max-width:none;width:100%}
 body.dock{--col:clamp(760px,50vw,980px)}
+body.hc{--muted:#c4c4c1;--faint:#a5a5a3;--fg-soft:#ececea;--line:#4a4a50;--line-soft:#3a3a40}
+body.focusring :focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
 body.noglass *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}body.noglass .composer,body.noglass .sbar{background:var(--surface)!important}
 body.dense .thread-inner{gap:12px}body.dense .bubble{padding:7px 14px}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer-wrap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:40px 24px 10px;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 88%,transparent) 35%,transparent);pointer-events:none}
@@ -900,6 +902,15 @@ select.input{appearance:none;background-image:none}
 .btn.ghost{background:none;color:var(--fg-soft)}
 .btn.danger{color:var(--danger)}
 .btn.block{width:100%}
+.btn.sm{height:36px;padding:0 14px;font-size:14px;border-radius:10px}.btns.end{justify-content:flex-end}
+body.dock .btn.block{width:auto;height:38px;padding:0 16px;font-size:14px;border-radius:10px}
+.skhead{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:2px 2px 4px}.skhead p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55;max-width:56ch}
+.skrows .row .tx span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.emptyc{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:26px 20px;border:1px dashed var(--line);border-radius:16px;color:var(--muted);font-size:14px}.emptyc b{color:var(--fg);font-size:15px;font-weight:500}.emptyc .btn{margin-top:8px}
+.emptyc .ei{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--raised);color:var(--fg-soft)}.emptyc .ei .ic{width:20px;height:20px}
+.sked{display:flex;flex-direction:column;gap:14px;padding:4px 2px 6px}.fl{display:flex;flex-direction:column;gap:6px}.fl>span{font-size:13px;font-weight:500;color:var(--muted)}
+.input.ta{height:auto;min-height:140px;padding:12px 14px;line-height:1.5;resize:vertical;font-size:14.5px}.fcount{align-self:flex-end;font-size:12px;color:var(--faint)}.fhelp{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+.iconpick{display:flex;flex-wrap:wrap;gap:6px}.iconpick button{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--raised);color:var(--c,var(--fg-soft))}.iconpick button.on{box-shadow:0 0 0 2px var(--accent);background:var(--raised-2)}.iconpick .ic{width:19px;height:19px}
 .btn:disabled{opacity:.4;cursor:default}
 .btns{display:flex;gap:8px;flex-wrap:wrap}
 .status{font-size:13.5px;color:var(--muted);line-height:1.5}
@@ -1268,6 +1279,7 @@ function systemPrompt(c){
   const k = c && c.companion ? compById(c.companion) : null;
   let s = k ? companionPrompt(k) : SYSTEM;
   const pf = S.profile || {}; if ((pf.call || pf.name || "").trim()) s += "\n\nCall the user " + (pf.call || pf.name).trim() + "."; if (pf.work) s += " They work in " + pf.work.toLowerCase() + ".";
+  if (S.replyLang) s += "\n\nWrite replies in " + S.replyLang + ", unless the user writes in another language or asks you to switch.";
   if (S.about.trim()) s += "\n\nAbout the user:\n" + S.about.trim();
   if (S.respond.trim()) s += "\n\nHow the user wants replies:\n" + S.respond.trim();
   if (S.open) s += "\n\n" + OPEN_RULE;
@@ -1690,6 +1702,7 @@ function msgEl(c, m, i){
   if (last && !m.greeting) acts.append(actBtn("refresh-cw", "Retry", () => retry()));
   if (m.saved) acts.append(h("button", {class:"memtag", type:"button", onclick:() => openMemory(), html:ic("brain") + "<span>Memory updated</span>"}));
   const mm = modelByKey(m.model); if (mm) acts.append(h("span", {class:"by", text:mm.name}));
+  if (S.times && m.at) acts.append(h("span", {class:"by", text:new Date(m.at).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}));
   if (S.devStats && m.stats) { const st = m.stats, sec = (st.ms || 0) / 1000; acts.append(h("span", {class:"by", text:(st.p || 0) + " in, " + (st.c || 0) + (st.est ? " out (est.)" : " out") + ", " + sec.toFixed(1) + " s" + (sec > 0 && st.c ? ", " + Math.round(st.c / sec) + " tok/s" : "") + (st.ttft ? ", first word " + (st.ttft / 1000).toFixed(1) + " s" : "")})); }
   wrap.append(a, acts);
   return wrap;
@@ -1911,6 +1924,7 @@ async function generate(){
   }
   if (text.trim()) {
     const out = {role:"assistant", content:text, model:mk(m), at:Date.now()};
+    if (S.autoRead && window.speechSynthesis) setTimeout(() => speak(text, null), 200);
     if (added.length) out.saved = added.length;
     if (reasoning) { out.reasoning = reasoning.slice(0, 20000); out.secs = secs || Math.max(1, Math.round((performance.now() - (t0 || performance.now())) / 1000)); }
     out.stats = actStats();
@@ -2241,7 +2255,7 @@ function toSettings(view){ if (settingsNavApi && stack.some(l => l.el && l.el.cl
 function settingsGo(view){ if (settingsNavApi) settingsNavApi.view(view); }
 // Every section stays in the left menu. Provider and model rows redraw the right pane instead of opening a layer.
 function settingsNav(L){
-  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Parameters:"sliders-horizontal", Developer:"code", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Voice:"mic", Parameters:"sliders-horizontal", Developer:"code", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
@@ -2363,18 +2377,35 @@ function renderSkill(){
   el.style.setProperty("--c", RICO[sk.icon || "sparkles"] || "#ffb340"); el.append(h("span", {html:ic(sk.icon || "sparkles")}), h("span", {text:sk.name}), h("button", {type:"button", "aria-label":"Stop using " + sk.name, html:ic("x"), onclick:() => setSkill(null)}));
 }
 function pickSkill(){ menu("skills", "Use a skill", SKILLS.concat(S.skills || []).map(sk => ({icon:sk.icon || "sparkles", tint:true, label:sk.name, run:() => setSkill(sk.id)})).concat([{icon:"plus", label:"Create a skill", run:() => newSkill()}])); }
-function newSkill(after){
-  dialog({title:"Name your skill", input:"", placeholder:"For example, Product copy", ok:"Next", onOk:name => { name = (name || "").trim(); if (!name) return;
-    setTimeout(() => dialog({title:"What should it do?", input:"", placeholder:"Write short product descriptions in a warm tone", ok:"Save", onOk:text => { text = (text || "").trim(); if (!text) return;
-      S.skills = (S.skills || []).concat([{id:"u" + uid(), name:name.slice(0, 40), text:text.slice(0, 2000)}]); save(); if (after) after(); }}), 360); }});
+const SKILL_ICONS = ["sparkles", "clapperboard", "camera", "lightning", "mic", "brain", "code", "graduation-cap", "message-square", "pencil", "chart", "briefcase"];
+function newSkill(after){ skillEditor(null, after); }
+function skillEditor(sk, after){
+  open("skilled", () => {
+    const L = makeSheet(sk ? "Edit skill" : "New skill"); let icon = sk && sk.icon || "sparkles";
+    const name = h("input", {class:"input", placeholder:"For example, Product copy", maxlength:"40", "aria-label":"Skill name"}); name.value = sk ? sk.name : "";
+    const text = h("textarea", {class:"input ta", rows:"7", maxlength:"2000", placeholder:"Write short product descriptions in a warm tone. Lead with the benefit, stay under 60 words and end with a question.", "aria-label":"Instructions"}); text.value = sk ? sk.text : "";
+    const count = h("small", {class:"fcount"}), upd = () => { count.textContent = text.value.length + " of 2000"; }; text.oninput = upd; upd();
+    const icons = h("div", {class:"iconpick", role:"radiogroup", "aria-label":"Icon"}), draw = () => { icons.innerHTML = ""; SKILL_ICONS.forEach(n => icons.append(h("button", {type:"button", class:n === icon ? "on" : "", role:"radio", "aria-checked":String(n === icon), "aria-label":n, html:ic(n), style:"--c:" + (RICO[n] || "#ffb340"), onclick:() => { icon = n; draw(); }}))); }; draw();
+    L.body.append(h("div", {class:"sked"},
+      h("label", {class:"fl"}, h("span", {text:"Name"}), name), h("label", {class:"fl"}, h("span", {text:"Instructions"}), text, count), h("div", {class:"fl"}, h("span", {text:"Icon"}), icons),
+      h("p", {class:"fhelp", text:"Vesper follows these instructions for every message in a chat where the skill is on. Be specific about tone, length and format."}),
+      h("div", {class:"btns end"}, h("button", {class:"btn ghost sm", type:"button", text:"Cancel", onclick:() => closeTop()}),
+        h("button", {class:"btn primary sm", type:"button", text:sk ? "Save changes" : "Create skill", onclick:() => { const n = name.value.trim(), t = text.value.trim(); if (!n) { name.focus(); return; } if (!t) { text.focus(); return; }
+          const item = {id:sk ? sk.id : "u" + uid(), name:n.slice(0, 40), text:t.slice(0, 2000), icon};
+          S.skills = sk ? (S.skills || []).map(x => x.id === sk.id ? item : x) : (S.skills || []).concat([item]); save(); closeTop(); if (after) after(); }}))));
+    return L;
+  });
 }
 function openSkills(){
   open("skillsp", () => makePage("Skills", (w, L) => {
-    w.append(gnote("A skill adds instructions to a chat. Pick one from the plus button in the message box."));
-    w.append(glabel("Ready to use"), group(...SKILLS.map(sk => row({icon:sk.icon, title:sk.name, sub:sk.text, chev:false}))));
-    const mine = S.skills || [];
-    w.append(glabel("Yours"), mine.length ? group(...mine.map(sk => row({icon:"sparkles", title:sk.name, sub:sk.text, onclick:() => menu("skillmenu", sk.name, [{icon:"trash-2", label:"Delete", danger:true, run:() => { S.skills = (S.skills || []).filter(x => x.id !== sk.id); save(); L.refresh(); }}])}))) : gnote("None yet."));
-    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Create a skill", onclick:() => newSkill(() => L.refresh())})));
+    const mine = S.skills || [], again = () => L.refresh();
+    w.append(h("div", {class:"skhead"}, h("p", {text:"A skill is a saved set of instructions. Turn one on from the plus button in the message box and Vesper follows it for the whole chat."}),
+      h("button", {class:"btn primary sm", type:"button", html:ic("plus") + "New skill", onclick:() => newSkill(again)})));
+    const skRow = (sk, own) => row({icon:sk.icon || "sparkles", title:sk.name, sub:sk.text, chev:false, onclick:() => menu("skillmenu", sk.name, own
+      ? [{icon:"check", label:"Use in this chat", run:() => setSkill(sk.id)}, {icon:"pencil", label:"Edit", run:() => skillEditor(sk, again)}, {icon:"trash-2", label:"Delete", danger:true, run:() => { S.skills = (S.skills || []).filter(x => x.id !== sk.id); if (chat() && chat().skill === sk.id) setSkill(null); save(); again(); }}]
+      : [{icon:"check", label:"Use in this chat", run:() => setSkill(sk.id)}, {icon:"copy", label:"Make my own copy", run:() => { S.skills = (S.skills || []).concat([{id:"u" + uid(), name:sk.name + " copy", text:sk.text, icon:sk.icon}]); save(); again(); }}])});
+    w.append(glabel("Yours"), mine.length ? h("div", {class:"group skrows"}, ...mine.map(sk => skRow(sk, true))) : h("div", {class:"emptyc"}, h("span", {class:"ei", html:ic("lightning")}), h("b", {text:"No skills of your own yet"}), h("span", {text:"Write instructions once and use them in any chat."}), h("button", {class:"btn sm", type:"button", text:"Write your first skill", onclick:() => newSkill(again)})));
+    w.append(glabel("Built in"), h("div", {class:"group skrows"}, ...SKILLS.map(sk => skRow(sk, false))));
   }));
 }
 // Media settings
@@ -2543,7 +2574,7 @@ function applyAccent(){
   else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
   document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
   document.body.classList.toggle("tinted", !!t.wall);
-  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); document.body.classList.toggle("noglass", S.glass === false); }
+  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); document.body.classList.toggle("noglass", S.glass === false); document.body.classList.toggle("hc", !!S.hc); document.body.classList.toggle("focusring", !!S.focusRing); if (S.msgSize) document.body.style.setProperty("--msgfs", S.msgSize + "px"); else document.body.style.removeProperty("--msgfs"); }
   document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : ""; document.body.style.setProperty("--z", Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "1");
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
@@ -2669,7 +2700,7 @@ function renderSettingsRoot(w){
   w.append(glabel("General"), group(
     h("div", {class:"row ctl laytop"}, h("div", {class:"tx"}, h("b", {text:"Interface layout"}), h("span", {text:"Choose how the sidebar and details panel sit beside the chat"})), layoutCards()),
     switchRow({icon:"panel-left", title:"Keep details panel open", sub:"Opening or closing it in one chat applies to all", get:() => S.insp, set:v => setInsp(v)}),
-    ctlRow("Language", "Vesper speaks English today. Other languages are planned", h("span", {class:"cval", text:"English"})),
+    ctlRow("Reply language", "The language Vesper writes in. Automatic matches whatever you write. The app screens themselves are in English for now", dropdown("Reply language", [["", "Automatic"], ["English", "English"], ["Spanish", "Spanish"], ["French", "French"], ["German", "German"], ["Italian", "Italian"], ["Portuguese", "Portuguese"], ["Hindi", "Hindi"], ["Arabic", "Arabic"], ["Chinese", "Chinese"], ["Japanese", "Japanese"], ["Korean", "Korean"], ["Russian", "Russian"], ["Turkish", "Turkish"]], S.replyLang || "", v => { if (v) S.replyLang = v; else delete S.replyLang; save(); })),
     ctlRow("Space at start", "Choose where Vesper opens", dropdown("Space at start", [["chat", "Chat"], ["last", "Last used"]], S.startSpace || "chat", v => { S.startSpace = v; save(); })),
     row({icon:"shield", title:"Permissions", sub:"Vesper only asks for the microphone when you use voice input. Files and keys stay on this device", chev:false}),
     switchRow({icon:"robot", title:"Show Agent and Code spaces", sub:"Both are in development. Hide them until they are ready", get:() => S.spacesOn !== false, set:v => setSpaces(v)}),
@@ -2704,6 +2735,9 @@ function renderSettingsRoot(w){
     ctlRow("Code font", "The font used inside code blocks", dropdown("Code font", [["system", "System mono"], ["menlo", "Menlo"], ["consolas", "Consolas"]], S.mono || "system", v => { S.mono = v; save(); applyTimeline(); })),
     ctlRow("Terminal font", "Vesper has no terminal. The coding agent is planned", h("span", {class:"cval", text:"Not used"})),
     ctlRow("Zoom", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
+    ctlRow("Chat text size", "The size of text in messages, apart from the screen scale above. Larger is easier on the eyes", dropdown("Chat text size", [["14.5", "Small"], ["16", "Default"], ["18", "Large"], ["20", "Extra large"]], String(S.msgSize || 16), v => { if (+v === 16) delete S.msgSize; else S.msgSize = +v; save(); applyAccent(); })),
+    switchRow({icon:"shield", title:"High contrast", sub:"Brighter text and stronger borders so everything is easier to tell apart", get:() => !!S.hc, set:v => { S.hc = v; save(); applyAccent(); }}),
+    switchRow({icon:"check", title:"Always show focus outlines", sub:"Draw a clear ring around whatever the keyboard has selected. Helpful if you navigate with Tab", get:() => !!S.focusRing, set:v => { S.focusRing = v; save(); applyAccent(); }}),
     switchRow({icon:"sparkles", title:"Glass effects", sub:"Frosted blur behind the message bar and panels. Turn off on older graphics cards for smoother scrolling", get:() => S.glass !== false, set:v => { S.glass = v; save(); applyAccent(); }}),
     ctlRow("Reduce motion", "Reduce animations or match your system", dropdown("Reduce motion", [["system", "System"], ["off", "Off"], ["on", "On"]], S.calm || "system", v => { S.calm = v; save(); applyCalm(); }))
   ), gnote("On a wide screen, 100% is drawn slightly smaller so the app reads like a desktop app."));
@@ -2721,6 +2755,7 @@ function renderSettingsRoot(w){
     row({icon:"message-square", title:"Message actions", sub:"Hover a reply to copy, edit, retry or read it aloud", chev:false}),
     ctlRow("Chat width", "How wide the conversation column is. Wide suits big monitors, narrow reads more like a page", dropdown("Chat width", [["narrow", "Narrow"], ["default", "Comfortable"], ["wide", "Wide"]], S.chatW || "default", v => { S.chatW = v; save(); applyAccent(); })),
     ctlRow("Message spacing", "Compact fits more of a long answer on screen. Comfortable leaves more air between messages", dropdown("Message spacing", [["comfortable", "Comfortable"], ["compact", "Compact"]], S.dense || "comfortable", v => { S.dense = v; save(); applyAccent(); })),
+    switchRow({icon:"clock", title:"Show message time", sub:"Put the time each reply arrived next to its actions", get:() => !!S.times, set:v => { S.times = v; save(); renderThread(true); }}),
     switchRow({icon:"arrow-down", title:"Follow the reply", sub:"Keep scrolling down while a reply is being written. Turn off to read from the top while it streams", get:() => S.autoScroll !== false, set:v => { S.autoScroll = v; save(); }}),
     ctlRow("Chats in the sidebar", "How many recent chats show before Show more. Older chats are always kept and searchable", dropdown("Chats in the sidebar", [["8", "8"], ["14", "14"], ["25", "25"], ["50", "50"]], String(S.sideCount || 14), v => { S.sideCount = +v; save(); renderDrawer(); }))
   ), gnote("Private chats start from the home screen and never touch this browser's storage."));
@@ -2810,6 +2845,13 @@ function renderSettingsRoot(w){
     row({icon:"external-link", title:"Open the website", sub:"vesper.nodefolds.com", onclick:() => { location.href = "https://vesper.nodefolds.com"; }})
   ));
   const askNotify = v => { if (v && "Notification" in window && Notification.permission === "default") { try { Notification.requestPermission().catch(() => {}); } catch (e) {} } };
+  w.append(glabel("Voice"), group(
+    ctlRow("Reading voice", "The voice used when Vesper reads a reply aloud. The list is the voices installed on this computer", dropdown("Reading voice", voiceList(), S.voice || "", v => { if (v) S.voice = v; else delete S.voice; save(); })),
+    ctlRow("Reading speed", "How fast replies are read. Normal is natural speech", dropdown("Reading speed", [["0.75", "Slow"], ["1", "Normal"], ["1.25", "Fast"], ["1.5", "Faster"], ["2", "Fastest"]], String(S.rate || 1), v => { S.rate = +v; save(); })),
+    switchRow({icon:"volume-2", title:"Read replies aloud", sub:"Speak each reply as soon as it is finished. Turn off to listen only when you press the speaker under a reply", get:() => !!S.autoRead, set:v => { S.autoRead = v; save(); }}),
+    row({icon:"volume-2", title:"Try the voice", sub:"Plays a short sample with the voice and speed above", chev:false, onclick:() => speak("This is how Vesper sounds with these settings.", null)}),
+    ctlRow("Dictation language", "The language the microphone listens for when you speak a message. Automatic follows your system", dropdown("Dictation language", [["", "Automatic"], ["en-US", "English (US)"], ["en-GB", "English (UK)"], ["en-IN", "English (India)"], ["es-ES", "Spanish"], ["fr-FR", "French"], ["de-DE", "German"], ["it-IT", "Italian"], ["pt-BR", "Portuguese (Brazil)"], ["hi-IN", "Hindi"], ["ar-SA", "Arabic"], ["zh-CN", "Chinese"], ["ja-JP", "Japanese"], ["ko-KR", "Korean"]], S.sttLang || "", v => { if (v) S.sttLang = v; else delete S.sttLang; save(); }))
+  ), gnote("Voices come from your device, so the choices and the quality depend on it. Nothing is uploaded."));
   w.append(glabel("Notifications"), group(
     switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
     switchRow({icon:"bell", title:"Reply finished", sub:"Show a system notification when a reply is ready and Vesper is in the background", get:() => S.notify.done, set:v => { S.notify.done = v; save(); askNotify(v); }}),
@@ -3212,7 +3254,7 @@ if (SpeechRec && !(window.__TAURI__ && window.__TAURI__.core)) $("#micBtn").hidd
 $("#micBtn").onclick = () => {
   if (rec) { rec.stop(); return; }
   try {
-    rec = new SpeechRec(); rec.lang = navigator.language || "en-US"; rec.interimResults = true; rec.continuous = false;
+    rec = new SpeechRec(); rec.lang = S.sttLang || navigator.language || "en-US"; rec.interimResults = true; rec.continuous = false;
     const base = input.value ? input.value.replace(/\s+$/, "") + " " : "";
     rec.onresult = ev => { let t = ""; for (const r of ev.results) t += r[0].transcript; input.value = base + t; autosize(); syncSend(); };
     rec.onerror = ev => { if (ev.error === "not-allowed") toast("Allow the microphone to talk to Vesper"); };
@@ -3224,12 +3266,14 @@ $("#micBtn").onclick = () => {
 /* read aloud, on this device */
 function plainText(t){ return String(t).replace(/```[\s\S]*?```/g, " ").replace(/`([^`]+)`/g, "$1").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[#*_>~|]/g, "").replace(/\s+/g, " ").trim(); }
 function speak(text, btn){
-  const ss = window.speechSynthesis;
-  if (ss.speaking) { ss.cancel(); document.querySelectorAll(".act.on").forEach(b => b.classList.remove("on")); if (btn.dataset.speaking) { delete btn.dataset.speaking; return; } }
-  const u = new SpeechSynthesisUtterance(plainText(text));
-  u.onend = u.onerror = () => { btn.classList.remove("on"); delete btn.dataset.speaking; };
-  btn.classList.add("on"); btn.dataset.speaking = "1"; ss.speak(u);
+  const ss = window.speechSynthesis; if (!ss) return;
+  if (ss.speaking) { ss.cancel(); document.querySelectorAll(".act.on").forEach(b => b.classList.remove("on")); if (btn && btn.dataset.speaking) { delete btn.dataset.speaking; return; } }
+  const u = new SpeechSynthesisUtterance(plainText(text)); u.rate = S.rate || 1;
+  if (S.voice) { const v = ss.getVoices().find(x => x.voiceURI === S.voice); if (v) { u.voice = v; u.lang = v.lang; } }
+  if (btn) { u.onend = u.onerror = () => { btn.classList.remove("on"); delete btn.dataset.speaking; }; btn.classList.add("on"); btn.dataset.speaking = "1"; }
+  ss.speak(u);
 }
+function voiceList(){ const vs = window.speechSynthesis ? speechSynthesis.getVoices() : []; return [["", "System default"]].concat(vs.map(v => [v.voiceURI, v.name.replace(/^Microsoft /, "") + " (" + v.lang + ")"])); }
 
 /* share a chat as text */
 async function shareChat(c){
