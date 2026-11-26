@@ -285,6 +285,14 @@ body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;ma
 .row.ctl{justify-content:space-between}
 .seg{display:inline-flex;gap:2px;padding:3px;border-radius:12px;background:var(--raised);flex:0 0 auto}
 .seg button{height:32px;padding:0 12px;border-radius:9px;font-size:13.5px;color:var(--muted)}.seg button.on{background:var(--raised-2);color:var(--fg)}
+.tin{width:min(260px,46vw);height:38px;padding:0 12px;border-radius:10px;border:0;background:var(--raised);outline:0;font-size:14.5px;color:var(--fg)}.tin:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 45%,transparent)}
+.cval{font-size:14px;color:var(--fg-soft);font-weight:500;flex:0 0 auto}
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;overflow:hidden;background:linear-gradient(135deg,#1d2a44,#0c0f18);box-shadow:inset 0 0 0 1px var(--line)}
+.av img{width:100%;height:100%;object-fit:cover}.av img.mk{width:78%;height:78%;object-fit:contain}.av b{font-size:14px;font-weight:600}.av .logo-flat{width:17px;height:17px}
+.av.lg{width:52px;height:52px}.av.lg b{font-size:20px}.avbtn{border-radius:50%;flex:0 0 auto}.avbtn:hover .av{box-shadow:inset 0 0 0 1px var(--line),0 0 0 3px var(--raised-2)}
+.avgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.avgrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;background:var(--raised);font-size:12.5px;color:var(--fg-soft)}
+.avgrid button.on{box-shadow:inset 0 0 0 2px var(--accent)}.avgrid img{width:46px;height:46px;object-fit:contain}
+body.dock.tinted .page.modal,body.tinted .page.modal .pfoot,body.tinted .ihead{background:var(--sheet)}body.tinted .insp{background:rgba(0,0,0,.25)}
 .ddw{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;margin-right:-6px}
 .dd{appearance:none;-webkit-appearance:none;background:none;border:0;outline:0;color:var(--fg);font:inherit;font-size:14.5px;height:36px;padding:0 30px 0 12px;border-radius:10px;cursor:pointer;text-align:right}
 .dd:hover,.dd:focus-visible{background:var(--raised)}.dd option,.dd optgroup{background:var(--surface);color:var(--fg)}
@@ -733,6 +741,12 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-images" viewBox="0 0 256 256" fill="currentColor"><path d="M216,40H72A16,16,0,0,0,56,56V72H40A16,16,0,0,0,24,88V200a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V184h16a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM72,56H216v62.75l-10.07-10.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L72,109.37ZM184,200H40V88H56v80a16,16,0,0,0,16,16H184Zm32-32H72V132l36-36,49.66,49.66a8,8,0,0,0,11.31,0L194.63,120,216,141.38V168ZM160,84a12,12,0,1,1,12,12A12,12,0,0,1,160,84Z"/></symbol>
   <symbol id="i-lightning" viewBox="0 0 256 256" fill="currentColor"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/></symbol>
   <symbol id="i-video" viewBox="0 0 256 256" fill="currentColor"><path d="M251.77,73a8,8,0,0,0-8.21.39L208,97.05V72a16,16,0,0,0-16-16H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V159l35.56,23.71A8,8,0,0,0,248,184a8,8,0,0,0,8-8V80A8,8,0,0,0,251.77,73ZM192,184H32V72H192V184Zm48-22.95-32-21.33V116.28L240,95Z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 256 256" fill="currentColor"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 256 256" fill="currentColor"><path d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 256 256" fill="currentColor"><path d="M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z"/></symbol>
+  <symbol id="i-desktop" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40ZM48,56H208a8,8,0,0,1,8,8v80H40V64A8,8,0,0,1,48,56ZM208,184H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"/></symbol>
   <symbol id="i-plug" viewBox="0 0 256 256" fill="currentColor"><path d="M237.66,18.34a8,8,0,0,0-11.32,0l-52.4,52.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L100,88.69l-6.34-6.35A8,8,0,0,0,82.34,93.66L88.69,100,65.37,123.31a32,32,0,0,0,0,45.26l5.38,5.37-52.41,52.4a8,8,0,0,0,11.32,11.32l52.4-52.41,5.37,5.38a32,32,0,0,0,45.26,0L156,167.31l6.34,6.35a8,8,0,0,0,11.32-11.32L167.31,156l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,52.41-52.4A8,8,0,0,0,237.66,18.34Zm-116.29,161a16,16,0,0,1-22.62,0L76.69,157.25a16,16,0,0,1,0-22.62L100,111.31,144.69,156Zm57.94-57.94L156,144.69,111.31,100l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,179.31,121.37ZM88.57,35A8,8,0,0,1,103.43,29l8,20A8,8,0,0,1,96.57,55ZM24.57,93A8,8,0,0,1,35,88.57l20,8A8,8,0,0,1,49,111.43l-20-8A8,8,0,0,1,24.57,93ZM231.43,163a8,8,0,0,1-10.4,4.46l-20-8A8,8,0,1,1,207,144.57l20,8A8,8,0,0,1,231.43,163Zm-64,58.06A8,8,0,0,1,152.57,227l-8-20A8,8,0,0,1,159.43,201Z"/></symbol>
   <symbol id="i-panel-left" viewBox="0 0 256 256" fill="currentColor"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
@@ -842,7 +856,7 @@ select.input{appearance:none;background-image:none}
   <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot">
-    <div class="d-user"><span class="av"><i class="logo-flat" aria-hidden="true"></i></span><button class="nm" id="dStatus" type="button"><b id="dStatusT">Free and private</b><small id="dStatusS">Keys and chats stay here</small></button><button class="icon-btn" id="openSupport" type="button" aria-label="Support Vesper" title="Support Vesper"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg></button><button class="icon-btn" id="openSettings" type="button" aria-label="Settings" title="Settings (Ctrl+,)"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button></div>
+    <div class="d-user"><span class="av" id="dAvatar"><i class="logo-flat" aria-hidden="true"></i></span><button class="nm" id="dStatus" type="button"><b id="dStatusT">Free and private</b><small id="dStatusS">Keys and chats stay here</small></button><button class="icon-btn" id="openSupport" type="button" aria-label="Support Vesper" title="Support Vesper"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg></button><button class="icon-btn" id="openSettings" type="button" aria-label="Settings" title="Settings (Ctrl+,)"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button></div>
   </div>
 </aside>
 
@@ -1023,6 +1037,7 @@ function companionPrompt(k){
 function systemPrompt(c){
   const k = c && c.companion ? compById(c.companion) : null;
   let s = k ? companionPrompt(k) : SYSTEM;
+  const pf = S.profile || {}; if ((pf.call || pf.name || "").trim()) s += "\n\nCall the user " + (pf.call || pf.name).trim() + "."; if (pf.work) s += " They work in " + pf.work.toLowerCase() + ".";
   if (S.about.trim()) s += "\n\nAbout the user:\n" + S.about.trim();
   if (S.respond.trim()) s += "\n\nHow the user wants replies:\n" + S.respond.trim();
   if (S.open) s += "\n\n" + OPEN_RULE;
@@ -1344,9 +1359,11 @@ async function pcSetup(m){
 }
 function renderFoot(){
   const t = $("#dStatusT"), sub = $("#dStatusS"); if (!t) return;
+  const da = $("#dAvatar"); if (da) da.replaceWith(Object.assign(avatarEl(), {id:"dAvatar"}));
   const n = Object.keys(PROVIDERS).filter(p => ready(p)).length;
-  if (DESKTOP) { t.textContent = pcFiles.length ? "Local AI ready" : "Set up local AI"; sub.textContent = pcFiles.length ? pcFiles.length + (pcFiles.length > 1 ? " models" : " model") + " on this PC" : "One click, works offline"; }
-  else { t.textContent = "Free and private"; sub.textContent = n ? n + (n > 1 ? " providers" : " provider") + " connected" : "Add a free model to start"; }
+  const nm = (prof().name || "").trim();
+  if (DESKTOP) { t.textContent = nm || (pcFiles.length ? "Local AI ready" : "Set up local AI"); sub.textContent = pcFiles.length ? pcFiles.length + (pcFiles.length > 1 ? " models" : " model") + " on this PC" : "One click, works offline"; }
+  else { t.textContent = nm || "Free and private"; sub.textContent = n ? n + (n > 1 ? " providers" : " provider") + " connected" : "Add a free model to start"; }
 }
 function renderHero(){
   inner.innerHTML = "";
@@ -1788,14 +1805,14 @@ function openSettings(swap){ open("settings", () => { const L = makePage("Settin
 // Settings opens as a floating window on wide screens, with a menu of its sections on the left.
 function settingsNav(L){
   if (!L.el.classList.contains("modal")) return;
-  const ICON = {Models:"cpu", Create:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Notifications:"bell", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Create:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.append(nav);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
   q.addEventListener("input", () => { const t = q.value.trim().toLowerCase();
     L.body.querySelectorAll(".row").forEach(r => r.style.display = !t || r.textContent.toLowerCase().includes(t) ? "" : "none");
     L.body.querySelectorAll(".glabel").forEach(g => { const grp = g.nextElementSibling; const any = !t || (grp && [...grp.querySelectorAll(".row")].some(r => r.style.display !== "none")); g.style.display = any ? "" : "none"; if (grp && grp.classList.contains("group")) grp.style.display = any ? "" : "none"; }); });
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Data:1}; L.body.querySelectorAll(".glabel").forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", class:i ? "" : "on", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => scroller.scrollTo({top:g.offsetTop - 8, behavior:"smooth"})})); }); };
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, "Desktop app":1, Help:1}; L.body.querySelectorAll(".glabel").forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", class:i ? "" : "on", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => scroller.scrollTo({top:g.offsetTop - 8, behavior:"smooth"})})); }); };
   scroller.addEventListener("scroll", () => { const gs = [...L.body.querySelectorAll(".glabel")]; let k = 0; gs.forEach((g, i) => { if (g.offsetTop - 40 <= scroller.scrollTop) k = i; }); if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) k = gs.length - 1; [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", i === k)); }, {passive:true});
   const r = L.refresh; L.refresh = () => { r(); build(); }; build();
 }
@@ -1939,18 +1956,26 @@ function openLibrary(swap){
   }), swap);
 }
 // One simple theme: an accent color with its gradient, a background tone and a text size.
-const ACCENTS = {blue:["#6ea8ff", "linear-gradient(135deg,#6ea8ff,#8b5cf6)", "Vesper Blue"], violet:["#a78bfa", "linear-gradient(135deg,#a78bfa,#ec4899)", "Aurora"], emerald:["#34d399", "linear-gradient(135deg,#34d399,#22d3ee)", "Jade"], amber:["#f0c26b", "linear-gradient(135deg,#f0c26b,#ff7a45)", "Ember"], rose:["#ff7eb3", "linear-gradient(135deg,#ff7eb3,#a78bfa)", "Rose Quartz"], mono:["#e8e8e6", "linear-gradient(135deg,#f5f5f4,#8e8e93)", "Moonlight"]};
-// Dynamic color follows the time of day: Ember in the morning, Vesper Blue by day, Aurora in the evening, Moonlight at night.
-const dynAccent = () => { const hr = new Date().getHours(); return hr >= 5 && hr < 11 ? "amber" : hr < 17 && hr >= 11 ? "blue" : hr >= 17 && hr < 21 ? "violet" : "mono"; };
-let dynTimer = 0;
+// Themes: each one sets the whole look (background, surfaces, lines, highlight and its gradient). Gradient themes tint the app like a wallpaper.
+const THEMES = {
+  midnight:{name:"Midnight", g:"Classic", accent:"#6ea8ff", grad:"linear-gradient(135deg,#6ea8ff,#8b5cf6)", bg:"#000000"},
+  graphite:{name:"Graphite", g:"Classic", accent:"#c7cad3", grad:"linear-gradient(135deg,#e5e7eb,#8e8e93)", bg:"#0f0f11", surface:"#17171a", raised:"#222226", raised2:"#2c2c31", line:"#2c2c31", lineSoft:"#212125"},
+  ocean:{name:"Deep Ocean", g:"Gradient", accent:"#5fd4f4", grad:"linear-gradient(135deg,#38bdf8,#22d3ee)", bg:"#04121c", wall:"linear-gradient(160deg,#06263a 0%,#051521 45%,#030b12 100%)", tint:"8,30,46"},
+  alpine:{name:"Alpine", g:"Gradient", accent:"#6ee7b7", grad:"linear-gradient(135deg,#34d399,#a3e635)", bg:"#04140e", wall:"linear-gradient(160deg,#0b2e22 0%,#061a13 45%,#030c09 100%)", tint:"10,40,30"},
+  twilight:{name:"Twilight", g:"Gradient", accent:"#b4a2ff", grad:"linear-gradient(135deg,#a78bfa,#6366f1)", bg:"#0d0a1c", wall:"linear-gradient(160deg,#241a4a 0%,#130f2b 45%,#08071a 100%)", tint:"34,26,72"},
+  ember:{name:"Ember", g:"Gradient", accent:"#ffa36b", grad:"linear-gradient(135deg,#fb923c,#f43f5e)", bg:"#160807", wall:"linear-gradient(160deg,#3a140d 0%,#200a08 45%,#0d0505 100%)", tint:"58,22,14"},
+  sakura:{name:"Sakura", g:"Gradient", accent:"#ff9ec7", grad:"linear-gradient(135deg,#f472b6,#c084fc)", bg:"#170a12", wall:"linear-gradient(160deg,#3a1630 0%,#210c1b 45%,#0e060b 100%)", tint:"58,22,48"},
+  titanium:{name:"Titanium", g:"Gradient", accent:"#d6d3cf", grad:"linear-gradient(135deg,#e7e5e4,#a8a29e)", bg:"#0e0d0c", wall:"linear-gradient(160deg,#2a2826 0%,#171615 45%,#0b0a0a 100%)", tint:"42,40,38"}
+};
 function applyAccent(){
-  const st = document.documentElement.style, a = ACCENTS[S.accent === "dynamic" ? dynAccent() : S.accent] || ACCENTS.blue;
-  clearInterval(dynTimer); if (S.accent === "dynamic") dynTimer = setInterval(applyAccent, 600000);
-  st.setProperty("--accent", a[0]); st.setProperty("--grad", a[1]);
-  if (S.tone === "graphite") [["--bg", "#0f0f11"], ["--surface", "#17171a"], ["--sheet", "#17171a"], ["--raised", "#222226"], ["--raised-2", "#2c2c31"], ["--line", "#2c2c31"], ["--line-soft", "#212125"]].forEach(([k, v]) => st.setProperty(k, v));
-  else st.setProperty("--bg", "#000000");
+  const st = document.documentElement.style, t = THEMES[S.theme] || THEMES.midnight;
+  st.setProperty("--accent", t.accent); st.setProperty("--grad", t.grad); st.setProperty("--bg", t.bg);
+  if (t.tint) { const c = t.tint; [["--surface", "rgba(" + c + ",.55)"], ["--sheet", "rgb(" + c + ")"], ["--raised", "rgba(255,255,255,.07)"], ["--raised-2", "rgba(255,255,255,.11)"], ["--line", "rgba(255,255,255,.12)"], ["--line-soft", "rgba(255,255,255,.07)"]].forEach(([k, v]) => st.setProperty(k, v)); }
+  else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
+  document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
+  document.body.classList.toggle("tinted", !!t.wall);
   document.body.style.zoom = S.zoom && S.zoom !== 1 ? S.zoom : "";
-  const tc = document.querySelector('meta[name="theme-color"]'); if (tc && !S.bg.photo && S.bg.id === "none") tc.content = S.tone === "graphite" ? "#0f0f11" : "#000000";
+  const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
 function dropdown(label, opts, cur, pick){
   const sel = h("select", {class:"dd", "aria-label":label});
@@ -1959,40 +1984,81 @@ function dropdown(label, opts, cur, pick){
   sel.value = cur; sel.onchange = () => pick(sel.value);
   return h("label", {class:"ddw"}, sel, icEl("chevron-down"));
 }
+const WORK = ["Design", "Video and content", "Marketing", "Engineering", "Writing", "Student", "Business", "Other"];
+function prof(){ S.profile = S.profile || {}; return S.profile; }
+function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " " + cls : "")});
+  if (pr.photo) a.append(h("img", {src:pr.photo, alt:""})); else if (pr.mark) a.append(h("img", {src:"icons/" + pr.mark + "/mark.webp", alt:"", class:"mk"}));
+  else if (pr.name) a.append(h("b", {text:pr.name.trim().charAt(0).toUpperCase()})); else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
+  return a; }
+async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
+function pickAvatar(after){
+  open("avatar", () => { const L = makeSheet("Profile photo"), file = h("input", {type:"file", accept:"image/png,image/jpeg,image/webp", hidden:true});
+    file.onchange = async () => { const f = file.files[0]; if (!f) return; if (f.size > 10485760) { toast("Pick a photo under 10 MB"); return; } try { prof().photo = await squareImage(f, 256); prof().mark = ""; save(); closeTop(); after(); } catch (e) { toast("That photo couldn't be opened"); } };
+    const grid = h("div", {class:"avgrid"});
+    ICONS.forEach(i => grid.append(h("button", {type:"button", class:prof().mark === i.id && !prof().photo ? "on" : "", "aria-label":i.name, title:i.name, onclick:() => { prof().mark = i.id; prof().photo = ""; save(); closeTop(); after(); }}, h("img", {src:"icons/" + i.id + "/mark.webp", alt:""}), h("span", {text:i.name}))));
+    L.body.append(h("div", {style:"padding:4px 16px 18px;display:flex;flex-direction:column;gap:12px"}, h("button", {class:"btn primary block", type:"button", html:ic("upload") + "Upload a photo", onclick:() => file.click()}), h("div", {class:"gnote", style:"padding:0", text:"Or pick an exclusive avatar"}), grid,
+      (prof().photo || prof().mark) ? h("button", {class:"btn ghost block", type:"button", text:"Remove photo", onclick:() => { prof().photo = ""; prof().mark = ""; save(); closeTop(); after(); }}) : null), file);
+    return L; });
+}
+function textCtl(label, key, ph){ const i = h("input", {class:"tin", value:prof()[key] || "", placeholder:ph, "aria-label":label, maxlength:"60"}); i.oninput = () => { prof()[key] = i.value; save(); renderFoot(); }; return i; }
+function usageStats(){ const by = {}; let p = 0, c = 0, n = 0, wk = 0; const since = Date.now() - 7 * 864e5;
+  S.chats.forEach(ch => ch.messages.forEach(m => { if (!m.stats) return; n++; p += m.stats.p || 0; c += m.stats.c || 0; if ((ch.updated || 0) >= since) wk += (m.stats.p || 0) + (m.stats.c || 0); const mm = modelByKey(m.model); const k = mm ? mm.name : (m.model || "Unknown").split("::").pop(); by[k] = (by[k] || 0) + (m.stats.p || 0) + (m.stats.c || 0); }));
+  return {p, c, n, wk, by:Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 5)}; }
 function ctlRow(title, sub, ctl){ return h("div", {class:"row ctl"}, h("div", {class:"tx"}, h("b", {text:title}), sub ? h("span", {text:sub}) : null), ctl); }
 function seg(opts, cur, pick){ const el = h("div", {class:"seg", role:"radiogroup"}); opts.forEach(([v, t]) => el.append(h("button", {type:"button", role:"radio", "aria-checked":String(v === cur), class:v === cur ? "on" : "", text:t, onclick:e => { [...el.children].forEach(x => { x.classList.toggle("on", x === e.currentTarget); x.setAttribute("aria-checked", String(x === e.currentTarget)); }); pick(v); }}))); return el; }
 function renderSettingsRoot(w){
   const nReady = Object.keys(PROVIDERS).filter(p => ready(p)).length;
   const shown = S.models.filter(m => !isHidden(m) && ready(m.p)).length;
   const lenL = (LENGTHS.find(l => l.id === S.len) || LENGTHS[1]).label;
-  w.append(glabel("Models"), group(
-    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
-    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
-    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()})
+  const pr = prof(), av = h("button", {class:"avbtn", type:"button", "aria-label":"Change profile photo", onclick:() => pickAvatar(() => { refreshAll(); })}, avatarEl("lg"));
+  const refreshAll = () => { const top = stack[stack.length - 1]; if (top && top.refresh) top.refresh(); renderFoot(); };
+  w.append(glabel("Account"), group(
+    ctlRow("Profile photo", "PNG, JPEG or WebP, up to 10 MB, or an exclusive avatar", av),
+    ctlRow("Full name", "", textCtl("Full name", "name", "Your name")),
+    ctlRow("What should Vesper call you?", "", textCtl("What should Vesper call you?", "call", "A first name or nickname")),
+    ctlRow("What best describes your work?", "", dropdown("Work", [["", "Choose"]].concat(WORK.map(x => [x, x])), pr.work || "", v => { pr.work = v; save(); }))
   ));
+  const u = usageStats();
+  w.append(glabel("Usage"), group(
+    ctlRow("Tokens this week", "Sent and received, all models", h("b", {class:"cval", text:nf(u.wk)})),
+    ctlRow("Tokens in total", nf(u.p) + " sent, " + nf(u.c) + " received", h("b", {class:"cval", text:nf(u.p + u.c)})),
+    ctlRow("Replies measured", "Counted since the details panel arrived", h("b", {class:"cval", text:String(u.n)})),
+    ...u.by.map(([k, v]) => ctlRow(k, "", h("span", {class:"cval", text:nf(v) + " tokens"})))
+  ), gnote("Counted on this device only."));
   w.append(glabel("Appearance"), group(
-    ctlRow("Color", S.accent === "dynamic" ? "Changes with the time of day" : "Buttons, highlights and progress", dropdown("Color", [["Dynamic", [["dynamic", "Dynamic"]]], ["Exclusive", Object.entries(ACCENTS).map(([id, a]) => [id, a[2]])]], S.accent || "blue", v => { S.accent = v; save(); applyAccent(); })),
-    ctlRow("Background", "", dropdown("Background", [["black", "Black"], ["graphite", "Graphite"]], S.tone || "black", v => { S.tone = v; save(); applyAccent(); })),
+    ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
     ctlRow("Text size", "", dropdown("Text size", [["0.92", "Small"], ["1", "Default"], ["1.08", "Large"]], String(S.zoom || 1), v => { S.zoom = +v; save(); applyAccent(); }))
   ));
-  w.append(glabel("Chat"), group(
-    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
+  w.append(glabel("Your Vesper"), group(
     row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
     row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
     row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
-    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }}),
-    switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }})
+    switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }}),
+    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }})
   ));
-  w.append(glabel("Data"), group(
+  w.append(glabel("Capabilities"), group(
+    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
+    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
+    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()}),
+    row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}),
+    row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()}),
+    row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()})
+  ));
+  w.append(glabel("Notifications"), group(
+    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
+    row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION, onclick:() => checkUpdate(true)})
+  ));
+  w.append(glabel("Privacy"), group(
     row({icon:"download", title:"Export chats", sub:"Save a backup file", onclick:exportChats, chev:false}),
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
+  ), gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
+  if (DESKTOP) w.append(glabel("Desktop app"), group(
+    row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()}),
+    ctlRow("Closing the window", "Vesper keeps running in the tray so a local model stays ready", h("span", {class:"cval", text:"Tray"}))
   ));
-  w.append(glabel("Create"), group(row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}), row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()})));
-  w.append(glabel("Connect apps"), group(row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()})));
-  w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()})));
-  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()}), row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }})),
-    gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
+  w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}), row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()})));
+  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION + ", by Node Folds"})));
 }
 function creativityWord(t){ return t < 0.45 ? "Focused" : t < 1.05 ? "Balanced" : "Wild"; }
 
