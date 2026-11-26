@@ -81,8 +81,8 @@ svg{display:block}
 
 .msg{display:flex;flex-direction:column;gap:4px;animation:rise .28s var(--ease) both}
 .msg.user{align-items:flex-end}
-.bubble{max-width:86%;background:var(--raised);padding:10px 16px;border-radius:22px 22px 8px 22px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5;cursor:pointer}
-.answer{min-width:0;font-size:16.5px;line-height:1.65;overflow-wrap:anywhere}
+.bubble{font-size:var(--msgfs,16px);max-width:86%;background:var(--raised);padding:10px 16px;border-radius:22px 22px 8px 22px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5;cursor:pointer}
+.answer{min-width:0;font-size:var(--msgfs,16.5px);line-height:1.65;overflow-wrap:anywhere}
 .answer p{margin:0 0 .85em}
 .answer .md > :last-child{margin-bottom:0}
 .answer strong{font-weight:600}
@@ -138,7 +138,7 @@ svg{display:block}
 .hero .mark{height:84px;width:auto;filter:drop-shadow(0 14px 40px var(--glow,rgba(110,140,255,.38)))}
 .hero h1{font-size:clamp(28px,8vw,36px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin:10px 0 0;text-wrap:balance}
 .hero h1 i{font-style:normal;color:var(--accent)}
-.hero h1.hl{font-size:clamp(36px,3.6vw,50px);font-weight:500;letter-spacing:-.045em;line-height:1.06;margin:0;text-align:center;background:linear-gradient(180deg,#ffffff 45%,#c3c9d6 140%);-webkit-background-clip:text;background-clip:text;color:transparent;font-feature-settings:"ss01","cv11","calt"}
+body.dock .app.is-empty .hero.ready h1.hl,.hero h1.hl{white-space:nowrap;font-size:clamp(34px,3.4vw,46px);font-weight:500;letter-spacing:-.045em;line-height:1.06;margin:0;text-align:center;background:linear-gradient(180deg,#ffffff 45%,#c3c9d6 140%);-webkit-background-clip:text;background-clip:text;color:transparent;font-feature-settings:"ss01","cv11","calt"}
 .hero h1.hl i{font-style:normal;-webkit-text-fill-color:var(--accent)}
 .hero .hsub{color:var(--muted);font-size:15px;line-height:1.5;margin:16px 0 0;text-align:center;max-width:none}
 .hero p{margin:0;color:var(--muted);font-size:15.5px;max-width:34ch}
@@ -288,8 +288,14 @@ body.dock .app.is-empty .top{position:absolute;top:0;left:0;right:0}
 body.dock .app.is-empty .hero .mark{display:none}
 .cta.row{flex-direction:row;justify-content:center;max-width:none;width:auto}.cta.row .btn{height:40px;padding:0 18px;font-size:14px}
 body.dock .app.is-empty .thread{flex:0 0 auto;overflow:visible}
-body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p,body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
-body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 26px}
+body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p:not(.hsub),body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
+body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 34px}
+/* home: our own pill, just larger and calmer */
+body.dock .app.is-empty .composer{padding:10px 12px 10px 14px;border-radius:34px;box-shadow:0 20px 70px rgba(0,0,0,.4)}
+body.dock .app.is-empty .composer textarea{font-size:17px;line-height:28px;min-height:44px;padding:8px 8px}
+body.dock .app.is-empty .composer .c-btn,body.dock .app.is-empty .composer .send,body.dock .app.is-empty #modelChip{height:44px}body.dock .app.is-empty .composer .c-btn{width:44px}
+.hl .hmark{width:40px;height:40px;background:var(--accent);flex:0 0 auto}
+body.dock .app.is-empty .hero.ready h1.hl{display:flex;align-items:center;justify-content:center;gap:16px;font-weight:400;letter-spacing:-.035em}
 body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spacing:-.02em}
 body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px;min-height:0}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
@@ -553,6 +559,28 @@ body.native .page.modal{top:calc(50% + 20px)}
 .lay-pic .lp-side{left:6px;width:32px}
 .lay-pic.compact .lp-side{width:10px}.lay-pic.compact .lp-main{left:22px}
 .lay-pic.focus .lp-side{width:10px}.lay-pic.focus .lp-main{left:22px;right:6px}
+/* settings design system: every page, inline view and legacy block uses the same cards, rows, fields and buttons */
+.page.modal .group{background:color-mix(in srgb,var(--bg) 55%,var(--surface));border:1px solid var(--line-soft);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.page.modal .group>.row,.page.modal .group>.field{border:0;border-bottom:1px solid var(--line-soft);border-radius:0;padding:15px 20px;min-height:60px;margin:0}
+.page.modal .group>.row:last-child,.page.modal .group>.field:last-child{border-bottom:0}
+.page.modal .group>.row:hover{background:color-mix(in srgb,var(--raised) 50%,transparent)}
+.page.modal .group>.row.ctl:hover,.page.modal .group>.row:not(button):hover{background:none}
+.page.modal .group>.row b{font-size:15px;font-weight:500}.page.modal .group>.row .tx span{font-size:13.5px;line-height:1.45}
+.page.modal .group>.field{display:flex;flex-direction:column;gap:10px}
+.page.modal.has-nav .settings-view .glabel,.page.modal:not(.mroot) .glabel{font-size:13px;font-weight:500;color:var(--muted);padding:22px 4px 8px;letter-spacing:0}
+.settings-view .glabel:first-child,.page.modal:not(.mroot) .wrap>.glabel:first-child{padding-top:6px}
+.page.modal .gnote{padding:2px 4px 10px;font-size:13px}
+.page.modal .input{height:42px;padding:0 14px;border-radius:10px;font-size:14.5px;background:var(--bg);border:1px solid var(--line)}
+.page.modal textarea.input{height:auto;padding:12px 14px;min-height:120px}
+.page.modal .input:focus{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.page.modal .btn{height:36px;padding:0 14px;font-size:14px;border-radius:10px}
+.page.modal .btn.danger{background:none;border:1px solid color-mix(in srgb,var(--danger) 40%,transparent)}
+.page.modal .btns{gap:8px;align-items:center}
+.page.modal .status{font-size:13px}
+.page.modal .steps{list-style:none;padding:0;margin:0;counter-reset:st;display:flex;flex-direction:column;gap:10px}
+.page.modal .steps li{counter-increment:st;display:flex;gap:12px;align-items:flex-start;margin:0;font-size:14px;line-height:1.5;color:var(--fg-soft)}
+.page.modal .steps li::before{content:counter(st);flex:0 0 22px;height:22px;border-radius:50%;background:var(--raised);color:var(--fg);font-size:12px;font-weight:600;display:grid;place-items:center;margin-top:1px}
+.page.modal .range{margin:6px 0}
 .pfoot{position:absolute;left:250px;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--line-soft);background:var(--surface);font-size:14px}
 .pfoot .ic{width:18px;height:18px;color:#f0c26b}.pfoot b{font-weight:600}.pfoot span{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pfoot button{height:34px;padding:0 16px;border-radius:999px;background:var(--fg);color:#000;font-weight:600;font-size:14px}
@@ -840,6 +868,8 @@ details.more-opts .group{margin-top:8px}
 body.dock .page:not(.modal) .page-body:has(.lcards,.cgrid,.spg){padding:8px clamp(24px,3vw,56px) 56px}
 body.dock .page:not(.modal) .wrap:has(.lcards,.cgrid,.spg){max-width:none;width:100%}
 body.dock{--col:clamp(760px,50vw,980px)}
+body.hc{--muted:#c4c4c1;--faint:#a5a5a3;--fg-soft:#ececea;--line:#4a4a50;--line-soft:#3a3a40}
+body.focusring :focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
 body.noglass *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}body.noglass .composer,body.noglass .sbar{background:var(--surface)!important}
 body.dense .thread-inner{gap:12px}body.dense .bubble{padding:7px 14px}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer-wrap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:40px 24px 10px;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 88%,transparent) 35%,transparent);pointer-events:none}
@@ -880,6 +910,7 @@ button.row:active{background:var(--raised)}
 .field small{color:var(--muted);font-size:13px;line-height:1.5}
 .inrow{display:flex;gap:8px;align-items:center}
 .inrow .input{flex:1;min-width:0}
+.keyin{flex:0 1 330px}.row.actions{justify-content:flex-end}.settings-view>.row:first-child{min-height:0;padding:2px 0 10px;border-bottom:0;gap:6px;width:auto}.settings-view>.row:first-child .rico{display:flex;width:18px;height:18px}.settings-view>.row:first-child .tx span{display:none}.settings-view>.row:first-child,.settings-view>.row:first-child *{border:0!important;box-shadow:none!important}.settings-view>.row:first-child b{font-size:13.5px;font-weight:500;color:var(--muted)}.settings-view>.row:first-child:hover b{color:var(--fg)}.row.actions .status{flex:1}
 .switch{width:48px;height:30px;border-radius:999px;background:var(--raised-2);position:relative;flex:0 0 auto;transition:background .2s}
 .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#cfcfcc;transition:transform .22s var(--ease),background .2s}
 .switch[aria-checked="true"]{background:var(--accent)}
@@ -900,6 +931,16 @@ select.input{appearance:none;background-image:none}
 .btn.ghost{background:none;color:var(--fg-soft)}
 .btn.danger{color:var(--danger)}
 .btn.block{width:100%}
+.kbdc{font:500 12.5px/1 var(--ui);color:var(--fg-soft);background:var(--raised);border:1px solid var(--line);border-radius:7px;padding:5px 9px}
+.btn.sm{height:36px;padding:0 14px;font-size:14px;border-radius:10px}.btns.end{justify-content:flex-end}
+body.dock .btn.block{width:auto;height:38px;padding:0 16px;font-size:14px;border-radius:10px}
+.skhead{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:2px 2px 4px}.skhead p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55;max-width:56ch}
+.skrows .row .tx span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.emptyc{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:26px 20px;border:1px dashed var(--line);border-radius:16px;color:var(--muted);font-size:14px}.emptyc b{color:var(--fg);font-size:15px;font-weight:500}.emptyc .btn{margin-top:8px}
+.emptyc .ei{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--raised);color:var(--fg-soft)}.emptyc .ei .ic{width:20px;height:20px}
+.sked{display:flex;flex-direction:column;gap:14px;padding:4px 2px 6px}.fl{display:flex;flex-direction:column;gap:6px}.fl>span{font-size:13px;font-weight:500;color:var(--muted)}
+.input.ta{height:auto;min-height:140px;padding:12px 14px;line-height:1.5;resize:vertical;font-size:14.5px}.fcount{align-self:flex-end;font-size:12px;color:var(--faint)}.fhelp{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+.iconpick{display:flex;flex-wrap:wrap;gap:6px}.iconpick button{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--raised);color:var(--c,var(--fg-soft))}.iconpick button.on{box-shadow:0 0 0 2px var(--accent);background:var(--raised-2)}.iconpick .ic{width:19px;height:19px}
 .btn:disabled{opacity:.4;cursor:default}
 .btns{display:flex;gap:8px;flex-wrap:wrap}
 .status{font-size:13.5px;color:var(--muted);line-height:1.5}
@@ -1268,6 +1309,7 @@ function systemPrompt(c){
   const k = c && c.companion ? compById(c.companion) : null;
   let s = k ? companionPrompt(k) : SYSTEM;
   const pf = S.profile || {}; if ((pf.call || pf.name || "").trim()) s += "\n\nCall the user " + (pf.call || pf.name).trim() + "."; if (pf.work) s += " They work in " + pf.work.toLowerCase() + ".";
+  if (S.replyLang) s += "\n\nWrite replies in " + S.replyLang + ", unless the user writes in another language or asks you to switch.";
   if (S.about.trim()) s += "\n\nAbout the user:\n" + S.about.trim();
   if (S.respond.trim()) s += "\n\nHow the user wants replies:\n" + S.respond.trim();
   if (S.open) s += "\n\n" + OPEN_RULE;
@@ -1328,7 +1370,7 @@ function friendlyError(status, body, P){
   return msg ? "Error from " + P.name + ": " + msg : "Something went wrong. Check your connection and try again.";
 }
 const netError = P => P.local
-  ? "Couldn't reach " + P.name + " at " + P.base + ". Check that the server is running, that it allows this site, and that this phone is on the same WiFi."
+  ? "Couldn't reach " + P.name + " at " + P.base + ". Check that the server is running, that it allows this site, and that this device is on the same network."
   : "Couldn't reach " + P.name + ". Check your internet and try again.";
 
 /* discover models a provider offers right now. New finds start hidden so the picker stays short. */
@@ -1621,14 +1663,16 @@ function renderHero(){
   inner.innerHTML = ""; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1;
   const hero = h("div", {class:"hero ready plain"}), main = h("div", {class:"hero-main"});
   if (privateMode) main.append(h("h1", {class:"hl", html:"Private chat<i>.</i>"}), h("p", {class:"hsub", text:"This chat will not be saved to your history."}));
-  else main.append(h("h1", {class:"hl", html:"What are we making<br>today<i>.</i>"}));
+  else { const nm = ((prof().call || prof().name || "").trim().split(/\s+/)[0] || ""); main.append(h("h1", {class:"hl"}, h("i", {class:"logo-flat hmark", "aria-hidden":"true"}), h("span", {text:greeting() + (nm ? ", " + nm : "")}))); }
   if (!anyReady()) main.append(h("p", {class:"hsub", text:"No model yet. Add one in Settings, under Providers or Models."}));
   hero.append(main); inner.append(hero);
+  input.placeholder = "Ask anything, or type / for skills";
 }
 // Suggestions while typing: finishes your sentence from ready made prompts and your own earlier ones.
 const PROMPTS = ["Write a hook for a 15 second product video", "Write a UGC ad script for a skincare serum, 30 seconds", "Write a podcast style ad read for a coffee brand", "Give me 10 opening lines for a short video about productivity", "Plan a week of short videos for a small bakery", "Write a video script with a hook, three beats and a call to action", "Turn this idea into a 60 second explainer script", "Write captions for a product demo reel", "Give me thumbnail ideas for a video about learning to cook", "Brainstorm content ideas for this week", "Write a voiceover for a travel montage, calm and cinematic", "Rewrite this script to sound more natural and less like an ad", "Write a cold email to a brand offering UGC content", "Write a product description that sounds human", "Explain this simply, in plain words", "Summarize this in five bullet points", "Plan my day hour by hour, realistic", "Help me prepare for a job interview", "Write a polite follow up email", "Translate this into Spanish and keep the tone", "Explain how this code works, step by step", "Find the bug in this code and fix it", "Write a function that parses a CSV file", "Give me a study plan for learning a new skill in 30 days", "Compare two options and recommend one", "Write a story opening with a strong first line", "Make this paragraph shorter and clearer", "Create a checklist for launching a new product", "Write a shot list for a 30 second commercial", "Describe a cinematic scene I can use as an image prompt"];
 let sugList = [], sugIdx = -1, sugHold = false;
 function sugFor(t){
+  if (t.startsWith("/")) { const k = t.slice(1).trim().toLowerCase(); return SKILLS.concat(S.skills || []).filter(x => !k || x.name.toLowerCase().includes(k)).slice(0, 6).map(sk => ({skill:sk})); }
   const q = t.trim().toLowerCase(); if (q.length < 2) return [];
   const mine = (S.chats || []).map(c => c.messages && c.messages.find(m => m.role === "user")).filter(Boolean).map(m => String(m.content || "").split("\n")[0].trim()).filter(x => x.length > 6 && x.length < 110).slice(0, 40);
   const words = q.split(/\s+/).filter(Boolean), score = x => { const l = x.toLowerCase(); if (l === q) return 0; if (l.startsWith(q)) return 3; if (words.every(w => l.includes(w))) return 2; const lw = words[words.length - 1]; return lw.length > 2 && l.includes(lw) ? 1 : 0; };
@@ -1639,16 +1683,18 @@ function sugFor(t){
 }
 function renderTypeSug(){
   const below = $("#sugBelow"), c = chat(); if (!below) return;
-  if (S.ideas === false || (c && c.messages.length) || sugHold) { below.innerHTML = ""; sugList = []; sugIdx = -1; return; }
+  if ((S.ideas === false && !input.value.startsWith("/")) || (c && c.messages.length) || sugHold) { below.innerHTML = ""; sugList = []; sugIdx = -1; return; }
   const t = input.value; sugList = sugFor(t); sugIdx = -1; below.innerHTML = "";
-  sugList.forEach((x, i) => { const lead = x.toLowerCase().startsWith(t.trim().toLowerCase()) ? t.trim().length : 0;
+  sugList.forEach((x, i) => { if (x && x.skill) { below.append(h("button", {class:"sgl", type:"button", "data-i":i, html:'<span class="sk" style="color:' + (RICO[x.skill.icon] || "#ffb340") + '">' + ic(x.skill.icon || "sparkles") + "</span><span><b class=\"typed\">" + esc(x.skill.name) + "</b> " + esc(x.skill.text.slice(0, 70)) + "</span>", onclick:() => acceptSug(i)})); return; } const lead = x.toLowerCase().startsWith(t.trim().toLowerCase()) ? t.trim().length : 0;
     below.append(h("button", {class:"sgl", type:"button", "data-i":i, html:ic("sparkles") + "<span><b class=\"typed\">" + esc(x.slice(0, lead)) + "</b>" + esc(x.slice(lead)) + "</span>", onclick:() => acceptSug(i)})); });
 }
 function paintSug(){ [...$("#sugBelow").children].forEach((b, i) => b.classList.toggle("on", i === sugIdx)); }
-function acceptSug(i){ const x = sugList[i]; if (!x) return; input.value = x; autosize(); syncSend(); sugHold = true; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1; input.focus(); input.setSelectionRange(x.length, x.length); }
+function acceptSug(i){ const x = sugList[i]; if (!x) return;
+  if (x.skill) { setSkill(x.skill.id); input.value = ""; autosize(); syncSend(); sugHold = false; renderTypeSug(); input.focus(); return; } input.value = x; autosize(); syncSend(); sugHold = true; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1; input.focus(); input.setSelectionRange(x.length, x.length); }
 function renderThread(keep){
   const c = chat();
   appEl.classList.toggle("is-empty", !c || !c.messages.length);
+  input.placeholder = "Ask anything"; requestAnimationFrame(autosize);
   if (!c || !c.messages.length) { $("#sugBelow").innerHTML = ""; renderHero(); stick = true; $("#toBottom").classList.remove("on"); return; }
   const st = thread.scrollTop;
   inner.innerHTML = "";
@@ -1690,6 +1736,7 @@ function msgEl(c, m, i){
   if (last && !m.greeting) acts.append(actBtn("refresh-cw", "Retry", () => retry()));
   if (m.saved) acts.append(h("button", {class:"memtag", type:"button", onclick:() => openMemory(), html:ic("brain") + "<span>Memory updated</span>"}));
   const mm = modelByKey(m.model); if (mm) acts.append(h("span", {class:"by", text:mm.name}));
+  if (S.times && m.at) acts.append(h("span", {class:"by", text:new Date(m.at).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}));
   if (S.devStats && m.stats) { const st = m.stats, sec = (st.ms || 0) / 1000; acts.append(h("span", {class:"by", text:(st.p || 0) + " in, " + (st.c || 0) + (st.est ? " out (est.)" : " out") + ", " + sec.toFixed(1) + " s" + (sec > 0 && st.c ? ", " + Math.round(st.c / sec) + " tok/s" : "") + (st.ttft ? ", first word " + (st.ttft / 1000).toFixed(1) + " s" : "")})); }
   wrap.append(a, acts);
   return wrap;
@@ -1911,6 +1958,7 @@ async function generate(){
   }
   if (text.trim()) {
     const out = {role:"assistant", content:text, model:mk(m), at:Date.now()};
+    if (S.autoRead && window.speechSynthesis) setTimeout(() => speak(text, null), 200);
     if (added.length) out.saved = added.length;
     if (reasoning) { out.reasoning = reasoning.slice(0, 20000); out.secs = secs || Math.max(1, Math.round((performance.now() - (t0 || performance.now())) / 1000)); }
     out.stats = actStats();
@@ -2241,7 +2289,7 @@ function toSettings(view){ if (settingsNavApi && stack.some(l => l.el && l.el.cl
 function settingsGo(view){ if (settingsNavApi) settingsNavApi.view(view); }
 // Every section stays in the left menu. Provider and model rows redraw the right pane instead of opening a layer.
 function settingsNav(L){
-  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Parameters:"sliders-horizontal", Developer:"code", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", "Voice and sounds":"mic", Personalization:"brain", "Privacy and data":"shield", Voice:"mic", Parameters:"sliders-horizontal", Developer:"code", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
@@ -2265,7 +2313,7 @@ function settingsNav(L){
     [...nav.querySelectorAll("button")].forEach((b, k) => b.classList.toggle("on", k === active));
     scroller.scrollTop = 0; };
   settingsNavApi = {view:showView, section:name => go(name, "home")};
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Providers:1, "Voice and sounds":1, Usage:1, "Desktop app":1, Help:1};
     sections().forEach(g => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = sections().indexOf(g); q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; }})); });
     show(); };
   q.addEventListener("input", show);
@@ -2359,22 +2407,40 @@ const skillOf = id => id ? (SKILLS.concat(S.skills || []).find(x => x.id === id)
 function setSkill(id){ const c = chat(); if (c) { c.skill = id || undefined; save(); } else pendingSkill = id || null; renderSkill(); }
 function renderSkill(){
   const el = $("#skillChip"); if (!el) return; const c = chat(), sk = skillOf(c ? c.skill : pendingSkill);
+  const ht = $("#homeSkillT"); if (ht) ht.textContent = sk ? sk.name : "No skill";
   el.hidden = !sk; el.innerHTML = ""; if (!sk) return;
   el.style.setProperty("--c", RICO[sk.icon || "sparkles"] || "#ffb340"); el.append(h("span", {html:ic(sk.icon || "sparkles")}), h("span", {text:sk.name}), h("button", {type:"button", "aria-label":"Stop using " + sk.name, html:ic("x"), onclick:() => setSkill(null)}));
 }
 function pickSkill(){ menu("skills", "Use a skill", SKILLS.concat(S.skills || []).map(sk => ({icon:sk.icon || "sparkles", tint:true, label:sk.name, run:() => setSkill(sk.id)})).concat([{icon:"plus", label:"Create a skill", run:() => newSkill()}])); }
-function newSkill(after){
-  dialog({title:"Name your skill", input:"", placeholder:"For example, Product copy", ok:"Next", onOk:name => { name = (name || "").trim(); if (!name) return;
-    setTimeout(() => dialog({title:"What should it do?", input:"", placeholder:"Write short product descriptions in a warm tone", ok:"Save", onOk:text => { text = (text || "").trim(); if (!text) return;
-      S.skills = (S.skills || []).concat([{id:"u" + uid(), name:name.slice(0, 40), text:text.slice(0, 2000)}]); save(); if (after) after(); }}), 360); }});
+const SKILL_ICONS = ["sparkles", "clapperboard", "camera", "lightning", "mic", "brain", "code", "graduation-cap", "message-square", "pencil", "chart", "briefcase"];
+function newSkill(after){ skillEditor(null, after); }
+function skillEditor(sk, after){
+  open("skilled", () => {
+    const L = makeSheet(sk ? "Edit skill" : "New skill"); let icon = sk && sk.icon || "sparkles";
+    const name = h("input", {class:"input", placeholder:"For example, Product copy", maxlength:"40", "aria-label":"Skill name"}); name.value = sk ? sk.name : "";
+    const text = h("textarea", {class:"input ta", rows:"7", maxlength:"2000", placeholder:"Write short product descriptions in a warm tone. Lead with the benefit, stay under 60 words and end with a question.", "aria-label":"Instructions"}); text.value = sk ? sk.text : "";
+    const count = h("small", {class:"fcount"}), upd = () => { count.textContent = text.value.length + " of 2000"; }; text.oninput = upd; upd();
+    const icons = h("div", {class:"iconpick", role:"radiogroup", "aria-label":"Icon"}), draw = () => { icons.innerHTML = ""; SKILL_ICONS.forEach(n => icons.append(h("button", {type:"button", class:n === icon ? "on" : "", role:"radio", "aria-checked":String(n === icon), "aria-label":n, html:ic(n), style:"--c:" + (RICO[n] || "#ffb340"), onclick:() => { icon = n; draw(); }}))); }; draw();
+    L.body.append(h("div", {class:"sked"},
+      h("label", {class:"fl"}, h("span", {text:"Name"}), name), h("label", {class:"fl"}, h("span", {text:"Instructions"}), text, count), h("div", {class:"fl"}, h("span", {text:"Icon"}), icons),
+      h("p", {class:"fhelp", text:"Vesper follows these instructions for every message in a chat where the skill is on. Be specific about tone, length and format."}),
+      h("div", {class:"btns end"}, h("button", {class:"btn ghost sm", type:"button", text:"Cancel", onclick:() => closeTop()}),
+        h("button", {class:"btn primary sm", type:"button", text:sk ? "Save changes" : "Create skill", onclick:() => { const n = name.value.trim(), t = text.value.trim(); if (!n) { name.focus(); return; } if (!t) { text.focus(); return; }
+          const item = {id:sk ? sk.id : "u" + uid(), name:n.slice(0, 40), text:t.slice(0, 2000), icon};
+          S.skills = sk ? (S.skills || []).map(x => x.id === sk.id ? item : x) : (S.skills || []).concat([item]); save(); closeTop(); if (after) after(); }}))));
+    return L;
+  });
 }
 function openSkills(){
   open("skillsp", () => makePage("Skills", (w, L) => {
-    w.append(gnote("A skill adds instructions to a chat. Pick one from the plus button in the message box."));
-    w.append(glabel("Ready to use"), group(...SKILLS.map(sk => row({icon:sk.icon, title:sk.name, sub:sk.text, chev:false}))));
-    const mine = S.skills || [];
-    w.append(glabel("Yours"), mine.length ? group(...mine.map(sk => row({icon:"sparkles", title:sk.name, sub:sk.text, onclick:() => menu("skillmenu", sk.name, [{icon:"trash-2", label:"Delete", danger:true, run:() => { S.skills = (S.skills || []).filter(x => x.id !== sk.id); save(); L.refresh(); }}])}))) : gnote("None yet."));
-    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Create a skill", onclick:() => newSkill(() => L.refresh())})));
+    const mine = S.skills || [], again = () => L.refresh();
+    w.append(h("div", {class:"skhead"}, h("p", {text:"A skill is a saved set of instructions. Turn one on from the plus button in the message box and Vesper follows it for the whole chat."}),
+      h("button", {class:"btn primary sm", type:"button", html:ic("plus") + "New skill", onclick:() => newSkill(again)})));
+    const skRow = (sk, own) => row({icon:sk.icon || "sparkles", title:sk.name, sub:sk.text, chev:false, onclick:() => menu("skillmenu", sk.name, own
+      ? [{icon:"check", label:"Use in this chat", run:() => setSkill(sk.id)}, {icon:"pencil", label:"Edit", run:() => skillEditor(sk, again)}, {icon:"trash-2", label:"Delete", danger:true, run:() => { S.skills = (S.skills || []).filter(x => x.id !== sk.id); if (chat() && chat().skill === sk.id) setSkill(null); save(); again(); }}]
+      : [{icon:"check", label:"Use in this chat", run:() => setSkill(sk.id)}, {icon:"copy", label:"Make my own copy", run:() => { S.skills = (S.skills || []).concat([{id:"u" + uid(), name:sk.name + " copy", text:sk.text, icon:sk.icon}]); save(); again(); }}])});
+    w.append(glabel("Yours"), mine.length ? h("div", {class:"group skrows"}, ...mine.map(sk => skRow(sk, true))) : h("div", {class:"emptyc"}, h("span", {class:"ei", html:ic("lightning")}), h("b", {text:"No skills of your own yet"}), h("span", {text:"Write instructions once and use them in any chat."}), h("button", {class:"btn sm", type:"button", text:"Write your first skill", onclick:() => newSkill(again)})));
+    w.append(glabel("Built in"), h("div", {class:"group skrows"}, ...SKILLS.map(sk => skRow(sk, false))));
   }));
 }
 // Media settings
@@ -2543,7 +2609,7 @@ function applyAccent(){
   else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
   document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
   document.body.classList.toggle("tinted", !!t.wall);
-  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); document.body.classList.toggle("noglass", S.glass === false); }
+  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); document.body.classList.toggle("noglass", S.glass === false); document.body.classList.toggle("hc", !!S.hc); document.body.classList.toggle("focusring", !!S.focusRing); if (S.msgSize) document.body.style.setProperty("--msgfs", S.msgSize + "px"); else document.body.style.removeProperty("--msgfs"); }
   document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : ""; document.body.style.setProperty("--z", Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "1");
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
@@ -2650,7 +2716,7 @@ function usageStats(){ const by = {}; let p = 0, c = 0, n = 0, wk = 0; const sin
 function numCtl(key, o){ o = o || {}; const i = h("input", {class:"tin num", type:"number", inputmode:"decimal", placeholder:o.placeholder || "Default", "aria-label":key}); if (o.min !== undefined) i.min = o.min; if (o.max !== undefined) i.max = o.max; if (o.step !== undefined) i.step = o.step;
   if (S[key] !== undefined && S[key] !== null && S[key] !== "") i.value = S[key];
   i.onchange = () => { if (i.value === "") delete S[key]; else { let v = +i.value; if (o.min !== undefined) v = Math.max(o.min, v); if (o.max !== undefined) v = Math.min(o.max, v); S[key] = v; i.value = v; } save(); if (o.after) o.after(); }; return i; }
-function textCtl(key, placeholder){ const i = h("input", {class:"tin", type:"text", placeholder:placeholder || "None", "aria-label":key, spellcheck:"false"}); i.value = S[key] || ""; i.onchange = () => { const v = i.value.trim(); if (v) S[key] = v; else delete S[key]; save(); }; return i; }
+function strCtl(key, placeholder){ const i = h("input", {class:"tin", type:"text", placeholder:placeholder || "None", "aria-label":key, spellcheck:"false"}); i.value = S[key] || ""; i.onchange = () => { const v = i.value.trim(); if (v) S[key] = v; else delete S[key]; save(); }; return i; }
 function ctlRow(title, sub, ctl){ return h("div", {class:"row ctl"}, h("div", {class:"tx"}, h("b", {text:title}), sub ? h("span", {text:sub}) : null), ctl); }
 function renderSettingsRoot(w){
   const nReady = Object.keys(PROVIDERS).filter(p => ready(p)).length;
@@ -2666,86 +2732,8 @@ function renderSettingsRoot(w){
   const used = h("b", {class:"cval", text:"Calculating"});
   storageUsed().then(n => { used.textContent = bytes(n); });
   const reqN = Object.keys(S.waitlist || {}).filter(k => k.indexOf("app:") === 0).length;
-  w.append(glabel("General"), group(
-    h("div", {class:"row ctl laytop"}, h("div", {class:"tx"}, h("b", {text:"Interface layout"}), h("span", {text:"Choose how the sidebar and details panel sit beside the chat"})), layoutCards()),
-    switchRow({icon:"panel-left", title:"Keep details panel open", sub:"Opening or closing it in one chat applies to all", get:() => S.insp, set:v => setInsp(v)}),
-    ctlRow("Language", "Vesper speaks English today. Other languages are planned", h("span", {class:"cval", text:"English"})),
-    ctlRow("Space at start", "Choose where Vesper opens", dropdown("Space at start", [["chat", "Chat"], ["last", "Last used"]], S.startSpace || "chat", v => { S.startSpace = v; save(); })),
-    row({icon:"shield", title:"Permissions", sub:"Vesper only asks for the microphone when you use voice input. Files and keys stay on this device", chev:false}),
-    switchRow({icon:"robot", title:"Show Agent and Code spaces", sub:"Both are in development. Hide them until they are ready", get:() => S.spacesOn !== false, set:v => setSpaces(v)}),
-    ctlRow("Follow-up behavior", "Send while a reply is coming: stop it or queue the next message", dropdown("Follow-up behavior", [["steer", "Steer"], ["queue", "Queue"]], S.follow || "steer", v => { S.follow = v; save(); })),
-    ctlRow("Submit messages with", "Shift Enter always adds a new line", dropdown("Submit messages with", [["enter", "Enter"], ["ctrl", "Ctrl Enter"]], S.sendKey || "enter", v => { S.sendKey = v; save(); syncEnterHint(); })),
-    switchRow({icon:"image", title:"Pinch to zoom", sub:"Allow pinch and trackpad zoom. Zoom in Appearance stays available either way", get:() => S.pinch !== false, set:v => { S.pinch = v; save(); applyPinch(); }}),
-    switchRow({icon:"pencil", title:"Spellcheck", sub:"Underline misspelled words in the message box", get:() => S.spell !== false, set:v => { S.spell = v; save(); applyWriting(); }}),
-    switchRow({icon:"menu", title:"Wrap long lines", sub:"Wrap the message box instead of scrolling sideways", get:() => S.wrap !== false, set:v => { S.wrap = v; save(); applyWriting(); }}),
-    row({icon:"message-square", title:"Help and feedback", sub:"Tell us what broke or what you need", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper feedback"; }})
-  ), gnote("These are defaults for new chats and for the app as a whole. Changes apply right away."));
-  w.append(glabel("Account"), group(
-    ctlRow("Profile photo", "PNG, JPEG or WebP, up to 10 MB, or an exclusive avatar", av),
-    ctlRow("Full name", "Shown in the app and sent with chats", textCtl("Full name", "name", "Your name")),
-    ctlRow("What should Vesper call you?", "Used at the start of replies", textCtl("What should Vesper call you?", "call", "A first name or nickname")),
-    ctlRow("What best describes your work?", "Helps Vesper pick examples and tone", dropdown("Work", [["", "Choose"]].concat(WORK.map(x => [x, x])), pr.work || "", v => { pr.work = v; save(); })),
-    row({icon:"user", title:"Account type", sub:"Local profile. No sign in, no email, nothing sent to us", val:"Local", chev:false}),
-    row({icon:"crown", title:"Plan", sub:"Every feature is free, with no paid tier", val:"Free", chev:false})
-  ), gnote("Your name and photo are read by the app. Your name is sent with chats so replies are written for you."));
   const u = usageStats();
-  w.append(glabel("Usage"), group(
-    ctlRow("Tokens this week", "Sent and received, all models", h("b", {class:"cval", text:nf(u.wk)})),
-    ctlRow("Tokens in total", nf(u.p) + " sent, " + nf(u.c) + " received", h("b", {class:"cval", text:nf(u.p + u.c)})),
-    ctlRow("Replies measured", "Counted since the details panel arrived", h("b", {class:"cval", text:String(u.n)})),
-    ...u.by.map(([k, v]) => ctlRow(k, "", h("span", {class:"cval", text:nf(v) + " tokens"}))),
-    ctlRow("Storage used", "Chats, settings, cache and the library in this browser", used),
-    row({icon:"refresh-cw", title:"Reset usage counts", sub:"Removes token counts from past replies. Chats stay", onclick:() => dialog({title:"Reset usage counts?", text:"This clears the token counts from every past reply on this device. Chats and settings stay as they are.", ok:"Reset", onOk:() => { S.chats.forEach(c => c.messages.forEach(m => { delete m.stats; })); save(); again(); toast("Usage counts reset"); }})})
-  ), gnote("Counted on this device only. Most providers report exact tokens; a few models send estimates."));
-  w.append(glabel("Appearance"), group(
-    ctlRow("Color scheme", "Vesper follows the theme you pick. Dark is the default", h("span", {class:"cval", text:"Theme based"})),
-    ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
-    ctlRow("UI font", "The font used in every screen", h("span", {class:"cval", text:"Inter"})),
-    ctlRow("Code font", "The font used inside code blocks", dropdown("Code font", [["system", "System mono"], ["menlo", "Menlo"], ["consolas", "Consolas"]], S.mono || "system", v => { S.mono = v; save(); applyTimeline(); })),
-    ctlRow("Terminal font", "Vesper has no terminal. The coding agent is planned", h("span", {class:"cval", text:"Not used"})),
-    ctlRow("Zoom", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
-    switchRow({icon:"sparkles", title:"Glass effects", sub:"Frosted blur behind the message bar and panels. Turn off on older graphics cards for smoother scrolling", get:() => S.glass !== false, set:v => { S.glass = v; save(); applyAccent(); }}),
-    ctlRow("Reduce motion", "Reduce animations or match your system", dropdown("Reduce motion", [["system", "System"], ["off", "Off"], ["on", "On"]], S.calm || "system", v => { S.calm = v; save(); applyCalm(); }))
-  ), gnote("On a wide screen, 100% is drawn slightly smaller so the app reads like a desktop app."));
-  w.append(glabel("Your Vesper"), group(
-    row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
-    row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
-    row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
-    switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }}),
-    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }}),
-    row({icon:"users", title:"Characters", sub:"Personalities with their own voice and chats", val:S.companions.length ? S.companions.length + " yours" : CHAR_LIBRARY.length + " ready", onclick:() => openCompanions()})
-  ));
-  w.append(glabel("Chat"), group(
-    switchRow({icon:"panel-left", title:"Details panel", sub:"Model, context and live activity beside the chat", get:() => S.insp, set:v => setInsp(v)}),
-    switchRow({icon:"menu", title:"Collapse the sidebar", sub:"Keep a narrow icon rail on wide screens", get:() => S.sideOff, set:v => setSide(v)}),
-    row({icon:"message-square", title:"Message actions", sub:"Hover a reply to copy, edit, retry or read it aloud", chev:false}),
-    ctlRow("Chat width", "How wide the conversation column is. Wide suits big monitors, narrow reads more like a page", dropdown("Chat width", [["narrow", "Narrow"], ["default", "Comfortable"], ["wide", "Wide"]], S.chatW || "default", v => { S.chatW = v; save(); applyAccent(); })),
-    ctlRow("Message spacing", "Compact fits more of a long answer on screen. Comfortable leaves more air between messages", dropdown("Message spacing", [["comfortable", "Comfortable"], ["compact", "Compact"]], S.dense || "comfortable", v => { S.dense = v; save(); applyAccent(); })),
-    switchRow({icon:"arrow-down", title:"Follow the reply", sub:"Keep scrolling down while a reply is being written. Turn off to read from the top while it streams", get:() => S.autoScroll !== false, set:v => { S.autoScroll = v; save(); }}),
-    ctlRow("Chats in the sidebar", "How many recent chats show before Show more. Older chats are always kept and searchable", dropdown("Chats in the sidebar", [["8", "8"], ["14", "14"], ["25", "25"], ["50", "50"]], String(S.sideCount || 14), v => { S.sideCount = +v; save(); renderDrawer(); }))
-  ), gnote("Private chats start from the home screen and never touch this browser's storage."));
-  w.append(glabel("Capabilities"), group(
-    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => settingsGo("providers")}),
-    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => settingsGo("local")}),
-    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => settingsGo("manage")}),
-    row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}),
-    row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()}),
-    row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()}),
-    row({icon:"mic", title:"Voice input", sub:"Uses your browser's speech service. Audio is not saved", chev:false}),
-    row({icon:"paperclip", title:"Attachments", sub:"Photos are shrunk here. Text files are sent as text", chev:false})
-  ));
   const provIds = Object.keys(PROVIDERS), provShow = S.showProviders ? provIds : provIds.slice(0, 3);
-  w.append(glabel("Providers"), group(
-    ...provShow.map(pid => row({icon:"key-round", title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "API key" : "Add key", ok:ready(pid), onclick:() => settingsGo("prov:" + pid)})),
-    row({icon:"arrow-down", title:S.showProviders ? "Show fewer providers" : "Show more providers", sub:"Free providers Vesper can connect to", onclick:() => { S.showProviders = !S.showProviders; save(); again(); }})
-  ), gnote("Keys are saved in this browser and sent only to the provider you pick."));
-  w.append(glabel("Models"), group(
-    row({icon:"cpu", title:"Model in use", sub:modelSub, val:cm ? cm.name : "", onclick:() => settingsGo("picker")}),
-    row({icon:"sliders-horizontal", title:"Shown in the picker", sub:hiddenN ? hiddenN + (hiddenN === 1 ? " discovered model is hidden" : " discovered models are hidden") : "Every discovered model is shown", val:shown + " of " + total, onclick:() => settingsGo("manage")}),
-    row({icon:"robot", title:"Find your model", sub:"A pick that fits this computer's memory and graphics", onclick:() => settingsGo("advisor")}),
-    row({icon:"refresh-cw", title:"Discover models", sub:"Ask each connected provider for its latest list", onclick:() => settingsGo("providers")}),
-    row({icon:"laptop", title:"Local models", sub:"Add and manage local connections", val:S.conns.length ? String(S.conns.length) : "", onclick:() => settingsGo("local")})
-  ), gnote("A model is saved as provider::id, so two providers can offer the same name. Hidden models stay available in Manage models."));
   const tlNames = ["Quiet", "Compact", "Normal", "Detailed", "Custom"];
   const tlWord = h("em", {text:tlNames[S.tlLevel] || "Normal"});
   const tlRange = h("input", {class:"range", type:"range", min:"0", max:"4", step:"1", "aria-label":"Timeline detail"}); tlRange.value = S.tlLevel;
@@ -2760,6 +2748,67 @@ function renderSettingsRoot(w){
     ["model", "Model name", "Model shown under each reply"],
     ["attachments", "Attachments", "Photos and files in messages"]
   ];
+  const askNotify = v => { if (v && "Notification" in window && Notification.permission === "default") { try { Notification.requestPermission().catch(() => {}); } catch (e) {} } };
+  const soundOpts = [["none", "None"], ["chime", "Chime"], ["tap", "Tap"], ["low", "Low"]];
+  w.append(glabel("General"), group(
+    h("div", {class:"row ctl laytop"}, h("div", {class:"tx"}, h("b", {text:"Interface layout"}), h("span", {text:"Choose how the sidebar and details panel sit beside the chat"})), layoutCards()),
+    switchRow({icon:"panel-left", title:"Keep details panel open", sub:"Opening or closing it in one chat applies to all", get:() => S.insp, set:v => setInsp(v)}),
+    ctlRow("Space at start", "Choose where Vesper opens", dropdown("Space at start", [["chat", "Chat"], ["last", "Last used"]], S.startSpace || "chat", v => { S.startSpace = v; save(); })),
+    switchRow({icon:"robot", title:"Show Agent and Code spaces", sub:"Both are in development. Hide them until they are ready", get:() => S.spacesOn !== false, set:v => setSpaces(v)}),
+    ctlRow("Reply language", "The language Vesper writes in. Automatic matches whatever you write. The app screens themselves are in English for now", dropdown("Reply language", [["", "Automatic"], ["English", "English"], ["Spanish", "Spanish"], ["French", "French"], ["German", "German"], ["Italian", "Italian"], ["Portuguese", "Portuguese"], ["Hindi", "Hindi"], ["Arabic", "Arabic"], ["Chinese", "Chinese"], ["Japanese", "Japanese"], ["Korean", "Korean"], ["Russian", "Russian"], ["Turkish", "Turkish"]], S.replyLang || "", v => { if (v) S.replyLang = v; else delete S.replyLang; save(); })),
+    switchRow({icon:"image", title:"Pinch to zoom", sub:"Allow pinch and trackpad zoom. Zoom in Appearance stays available either way", get:() => S.pinch !== false, set:v => { S.pinch = v; save(); applyPinch(); }})
+  ), gnote("These are defaults for new chats and for the app as a whole. Changes apply right away."));
+  w.append(glabel("Account"), group(
+    ctlRow("Profile photo", "PNG, JPEG or WebP, up to 10 MB, or an exclusive avatar", av),
+    ctlRow("Full name", "Shown in the app and sent with chats", textCtl("Full name", "name", "Your name")),
+    ctlRow("What should Vesper call you?", "Used at the start of replies", textCtl("What should Vesper call you?", "call", "A first name or nickname")),
+    ctlRow("What best describes your work?", "Helps Vesper pick examples and tone", dropdown("Work", [["", "Choose"]].concat(WORK.map(x => [x, x])), pr.work || "", v => { pr.work = v; save(); }))
+  ), gnote("Your name and photo are read by the app. Your name is sent with chats so replies are written for you."));
+  w.append(glabel("Appearance"), group(
+    ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
+    ctlRow("Display scale", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
+    ctlRow("Chat text size", "The size of text in messages, apart from the screen scale above. Larger is easier on the eyes", dropdown("Chat text size", [["14.5", "Small"], ["16", "Default"], ["18", "Large"], ["20", "Extra large"]], String(S.msgSize || 16), v => { if (+v === 16) delete S.msgSize; else S.msgSize = +v; save(); applyAccent(); })),
+    ctlRow("Chat width", "How wide the conversation column is. Wide suits big monitors, narrow reads more like a page", dropdown("Chat width", [["narrow", "Narrow"], ["default", "Comfortable"], ["wide", "Wide"]], S.chatW || "default", v => { S.chatW = v; save(); applyAccent(); })),
+    ctlRow("Message spacing", "Compact fits more of a long answer on screen. Comfortable leaves more air between messages", dropdown("Message spacing", [["comfortable", "Comfortable"], ["compact", "Compact"]], S.dense || "comfortable", v => { S.dense = v; save(); applyAccent(); })),
+    ctlRow("Code font", "The font used inside code blocks", dropdown("Code font", [["system", "System mono"], ["menlo", "Menlo"], ["consolas", "Consolas"]], S.mono || "system", v => { S.mono = v; save(); applyTimeline(); })),
+    switchRow({icon:"sparkles", title:"Glass effects", sub:"Frosted blur behind the message bar and panels. Turn off on older graphics cards for smoother scrolling", get:() => S.glass !== false, set:v => { S.glass = v; save(); applyAccent(); }}),
+    ctlRow("Reduce motion", "Reduce animations or match your system", dropdown("Reduce motion", [["system", "System"], ["off", "Off"], ["on", "On"]], S.calm || "system", v => { S.calm = v; save(); applyCalm(); })),
+    switchRow({icon:"shield", title:"High contrast", sub:"Brighter text and stronger borders so everything is easier to tell apart", get:() => !!S.hc, set:v => { S.hc = v; save(); applyAccent(); }}),
+    switchRow({icon:"check", title:"Always show focus outlines", sub:"Draw a clear ring around whatever the keyboard has selected. Helpful if you navigate with Tab", get:() => !!S.focusRing, set:v => { S.focusRing = v; save(); applyAccent(); }})
+  ), gnote("On a wide screen, 100% is drawn slightly smaller so the app reads like a desktop app."));
+  w.append(glabel("Chat"), group(
+    ctlRow("Submit messages with", "Shift Enter always adds a new line", dropdown("Submit messages with", [["enter", "Enter"], ["ctrl", "Ctrl Enter"]], S.sendKey || "enter", v => { S.sendKey = v; save(); syncEnterHint(); })),
+    ctlRow("Follow-up behavior", "Send while a reply is coming: stop it or queue the next message", dropdown("Follow-up behavior", [["steer", "Steer"], ["queue", "Queue"]], S.follow || "steer", v => { S.follow = v; save(); })),
+    switchRow({icon:"arrow-down", title:"Follow the reply", sub:"Keep scrolling down while a reply is being written. Turn off to read from the top while it streams", get:() => S.autoScroll !== false, set:v => { S.autoScroll = v; save(); }}),
+    switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }}),
+    switchRow({icon:"clock", title:"Show message time", sub:"Put the time each reply arrived next to its actions", get:() => !!S.times, set:v => { S.times = v; save(); renderThread(true); }}),
+    switchRow({icon:"sparkles", title:"Suggestions while typing", sub:"Under the message box on a new chat, Vesper finishes your sentence from ready prompts and your own earlier ones. Tab accepts the first, arrows pick", get:() => S.ideas !== false, set:v => { S.ideas = v; save(); renderTypeSug(); }}),
+    switchRow({icon:"pencil", title:"Spellcheck", sub:"Underline misspelled words in the message box", get:() => S.spell !== false, set:v => { S.spell = v; save(); applyWriting(); }}),
+    switchRow({icon:"menu", title:"Wrap long lines", sub:"Wrap the message box instead of scrolling sideways", get:() => S.wrap !== false, set:v => { S.wrap = v; save(); applyWriting(); }}),
+    switchRow({icon:"clock", title:"Group chats by day", sub:"Show day headings in the chat list", get:() => S.groupChats !== false, set:v => { S.groupChats = v; save(); renderDrawer(); }}),
+    ctlRow("Sidebar order", "How chats are arranged in the list", dropdown("Sidebar order", [["recent", "Pinned then recent"], ["name", "Name"], ["oldest", "Oldest first"]], S.sideOrder, v => { S.sideOrder = v; save(); renderDrawer(); })),
+    ctlRow("Chats in the sidebar", "How many recent chats show before Show more. Older chats are always kept and searchable", dropdown("Chats in the sidebar", [["8", "8"], ["14", "14"], ["25", "25"], ["50", "50"]], String(S.sideCount || 14), v => { S.sideCount = +v; save(); renderDrawer(); }))
+  ), gnote("Private chats start from the home screen and never touch this browser's storage."));
+  w.append(glabel("Personalization"), group(
+    row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
+    row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
+    row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
+    row({icon:"users", title:"Characters", sub:"Personalities with their own voice and chats", val:S.companions.length ? S.companions.length + " yours" : CHAR_LIBRARY.length + " ready", onclick:() => openCompanions()}),
+    row({icon:"lightning", title:"Skills", sub:"Reusable instructions for one chat", val:String(SKILLS.length + (S.skills || []).length) + " ready", onclick:() => openSkills()}),
+    row({icon:"plug", title:"Connect apps", sub:"Ask for the apps you use. Nothing connects until you turn it on", val:reqN + " requested", onclick:() => openApps()})
+  ), gnote("Memory, instructions and skills are kept on this device and sent with your messages so replies fit you."));
+  w.append(glabel("Providers"), group(
+    ...provShow.map(pid => row({icon:"key-round", title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "API key" : "Add key", ok:ready(pid), onclick:() => settingsGo("prov:" + pid)})),
+    row({icon:"arrow-down", title:S.showProviders ? "Show fewer providers" : "Show more providers", sub:"Free providers Vesper can connect to", onclick:() => { S.showProviders = !S.showProviders; save(); again(); }})
+  ), gnote("Keys are saved in this browser and sent only to the provider you pick."));
+  w.append(glabel("Models"), group(
+    row({icon:"cpu", title:"Model in use", sub:modelSub, val:cm ? cm.name : "", onclick:() => settingsGo("picker")}),
+    row({icon:"sliders-horizontal", title:"Shown in the picker", sub:hiddenN ? hiddenN + (hiddenN === 1 ? " discovered model is hidden" : " discovered models are hidden") : "Every discovered model is shown", val:shown + " of " + total, onclick:() => settingsGo("manage")}),
+    row({icon:"robot", title:"Find your model", sub:"A pick that fits this computer's memory and graphics", onclick:() => settingsGo("advisor")}),
+    row({icon:"refresh-cw", title:"Discover models", sub:"Ask each connected provider for its latest list", onclick:() => settingsGo("providers")}),
+    row({icon:"laptop", title:"Local models", sub:"Add and manage local connections", val:S.conns.length ? String(S.conns.length) : "", onclick:() => settingsGo("local")}),
+    switchRow({icon:"clock", title:"Keep screen active", sub:"Stop this device from sleeping while a local model runs", get:() => S.wake, set:v => { S.wake = v; save(); if (!v) wakeOff(); else wakeOn(); }})
+  ), gnote("A model is saved as provider::id, so two providers can offer the same name. Hidden models stay available in Manage models."));
   w.append(glabel("Parameters"), group(
     ctlRow("Creativity", "How varied replies are, from 0 to 2. Low is focused and repeatable, high is looser. Around 0.7 suits everyday use", numCtl("temp", {min:0, max:2, step:0.05, placeholder:"0.8"})),
     ctlRow("Top P", "Limits word choice to the most likely options, from 0.05 to 1. Change this or Creativity, rarely both. Empty lets the model decide", numCtl("topP", {min:0.05, max:1, step:0.05})),
@@ -2767,7 +2816,7 @@ function renderSettingsRoot(w){
     ctlRow("Frequency penalty", "Discourages repeating the same words, from -2 to 2. A little above 0 reduces loops", numCtl("freq", {min:-2, max:2, step:0.1})),
     ctlRow("Presence penalty", "Nudges the model toward new topics, from -2 to 2. Higher wanders more", numCtl("pres", {min:-2, max:2, step:0.1})),
     ctlRow("Seed", "On models that support it, the same seed and prompt give the same reply. Empty means random", numCtl("seed", {min:0, step:1, placeholder:"Random"})),
-    ctlRow("Stop sequences", "Replies end as soon as one of these appears. Separate with commas, up to four", textCtl("stop", "For example ###, END")),
+    ctlRow("Stop sequences", "Replies end as soon as one of these appears. Separate with commas, up to four", strCtl("stop", "For example ###, END")),
     ctlRow("Reasoning effort", "For models that think before answering. Higher is slower and more careful. Models without it may ignore it or return an error", dropdown("Reasoning effort", [["", "Model default"], ["low", "Low"], ["medium", "Medium"], ["high", "High"]], S.reason || "", v => { if (v) S.reason = v; else delete S.reason; save(); })),
     ctlRow("History sent", "How many recent messages go with each new one. Fewer saves tokens and cost on long chats, but the model forgets older turns", dropdown("History sent", [["0", "Whole chat"], ["10", "Last 10"], ["20", "Last 20"], ["40", "Last 40"]], String(S.histMax || 0), v => { if (+v) S.histMax = +v; else delete S.histMax; save(); })),
     switchRow({icon:"lightning", title:"Stream replies", sub:"Show words as they arrive. Turn off to receive each reply in one piece, which suits slow or unstable connections", get:() => S.stream !== false, set:v => { S.stream = v; save(); }}),
@@ -2782,6 +2831,7 @@ function renderSettingsRoot(w){
     row({icon:"refresh-cw", title:"Reset timeline", sub:"Back to the normal view", onclick:() => { S.tlLevel = 2; S.tlWidth = "comfortable"; tlCats.forEach(([k]) => { S.tlShow[k] = true; }); save(); applyTimeline(); again(); toast("Timeline reset"); }})
   ), gnote("These control what appears in the chat. The full message text is always kept in the chat history."));
   w.append(glabel("Create"), group(
+    row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}),
     ctlRow("Default aspect ratio", "The shape new pictures and clips start with in Studio. 16:9 is widescreen video, 9:16 is vertical for Reels and Shorts, 21:9 is cinematic. You can change it for each one in the prompt bar", dropdown("Default aspect ratio", ASPECTS.map(a => [a, a]), ratioId(S.shapeDef), v => { S.shapeDef = v; save(); })),
     ctlRow("Picture size", "Length of the longest side in pixels. Bigger is sharper but slower, and some free generators cap the size", dropdown("Picture size", [["768", "768 px"], ["1024", "1024 px"], ["1280", "1280 px"], ["1536", "1536 px"]], String(S.imgLong || 1024), v => { S.imgLong = +v; save(); })),
     ctlRow("Free generator model", "Which model the free generator uses. Flux is more detailed, Turbo is faster", dropdown("Free generator model", [["", "Automatic"], ["flux", "Flux"], ["turbo", "Turbo"]], S.imgModel || "", v => { S.imgModel = v; save(); })),
@@ -2791,64 +2841,59 @@ function renderSettingsRoot(w){
     row({icon:"images", title:"Library", sub:"Everything you made, saved on this device", onclick:() => openLibrary()}),
     row({icon:"clapperboard", title:"Projects", sub:"Each project keeps its own media in Studio", val:String(projects().length), onclick:() => openStudio("image")})
   ), gnote("Images and videos stay in this browser. Prompts go to the generator you pick."));
-  w.append(glabel("Extensions"), group(
-    row({icon:"lightning", title:"Skills", sub:"Reusable instructions for one chat", val:String(SKILLS.length + (S.skills || []).length) + " ready", onclick:() => openSkills()}),
-    row({icon:"plug", title:"Connect apps", sub:"Ask for the apps you use. Nothing connects until you turn it on", val:reqN + " requested", onclick:() => openApps()})
-  ));
-  w.append(glabel("Server"), group(
-    row({icon:"laptop", title:"Local connections", sub:"Ollama, LM Studio and OpenAI compatible servers", val:S.conns.length ? String(S.conns.length) : "None", onclick:() => openLocal()}),
-    row({icon:"key-round", title:"Cloud providers", sub:"Free models from providers you connect", val:nReady ? String(nReady) : "None", onclick:() => settingsGo("providers")})
-  ), gnote("Local calls to private addresses are allowed by the browser from this page. No server is run by Node Folds."));
-  w.append(glabel("Pairing"), group(
-    row({icon:"share-2", title:"Connect a local server", sub:"Pair this app with Ollama, LM Studio or another computer on your WiFi", onclick:() => openLocal()}),
-    row({icon:"shield", title:"Remote access", sub:"Local models are reached on your network. Vesper does not open a public server", chev:false}),
-    switchRow({icon:"clock", title:"Keep screen active", sub:"Stop this device from sleeping while a local model runs", get:() => S.wake, set:v => { S.wake = v; save(); if (!v) wakeOff(); else wakeOn(); }})
-  ));
-  w.append(glabel("Browser"), group(
-    row({icon:"download", title:"Install Vesper", sub:"Use your browser's install option to add it to the home screen", chev:false}),
-    row({icon:"refresh-cw", title:"Offline files", sub:"Download the app files again on the next visit", onclick:() => dialog({title:"Clear the offline cache?", text:"Vesper downloads its files again the next time you open it. Chats, settings and the library stay.", ok:"Clear cache", onOk:clearOffline})}),
-    row({icon:"external-link", title:"Open the website", sub:"vesper.nodefolds.com", onclick:() => { location.href = "https://vesper.nodefolds.com"; }})
-  ));
-  const askNotify = v => { if (v && "Notification" in window && Notification.permission === "default") { try { Notification.requestPermission().catch(() => {}); } catch (e) {} } };
-  w.append(glabel("Notifications"), group(
-    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
-    switchRow({icon:"bell", title:"Reply finished", sub:"Show a system notification when a reply is ready and Vesper is in the background", get:() => S.notify.done, set:v => { S.notify.done = v; save(); askNotify(v); }}),
-    switchRow({icon:"circle-x", title:"Reply failed", sub:"Show a system notification when an error occurs", get:() => S.notify.failed, set:v => { S.notify.failed = v; save(); askNotify(v); }}),
-    switchRow({icon:"key-round", title:"Needs attention", sub:"Show a system notification when a key or server is needed", get:() => S.notify.attention, set:v => { S.notify.attention = v; save(); askNotify(v); }}),
-    switchRow({icon:"bell", title:"Update notices", sub:"A small window when a new version is ready", get:() => !S.updOff, set:v => { S.updOff = !v; save(); }}),
-    row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION + ". Checking now is always allowed", onclick:() => checkUpdate(true)})
-  ), gnote("System notices appear only when Vesper is in the background. Your browser asks permission once."));
-  const soundOpts = [["none", "None"], ["chime", "Chime"], ["tap", "Tap"], ["low", "Low"]];
-  w.append(glabel("Sounds"), group(
+  w.append(glabel("Voice and sounds"), group(
+    ctlRow("Reading voice", "The voice used when Vesper reads a reply aloud. The list is the voices installed on this computer", dropdown("Reading voice", voiceList(), S.voice || "", v => { if (v) S.voice = v; else delete S.voice; save(); })),
+    ctlRow("Reading speed", "How fast replies are read. Normal is natural speech", dropdown("Reading speed", [["0.75", "Slow"], ["1", "Normal"], ["1.25", "Fast"], ["1.5", "Faster"], ["2", "Fastest"]], String(S.rate || 1), v => { S.rate = +v; save(); })),
+    switchRow({icon:"volume-2", title:"Read replies aloud", sub:"Speak each reply as soon as it is finished. Turn off to listen only when you press the speaker under a reply", get:() => !!S.autoRead, set:v => { S.autoRead = v; save(); }}),
+    row({icon:"volume-2", title:"Try the voice", sub:"Plays a short sample with the voice and speed above", chev:false, onclick:() => speak("This is how Vesper sounds with these settings.", null)}),
+    ctlRow("Dictation language", "The language the microphone listens for when you speak a message. Automatic follows your system", dropdown("Dictation language", [["", "Automatic"], ["en-US", "English (US)"], ["en-GB", "English (UK)"], ["en-IN", "English (India)"], ["es-ES", "Spanish"], ["fr-FR", "French"], ["de-DE", "German"], ["it-IT", "Italian"], ["pt-BR", "Portuguese (Brazil)"], ["hi-IN", "Hindi"], ["ar-SA", "Arabic"], ["zh-CN", "Chinese"], ["ja-JP", "Japanese"], ["ko-KR", "Korean"]], S.sttLang || "", v => { if (v) S.sttLang = v; else delete S.sttLang; save(); }))
+  ), h("div", {class:"subhead", text:"Sounds"}), group(
     ctlRow("Reply finished", "Play a sound when a reply is ready", dropdown("Reply sound", soundOpts, S.sound.done, v => { S.sound.done = v; save(); playSound(v); })),
     ctlRow("Reply failed", "Play a sound when an error occurs", dropdown("Error sound", soundOpts, S.sound.failed, v => { S.sound.failed = v; save(); playSound(v); })),
     ctlRow("Needs attention", "Play a sound when a key or server is needed", dropdown("Attention sound", soundOpts, S.sound.attention, v => { S.sound.attention = v; save(); playSound(v); })),
     ctlRow("Interface", "Play a subtle sound when you send a message", dropdown("Interface sound", soundOpts, S.sound.interface, v => { S.sound.interface = v; save(); playSound(v); })),
     row({icon:"volume-2", title:"Preview a sound", sub:"Hear the chime before you choose", onclick:() => playSound("chime"), chev:false})
-  ), gnote("Sounds are made on this device. Nothing is downloaded or sent anywhere."));
+  ), gnote("Voices come from your device, so the choices and the quality depend on it. Nothing is uploaded."));
+  w.append(glabel("Notifications"), group(
+    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
+    switchRow({icon:"bell", title:"Reply finished", sub:"Show a system notification when a reply is ready and Vesper is in the background", get:() => S.notify.done, set:v => { S.notify.done = v; save(); askNotify(v); }}),
+    switchRow({icon:"circle-x", title:"Reply failed", sub:"Show a system notification when an error occurs", get:() => S.notify.failed, set:v => { S.notify.failed = v; save(); askNotify(v); }}),
+    switchRow({icon:"key-round", title:"Needs attention", sub:"Show a system notification when a key or server is needed", get:() => S.notify.attention, set:v => { S.notify.attention = v; save(); askNotify(v); }}),
+    switchRow({icon:"bell", title:"Update notices", sub:"A small window when a new version is ready", get:() => !S.updOff, set:v => { S.updOff = !v; save(); }})
+  ), gnote("System notices appear only when Vesper is in the background. Your browser asks permission once."));
   w.append(glabel("Shortcuts"), group(
-    row({icon:"menu", title:"Keyboard shortcuts", sub:"Search every shortcut in the app", onclick:() => openShortcuts()}),
+    ctlRow("New chat", "", h("kbd", {class:"kbdc", text:"Ctrl N"})),
+    ctlRow("Search chats", "", h("kbd", {class:"kbdc", text:"Ctrl K"})),
+    ctlRow("Show or hide the sidebar", "", h("kbd", {class:"kbdc", text:"Ctrl B"})),
+    ctlRow("Open or close the details panel", "", h("kbd", {class:"kbdc", text:"Ctrl I"})),
+    ctlRow("Chat space", "", h("kbd", {class:"kbdc", text:"Ctrl 1"})),
+    ctlRow("Agent space", "", h("kbd", {class:"kbdc", text:"Ctrl 2"})),
+    ctlRow("Code space", "", h("kbd", {class:"kbdc", text:"Ctrl 3"})),
+    ctlRow("Settings", "", h("kbd", {class:"kbdc", text:"Ctrl ,"})),
+    ctlRow("Close the top window, menu or dialog", "", h("kbd", {class:"kbdc", text:"Esc"})),
+    ctlRow("Send a message (when Enter is the send key)", "", h("kbd", {class:"kbdc", text:"Enter"})),
+    ctlRow("Start a new line in the message box", "", h("kbd", {class:"kbdc", text:"Shift Enter"})),
     row({icon:"refresh-cw", title:"Reset shortcut defaults", sub:"Restores Enter to send and the standard keys", onclick:() => { S.sendKey = "enter"; S.enter = null; save(); syncEnterHint(); again(); toast("Shortcuts reset"); }})
-  ));
-  w.append(glabel("Privacy"), group(
+  ), gnote("Send with Enter or Ctrl Enter is set in Chat."));
+  w.append(glabel("Usage"), group(
+    ctlRow("Tokens this week", "Sent and received, all models", h("b", {class:"cval", text:nf(u.wk)})),
+    ctlRow("Tokens in total", nf(u.p) + " sent, " + nf(u.c) + " received", h("b", {class:"cval", text:nf(u.p + u.c)})),
+    ctlRow("Replies measured", "Counted since the details panel arrived", h("b", {class:"cval", text:String(u.n)})),
+    ...u.by.map(([k, v]) => ctlRow(k, "", h("span", {class:"cval", text:nf(v) + " tokens"}))),
+    row({icon:"message-square", title:"Chats stored", sub:"Private chats are never counted", val:String(S.chats.filter(c => !c.temp).length), chev:false}),
+    row({icon:"users", title:"Characters saved", sub:"Ready made and your own", val:String(S.companions.length), chev:false}),
+    ctlRow("Storage used", "Chats, settings, cache and the library in this browser", used),
+    row({icon:"refresh-cw", title:"Reset usage counts", sub:"Removes token counts from past replies. Chats stay", onclick:() => dialog({title:"Reset usage counts?", text:"This clears the token counts from every past reply on this device. Chats and settings stay as they are.", ok:"Reset", onOk:() => { S.chats.forEach(c => c.messages.forEach(m => { delete m.stats; })); save(); again(); toast("Usage counts reset"); }})})
+  ), gnote("Counted on this device only. Most providers report exact tokens; a few models send estimates."));
+  w.append(glabel("Privacy and data"), group(
     ctlRow("Delete old chats", "Chats you have not touched for this long are removed when Vesper opens. Pinned chats are kept. This cannot be undone", dropdown("Delete old chats", [["0", "Never"], ["30", "After 30 days"], ["90", "After 90 days"], ["365", "After a year"]], String(S.keepDays || 0), v => { if (+v) S.keepDays = +v; else delete S.keepDays; save(); })),
     row({icon:"download", title:"Export chats", sub:"Save a backup file", onclick:exportChats, chev:false}),
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
-    row({icon:"ghost", title:"Private chats", sub:"Nothing is saved, not even the title", chev:false}),
-    row({icon:"key-round", title:"API keys", sub:"Kept in this browser and sent only to the provider you pick", chev:false}),
-    row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
-  ), gnote("No analytics, no ads and no account. Messages go only to the AI provider you pick."));
-  w.append(glabel("Data"), group(
-    row({icon:"message-square", title:"Chats stored", sub:"Private chats are never counted", val:String(S.chats.filter(c => !c.temp).length), chev:false}),
-    row({icon:"users", title:"Characters saved", sub:"Ready made and your own", val:String(S.companions.length), chev:false}),
+    row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})}),
     row({icon:"trash-2", title:"Clear the library", sub:"Deletes every Studio image and video on this device", danger:true, onclick:() => dialog({title:"Clear the library?", text:"This deletes every image and video Studio saved on this device. Chats and settings stay.", ok:"Clear library", danger:true, onOk:clearLibrary})}),
     row({icon:"download", title:"Clear offline cache", sub:"The app downloads again on the next visit", onclick:() => dialog({title:"Clear the offline cache?", text:"Vesper downloads its files again the next time you open it. Chats, settings and the library stay.", ok:"Clear cache", onOk:clearOffline})}),
     row({icon:"user", title:"Reset profile", sub:"Removes your name, photo and work", danger:true, onclick:() => dialog({title:"Reset your profile?", text:"This removes your name, photo, avatar and work. Chats and settings stay.", ok:"Reset profile", danger:true, onOk:() => { S.profile = {}; save(); renderFoot(); again(); toast("Profile reset"); }})})
-  ), gnote("Clearing the cache or the library never touches your chats and settings."));
-  if (DESKTOP) w.append(glabel("Desktop app"), group(
-    row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()}),
-    ctlRow("Closing the window", "Vesper keeps running in the tray so a local model stays ready", h("span", {class:"cval", text:"Tray"}))
-  ));
+  ), gnote("No analytics, no ads and no account. Messages go only to the AI provider you pick, and API keys stay in this browser. Clearing the cache or the library never touches your chats and settings."));
   w.append(glabel("Developer"), group(
     switchRow({icon:"chart", title:"Reply details", sub:"Show tokens in and out, speed and time to first word under each reply", get:() => !!S.devStats, set:v => { S.devStats = v; save(); renderThread(true); }}),
     row({icon:"copy", title:"Copy last request as cURL", sub:"The last message Vesper sent to a model, ready for a terminal. Your key is replaced with a placeholder", chev:false, onclick:() => { if (!lastReq) { toast("Send a message first"); return; } copyText("curl " + lastReq.url + " \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $API_KEY\" \\\n  -d '" + JSON.stringify(lastReq.payload).replace(/'/g, "'\\''") + "'"); }}),
@@ -2857,24 +2902,23 @@ function renderSettingsRoot(w){
     row({icon:"upload", title:"Import settings", sub:"Load a settings file made by Vesper. It replaces matching preferences and leaves everything else", chev:false, onclick:importSettings}),
     row({icon:"trash-2", title:"Reset all settings", sub:"Every preference back to default. Chats, keys, memory and your library are kept", danger:true, chev:false, onclick:() => dialog({title:"Reset all settings?", text:"Preferences return to their defaults. Chats, keys, memory and your library stay as they are.", ok:"Reset", danger:true, onOk:() => { resetSettings(); }})})
   ), gnote("For people who build with models. Nothing here is sent anywhere."));
-  w.append(glabel("Experimental"), group(
-    switchRow({icon:"clock", title:"Group chats by day", sub:"Show day headings in the chat list", get:() => S.groupChats !== false, set:v => { S.groupChats = v; save(); renderDrawer(); }}),
-    ctlRow("Sidebar order", "How chats are arranged in the list", dropdown("Sidebar order", [["recent", "Pinned then recent"], ["name", "Name"], ["oldest", "Oldest first"]], S.sideOrder, v => { S.sideOrder = v; save(); renderDrawer(); })),
-    switchRow({icon:"menu", title:"Compact timeline", sub:"Hide message actions and extra notes in the chat", get:() => S.tlLevel === 0, set:v => { S.tlLevel = v ? 0 : 2; save(); applyTimeline(); again(); }}),
-    switchRow({icon:"sparkles", title:"Suggestions while typing", sub:"Under the message box on a new chat, Vesper finishes your sentence from ready prompts and your own earlier ones. Tab accepts the first, arrows pick", get:() => S.ideas !== false, set:v => { S.ideas = v; save(); renderTypeSug(); }})
-  ), gnote("These work today. They may change as Vesper grows."));
+  if (DESKTOP) w.append(glabel("Desktop app"), group(
+    row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()})
+  ), gnote("Closing the window keeps Vesper running in the tray so a local model stays ready. Quit from the tray icon."));
   w.append(glabel("Help"), group(
     row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}),
-    row({icon:"info", title:"Keyboard shortcuts", sub:"Every shortcut in the app", onclick:() => openShortcuts()}),
+    row({icon:"message-square", title:"Send feedback", sub:"Tell us what broke or what you need", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper feedback"; }}),
     row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }}),
     row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()})
   ));
   w.append(glabel("About"), group(
     row({icon:"info", title:"Vesper", sub:"By Node Folds. Free and private", val:"Version " + APP_VERSION, chev:false}),
+    row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION + ". Checking now is always allowed", onclick:() => checkUpdate(true)}),
     row({icon:"shield", title:"Privacy policy", sub:"nodefolds.com/privacy", onclick:() => { location.href = "https://nodefolds.com/privacy"; }}),
     row({icon:"info", title:"Terms of use", sub:"nodefolds.com/terms", onclick:() => { location.href = "https://nodefolds.com/terms"; }}),
     row({icon:"code", title:"Source code", sub:"github.com/PushkarX-Code/vesper", onclick:() => { location.href = "https://github.com/PushkarX-Code/vesper"; }}),
-    row({icon:"coffee", title:"Licenses", sub:"Fonts, icons and open source libraries", onclick:() => openLicenses()})
+    row({icon:"coffee", title:"Licenses", sub:"Fonts, icons and open source libraries", onclick:() => openLicenses()}),
+    row({icon:"external-link", title:"Open the website", sub:"vesper.nodefolds.com", onclick:() => { location.href = "https://vesper.nodefolds.com"; }})
   ));
 }
 function bytes(n){ n = Math.max(0, +n || 0); return n >= 1073741824 ? (n / 1073741824).toFixed(1) + " GB" : n >= 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
@@ -2960,24 +3004,23 @@ function openProvider(pid, swap, opts){
         else set(r.status === 401 || r.status === 403 ? "This key was rejected. Make a new one at " + P.siteName + "." : "Test failed with error " + r.status + ".", "bad");
       } catch (e) { set("Couldn't reach " + P.name + ". Check your internet.", "bad"); }
     }});
-    w.append(glabel(ready(pid) ? "Connected" : "Not connected"), group(h("div", {class:"field"}, h("label", {text:"API key"}), h("div", {class:"inrow"}, key, show), h("div", {class:"btns"}, saveBtn, testBtn), st)));
-    w.append(gnote(P.usage + ". Your key stays on this device and is only sent to " + P.name + "."));
+    w.append(glabel("API key"), group(
+      h("div", {class:"row ctl keyrow"}, h("div", {class:"tx"}, h("b", {text:ready(pid) ? "Connected" : "Not connected"}), h("span", {text:P.usage + ". Kept on this device and only sent to " + P.name + "."})), h("div", {class:"inrow keyin"}, key, show)),
+      h("div", {class:"row actions"}, st, h("div", {class:"btns"}, testBtn, saveBtn))));
     if (P.key) {
       const fst = h("div", {class:"status"});
       w.append(glabel("Models"), group(
-        h("div", {class:"field"}, h("div", {class:"btns"},
-          h("button", {class:"btn", type:"button", html:ic("refresh-cw") + "Find new models", onclick:async () => {
-            fst.className = "status"; fst.textContent = "Looking…";
-            const r = await discover(pid);
-            if (r.err) { fst.className = "status bad"; fst.textContent = "Couldn't load the list: " + r.err + "."; }
-            else { fst.className = "status good"; fst.textContent = r.added ? r.added + " new. Turn " + (r.added === 1 ? "it" : "them") + " on in Manage models." : "No new models. You have them all."; }
-          }}),
-          h("button", {class:"btn", type:"button", text:"Manage models", onclick:() => opts && opts.nav ? opts.nav("models", "manage") : manageModels()})), fst)));
-      w.append(h("div", {style:"padding-top:14px"}, h("button", {class:"btn danger block", type:"button", text:"Remove key", onclick:() => dialog({title:"Remove " + P.name + " key?", text:"Its models stop working until you add a key again.", ok:"Remove", danger:true, onOk:() => { delete S.keys[pid]; fixModels(); save(); renderChip(); note.text = ""; L.refresh(); }})})));
+        row({icon:"refresh-cw", title:"Find new models", sub:"Ask " + P.name + " for its latest list", chev:false, onclick:async () => {
+          fst.className = "status"; fst.textContent = "Looking...";
+          const r = await discover(pid);
+          if (r.err) { fst.className = "status bad"; fst.textContent = "Could not load the list: " + r.err + "."; }
+          else { fst.className = "status good"; fst.textContent = r.added ? r.added + " new. Turn " + (r.added === 1 ? "it" : "them") + " on in Manage models." : "No new models. You have them all."; }
+        }}),
+        row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose which of its models show in the picker", onclick:() => opts && opts.nav ? opts.nav("models", "manage") : manageModels()}),
+        row({icon:"trash-2", title:"Remove key", sub:"Its models stop working until you add a key again", danger:true, chev:false, onclick:() => dialog({title:"Remove " + P.name + " key?", text:"Its models stop working until you add a key again.", ok:"Remove", danger:true, onOk:() => { delete S.keys[pid]; fixModels(); save(); renderChip(); renderHeader(); if (!chat()) renderThread(); L.refresh(); }})})), fst);
     }
-    w.append(glabel("Get a free key"), group(h("div", {class:"field"},
-      h("ol", {class:"steps"}, ...P.steps.map(s => h("li", {text:s}))),
-      h("a", {class:"btn block", href:P.site, target:"_blank", rel:"noopener noreferrer", html:"Open " + esc(P.siteName) + ic("external-link")}))));
+    w.append(glabel("Get a free key"), group(h("div", {class:"field"}, h("ol", {class:"steps"}, ...P.steps.map(x => h("li", {text:x})))),
+      row({icon:"external-link", title:"Open " + P.siteName, sub:"Sign up and create a key, then paste it above", onclick:() => window.open(P.site, "_blank", "noopener,noreferrer"), chev:false})));
   };
   if (opts && opts.into) return inlineLayer(render, opts.into, opts.after);
   open("prov:" + pid, () => makePage(PROVIDERS[pid].name, render), swap);
@@ -2990,7 +3033,7 @@ function openLocal(swap, opts){
   const render = w => {
     if (inline) w.append(row({icon:"chevron-left", title:"All models", sub:"Back to models", onclick:() => go("home"), chev:false}));
     if (DESKTOP && !inline) w.append(glabel("On this PC"), group(row({icon:"cpu", title:"Models on this PC", sub:"Download and run models right here, offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()})), glabel("Other computers and servers"));
-    w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. It only needs to be on the same WiFi as this phone."));
+    w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. It only needs to be on the same network as this device."));
     if (S.conns.some(c => c.id !== "pc")) w.append(glabel("Your connections"), group(...S.conns.filter(c => c.id !== "pc").map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => go("conn:" + c.id)}))));
     w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Add a local model", onclick:() => go("conn:new")})));
     w.append(glabel("Not sure which model?"), group(row({icon:"cpu", title:"Which model fits my computer?", sub:"Picks based on your memory and graphics card", onclick:() => go("advisor")})));
@@ -3001,9 +3044,9 @@ function openLocal(swap, opts){
 function localTips(kind){
   const o = esc(location.origin);
   const common = "<li>When Chrome asks to let this site reach devices on your local network, tap Allow.</li>";
-  if (kind === "ollama") return `<li>Install Ollama on your computer and get a model, for example <span class="codechip">ollama pull llama3.2</span>.</li><li>Let this phone and this site reach it: set <span class="codechip">OLLAMA_HOST=0.0.0.0</span> and <span class="codechip">OLLAMA_ORIGINS=${o}</span>, then restart Ollama.</li><li>On this phone, use your computer's WiFi address with port 11434. On the computer itself, localhost works.</li>` + common;
-  if (kind === "lmstudio") return `<li>In LM Studio, open the Developer tab and start the server.</li><li>In its settings, turn on Enable CORS and Serve on Local Network.</li><li>On this phone, use your computer's WiFi address with port 1234.</li>` + common;
-  if (kind === "llamacpp") return `<li>Start llama server with <span class="codechip">--host 0.0.0.0</span> so other devices can reach it.</li><li>On this phone, use your computer's WiFi address with port 8080.</li>` + common;
+  if (kind === "ollama") return `<li>Install Ollama on your computer and get a model, for example <span class="codechip">ollama pull llama3.2</span>.</li><li>Let this device and this site reach it: set <span class="codechip">OLLAMA_HOST=0.0.0.0</span> and <span class="codechip">OLLAMA_ORIGINS=${o}</span>, then restart Ollama.</li><li>From another device, use your computer's WiFi address with port 11434. On the computer itself, localhost works.</li>` + common;
+  if (kind === "lmstudio") return `<li>In LM Studio, open the Developer tab and start the server.</li><li>In its settings, turn on Enable CORS and Serve on Local Network.</li><li>From another device, use your computer's WiFi address with port 1234.</li>` + common;
+  if (kind === "llamacpp") return `<li>Start llama server with <span class="codechip">--host 0.0.0.0</span> so other devices can reach it.</li><li>From another device, use your computer's WiFi address with port 8080.</li>` + common;
   return `<li>Any server with an OpenAI compatible API works. Its address usually ends in /v1.</li><li>The server must allow requests from <span class="codechip">${o}</span> (CORS).</li>` + common;
 }
 function normBase(v){
@@ -3058,7 +3101,7 @@ function openConn(id, swap, opts){
     if (!saved) w.append(glabel("App"), seg(kinds, draft.kind, pickKind));
     w.append(glabel("Connection"), group(
       h("div", {class:"field"}, h("label", {text:"Name"}), name),
-      h("div", {class:"field"}, h("label", {text:"Server address"}), base, h("small", {text:"On this phone, use your computer's WiFi address, like http://192.168.1.20:11434. Find it in your computer's network settings."})),
+      h("div", {class:"field"}, h("label", {text:"Server address"}), base, h("small", {text:"From another device, use your computer's WiFi address, like http://192.168.1.20:11434. Find it in your computer's network settings."})),
       h("div", {class:"field"}, h("label", {text:"API key, optional"}), key),
       h("div", {class:"field"}, h("div", {class:"btns"},
         h("button", {class:"btn primary", type:"button", text:saved ? "Save and test" : "Connect", onclick:() => connect(false)}),
@@ -3212,7 +3255,7 @@ if (SpeechRec && !(window.__TAURI__ && window.__TAURI__.core)) $("#micBtn").hidd
 $("#micBtn").onclick = () => {
   if (rec) { rec.stop(); return; }
   try {
-    rec = new SpeechRec(); rec.lang = navigator.language || "en-US"; rec.interimResults = true; rec.continuous = false;
+    rec = new SpeechRec(); rec.lang = S.sttLang || navigator.language || "en-US"; rec.interimResults = true; rec.continuous = false;
     const base = input.value ? input.value.replace(/\s+$/, "") + " " : "";
     rec.onresult = ev => { let t = ""; for (const r of ev.results) t += r[0].transcript; input.value = base + t; autosize(); syncSend(); };
     rec.onerror = ev => { if (ev.error === "not-allowed") toast("Allow the microphone to talk to Vesper"); };
@@ -3224,12 +3267,14 @@ $("#micBtn").onclick = () => {
 /* read aloud, on this device */
 function plainText(t){ return String(t).replace(/```[\s\S]*?```/g, " ").replace(/`([^`]+)`/g, "$1").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[#*_>~|]/g, "").replace(/\s+/g, " ").trim(); }
 function speak(text, btn){
-  const ss = window.speechSynthesis;
-  if (ss.speaking) { ss.cancel(); document.querySelectorAll(".act.on").forEach(b => b.classList.remove("on")); if (btn.dataset.speaking) { delete btn.dataset.speaking; return; } }
-  const u = new SpeechSynthesisUtterance(plainText(text));
-  u.onend = u.onerror = () => { btn.classList.remove("on"); delete btn.dataset.speaking; };
-  btn.classList.add("on"); btn.dataset.speaking = "1"; ss.speak(u);
+  const ss = window.speechSynthesis; if (!ss) return;
+  if (ss.speaking) { ss.cancel(); document.querySelectorAll(".act.on").forEach(b => b.classList.remove("on")); if (btn && btn.dataset.speaking) { delete btn.dataset.speaking; return; } }
+  const u = new SpeechSynthesisUtterance(plainText(text)); u.rate = S.rate || 1;
+  if (S.voice) { const v = ss.getVoices().find(x => x.voiceURI === S.voice); if (v) { u.voice = v; u.lang = v.lang; } }
+  if (btn) { u.onend = u.onerror = () => { btn.classList.remove("on"); delete btn.dataset.speaking; }; btn.classList.add("on"); btn.dataset.speaking = "1"; }
+  ss.speak(u);
 }
+function voiceList(){ const vs = window.speechSynthesis ? speechSynthesis.getVoices() : []; return [["", "System default"]].concat(vs.map(v => [v.voiceURI, v.name.replace(/^Microsoft /, "") + " (" + v.lang + ")"])); }
 
 /* share a chat as text */
 async function shareChat(c){
