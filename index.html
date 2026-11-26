@@ -227,6 +227,33 @@ body.dock .app,body.dock .page{margin-left:280px}
 body.dock .page{width:auto;left:0;right:0}
 body.dock #openDrawer{visibility:hidden}
 body.dock .d-new:hover,body.dock .ci:hover,body.dock .d-foot button:hover{background:var(--raised)}
+body.dock.side-off .drawer{transform:translateX(-100%);visibility:hidden}
+body.dock.side-off .app,body.dock.side-off .page{margin-left:0}
+/* desktop: sheets become centered dialogs */
+body.dock .sheet{top:50%;bottom:auto;max-height:min(80vh,720px);border:1px solid var(--line);border-radius:20px;opacity:0;transform:translateY(-48%) scale(.97)}
+body.dock .sheet.on{opacity:1;transform:translateY(-50%)}
+body.dock .sheet .grab{visibility:hidden;height:12px;padding:0}
+body.dock ::-webkit-scrollbar{width:10px;height:10px}
+body.dock ::-webkit-scrollbar-thumb{background:var(--raised-2);border-radius:10px;border:3px solid transparent;background-clip:padding-box}
+body.dock ::-webkit-scrollbar-track{background:transparent}
+/* Windows app: its own title bar, like a native desktop app */
+.titlebar{display:none}
+body.native .titlebar{display:flex;position:fixed;top:0;left:0;right:0;height:40px;z-index:200;align-items:center;user-select:none;-webkit-user-select:none;background:var(--bg)}
+body.native.dock:not(.side-off) .titlebar{background:linear-gradient(90deg,var(--surface) 279px,var(--line-soft) 279px 280px,var(--bg) 280px)}
+.titlebar .tb-drag{flex:1;height:100%}
+.titlebar .tb-btn{width:46px;height:40px;display:grid;place-items:center;color:var(--fg-soft);cursor:default;transition:background .12s}
+.titlebar .tb-btn:hover{background:rgba(255,255,255,.08)}
+.titlebar .tb-btn.x:hover{background:#c42b1c;color:#fff}
+.titlebar .tb-btn svg{width:16px;height:16px}
+.titlebar .tb-side{width:40px;height:32px;margin-left:6px;border-radius:8px}
+.titlebar .tb-brand{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:13px;font-weight:600;color:var(--fg-soft);pointer-events:none}
+.titlebar .tb-brand .logo-flat{width:16px;height:16px}
+body.native .app{height:calc(100dvh - 40px);margin-top:40px;padding-top:0}
+body.native .drawer,body.native .page{top:40px}
+body.native .drawer{padding-top:8px}
+body.native .d-brand{display:none}
+body.native button,body.native a,body.native .icon-btn{cursor:default}
+body.native .drawer,body.native .top,body.native .d-new,body.native .ci{user-select:none;-webkit-user-select:none}
 .grab{padding:10px 0 4px;display:grid;place-items:center;touch-action:none;cursor:grab}
 .grab i{width:38px;height:4px;border-radius:4px;background:var(--line)}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:2px 8px 6px 20px;touch-action:none}
@@ -556,6 +583,7 @@ select.input{appearance:none;background-image:none}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
   <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-panel-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 8h16"/><path d="M4 16h10"/></symbol>
   <symbol id="i-square-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
@@ -607,6 +635,14 @@ select.input{appearance:none;background-image:none}
   </defs>
 </svg>
 
+<div class="titlebar" id="titlebar" data-tauri-drag-region>
+  <button class="tb-btn tb-side" id="tbSide" type="button" aria-label="Show or hide the sidebar" title="Sidebar (Ctrl+B)"><svg aria-hidden="true"><use href="#i-panel-left"/></svg></button>
+  <div class="tb-brand" data-tauri-drag-region><i class="logo-flat" aria-hidden="true"></i>Vesper</div>
+  <div class="tb-drag" data-tauri-drag-region></div>
+  <button class="tb-btn" id="tbMin" type="button" aria-label="Minimize"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10" stroke="currentColor" stroke-width="1"/></svg></button>
+  <button class="tb-btn" id="tbMax" type="button" aria-label="Maximize"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3.5" width="9" height="9" rx="1" fill="none" stroke="currentColor" stroke-width="1"/></svg></button>
+  <button class="tb-btn x" id="tbClose" type="button" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1"/></svg></button>
+</div>
 <div class="app" id="app">
   <header class="top">
     <button class="icon-btn" id="openDrawer" aria-label="Open chats"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
@@ -1024,7 +1060,7 @@ function dragToClose(L, handles){
   let y0 = null, dy = 0, pid = null;
   handles.forEach(hd => {
     hd.addEventListener("pointerdown", e => {
-      if (e.target.closest("button") || stack[stack.length - 1] !== L || L.el.classList.contains("settling")) return;
+      if (docked() || e.target.closest("button") || stack[stack.length - 1] !== L || L.el.classList.contains("settling")) return;
       y0 = e.clientY; dy = 0; pid = e.pointerId; hd.setPointerCapture(pid); L.el.classList.add("dragging");
     });
     hd.addEventListener("pointermove", e => { if (y0 == null || e.pointerId !== pid) return; dy = Math.max(0, e.clientY - y0); L.el.style.transform = "translateY(" + dy + "px)"; });
@@ -1393,6 +1429,19 @@ function applyDock(){ const on = docked(); document.body.classList.toggle("dock"
   if (on) { const i = stack.indexOf(drawerL); if (i >= 0) { stack.splice(i, 1); drawerL.scrim.classList.remove("on"); } $("#drawer").removeAttribute("inert"); appEl.inert = stack.length > 0; renderDrawer(); }
   else if (!stack.includes(drawerL)) { if (drawerInHist) { stack.unshift(drawerL); showLayer(drawerL); } else $("#drawer").setAttribute("inert", ""); } }
 dockMQ.addEventListener("change", applyDock);
+function setSide(off){ S.sideOff = !!off; save(); document.body.classList.toggle("side-off", S.sideOff); }
+function toggleSide(){ if (docked()) setSide(!S.sideOff); else $("#openDrawer").click(); }
+document.body.classList.toggle("side-off", !!S.sideOff);
+$("#tbSide").onclick = toggleSide;
+// Keyboard shortcuts, like a desktop chat app
+addEventListener("keydown", e => {
+  const mod = e.ctrlKey || e.metaKey; if (!mod || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if ((k === "n" && DESKTOP) || (k === "o" && e.shiftKey)) { e.preventDefault(); newChat(); }
+  else if (k === "b" && !e.shiftKey) { e.preventDefault(); toggleSide(); }
+  else if (k === "k" && docked()) { e.preventDefault(); if (S.sideOff) setSide(false); $("#chatSearch").focus(); }
+  else if (k === ",") { e.preventDefault(); openSettings(); }
+});
 function dayGroup(t){
   const d = new Date(t), now = new Date();
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -2241,6 +2290,21 @@ function openAdvisor(){
 /* ---------- Windows app (Tauri): models that run on this PC ---------- */
 const TAURI = window.__TAURI__ || null;
 const DESKTOP = !!(TAURI && TAURI.core && TAURI.core.invoke);
+// Windows app: our own title bar with real window controls, and no web page context menu.
+if (DESKTOP) {
+  document.body.classList.add("native");
+  const W = TAURI.window && TAURI.window.getCurrentWindow ? TAURI.window.getCurrentWindow() : null;
+  if (W) {
+    const MAX = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3.5" width="9" height="9" rx="1" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
+    const RES = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="5.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1"/><path d="M5.5 5.5V4.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-1" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
+    $("#tbMin").onclick = () => W.minimize();
+    $("#tbMax").onclick = () => W.toggleMaximize();
+    $("#tbClose").onclick = () => W.close();
+    const sync = async () => { const m = await W.isMaximized().catch(() => false); $("#tbMax").innerHTML = m ? RES : MAX; $("#tbMax").setAttribute("aria-label", m ? "Restore" : "Maximize"); };
+    W.onResized(sync); sync();
+  }
+  addEventListener("contextmenu", e => { if (!e.target.closest("input,textarea,.thread")) e.preventDefault(); });
+}
 const invoke = (cmd, args) => TAURI.core.invoke(cmd, args || {});
 const HF = (repo, file) => "https://huggingface.co/" + repo + "/resolve/main/" + file + "?download=true";
 // Verified Q4 GGUF files on Hugging Face. gb is the download size.

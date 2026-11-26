@@ -1,10 +1,18 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "What the Vesper window may do: the core app features, events for download progress, and changing its own icon.",
-  "windows": ["main"],
+  "description": "What the Vesper window may do: the core app features, events for download progress, its own icon, and its own title bar controls (move, minimize, maximize, close).",
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
-    "core:window:allow-set-icon"
+    "core:window:allow-set-icon",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-internal-toggle-maximize",
+    "core:window:allow-is-maximized",
+    "core:window:allow-close",
+    "core:window:allow-start-dragging"
   ]
 }
