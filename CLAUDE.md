@@ -63,3 +63,4 @@ Vesper is a single file PWA chat app (`index.html`) served by GitHub Pages from 
 
 - Menus (`menu()`): a follow up menu (Use a skill from the plus menu) keeps the original button as its anchor, opens left aligned, and above the composer when the button is in it. Skill chip sits after the plus on the composer center line.
 - Full width on desktop: card pages (Learn, Characters, Library) fill the whole window (`.page-body:has(.lcards,.cgrid,.spg)`, grids auto fill), never a phone width column; the chat column and composer scale with the window (`--col`, 760 to 980 px).
+- Body zoom scales vh and dvh too, so heights that fill the window are divided by `--z` (set in `applyAccent()`): `.app{height:calc(100dvh / var(--z,1))}`. Never use plain 100vh or 100dvh for window sized layout. On desktop the composer (and the Studio prompt bar) is a frosted bar pinned to the bottom edge, never floating; messages scroll behind it.
