@@ -296,7 +296,7 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
 .hive button:hover{transform:scale(1.06);opacity:1!important}.hive button.on{opacity:1!important}
 .hive button.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--fg)}
-.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg{width:62%;height:62%}
+.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}.gav svg{width:74%;height:74%;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.18))}
 .avfoot{display:flex;align-items:center;gap:8px;padding:12px 4px 2px}.avfoot .sp{flex:1}
 .avfoot .btn{height:38px;padding:0 16px;font-size:14px}
 /* settings window: header, menu with search, flat rows */
@@ -2038,25 +2038,23 @@ function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " 
   else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
   return a; }
 async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
-// Avatars: bold, flat marks of our own, generated from a seed and set on soft muted colors.
-const AV_COLORS = ["#a5c9bc", "#d9a7b8", "#e7b79c", "#c9c5dd", "#e5a94a", "#7f8fa6", "#c97b5f", "#8fae7f", "#b8a07c", "#e3cfd7", "#6f9fc9", "#d36f5c", "#9a8fb8", "#4f7f6c", "#d8c9a8", "#b5655e"];
+// Avatars: the Vesper rosette, our own style. Curved blades around an open center, like the blades of our logo.
+// Each seed gives its own blade count, twist and size, in white on a soft two tone gradient.
+const AV_COLORS = ["#5b7fd6", "#7a68c9", "#b8608f", "#d07a5a", "#c99a45", "#4f9a82", "#3f8fa8", "#6b7487", "#a0705a", "#8c5e9e", "#5f8f6a", "#c76f78", "#4c6fa0", "#9a8456"];
 function rng(seed){ let x = seed >>> 0 || 1; return () => { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; return ((x >>> 0) % 10000) / 10000; }; }
 function avShape(seed){
-  const r = rng(seed), fam = Math.floor(r() * 8), f = v => +v.toFixed(2), rot = (a, el) => el.replace("/>", ' transform="rotate(' + a + ' 12 12)"/>');
-  if (fam === 0) { const n = [3, 4, 6][Math.floor(r() * 3)], d = 4.2, rr = n === 6 ? 3.2 : 4.4; let o = ""; for (let k = 0; k < n; k++) o += rot(k * 360 / n, '<circle cx="12" cy="' + f(12 - d) + '" r="' + rr + '"/>'); return o + (r() > .5 ? '<circle cx="12" cy="12" r="' + (n === 6 ? 3.4 : 2.6) + '"/>' : ""); }
-  if (fam === 1) { const t = 6 + r() * 2.2, c = t * .35; return '<rect x="' + f(12 - t / 2) + '" y="3.5" width="' + f(t) + '" height="17" rx="' + f(c) + '"/><rect x="3.5" y="' + f(12 - t / 2) + '" width="17" height="' + f(t) + '" rx="' + f(c) + '"/>'; }
-  if (fam === 2) { const n = 2 + Math.floor(r() * 2), w = 16 / n; let o = '<path d="M4 20'; for (let k = 0; k < n; k++) o += 'V' + f(20 - (k + 1) * (16 / n)) + 'H' + f(4 + (k + 1) * w); return o + 'V20Z"/>'; }
-  if (fam === 3) { const n = 2 + Math.floor(r() * 2), hh = n === 2 ? 5.5 : 4, g = (16 - n * hh) / (n - 1); let o = ""; for (let k = 0; k < n; k++) { const w = 16 - (k % 2) * (4 + r() * 4); o += '<rect x="' + f(12 - w / 2) + '" y="' + f(4 + k * (hh + g)) + '" width="' + f(w) + '" height="' + hh + '" rx="' + f(hh / 2) + '"/>'; } return o; }
-  if (fam === 4) { const n = r() > .5 ? 2 : 3, gap = 16 / n, rr = n === 2 ? 3.6 : 2.5; let o = ""; for (let a = 0; a < n; a++) for (let b = 0; b < n; b++) o += '<circle cx="' + f(4 + gap / 2 + a * gap) + '" cy="' + f(4 + gap / 2 + b * gap) + '" r="' + rr + '"/>'; return o; }
-  if (fam === 5) { const n = [6, 8][Math.floor(r() * 2)]; let o = '<g stroke="currentColor" stroke-width="2.6" stroke-linecap="round">'; for (let k = 0; k < n; k++) o += rot(k * 360 / n, '<path d="M12 12V4"/>'); return o + '</g><circle cx="12" cy="12" r="3"/>' + (r() > .5 ? Array.from({length:n}, (_, k) => rot(k * 360 / n, '<circle cx="12" cy="4" r="2"/>')).join("") : ""); }
-  if (fam === 6) { const cut = r() > .5; return '<path fill-rule="evenodd" d="M12 3.5a8.5 8.5 0 1 1 0 17a8.5 8.5 0 0 1 0-17Zm0 ' + (cut ? '4.5a4 4 0 1 0 0 8a4 4 0 0 0 0-8Z' : '5a3 3 0 1 0 0 6a3 3 0 0 0 0-6Z') + '"/>' + (cut ? '<rect x="10.4" y="2" width="3.2" height="8" fill="currentColor" opacity="0"/>' : ""); }
-  const k = 4 + Math.floor(r() * 2) * 2, R = 8.5, rin = 4.2; let pts = []; for (let i = 0; i < k * 2; i++) { const a = Math.PI * i / k - Math.PI / 2, rad = i % 2 ? rin : R; pts.push(f(12 + rad * Math.cos(a)) + " " + f(12 + rad * Math.sin(a))); }
-  return '<path stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M' + pts.join("L") + 'Z"/>';
+  const r = rng(seed), n = 3 + Math.floor(r() * 5), R = 9.6 + r() * 1.2, r0 = 1.4 + r() * 1.4, tw = .45 + r() * .55, span = (Math.PI * 2 / n) * (.55 + r() * .25), rot = r() * Math.PI * 2;
+  const P = (rad, a) => (12 + rad * Math.cos(a)).toFixed(2) + " " + (12 + rad * Math.sin(a)).toFixed(2);
+  let o = "";
+  for (let k = 0; k < n; k++) { const a = rot + k * Math.PI * 2 / n;
+    o += '<path d="M' + P(r0, a) + "Q" + P(R * .78, a - .1) + " " + P(R, a + tw) + "Q" + P(R * .62, a + span + tw * .5) + " " + P(r0, a + span) + 'Z"/>'; }
+  return o;
 }
 function lightColor(hex){ const n = parseInt(hex.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; }
+function shade(hex, k){ const n = parseInt(hex.slice(1), 16), f = v => Math.max(0, Math.min(255, Math.round(v * k))); return "rgb(" + f(n >> 16) + "," + f((n >> 8) & 255) + "," + f(n & 255) + ")"; }
 function genAvatar(g, c, size){
-  const col = AV_COLORS[c % AV_COLORS.length], fg = lightColor(col) ? "#151515" : "#ffffff";
-  const el = h("span", {class:"gav", style:"background:" + col + ";color:" + fg + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
+  const col = AV_COLORS[c % AV_COLORS.length];
+  const el = h("span", {class:"gav", style:"background:linear-gradient(145deg," + shade(col, 1.18) + "," + shade(col, .62) + ");color:#fff" + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
   el.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + avShape(g) + '</svg>';
   return el; }
 let avFile = null;
