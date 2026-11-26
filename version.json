@@ -1,8 +1,9 @@
 {
- "version": "3.6",
+ "version": "3.7",
  "notes": [
-  "Every Settings section is back in the menu",
-  "Provider and model rows still open in the right pane, not over Settings",
-  "Same theme colors across the app"
+  "Agent and Code are real workspaces with the same chat composer",
+  "Agent has a goal, collapsible mind map and timeline on the right",
+  "Code has a local editor with files, line numbers and an Open in editor button",
+  "Both right panels collapse when you need more chat space"
  ]
 }

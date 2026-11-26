@@ -67,7 +67,7 @@ svg{display:block}
   padding-left:max(4px,env(safe-area-inset-left,0px));padding-right:max(4px,env(safe-area-inset-right,0px))}
 .top-center{display:flex;justify-content:center;min-width:0}
 .tbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border-radius:9px}.tbtn:hover{background:var(--raised)}.tbtn .ic{width:14px;height:14px;color:var(--muted)}.tbtn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.top-title{font-size:15px;font-weight:600;color:var(--fg-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.top-title{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--fg-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.top-title .ic{width:17px;height:17px;color:var(--accent)}
 .priv{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border-radius:999px;background:var(--raised);font-size:13.5px;font-weight:500;color:var(--fg-soft)}
 .priv .ic{width:16px;height:16px;color:var(--accent)}
 .icon-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--fg-soft);transition:background .15s,color .15s}
@@ -101,10 +101,11 @@ svg{display:block}
 .answer th,.answer td{border:1px solid var(--line);padding:7px 11px;text-align:left}
 .answer th{font-weight:600;background:var(--surface)}
 .code{margin:0 0 .9em;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
-.code-head{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 14px;border-bottom:1px solid var(--line-soft);font-size:12.5px;color:var(--muted)}
-.code-copy{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:8px;font-size:12.5px;color:var(--muted)}
-.code-copy .ic{width:14px;height:14px}
-.code-copy:active{background:var(--raised);color:var(--fg)}
+.code-head{display:flex;align-items:center;gap:6px;padding:4px 6px 4px 14px;border-bottom:1px solid var(--line-soft);font-size:12.5px;color:var(--muted)}
+.code-head>span{margin-right:auto}
+.code-copy,.code-edit{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:8px;font-size:12.5px;color:var(--muted)}
+.code-copy .ic,.code-edit .ic{width:14px;height:14px}
+.code-copy:active,.code-edit:active,.code-copy:hover,.code-edit:hover{background:var(--raised);color:var(--fg)}
 
 .acts{display:flex;align-items:center;gap:2px;margin-left:-8px;min-height:34px}
 .msg.user .acts{margin:0 -6px 0 0;height:0;min-height:0;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -358,14 +359,49 @@ body.dock.tinted .page.modal,body.tinted .page.modal .pfoot,body.tinted .ihead{b
 .spaces{display:flex;gap:2px;padding:3px;margin:0 2px 10px;border-radius:12px;background:var(--raised)}
 .spaces button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:32px;border-radius:9px;font-size:13.5px;color:var(--muted)}
 .spaces button .ic{width:16px;height:16px}.spaces button.on{background:var(--raised-2);color:var(--fg)}.spaces button:hover:not(.on){color:var(--fg-soft)}
-body:not([data-space="chat"]) #thread,body:not([data-space="chat"]) .composer-wrap,body:not([data-space="chat"]) #topCenter,body:not([data-space="chat"]) #topRight{display:none}
-.spaceview{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
-.spaceview .sv{max-width:520px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
-.sv .svi{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--raised);color:var(--accent)}.sv .svi .ic{width:28px;height:28px}
-.sv h2{margin:6px 0 0;font-size:26px;font-weight:600;letter-spacing:-.02em}.sv p{margin:0;color:var(--muted);font-size:15px;line-height:1.55}
-.sv ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;text-align:left}
-.sv li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--fg-soft)}.sv li .ic{width:17px;height:17px;color:var(--accent)}
-.sv .chip{margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+body[data-space="agent"] .app,body[data-space="code"] .app{display:grid;grid-template-columns:minmax(0,1fr) var(--space-w,420px);grid-template-rows:auto minmax(0,1fr) auto}
+body[data-space="agent"] .app>.top,body[data-space="code"] .app>.top{grid-column:1/-1;grid-row:1}
+body[data-space="agent"] .app>.thread,body[data-space="code"] .app>.thread{grid-column:1;grid-row:2;min-width:0}
+body[data-space="agent"] .app>.composer-wrap,body[data-space="code"] .app>.composer-wrap{grid-column:1;grid-row:3;min-width:0}
+body[data-space="code"] .app{--space-w:520px}
+body.space-collapsed[data-space="agent"] .app,body.space-collapsed[data-space="code"] .app{--space-w:44px}
+body.space-collapsed .spaceview .sp-body,body.space-collapsed .spaceview .sp-head .sp-tx{display:none}
+.spaceview{min-width:0;display:flex;flex-direction:column;overflow:hidden;background:var(--surface);border-left:1px solid var(--line-soft)}
+body.space-collapsed .spaceview{align-items:center}
+.sp-head{flex:0 0 auto;display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 12px;border-bottom:1px solid var(--line-soft)}
+.sp-head .sp-tx{flex:1;min-width:0}.sp-head b{display:block;font-size:15px;font-weight:600}.sp-head span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-body{flex:1;min-height:0;overflow:auto;padding:14px 14px max(20px,env(safe-area-inset-bottom,0px))}
+.sp-sec{margin:0 0 18px}.sp-sec>h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.sp-card{border:1px solid var(--line-soft);border-radius:14px;background:var(--raised);padding:12px}
+.sp-card p{margin:0;font-size:14px;line-height:1.5;color:var(--fg-soft);white-space:pre-wrap;overflow-wrap:anywhere}
+.sp-empty{font-size:13.5px;color:var(--muted);line-height:1.5}
+.sp-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sp-btns .btn{flex:1;min-width:110px}
+.mind{display:flex;flex-direction:column;gap:4px}
+.mnode{border-left:1px solid var(--line);padding-left:12px;margin-left:6px}
+.mnode>.msum{display:flex;align-items:flex-start;gap:8px;min-height:38px;padding:7px 8px;border-radius:10px;cursor:pointer;list-style:none;font-size:14px;color:var(--fg-soft)}
+.mnode>.msum::-webkit-details-marker{display:none}.mnode>.msum:hover{background:var(--raised)}
+.mnode>.msum .ic{width:15px;height:15px;margin-top:3px;color:var(--muted);transition:transform .15s}
+.mnode[open]>.msum>.ic.chev{transform:rotate(90deg)}
+.mdot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:0 0 auto;background:var(--faint)}
+.mdot.doing{background:var(--accent)}.mdot.done{background:var(--ok)}
+.mtext{flex:1;min-width:0;overflow-wrap:anywhere}.mtext small{display:block;color:var(--muted);font-size:12px}
+.macts{display:flex;gap:2px;flex:0 0 auto}.macts button{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:var(--muted)}.macts button:hover{background:var(--raised-2);color:var(--fg)}
+.macts .ic{width:15px;height:15px;margin:0;color:inherit}
+.mbody{padding:2px 0 8px 8px}
+.tl-item{border-left:1px solid var(--line);padding:0 0 8px 14px;margin-left:6px}
+.tl-item summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--fg-soft);min-height:30px}
+.tl-item summary::-webkit-details-marker{display:none}.tl-item summary time{margin-left:auto;font-size:11.5px;color:var(--faint)}
+.tl-item p{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.filetabs{flex:0 0 auto;display:flex;gap:2px;overflow-x:auto;padding:6px 8px;border-bottom:1px solid var(--line-soft)}
+.filetabs button{flex:0 0 auto;padding:6px 10px;border-radius:8px;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.filetabs button.on{background:var(--raised-2);color:var(--fg)}
+.codetop{flex:0 0 auto;display:flex;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line-soft);overflow-x:auto}
+.codetop .btn{height:32px;padding:0 10px;font-size:12.5px;flex:0 0 auto}
+.codearea{flex:1;min-height:0;display:flex;overflow:hidden;background:var(--bg)}
+.gutter{flex:0 0 auto;width:42px;padding:10px 8px 10px 0;text-align:right;font-family:var(--mono);font-size:12.5px;line-height:20px;color:var(--faint);border-right:1px solid var(--line-soft);overflow:hidden;user-select:none}
+.codearea textarea{flex:1;min-width:0;resize:none;border:0;outline:0;background:none;padding:10px 12px;font-family:var(--mono);font-size:12.5px;line-height:20px;color:var(--fg);white-space:pre;overflow:auto;tab-size:2}
+.codefoot{flex:0 0 auto;padding:8px 12px;border-top:1px solid var(--line-soft);font-size:12px;color:var(--muted)}
 /* details panel */
 .insp{display:none}
 body.insp-on .insp{display:block;position:fixed;right:0;top:0;bottom:0;width:var(--insp-w,320px);z-index:25;background:var(--surface);border-left:1px solid var(--line-soft);overflow-y:auto}
@@ -1140,6 +1176,14 @@ function load(){
   s.sideOrder = ["recent", "name", "oldest"].includes(s.sideOrder) ? s.sideOrder : "recent";
   s.ideas = s.ideas !== false;
   s.showProviders = s.showProviders === true;
+  s.spaceCollapsed = s.spaceCollapsed === true;
+  s.agent = s.agent && typeof s.agent === "object" ? s.agent : {};
+  s.agent.goal = String(s.agent.goal || "");
+  s.agent.steps = Array.isArray(s.agent.steps) ? s.agent.steps.filter(x => x && x.text).slice(0, 60) : [];
+  s.agent.steps.forEach((x, i) => { x.id = String(x.id || "s" + i + "-" + Date.now()); x.text = String(x.text).slice(0, 300); x.status = ["todo", "doing", "done"].includes(x.status) ? x.status : "todo"; x.note = String(x.note || "").slice(0, 2000); x.at = +x.at || Date.now(); x.open = x.open !== false; });
+  s.agent.awaiting = s.agent.awaiting === true;
+  s.codeFiles = Array.isArray(s.codeFiles) && s.codeFiles.length ? s.codeFiles.filter(x => x && x.name).slice(0, 40).map(x => ({name:String(x.name).slice(0, 80), content:String(x.content || "")})) : [{name:"main.js", content:"// Write code here, or open a code block from a reply.\n"}];
+  s.codeActive = s.codeFiles.some(f => f.name === s.codeActive) ? s.codeActive : s.codeFiles[0].name;
   s.waitlist = s.waitlist && typeof s.waitlist === "object" ? s.waitlist : {};
   s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","night","geo","organic","mono","ocean","cream","sage","paper","sky","blush","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"none", dim:35};
   s.companions = Array.isArray(s.companions) ? s.companions.filter(x => x && x.id && x.name) : [];
@@ -1299,7 +1343,9 @@ function decorate(el){
     const code = pre.querySelector("code");
     const lang = code && (code.className.match(/language-([\w+#.]+)/) || [])[1];
     const box = h("div", {class:"code"});
-    const head = h("div", {class:"code-head"}, h("span", {text:lang || "code"}), h("button", {class:"code-copy", type:"button", html:ic("copy") + "<span>Copy</span>"}));
+    const head = h("div", {class:"code-head"}, h("span", {text:lang || "code"}),
+      h("button", {class:"code-copy", type:"button", html:ic("copy") + "<span>Copy</span>"}),
+      h("button", {class:"code-edit", type:"button", html:ic("code") + "<span>Open in editor</span>"}));
     pre.replaceWith(box); box.append(head, pre);
   });
 }
@@ -1486,6 +1532,15 @@ function greeting(){
 function refreshMain(){ renderHeader(); renderThread(); renderChip(); syncSend(); if (docked()) renderDrawer(); renderInsp(); }
 function renderHeader(){
   const c = chat(); const empty = !c || !c.messages.length;
+  const sp = S.space || "chat";
+  if (sp !== "chat") {
+    const center = $("#topCenter"); center.innerHTML = "";
+    center.append(h("span", {class:"top-title", html:ic(sp === "agent" ? "robot" : "code") + "<span>" + (sp === "agent" ? "Agent" : "Code") + "</span>"}));
+    input.placeholder = sp === "code" ? "Ask about this code" : "Describe the goal";
+    const right = $("#topRight"); right.innerHTML = "";
+    right.append(h("button", {class:"icon-btn flip" + (S.spaceCollapsed ? "" : " on"), type:"button", "aria-label":"Toggle workspace panel", title:"Toggle workspace panel", onclick:toggleSpacePanel, html:ic("panel-left")}));
+    return;
+  }
   const center = $("#topCenter"); center.innerHTML = "";
   const k = c && c.companion ? compById(c.companion) : null;
   if (privateMode) center.append(h("span", {class:"priv", html:ic("ghost") + "<span>Private chat</span>"}));
@@ -1605,6 +1660,8 @@ function reasonEl(text, secs, isLive){
   return d;
 }
 inner.addEventListener("click", e => {
+  const ed = e.target.closest(".code-edit");
+  if (ed) { openCodeBlock(ed.closest(".code").querySelector("pre").innerText, ed.closest(".code").querySelector(".code-head span").textContent); return; }
   const b = e.target.closest(".code-copy"); if (!b) return;
   copyText(b.closest(".code").querySelector("pre").innerText);
 });
@@ -1811,6 +1868,13 @@ async function generate(){
   busy = false; busyChat = null; controller = null; live = null;
   c.updated = Date.now(); save(); syncSend(); inspTick();
   if (chat() === c) renderThread(true);
+  if (S.agent.awaiting) {
+    S.agent.awaiting = false;
+    const lastA = [...c.messages].reverse().find(m => m.role === "assistant" && !m.error);
+    const lines = lastA ? String(lastA.content).split("\n").map(x => x.replace(/^\s*(?:[-*]|\d+[.)])\s*/, "").trim()).filter(x => x.length > 3 && x.length < 220).slice(0, 12) : [];
+    if (lines.length) { lines.forEach((t, i) => S.agent.steps.push({id:"s" + Date.now() + i + Math.random().toString(36).slice(2, 6), text:t, parent:null, status:"todo", note:"", at:Date.now() + i, open:true})); toast("Plan added to the agent board"); }
+    save(); if (S.space === "agent") renderSpace();
+  }
   if (queued.length) { const q = queued.shift(); if (!q.chat || (chat() && chat().id === q.chat)) { input.value = q.text; pending = q.pending; renderAttach(); submit(); } }
 }
 
@@ -1899,11 +1963,83 @@ function applyDock(){ const on = docked(); document.body.classList.toggle("dock"
   if (on) { const i = stack.indexOf(drawerL); if (i >= 0) { stack.splice(i, 1); drawerL.scrim.classList.remove("on"); } $("#drawer").removeAttribute("inert"); appEl.inert = stack.length > 0; renderDrawer(); }
   else if (!stack.includes(drawerL)) { if (drawerInHist) { stack.unshift(drawerL); showLayer(drawerL); } else $("#drawer").setAttribute("inert", ""); } }
 dockMQ.addEventListener("change", () => { applyDock(); applyAccent(); renderInsp(); renderHeader(); });
-// Workspaces: Chat works today; Agent and Code are the next big features and say so honestly.
-const SPACES = {
-  agent:{icon:"robot", title:"Agent", text:"Give Vesper a goal. It plans the steps, uses tools and checks its work, asking before anything changes.", items:["Plans and runs multi step tasks", "Uses the web, your files and your apps", "Asks for your approval at each step"]},
-  code:{icon:"code", title:"Code", text:"Open a folder and build with Vesper. It reads your project, edits files and runs commands, only with your approval.", items:["A built in code editor", "Works with local or cloud models", "Every change shown before it is saved"]}
-};
+// Workspaces: Chat, Agent and Code share the same composer and chat thread. The right panel changes with the space.
+const SPACES = {agent:{icon:"robot", title:"Agent"}, code:{icon:"code", title:"Code"}};
+function toggleSpacePanel(){ S.spaceCollapsed = !S.spaceCollapsed; save(); document.body.classList.toggle("space-collapsed", S.spaceCollapsed); renderHeader(); }
+const spaceHead = (title, sub) => h("div", {class:"sp-head"}, h("div", {class:"sp-tx"}, h("b", {text:title}), h("span", {text:sub})),
+  h("button", {class:"icon-btn flip", type:"button", "aria-label":"Collapse workspace panel", title:"Collapse panel", onclick:toggleSpacePanel, html:ic("panel-left")}));
+function setAgentGoal(){ dialog({title:"Set the goal", input:S.agent.goal, placeholder:"What should the agent work toward?", ok:"Save", onOk:v => { v = (v || "").trim().slice(0, 600); if (!v) return; S.agent.goal = v; save(); renderSpace(); }}); }
+function agentAddStep(parent){ dialog({title:parent ? "Add a substep" : "Add a step", input:"", placeholder:"One clear action", ok:"Add", onOk:v => { v = (v || "").trim().slice(0, 300); if (!v) return;
+  S.agent.steps.push({id:"s" + Date.now() + Math.random().toString(36).slice(2, 6), text:v, parent:parent || null, status:"todo", note:"", at:Date.now(), open:true}); save(); renderSpace(); }}); }
+function agentCycle(s){ s.status = s.status === "todo" ? "doing" : s.status === "doing" ? "done" : "todo"; s.at = Date.now(); save(); renderSpace(); }
+function agentEdit(s){ dialog({title:"Edit step", input:s.text, ok:"Save", onOk:v => { v = (v || "").trim().slice(0, 300); if (!v) return; s.text = v; save(); renderSpace(); }}); }
+function agentNote(s){ dialog({title:"Note for this step", input:s.note, placeholder:"What happened, what is next", ok:"Save", onOk:v => { s.note = (v || "").slice(0, 2000); s.at = Date.now(); save(); renderSpace(); }}); }
+function agentNode(s, depth){
+  const d = h("details", {class:"mnode", open:s.open});
+  const acts = h("span", {class:"macts"},
+    h("button", {type:"button", "aria-label":"Change status of " + s.text, title:"Change status", html:ic("circle-check"), onclick:e => { e.preventDefault(); e.stopPropagation(); agentCycle(s); }}),
+    h("button", {type:"button", "aria-label":"Edit " + s.text, title:"Edit step", html:ic("pencil"), onclick:e => { e.preventDefault(); e.stopPropagation(); agentEdit(s); }}),
+    h("button", {type:"button", "aria-label":"Delete " + s.text, title:"Delete step", html:ic("trash-2"), onclick:e => { e.preventDefault(); e.stopPropagation(); S.agent.steps = S.agent.steps.filter(x => x !== s && x.parent !== s.id); save(); renderSpace(); }}));
+  const sum = h("summary", {class:"msum"}, h("i", {class:"ic chev", html:ic("chevron-right")}), h("i", {class:"mdot " + s.status}), h("span", {class:"mtext"}, h("span", {text:s.text}), h("small", {text:s.status === "done" ? "Done" : s.status === "doing" ? "In progress" : "Planned"})), acts);
+  const kids = S.agent.steps.filter(x => x.parent === s.id);
+  const body = h("div", {class:"mbody"}, h("p", {class:"sp-empty", text:s.note || "No note yet."}),
+    h("div", {class:"sp-btns"}, h("button", {class:"btn", type:"button", text:"Add note", onclick:() => agentNote(s)}), h("button", {class:"btn", type:"button", text:"Add substep", onclick:() => agentAddStep(s.id)})),
+    ...kids.map(k => agentNode(k, depth + 1)));
+  d.append(sum, body);
+  d.addEventListener("toggle", () => { s.open = d.open; save(); });
+  return d;
+}
+function askAgentPlan(){
+  if (!S.agent.goal.trim()) { setAgentGoal(); return; }
+  S.agent.awaiting = true; save();
+  input.value = "Make a short step by step plan for this goal: " + S.agent.goal + ". Number each step on its own line. Do not run anything.";
+  autosize(); syncSend(); submit(); toast("Asking Vesper for a plan");
+}
+function renderAgentPanel(v){
+  const body = h("div", {class:"sp-body"});
+  v.append(spaceHead("Agent board", "Goal, mind map and timeline"), body);
+  const goal = h("div", {class:"sp-sec"}, h("h4", {text:"Goal"}), h("div", {class:"sp-card"},
+    h("p", {text:S.agent.goal || "No goal yet. Set one, then ask Vesper for a plan."}),
+    h("div", {class:"sp-btns"}, h("button", {class:"btn", type:"button", text:S.agent.goal ? "Edit goal" : "Set goal", onclick:setAgentGoal}), h("button", {class:"btn primary", type:"button", text:"Ask for a plan", onclick:askAgentPlan}))));
+  body.append(goal);
+  const roots = S.agent.steps.filter(s => !s.parent);
+  const mind = h("div", {class:"sp-sec"}, h("h4", {text:"Mind map"}));
+  mind.append(roots.length ? h("div", {class:"mind"}, ...roots.map(s => agentNode(s, 0))) : h("div", {class:"sp-empty", text:"The plan shows here as steps. Expand a step to see its notes and substeps."}));
+  body.append(mind);
+  const tl = h("div", {class:"sp-sec"}, h("h4", {text:"Timeline"}));
+  if (!S.agent.steps.length) tl.append(h("div", {class:"sp-empty", text:"Step activity and times show here."}));
+  else tl.append(...S.agent.steps.slice().sort((a, b) => a.at - b.at).map(s => h("details", {class:"tl-item", open:s.open},
+    h("summary", {}, h("span", {text:s.text}), h("time", {text:stamp(s.at)})), h("p", {text:s.note || "No note yet. Add one from the mind map."}))));
+  body.append(tl, h("div", {class:"sp-btns"}, h("button", {class:"btn block", type:"button", text:"Add a step", onclick:() => agentAddStep(null)})));
+}
+function activeFile(){ return S.codeFiles.find(f => f.name === S.codeActive) || S.codeFiles[0]; }
+function addCodeFile(name, content){
+  name = (name || "").trim().slice(0, 80) || "untitled.txt";
+  const old = S.codeFiles.find(f => f.name === name); if (old) old.content = content || ""; else S.codeFiles.push({name:name, content:content || ""});
+  S.codeActive = name; save(); setSpace("code"); renderSpace(); toast(old ? "Updated " + name : "Added " + name);
+}
+function newCodeFile(){ dialog({title:"New file", input:"", placeholder:"main.py", ok:"Create", onOk:v => { const n = (v || "").trim(); if (!n) return; if (S.codeFiles.some(f => f.name === n)) { toast("That file already exists"); return; } S.codeFiles.push({name:n.slice(0, 80), content:""}); S.codeActive = n.slice(0, 80); save(); renderSpace(); }}); }
+function openCodeBlock(code, lang){ const ext = ({javascript:"js", typescript:"ts", python:"py", html:"html", css:"css", json:"json", bash:"sh"})[lang || ""] || "txt"; addCodeFile("snippet." + ext, code); }
+function renderCodePanel(v){
+  const f = activeFile(), body = h("div", {class:"sp-body", style:"display:flex;flex-direction:column;padding:0;overflow:hidden"});
+  v.append(spaceHead("Code editor", f ? f.name : "No file open"), body);
+  const tabs = h("div", {class:"filetabs"}, ...S.codeFiles.map(x => h("button", {type:"button", class:x.name === S.codeActive ? "on" : "", text:x.name, onclick:() => { S.codeActive = x.name; save(); renderSpace(); }})),
+    h("button", {type:"button", "aria-label":"New file", title:"New file", html:ic("plus"), onclick:newCodeFile}));
+  const gutter = h("div", {class:"gutter"}), ta = h("textarea", {spellcheck:"false", autocapitalize:"off", autocomplete:"off", "aria-label":"Code editor"});
+  const paint = () => { gutter.textContent = Array.from({length:Math.max(1, ta.value.split("\n").length)}, (_, i) => i + 1).join("\n"); };
+  ta.value = f ? f.content : ""; ta.addEventListener("input", () => { if (f) { f.content = ta.value; save(); } paint(); });
+  ta.addEventListener("scroll", () => { gutter.scrollTop = ta.scrollTop; });
+  ta.addEventListener("keydown", e => { if (e.key !== "Tab") return; e.preventDefault(); const a = ta.selectionStart, b = ta.selectionEnd; ta.value = ta.value.slice(0, a) + "  " + ta.value.slice(b); ta.selectionStart = ta.selectionEnd = a + 2; ta.dispatchEvent(new Event("input")); });
+  const top = h("div", {class:"codetop"},
+    h("button", {class:"btn", type:"button", text:"New file", onclick:newCodeFile}),
+    h("button", {class:"btn", type:"button", text:"Rename", onclick:() => f && dialog({title:"Rename file", input:f.name, ok:"Save", onOk:n => { n = (n || "").trim().slice(0, 80); if (!n || S.codeFiles.some(x => x !== f && x.name === n)) return; f.name = n; S.codeActive = n; save(); renderSpace(); }})}),
+    h("button", {class:"btn", type:"button", text:"Copy", onclick:() => copyText(ta.value)}),
+    h("button", {class:"btn", type:"button", text:"Download", onclick:() => { const a = h("a", {href:URL.createObjectURL(new Blob([ta.value], {type:"text/plain"})), download:f ? f.name : "vesper.txt"}); document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); }}),
+    h("button", {class:"btn", type:"button", text:"Ask Vesper", onclick:() => { input.value = "Look at " + (f ? f.name : "this file") + ":\n```\n" + ta.value.slice(0, 6000) + "\n```\n"; autosize(); syncSend(); toast("File added to the message box"); }}),
+    f ? h("button", {class:"btn danger", type:"button", text:"Delete", onclick:() => dialog({title:"Delete " + f.name + "?", text:"This file is removed from this browser.", ok:"Delete", danger:true, onOk:() => { S.codeFiles = S.codeFiles.filter(x => x !== f); S.codeActive = S.codeFiles[0] ? S.codeFiles[0].name : ""; if (!S.codeFiles.length) S.codeFiles = [{name:"main.js", content:""}], S.codeActive = "main.js"; save(); renderSpace(); }})}) : null);
+  body.append(tabs, top, h("div", {class:"codearea"}, gutter, ta), h("div", {class:"codefoot", text:"Saved in this browser. Open a code block from a reply with its Open in editor button."}));
+  paint();
+}
 function setSpace(id){ S.space = SPACES[id] ? id : "chat"; S.lastSpace = S.space; save(); renderSpace(); }
 function setLayout(v){
   S.layout = v;
@@ -1924,11 +2060,13 @@ function applyWriting(){
   i.style.whiteSpace = S.wrap === false ? "pre" : "";
 }
 function renderSpace(){
-  const sp = S.space || "chat", v = $("#spaceView"); document.body.dataset.space = sp; renderInsp();
+  const sp = S.space || "chat", v = $("#spaceView"), d = SPACES[sp];
+  document.body.dataset.space = d ? sp : "chat";
+  document.body.classList.toggle("space-collapsed", !!S.spaceCollapsed);
   document.querySelectorAll(".spaces button").forEach(b => { const on = b.dataset.space === sp; b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on)); });
-  v.hidden = sp === "chat"; v.innerHTML = ""; if (sp === "chat") return;
-  const d = SPACES[sp];
-  v.append(h("div", {class:"sv"}, h("div", {class:"svi", html:ic(d.icon)}), h("h2", {text:d.title}), h("p", {text:d.text}), h("ul", {}, ...d.items.map(t => h("li", {html:ic("circle-check") + "<span>" + esc(t) + "</span>"}))), h("span", {class:"chip", text:"In development"})));
+  v.hidden = !d; v.innerHTML = ""; renderInsp(); renderHeader();
+  if (!d) return;
+  if (sp === "agent") renderAgentPanel(v); else renderCodePanel(v);
 }
 document.querySelectorAll(".spaces button").forEach(b => b.onclick = () => setSpace(b.dataset.space));
 function setSide(off){ S.sideOff = !!off; save(); document.body.classList.toggle("side-off", S.sideOff); }
@@ -3328,7 +3466,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "3.6";
+const APP_VERSION = "3.7";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
