@@ -1,9 +1,9 @@
 {
- "version": "3.3",
+ "version": "3.4",
  "notes": [
-  "Settings now covers every app preference in one place",
-  "Characters, Learn and Studio fill the screen on desktop",
-  "Live Characters is gone",
-  "Fixes for model discovery, menus, Studio and token counts"
+  "More Settings detail for timeline, notifications, sounds and providers",
+  "Shortcut search and a reset option",
+  "Pairing and screen wake controls for local models",
+  "All earlier Settings and full screen work"
  ]
 }

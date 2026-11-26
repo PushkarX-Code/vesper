@@ -43,6 +43,15 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
 body.calm{--d:1ms}
 body.calm *,body.calm *::before,body.calm *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+body.mono-menlo{--mono:Menlo,Monaco,Consolas,monospace}
+body.mono-consolas{--mono:Consolas,"Courier New",monospace}
+.subhead{font-size:13px;font-weight:600;color:var(--muted);padding:16px 2px 6px}
+.thread-inner{max-width:760px}
+body.tlw-wide .thread-inner{max-width:960px}
+body.tlw-full .thread-inner{max-width:none;padding-left:22px;padding-right:22px}
+body.tl-quiet .msg .acts,body.tl-quiet .errcard .pills,body.tl-quiet .reason,body.tl-quiet .memtag,body.tl-quiet .by,body.tl-compact .msg .by,body.tl-compact .msg .memtag{display:none!important}
+body.tl-full .msg.user .acts{height:36px;opacity:1;pointer-events:auto;overflow:visible}
+body.tl-custom.tl-no-shell .reason,body.tl-custom.tl-no-edits .msg.user .acts,body.tl-custom.tl-no-thinking .reason summary,body.tl-custom.tl-no-memory .memtag,body.tl-custom.tl-no-errors .errcard .pills,body.tl-custom.tl-no-model .by,body.tl-custom.tl-no-attachments .msg-imgs,body.tl-custom.tl-no-attachments .msg-files{display:none!important}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
 input,textarea,select{font:inherit;color:inherit}
 a{color:inherit}
@@ -1102,7 +1111,7 @@ function load(){
   s.memOn = s.memOn !== false;
   s.memory = Array.isArray(s.memory) ? s.memory.filter(m => m && m.text) : [];
   s.haptics = s.haptics !== false;
-  s.calm = s.calm === true;
+  s.calm = ["system", "on", "off"].includes(s.calm) ? s.calm : "system";
   s.updOff = s.updOff === true;
   s.spell = s.spell !== false;
   s.wrap = s.wrap !== false;
@@ -1112,6 +1121,22 @@ function load(){
   s.spacesOn = s.spacesOn !== false;
   s.layout = ["dock", "compact", "focus"].includes(s.layout) ? s.layout : "dock";
   s.lastSpace = ["chat", "agent", "code"].includes(s.lastSpace) ? s.lastSpace : "chat";
+  s.pinch = s.pinch !== false;
+  s.mono = ["system", "menlo", "consolas"].includes(s.mono) ? s.mono : "system";
+  s.tlLevel = [0, 1, 2, 3, 4].includes(s.tlLevel) ? s.tlLevel : 2;
+  s.tlShow = s.tlShow && typeof s.tlShow === "object" ? s.tlShow : {};
+  ["shell", "edits", "thinking", "memory", "errors", "model", "attachments"].forEach(k => { if (s.tlShow[k] == null) s.tlShow[k] = true; });
+  s.tlWidth = ["comfortable", "wide", "full"].includes(s.tlWidth) ? s.tlWidth : "comfortable";
+  s.bgActivity = s.bgActivity === "none" ? "none" : "right";
+  s.notify = s.notify && typeof s.notify === "object" ? s.notify : {};
+  ["done", "failed", "attention"].forEach(k => { s.notify[k] = s.notify[k] === true; });
+  s.sound = s.sound && typeof s.sound === "object" ? s.sound : {};
+  ["done", "failed", "attention", "interface"].forEach(k => { s.sound[k] = ["none", "chime", "tap", "low"].includes(s.sound[k]) ? s.sound[k] : (k === "done" ? "chime" : k === "failed" ? "low" : "none"); });
+  s.wake = s.wake === true;
+  s.groupChats = s.groupChats !== false;
+  s.sideOrder = ["recent", "name", "oldest"].includes(s.sideOrder) ? s.sideOrder : "recent";
+  s.ideas = s.ideas !== false;
+  s.showProviders = s.showProviders === true;
   s.waitlist = s.waitlist && typeof s.waitlist === "object" ? s.waitlist : {};
   s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","night","geo","organic","mono","ocean","cream","sage","paper","sky","blush","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"none", dim:35};
   s.companions = Array.isArray(s.companions) ? s.companions.filter(x => x && x.id && x.name) : [];
@@ -1516,8 +1541,10 @@ function renderHero(){
     const sc = setupCard(); if (sc) main.append(sc);
     hero.classList.add("ready");
     const sg = h("div", {class:"suggest"}), below = $("#sugBelow"); below.innerHTML = "";
-    SUGGEST.forEach(s => below.append(h("button", {class:"sgl", type:"button", html:ic(s.icon) + "<span>" + esc(s.title + " " + s.sub) + "</span>", onclick:() => { input.value = s.prompt; autosize(); submit(); }})));
-    SUGGEST.forEach(s => sg.append(h("button", {class:"sg", type:"button", onclick:() => { input.value = s.prompt; autosize(); submit(); }}, h("b", {text:s.title}), h("span", {text:s.sub}))));
+    if (S.ideas !== false) {
+      SUGGEST.forEach(s => below.append(h("button", {class:"sgl", type:"button", html:ic(s.icon) + "<span>" + esc(s.title + " " + s.sub) + "</span>", onclick:() => { input.value = s.prompt; autosize(); submit(); }})));
+      SUGGEST.forEach(s => sg.append(h("button", {class:"sg", type:"button", onclick:() => { input.value = s.prompt; autosize(); submit(); }}, h("b", {text:s.title}), h("span", {text:s.sub}))));
+    }
     hero.append(main, sg);
   }
   inner.append(hero);
@@ -1653,7 +1680,7 @@ function submit(){
   if (!anyReady()) { openProviders(); return; }
   const m = modelByKey(curKey());
   if (!m) { openModels(); return; }
-  if (!ready(m.p)) { toast("Add your " + provOf(m.p).name + " key first"); openProvider(m.p); return; }
+  if (!ready(m.p)) { toast("Add your " + provOf(m.p).name + " key first"); notifyEvent("attention", "Vesper needs a key", "Add a key for " + provOf(m.p).name + " to keep chatting."); openProvider(m.p); return; }
   const c = ensureChat();
   if (editIdx != null) { c.messages = c.messages.slice(0, editIdx); editIdx = null; $("#editing").hidden = true; }
   const title = text || (pending[0] ? pending[0].name : "New chat");
@@ -1665,7 +1692,7 @@ function submit(){
   c.messages.push(um); c.updated = Date.now(); save();
   input.value = ""; autosize(); pending = []; renderAttach();
   if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} }
-  renderHeader(); renderThread(); generate();
+  renderHeader(); renderThread(); playSound("interface"); generate();
 }
 function retry(){
   if (busy) return;
@@ -1687,6 +1714,7 @@ async function generate(){
   const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
   if (["openrouter", "groq", "cerebras", "pc"].includes(P.id)) payload.stream_options = {include_usage:true};
   act = {chat:c.id, model:mk(m), phase:"Sending to " + (P.id === "pc" ? "this PC" : P.name), start:performance.now(), first:0, chars:0, rchars:0, rtail:"", usage:null, max:len.tokens, inTok:estTok(JSON.stringify(payload.messages))};
+  if (P.id === "pc") wakeOn();
   inspTick();
 
   busy = true; busyChat = c.id; syncSend();
@@ -1773,7 +1801,10 @@ async function generate(){
     c.messages.push(out);
   } else if (aborted) c.messages.push({role:"assistant", error:true, content:"You stopped this reply.", model:mk(m), at:Date.now()});
   else c.messages.push({role:"assistant", error:true, content:fail.friendly, fix:fail.fix || null, pid:P.id, model:mk(m), at:Date.now()});
-  act.phase = text.trim() ? "Done" : aborted ? "Stopped" : "Failed"; act.end = performance.now();
+  const replyOk = !!text.trim();
+  act.phase = replyOk ? "Done" : aborted ? "Stopped" : "Failed"; act.end = performance.now();
+  wakeOff();
+  notifyEvent(replyOk ? "done" : "failed", replyOk ? "Vesper" : "Vesper needs you", replyOk ? "Your reply is ready." : "A reply failed. Open Vesper to try again.");
   busy = false; busyChat = null; controller = null; live = null;
   c.updated = Date.now(); save(); syncSend(); inspTick();
   if (chat() === c) renderThread(true);
@@ -1929,12 +1960,12 @@ function renderDrawer(){
   renderFoot();
   const list = $("#chatList"); list.innerHTML = "";
   const q = $("#chatSearch").value.trim().toLowerCase();
-  const chats = S.chats.filter(c => !c.temp && (!q || c.title.toLowerCase().includes(q) || c.messages.some(m => String(m.content || "").toLowerCase().includes(q)))).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.updated - a.updated);
+  const chats = S.chats.filter(c => !c.temp && (!q || c.title.toLowerCase().includes(q) || c.messages.some(m => String(m.content || "").toLowerCase().includes(q)))).sort((a, b) => S.sideOrder === "name" ? a.title.localeCompare(b.title) : S.sideOrder === "oldest" ? a.updated - b.updated : (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.updated - a.updated);
   if (!chats.length) { list.append(h("div", {class:"empty-list", text:q ? "No chats match that." : "Your chats will show up here."})); return; }
   let last = "";
   const all = chats.length, cap = q || drawerAll ? all : 14;
   chats.slice(0, cap).forEach(c => {
-    const g = c.pinned ? "Pinned" : dayGroup(c.updated); if (g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
+    const g = S.groupChats === false ? "" : (c.pinned && S.sideOrder !== "name" && S.sideOrder !== "oldest" ? "Pinned" : dayGroup(c.updated)); if (g && g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
     const k = c.companion ? compById(c.companion) : null;
     const o = h("button", {class:"open", type:"button", onclick:() => openChat(c.id)}, k ? avatar(k, "sm") : null, h("span", {text:c.title}));
     o.addEventListener("contextmenu", e => { e.preventDefault(); chatMenu(c); });
@@ -2002,7 +2033,7 @@ function openSettings(swap){ open("settings", () => { const L = makePage("Settin
 // Settings opens as a floating window on wide screens, with a menu of its sections on the left.
 function settingsNav(L){
   if (!L.el.classList.contains("modal")) return;
-  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Notifications:"bell", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Create:"sparkles", Extensions:"lightning", Server:"laptop", Browser:"share-2", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"sparkles", Extensions:"lightning", Server:"laptop", Pairing:"share-2", Browser:"share-2", Experimental:"lightning", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.append(nav);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
@@ -2015,7 +2046,7 @@ function settingsNav(L){
       [...L.body.children].forEach(el => { if (el.classList.contains("glabel")) { flush(); lab = el; any = false; } else if (el.classList.contains("group")) { const v = [...el.querySelectorAll(".row")].some(r => r.style.display !== "none"); el.style.display = v ? "" : "none"; any = any || v; } else if (el.classList.contains("gnote")) el.style.display = "none"; }); flush(); }
     else [...L.body.children].forEach(el => el.style.display = "");
     [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); };
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, "Desktop app":1, Help:1};
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
     [...L.body.querySelectorAll(".glabel")].forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = i; q.value = ""; show(); scroller.scrollTop = 0; }})); });
     show(); };
   q.addEventListener("input", show);
@@ -2245,7 +2276,43 @@ function applyAccent(){
   const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "";
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
-function applyCalm(){ document.body.classList.toggle("calm", !!S.calm); }
+function applyCalm(){
+  const on = S.calm === "on" || (S.calm === "system" && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  document.body.classList.toggle("calm", on);
+}
+function applyTimeline(){
+  const names = ["quiet", "compact", "normal", "full", "custom"];
+  names.forEach(n => document.body.classList.remove("tl-" + n));
+  document.body.classList.add("tl-" + names[S.tlLevel]);
+  ["shell", "edits", "thinking", "memory", "errors", "model", "attachments"].forEach(k => document.body.classList.toggle("tl-no-" + k, S.tlShow[k] === false));
+  ["comfortable", "wide", "full"].forEach(n => document.body.classList.remove("tlw-" + n));
+  document.body.classList.add("tlw-" + S.tlWidth);
+  document.body.classList.toggle("mono-menlo", S.mono === "menlo");
+  document.body.classList.toggle("mono-consolas", S.mono === "consolas");
+}
+function applyPinch(){
+  const m = document.querySelector('meta[name="viewport"]'); if (!m) return;
+  m.content = S.pinch === false ? "width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content,maximum-scale=1,user-scalable=no" : "width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content";
+}
+let wakeLock = null, actx = null;
+async function wakeOn(){ if (!S.wake || !("wakeLock" in navigator) || wakeLock) return; try { wakeLock = await navigator.wakeLock.request("screen"); } catch (e) {} }
+function wakeOff(){ if (!wakeLock) return; try { wakeLock.release(); } catch (e) {} wakeLock = null; }
+function playSound(kind){
+  const s = S.sound && S.sound[kind]; if (!s || s === "none") return;
+  try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; actx = actx || new AC();
+    const notes = s === "chime" ? [660, 880] : s === "tap" ? [520] : [240, 180];
+    notes.forEach((f, i) => { const o = actx.createOscillator(), g = actx.createGain(); o.type = s === "low" ? "sine" : "triangle"; o.frequency.value = f;
+      const t = actx.currentTime + i * .12; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.07, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + .18);
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + .2); });
+  } catch (e) {}
+}
+async function notifyEvent(kind, title, body){
+  if (S.notify && S.notify[kind]) {
+    if ("Notification" in window && Notification.permission === "default") { try { await Notification.requestPermission(); } catch (e) {} }
+    if ("Notification" in window && Notification.permission === "granted" && document.hidden) { try { new Notification(title, {body:body, tag:"vesper-" + kind}); } catch (e) {} }
+  }
+  playSound(kind);
+}
 function dropdown(label, opts, cur, pick){
   const sel = h("select", {class:"dd", "aria-label":label});
   const add = (into, [v, t]) => into.append(h("option", {value:v, text:t}));
@@ -2334,7 +2401,7 @@ function renderSettingsRoot(w){
     switchRow({icon:"robot", title:"Show Agent and Code spaces", sub:"Both are in development. Hide them until they are ready", get:() => S.spacesOn !== false, set:v => setSpaces(v)}),
     ctlRow("Follow-up behavior", "Send while a reply is coming: stop it or queue the next message", dropdown("Follow-up behavior", [["steer", "Steer"], ["queue", "Queue"]], S.follow || "steer", v => { S.follow = v; save(); })),
     ctlRow("Submit messages with", "Shift Enter always adds a new line", dropdown("Submit messages with", [["enter", "Enter"], ["ctrl", "Ctrl Enter"]], S.sendKey || "enter", v => { S.sendKey = v; save(); syncEnterHint(); })),
-    row({icon:"image", title:"Pinch to zoom", sub:"Use your browser zoom. Vesper also has a Display scale setting in Appearance", chev:false}),
+    switchRow({icon:"image", title:"Pinch to zoom", sub:"Allow pinch and trackpad zoom. Zoom in Appearance stays available either way", get:() => S.pinch !== false, set:v => { S.pinch = v; save(); applyPinch(); }}),
     switchRow({icon:"pencil", title:"Spellcheck", sub:"Underline misspelled words in the message box", get:() => S.spell !== false, set:v => { S.spell = v; save(); applyWriting(); }}),
     switchRow({icon:"menu", title:"Wrap long lines", sub:"Wrap the message box instead of scrolling sideways", get:() => S.wrap !== false, set:v => { S.wrap = v; save(); applyWriting(); }}),
     row({icon:"message-square", title:"Help and feedback", sub:"Tell us what broke or what you need", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper feedback"; }})
@@ -2357,9 +2424,13 @@ function renderSettingsRoot(w){
     row({icon:"refresh-cw", title:"Reset usage counts", sub:"Removes token counts from past replies. Chats stay", onclick:() => dialog({title:"Reset usage counts?", text:"This clears the token counts from every past reply on this device. Chats and settings stay as they are.", ok:"Reset", onOk:() => { S.chats.forEach(c => c.messages.forEach(m => { delete m.stats; })); save(); again(); toast("Usage counts reset"); }})})
   ), gnote("Counted on this device only. Most providers report exact tokens; a few models send estimates."));
   w.append(glabel("Appearance"), group(
+    ctlRow("Color scheme", "Vesper follows the theme you pick. Dark is the default", h("span", {class:"cval", text:"Theme based"})),
     ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
-    ctlRow("Display scale", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
-    switchRow({icon:"clock", title:"Reduce motion", sub:"Removes the shimmer, slides and fades", get:() => S.calm, set:v => { S.calm = v; save(); applyCalm(); }})
+    ctlRow("UI font", "The font used in every screen", h("span", {class:"cval", text:"Inter"})),
+    ctlRow("Code font", "The font used inside code blocks", dropdown("Code font", [["system", "System mono"], ["menlo", "Menlo"], ["consolas", "Consolas"]], S.mono || "system", v => { S.mono = v; save(); applyTimeline(); })),
+    ctlRow("Terminal font", "Vesper has no terminal. The coding agent is planned", h("span", {class:"cval", text:"Not used"})),
+    ctlRow("Zoom", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
+    ctlRow("Reduce motion", "Reduce animations or match your system", dropdown("Reduce motion", [["system", "System"], ["off", "Off"], ["on", "On"]], S.calm || "system", v => { S.calm = v; save(); applyCalm(); }))
   ), gnote("On a wide screen, 100% is drawn slightly smaller so the app reads like a desktop app."));
   w.append(glabel("Your Vesper"), group(
     row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
@@ -2384,12 +2455,39 @@ function renderSettingsRoot(w){
     row({icon:"mic", title:"Voice input", sub:"Uses your browser's speech service. Audio is not saved", chev:false}),
     row({icon:"paperclip", title:"Attachments", sub:"Photos are shrunk here. Text files are sent as text", chev:false})
   ));
+  const provIds = Object.keys(PROVIDERS), provShow = S.showProviders ? provIds : provIds.slice(0, 3);
+  w.append(glabel("Providers"), group(
+    ...provShow.map(pid => row({icon:"key-round", title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "API key" : "Add key", ok:ready(pid), onclick:() => openProvider(pid)})),
+    row({icon:"arrow-down", title:S.showProviders ? "Show fewer providers" : "Show more providers", sub:"Free providers Vesper can connect to", onclick:() => { S.showProviders = !S.showProviders; save(); again(); }})
+  ), gnote("Keys are saved in this browser and sent only to the provider you pick."));
   w.append(glabel("Models"), group(
     row({icon:"cpu", title:"Model in use", sub:modelSub, val:cm ? cm.name : "", onclick:() => openModels()}),
     row({icon:"sliders-horizontal", title:"Shown in the picker", sub:hiddenN ? hiddenN + (hiddenN === 1 ? " discovered model is hidden" : " discovered models are hidden") : "Every discovered model is shown", val:shown + " of " + total, onclick:() => manageModels()}),
     row({icon:"robot", title:"Find your model", sub:"A pick that fits this computer's memory and graphics", onclick:() => openAdvisor()}),
     row({icon:"refresh-cw", title:"Discover models", sub:"Ask each connected provider for its latest list", onclick:() => openProviders()})
   ), gnote("A model is saved as provider::id, so two providers can offer the same name. Hidden models stay available in Manage models."));
+  const tlNames = ["Quiet", "Compact", "Normal", "Detailed", "Custom"];
+  const tlWord = h("em", {text:tlNames[S.tlLevel] || "Normal"});
+  const tlRange = h("input", {class:"range", type:"range", min:"0", max:"4", step:"1", "aria-label":"Timeline detail"}); tlRange.value = S.tlLevel;
+  tlRange.oninput = () => { tlWord.textContent = tlNames[+tlRange.value]; };
+  tlRange.onchange = () => { S.tlLevel = +tlRange.value; save(); applyTimeline(); again(); };
+  const tlCats = [
+    ["shell", "Shell", "Thinking text and live status"],
+    ["edits", "Edits", "Copy, edit and retry actions"],
+    ["thinking", "Thinking", "Thought summary above a reply"],
+    ["memory", "Memory notes", "Badge when Vesper saves something"],
+    ["errors", "Errors", "Failed reply cards and retry buttons"],
+    ["model", "Model name", "Model shown under each reply"],
+    ["attachments", "Attachments", "Photos and files in messages"]
+  ];
+  w.append(glabel("Timeline"), group(
+    h("div", {class:"field"}, h("div", {class:"flabel"}, h("span", {text:"Timeline detail"}), tlWord), tlRange,
+      h("div", {class:"range-row"}, ...tlNames.map(n => h("span", {text:n}))), h("small", {text:"Choose how much detail appears in the chat timeline."})),
+    h("div", {hidden:S.tlLevel !== 4}, h("div", {class:"subhead", text:"Advanced"}), group(...tlCats.map(([k, t, s]) => switchRow({icon:"circle-check", title:t, sub:s, get:() => S.tlShow[k] !== false, set:v => { S.tlShow[k] = v; save(); applyTimeline(); }})))),
+    ctlRow("Timeline width", "Narrower lines are easier to scan. Wider lines show more at once", dropdown("Timeline width", [["comfortable", "Comfortable"], ["wide", "Wide"], ["full", "Full"]], S.tlWidth, v => { S.tlWidth = v; save(); applyTimeline(); })),
+    ctlRow("Background activity", "Where live activity and results appear", dropdown("Background activity", [["right", "Details panel"], ["none", "Hidden"]], S.bgActivity, v => { S.bgActivity = v; save(); setInsp(v === "right"); })),
+    row({icon:"refresh-cw", title:"Reset timeline", sub:"Back to the normal view", onclick:() => { S.tlLevel = 2; S.tlWidth = "comfortable"; tlCats.forEach(([k]) => { S.tlShow[k] = true; }); save(); applyTimeline(); again(); toast("Timeline reset"); }})
+  ), gnote("These control what appears in the chat. The full message text is always kept in the chat history."));
   w.append(glabel("Create"), group(
     row({icon:"sparkles", title:"Studio", sub:"Describe an image or a scene and Vesper makes it", onclick:() => openStudio("image")}),
     row({icon:"images", title:"Library", sub:"Everything you made, saved on this device", onclick:() => openLibrary()}),
@@ -2403,16 +2501,37 @@ function renderSettingsRoot(w){
     row({icon:"laptop", title:"Local connections", sub:"Ollama, LM Studio and OpenAI compatible servers", val:S.conns.length ? String(S.conns.length) : "None", onclick:() => openLocal()}),
     row({icon:"key-round", title:"Cloud providers", sub:"Free models from providers you connect", val:nReady ? String(nReady) : "None", onclick:() => openProviders()})
   ), gnote("Local calls to private addresses are allowed by the browser from this page. No server is run by Node Folds."));
+  w.append(glabel("Pairing"), group(
+    row({icon:"share-2", title:"Connect a local server", sub:"Pair this app with Ollama, LM Studio or another computer on your WiFi", onclick:() => openLocal()}),
+    row({icon:"shield", title:"Remote access", sub:"Local models are reached on your network. Vesper does not open a public server", chev:false}),
+    switchRow({icon:"clock", title:"Keep screen active", sub:"Stop this device from sleeping while a local model runs", get:() => S.wake, set:v => { S.wake = v; save(); if (!v) wakeOff(); else wakeOn(); }})
+  ));
   w.append(glabel("Browser"), group(
     row({icon:"download", title:"Install Vesper", sub:"Use your browser's install option to add it to the home screen", chev:false}),
     row({icon:"refresh-cw", title:"Offline files", sub:"Download the app files again on the next visit", onclick:() => dialog({title:"Clear the offline cache?", text:"Vesper downloads its files again the next time you open it. Chats, settings and the library stay.", ok:"Clear cache", onOk:clearOffline})}),
     row({icon:"external-link", title:"Open the website", sub:"vesper.nodefolds.com", onclick:() => { location.href = "https://vesper.nodefolds.com"; }})
   ));
+  const askNotify = v => { if (v && "Notification" in window && Notification.permission === "default") { try { Notification.requestPermission().catch(() => {}); } catch (e) {} } };
   w.append(glabel("Notifications"), group(
     switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
+    switchRow({icon:"bell", title:"Reply finished", sub:"Show a system notification when a reply is ready and Vesper is in the background", get:() => S.notify.done, set:v => { S.notify.done = v; save(); askNotify(v); }}),
+    switchRow({icon:"circle-x", title:"Reply failed", sub:"Show a system notification when an error occurs", get:() => S.notify.failed, set:v => { S.notify.failed = v; save(); askNotify(v); }}),
+    switchRow({icon:"key-round", title:"Needs attention", sub:"Show a system notification when a key or server is needed", get:() => S.notify.attention, set:v => { S.notify.attention = v; save(); askNotify(v); }}),
     switchRow({icon:"bell", title:"Update notices", sub:"A small window when a new version is ready", get:() => !S.updOff, set:v => { S.updOff = !v; save(); }}),
     row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION + ". Checking now is always allowed", onclick:() => checkUpdate(true)})
-  ), gnote("Vesper has no push notifications. These only use the device in front of you."));
+  ), gnote("System notices appear only when Vesper is in the background. Your browser asks permission once."));
+  const soundOpts = [["none", "None"], ["chime", "Chime"], ["tap", "Tap"], ["low", "Low"]];
+  w.append(glabel("Sounds"), group(
+    ctlRow("Reply finished", "Play a sound when a reply is ready", dropdown("Reply sound", soundOpts, S.sound.done, v => { S.sound.done = v; save(); playSound(v); })),
+    ctlRow("Reply failed", "Play a sound when an error occurs", dropdown("Error sound", soundOpts, S.sound.failed, v => { S.sound.failed = v; save(); playSound(v); })),
+    ctlRow("Needs attention", "Play a sound when a key or server is needed", dropdown("Attention sound", soundOpts, S.sound.attention, v => { S.sound.attention = v; save(); playSound(v); })),
+    ctlRow("Interface", "Play a subtle sound when you send a message", dropdown("Interface sound", soundOpts, S.sound.interface, v => { S.sound.interface = v; save(); playSound(v); })),
+    row({icon:"volume-2", title:"Preview a sound", sub:"Hear the chime before you choose", onclick:() => playSound("chime"), chev:false})
+  ), gnote("Sounds are made on this device. Nothing is downloaded or sent anywhere."));
+  w.append(glabel("Shortcuts"), group(
+    row({icon:"menu", title:"Keyboard shortcuts", sub:"Search every shortcut in the app", onclick:() => openShortcuts()}),
+    row({icon:"refresh-cw", title:"Reset shortcut defaults", sub:"Restores Enter to send and the standard keys", onclick:() => { S.sendKey = "enter"; S.enter = null; save(); syncEnterHint(); again(); toast("Shortcuts reset"); }})
+  ));
   w.append(glabel("Privacy"), group(
     row({icon:"download", title:"Export chats", sub:"Save a backup file", onclick:exportChats, chev:false}),
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
@@ -2431,6 +2550,12 @@ function renderSettingsRoot(w){
     row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()}),
     ctlRow("Closing the window", "Vesper keeps running in the tray so a local model stays ready", h("span", {class:"cval", text:"Tray"}))
   ));
+  w.append(glabel("Experimental"), group(
+    switchRow({icon:"clock", title:"Group chats by day", sub:"Show day headings in the chat list", get:() => S.groupChats !== false, set:v => { S.groupChats = v; save(); renderDrawer(); }}),
+    ctlRow("Sidebar order", "How chats are arranged in the list", dropdown("Sidebar order", [["recent", "Pinned then recent"], ["name", "Name"], ["oldest", "Oldest first"]], S.sideOrder, v => { S.sideOrder = v; save(); renderDrawer(); })),
+    switchRow({icon:"menu", title:"Compact timeline", sub:"Hide message actions and extra notes in the chat", get:() => S.tlLevel === 0, set:v => { S.tlLevel = v ? 0 : 2; save(); applyTimeline(); again(); }}),
+    switchRow({icon:"sparkles", title:"Idea cards", sub:"Show prompt ideas on an empty chat", get:() => S.ideas !== false, set:v => { S.ideas = v; save(); renderThread(); }})
+  ), gnote("These work today. They may change as Vesper grows."));
   w.append(glabel("Help"), group(
     row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}),
     row({icon:"info", title:"Keyboard shortcuts", sub:"Every shortcut in the app", onclick:() => openShortcuts()}),
@@ -2450,10 +2575,10 @@ async function storageUsed(){ let n = new Blob([localStorage.getItem(STORE) || "
 async function clearOffline(){ try { const r = navigator.serviceWorker && await navigator.serviceWorker.getRegistration(); if (r) await r.update(); const ks = await caches.keys(); await Promise.all(ks.map(k => caches.delete(k))); } catch (e) {} toast("Cache cleared. It downloads again on the next visit"); }
 async function clearLibrary(){ try { const db = await mdb(); await new Promise((res, rej) => { const tx = db.transaction("media", "readwrite"); tx.objectStore("media").clear(); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); } catch (e) {} Object.keys(murls).forEach(k => { try { URL.revokeObjectURL(murls[k]); } catch (e) {} delete murls[k]; }); S.projects = []; save(); toast("Library cleared"); const top = stack[stack.length - 1]; if (top && top.refresh) top.refresh(); }
 function openShortcuts(){
-  const keys = [
+  const app = [
     [DESKTOP ? "Ctrl N" : "Ctrl Shift O", "New chat"],
-    ["Ctrl B", "Show or hide the sidebar"],
     ["Ctrl K", "Search chats"],
+    ["Ctrl B", "Show or hide the sidebar"],
     ["Ctrl I", "Open or close the details panel"],
     ["Ctrl 1", "Chat space"],
     ["Ctrl 2", "Agent space"],
@@ -2461,11 +2586,19 @@ function openShortcuts(){
     ["Ctrl ,", "Settings"],
     ["Esc", "Close the top window, menu or dialog"]
   ];
-  const msg = [["Enter", "Send a message, when Enter key sends is on"], ["Shift Enter", "Start a new line in the message box"], ["Microphone", "Speak instead of typing, on a phone"]];
+  const msg = [["Enter", "Send a message when Enter is the send key"], ["Ctrl Enter", "Send a message when Ctrl Enter is the send key"], ["Shift Enter", "Start a new line in the message box"], ["Microphone button", "Speak instead of typing, on a phone"]];
   open("shortcuts", () => makePage("Keyboard shortcuts", w => {
-    w.append(gnote("Shortcuts need a keyboard. On a phone, the buttons do the same job."));
-    w.append(glabel("App"), group(...keys.map(([k, t]) => ctlRow(t, "", h("kbd", {class:"key", text:k})))));
-    w.append(glabel("Message box"), group(...msg.map(([k, t]) => ctlRow(t, "", h("kbd", {class:"key", text:k})))));
+    w.append(gnote("Customize shortcuts for common actions. Search to find one. On a phone, the buttons do the same job."));
+    const q = h("input", {type:"search", placeholder:"Search shortcuts", "aria-label":"Search shortcuts"});
+    const list = h("div");
+    const draw = () => { list.innerHTML = ""; const t = q.value.trim().toLowerCase(); let n = 0;
+      [["General", app], ["Message box", msg]].forEach(([label, rows]) => { const hit = rows.filter(([k, title]) => !t || (k + " " + title).toLowerCase().includes(t));
+        if (!hit.length) return; n += hit.length; list.append(glabel(label), group(...hit.map(([k, title]) => ctlRow(title, "", h("kbd", {class:"key", text:k}))))); });
+      if (!n) list.append(gnote("No shortcut matches that.")); };
+    q.addEventListener("input", draw);
+    w.append(h("label", {class:"apps-search", html:ic("search")}, q),
+      ctlRow("Reset to defaults", "Restore the standard keys", h("button", {class:"btn", type:"button", text:"Reset", onclick:() => { S.sendKey = "enter"; S.enter = null; save(); syncEnterHint(); toast("Shortcuts reset"); }})), list);
+    draw();
   }));
 }
 function openLicenses(){
@@ -3107,7 +3240,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "3.3";
+const APP_VERSION = "3.4";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
@@ -3497,6 +3630,8 @@ syncEnterHint();
 applyIcon();
 applyBg();
 applyCalm();
+applyTimeline();
+applyPinch();
 applyWriting();
 setSpaces(S.spacesOn !== false);
 if (S.startSpace === "chat") S.space = "chat";

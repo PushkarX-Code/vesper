@@ -34,6 +34,27 @@ Menu icons come from `settingsNav()` `ICON`. The Settings gear stays the Lucide 
 
 Account has Account type and Plan. Usage has Storage used (`storageUsed()` via `navigator.storage.estimate()`) and Reset usage counts. Appearance has Reduce motion (`S.calm`, `applyCalm()`). Your Vesper links to Characters. Chat has the details panel, collapsed sidebar and message actions. Capabilities has Model in use, Voice input and Attachments. Models has shown and hidden model counts, Find your model and Discover models. Create has Studio, Library and Projects. Notifications has Update notices (`S.updOff`, checked in `checkUpdate()`). Privacy has private chats and API key notes. Data has chats and characters counts, Clear the library (`clearLibrary()`), Clear offline cache and Reset profile. About has privacy policy, terms, source code and Licenses (`openLicenses()`).
 
+## Second pass: the remaining screenshots
+
+The owner sent seven more Preferences screens. They were mapped as follows, again with no fake controls.
+
+| Screenshot | Vesper setting | State and code |
+| --- | --- | --- |
+| Pinch to zoom switch | Pinch to zoom | `S.pinch`, `applyPinch()` changes the viewport meta tag. Zoom in Appearance remains available |
+| Timeline detail slider and Advanced grid | Timeline section | `S.tlLevel` from Quiet to Custom, `applyTimeline()` sets `tl-` body classes. Custom shows seven switches in Shell, Edits, Thinking, Memory notes, Errors, Model name and Attachments. OpenCode only ideas such as subagents and notices are not invented |
+| Timeline width | Timeline width | `S.tlWidth`, Comfortable, Wide or Full, controls `.thread-inner` width |
+| Background activity | Background activity | `S.bgActivity`, Details panel or Hidden, uses `setInsp()` |
+| Color scheme | Color scheme note | Vesper follows the chosen theme. Dark is the default. No extra theme options added |
+| Theme, UI font, Code font, Terminal font, Zoom, Reduce motion | Theme, UI font note, Code font, Terminal font note, Zoom, Reduce motion | `S.mono` changes `--mono` for code blocks. `S.calm` is System, Off or On and follows `prefers-reduced-motion` on System. No terminal exists, so that row says so |
+| Desktop notifications for Agent, Permissions, Questions and Errors | Reply finished, Reply failed, Needs attention | `S.notify`, `notifyEvent()`. System notices only show when the app is in the background and permission is granted |
+| Sound effects for each event | Sounds section | `S.sound`, `playSound()` makes short tones with Web Audio. Nothing is downloaded. Options are None, Chime, Tap and Low |
+| Shortcuts search and Reset to defaults | Shortcuts section and a searchable shortcuts page | `openShortcuts()` filters the list and resets `S.sendKey` and `S.enter` |
+| Providers with connected list, popular list and Show more | Providers section | `PROVIDERS`, `S.showProviders`, `openProvider()`. Three providers show first, five after Show more. Each row shows API key or Add key |
+| Pair a device, Remote access, Keep screen active | Pairing section | `openLocal()` for local servers, a note that no public server is opened, and `S.wake` with the Wake Lock API during local model replies |
+| Tab groups, Organize vertical sidebar, New timeline, New question UI | Experimental section | `S.groupChats`, `S.sideOrder`, `S.tlLevel` compact switch and `S.ideas`. All four are real chat and sidebar behaviors. The OpenCode names for tabs and question docks are not copied |
+
+Menu groups now add dividers before Appearance, Providers, Sounds, Experimental, Desktop app and Help. The menu order ends with Experimental, Help and About.
+
 ## Design checks
 
 1. Desktop docked at 1024 and 1440. Open Settings, confirm the menu lists every section in the order above, each section opens alone, and no row has a centered card look. Keep sections and rows flat with a label left, a control right, and thin dividers.
@@ -44,6 +65,11 @@ Account has Account type and Plan. Usage has Storage used (`storageUsed()` via `
 6. Open Keyboard shortcuts and Licenses from Help, and check they stay inside the Settings window on desktop.
 7. Search for layout, model, queue and cache in the Settings search box. Results must match rows across sections.
 8. No Live Characters text or entry anywhere. No dashes in new copy. No monospace for row labels.
+9. Move the Timeline detail slider through all five stops. Quiet hides actions and notes, Normal looks like today's chat, Custom reveals the seven switches. Confirm the advanced switches hide only their own part of a reply and reload to confirm persistence.
+10. Switch Timeline width and Background activity. Narrow, wide and full widths must not crop code blocks. Hidden must close the details panel.
+11. Turn on the three notification switches. The browser asks for notice permission once. A failed reply and a finished reply should each give one notice only when Vesper is in the background. Preview a sound and confirm each sound choice plays that tone.
+12. Open Keyboard shortcuts, search for sidebar and confirm only the matching row remains. Reset to defaults restores Enter to send.
+13. In Providers, Show more must reveal Google Gemini and Mistral and Save must persist the choice. In Pairing, Keep screen active must only hold a wake lock while a PC model replies.
 
 ## Do not revert
 
