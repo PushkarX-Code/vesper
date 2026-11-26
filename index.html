@@ -285,8 +285,10 @@ body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;ma
 .row.ctl{justify-content:space-between}
 .seg{display:inline-flex;gap:2px;padding:3px;border-radius:12px;background:var(--raised);flex:0 0 auto}
 .seg button{height:32px;padding:0 12px;border-radius:9px;font-size:13.5px;color:var(--muted)}.seg button.on{background:var(--raised-2);color:var(--fg)}
-.swatches{display:flex;gap:8px;flex:0 0 auto}.swatches button{width:24px;height:24px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
-.swatches button.on{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--fg)}
+.ddw{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;margin-right:-6px}
+.dd{appearance:none;-webkit-appearance:none;background:none;border:0;outline:0;color:var(--fg);font:inherit;font-size:14.5px;height:36px;padding:0 30px 0 12px;border-radius:10px;cursor:pointer;text-align:right}
+.dd:hover,.dd:focus-visible{background:var(--raised)}.dd option,.dd optgroup{background:var(--surface);color:var(--fg)}
+.ddw .ic{position:absolute;right:8px;top:50%;margin-top:-7px;width:14px;height:14px;pointer-events:none;color:var(--muted)}
 .switch[aria-checked="true"]{background:var(--grad,var(--accent))}
 /* details panel */
 .insp{display:none}
@@ -340,11 +342,12 @@ body.dock #skillChip{order:-1;width:auto}
 .setup .pct{font-size:12.5px;color:var(--muted)}
 @media (max-width:560px){.setup{flex-wrap:wrap}.setup .sa{width:100%;align-items:stretch}.setup .bar{width:100%}}
 /* one line composer on wide screens */
-body.dock .composer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px;padding:8px;border-radius:30px}
+body.dock .composer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px;padding:8px;border-radius:30px}
+body.dock .composer .c-btn,body.dock .composer .send,body.dock #modelChip{height:40px}body.dock .composer .c-btn{width:40px}
 body.dock .composer .c-row,body.dock .composer .c-side{display:contents}
 body.dock #attachRow{order:-1;width:100%}
 body.dock #attachBtn{order:0;background:var(--raised)}
-body.dock .composer textarea{order:1;flex:1;width:auto;min-width:0;padding:8px 8px}
+body.dock .composer textarea{order:1;flex:1;width:auto;min-width:0;padding:8px 6px;line-height:24px;min-height:40px}
 body.dock #modelChip{order:2;background:none}body.dock #modelChip:hover{background:var(--raised)}
 body.dock #micBtn{order:3}body.dock #send{order:4}
 body.dock .c-btn:hover{background:var(--raised)}
@@ -1936,14 +1939,25 @@ function openLibrary(swap){
   }), swap);
 }
 // One simple theme: an accent color with its gradient, a background tone and a text size.
-const ACCENTS = {blue:["#6ea8ff", "linear-gradient(135deg,#6ea8ff,#8b5cf6)", "Blue"], violet:["#a78bfa", "linear-gradient(135deg,#a78bfa,#ec4899)", "Violet"], emerald:["#34d399", "linear-gradient(135deg,#34d399,#22d3ee)", "Emerald"], amber:["#f0c26b", "linear-gradient(135deg,#f0c26b,#ff7a45)", "Amber"], rose:["#ff7eb3", "linear-gradient(135deg,#ff7eb3,#a78bfa)", "Rose"], mono:["#e8e8e6", "linear-gradient(135deg,#f5f5f4,#8e8e93)", "Mono"]};
+const ACCENTS = {blue:["#6ea8ff", "linear-gradient(135deg,#6ea8ff,#8b5cf6)", "Vesper Blue"], violet:["#a78bfa", "linear-gradient(135deg,#a78bfa,#ec4899)", "Aurora"], emerald:["#34d399", "linear-gradient(135deg,#34d399,#22d3ee)", "Jade"], amber:["#f0c26b", "linear-gradient(135deg,#f0c26b,#ff7a45)", "Ember"], rose:["#ff7eb3", "linear-gradient(135deg,#ff7eb3,#a78bfa)", "Rose Quartz"], mono:["#e8e8e6", "linear-gradient(135deg,#f5f5f4,#8e8e93)", "Moonlight"]};
+// Dynamic color follows the time of day: Ember in the morning, Vesper Blue by day, Aurora in the evening, Moonlight at night.
+const dynAccent = () => { const hr = new Date().getHours(); return hr >= 5 && hr < 11 ? "amber" : hr < 17 && hr >= 11 ? "blue" : hr >= 17 && hr < 21 ? "violet" : "mono"; };
+let dynTimer = 0;
 function applyAccent(){
-  const st = document.documentElement.style, a = ACCENTS[S.accent] || ACCENTS.blue;
+  const st = document.documentElement.style, a = ACCENTS[S.accent === "dynamic" ? dynAccent() : S.accent] || ACCENTS.blue;
+  clearInterval(dynTimer); if (S.accent === "dynamic") dynTimer = setInterval(applyAccent, 600000);
   st.setProperty("--accent", a[0]); st.setProperty("--grad", a[1]);
   if (S.tone === "graphite") [["--bg", "#0f0f11"], ["--surface", "#17171a"], ["--sheet", "#17171a"], ["--raised", "#222226"], ["--raised-2", "#2c2c31"], ["--line", "#2c2c31"], ["--line-soft", "#212125"]].forEach(([k, v]) => st.setProperty(k, v));
   else st.setProperty("--bg", "#000000");
   document.body.style.zoom = S.zoom && S.zoom !== 1 ? S.zoom : "";
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && !S.bg.photo && S.bg.id === "none") tc.content = S.tone === "graphite" ? "#0f0f11" : "#000000";
+}
+function dropdown(label, opts, cur, pick){
+  const sel = h("select", {class:"dd", "aria-label":label});
+  const add = (into, [v, t]) => into.append(h("option", {value:v, text:t}));
+  opts.forEach(o => Array.isArray(o[1]) ? sel.append((g => { o[1].forEach(x => add(g, x)); return g; })(h("optgroup", {label:o[0]}))) : add(sel, o));
+  sel.value = cur; sel.onchange = () => pick(sel.value);
+  return h("label", {class:"ddw"}, sel, icEl("chevron-down"));
 }
 function ctlRow(title, sub, ctl){ return h("div", {class:"row ctl"}, h("div", {class:"tx"}, h("b", {text:title}), sub ? h("span", {text:sub}) : null), ctl); }
 function seg(opts, cur, pick){ const el = h("div", {class:"seg", role:"radiogroup"}); opts.forEach(([v, t]) => el.append(h("button", {type:"button", role:"radio", "aria-checked":String(v === cur), class:v === cur ? "on" : "", text:t, onclick:e => { [...el.children].forEach(x => { x.classList.toggle("on", x === e.currentTarget); x.setAttribute("aria-checked", String(x === e.currentTarget)); }); pick(v); }}))); return el; }
@@ -1956,11 +1970,10 @@ function renderSettingsRoot(w){
     row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
     row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()})
   ));
-  const sw = h("div", {class:"swatches"}); Object.entries(ACCENTS).forEach(([id, a]) => sw.append(h("button", {type:"button", class:(S.accent || "blue") === id ? "on" : "", style:"background:" + a[1], "aria-label":a[2], title:a[2], onclick:() => { S.accent = id; save(); applyAccent(); [...sw.children].forEach(x => x.classList.toggle("on", x.title === a[2])); }})));
   w.append(glabel("Appearance"), group(
-    ctlRow("Accent", "Buttons, highlights and progress", sw),
-    ctlRow("Background", "", seg([["black", "Black"], ["graphite", "Graphite"]], S.tone || "black", v => { S.tone = v; save(); applyAccent(); })),
-    ctlRow("Text size", "", seg([["0.92", "Small"], ["1", "Default"], ["1.08", "Large"]], String(S.zoom || 1), v => { S.zoom = +v; save(); applyAccent(); }))
+    ctlRow("Color", S.accent === "dynamic" ? "Changes with the time of day" : "Buttons, highlights and progress", dropdown("Color", [["Dynamic", [["dynamic", "Dynamic"]]], ["Exclusive", Object.entries(ACCENTS).map(([id, a]) => [id, a[2]])]], S.accent || "blue", v => { S.accent = v; save(); applyAccent(); })),
+    ctlRow("Background", "", dropdown("Background", [["black", "Black"], ["graphite", "Graphite"]], S.tone || "black", v => { S.tone = v; save(); applyAccent(); })),
+    ctlRow("Text size", "", dropdown("Text size", [["0.92", "Small"], ["1", "Default"], ["1.08", "Large"]], String(S.zoom || 1), v => { S.zoom = +v; save(); applyAccent(); }))
   ));
   w.append(glabel("Chat"), group(
     switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
