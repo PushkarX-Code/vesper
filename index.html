@@ -260,7 +260,11 @@ body.dock .ci .more{opacity:0}body.dock .ci:hover .more,body.dock .ci.active .mo
 body.native #dSideBtn{display:none}
 /* home on wide screens: greeting, composer in the middle, ideas below */
 .sug-below{display:none}
+body.dock .app{position:relative}
 body.dock .app.is-empty{justify-content:center}
+body.dock .app.is-empty .top{position:absolute;top:0;left:0;right:0}
+body.dock .app.is-empty .hero .mark{display:none}
+.cta.row{flex-direction:row;justify-content:center;max-width:none;width:auto}.cta.row .btn{height:40px;padding:0 18px;font-size:14px}
 body.dock .app.is-empty .thread{flex:0 0 auto;overflow:visible}
 body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p,body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
 body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 26px}
@@ -290,9 +294,9 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .hive{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 0 8px}
 .hive .hr{display:flex;gap:8px;align-items:center}
 .hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
-.hive button:hover{transform:scale(1.06)}
+.hive button:hover{transform:scale(1.06);opacity:1!important}.hive button.on{opacity:1!important}
 .hive button.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--fg)}
-.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg{width:64%;height:64%}
+.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg{width:62%;height:62%}
 .avfoot{display:flex;align-items:center;gap:8px;padding:12px 4px 2px}.avfoot .sp{flex:1}
 .avfoot .btn{height:38px;padding:0 16px;font-size:14px}
 /* settings window: header, menu with search, flat rows */
@@ -1364,7 +1368,7 @@ function renderHeader(){
   else if (!empty) center.append(h("span", {class:"top-title", text:c.title}));
   input.placeholder = k ? "Message " + k.name : "Ask anything";
   const right = $("#topRight"); right.innerHTML = "";
-  if (docked()) right.append(h("button", {class:"icon-btn flip" + (S.insp ? " on" : ""), type:"button", "aria-label":"Details", title:"Details (Ctrl+I)", onclick:() => setInsp(!S.insp), html:ic("panel-left")}));
+  if (docked() && !empty) right.append(h("button", {class:"icon-btn flip" + (S.insp ? " on" : ""), type:"button", "aria-label":"Details", title:"Details (Ctrl+I)", onclick:() => setInsp(!S.insp), html:ic("panel-left")}));
   if (empty && anyReady() && !k) right.append(h("button", {class:"icon-btn" + (privateMode ? " on" : ""), type:"button", "aria-pressed":String(privateMode), "aria-label":"Private chat", onclick:togglePrivate, html:ic("ghost")}));
   else if (!empty) right.append(iconBtn("square-pen", "New chat", () => newChat()));
 }
@@ -1405,9 +1409,9 @@ function renderHero(){
   const hero = h("div", {class:"hero"});
   const main = h("div", {class:"hero-main", html:`<img class="mark" src="${iconFile("mark.webp")}" alt="" width="360" height="352" decoding="async">`});
   if (!anyReady()) {
-    if (DESKTOP) { main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Set up a private AI on this PC in one click, or connect a free cloud model."})); const sc = setupCard(); if (sc) main.append(sc); main.append(h("div", {class:"cta"}, h("button", {class:"btn ghost block", type:"button", text:"Use a cloud model", onclick:() => openProviders()}))); hero.append(main); inner.append(hero); return; }
-    main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Connect a free AI model to start. It takes about a minute."}),
-      h("div", {class:"cta"}, h("button", {class:"btn primary block", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost block", type:"button", text:"Use a local model", onclick:() => openLocal()}), h("button", {class:"btn ghost block", type:"button", html:ic("graduation-cap") + "New here? Learn the basics", onclick:() => openLearn()})));
+    if (DESKTOP) { main.append(h("h1", {text:"Welcome to Vesper"}), h("p", {text:"Run a private AI on this PC, or connect a free cloud model."})); const sc = setupCard(); if (sc) main.append(sc); main.append(h("div", {class:"cta"}, h("button", {class:"btn ghost block", type:"button", text:"Use a cloud model", onclick:() => openProviders()}))); hero.append(main); inner.append(hero); return; }
+    main.append(h("h1", {text:"Welcome to Vesper"}), h("p", {text:"Connect a free model to start."}),
+      h("div", {class:"cta row"}, h("button", {class:"btn primary", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost", type:"button", text:"Use a local model", onclick:() => openLocal()})));
     hero.append(main);
   } else {
     if (privateMode) main.append(h("h1", {html:"Private chat<i>.</i>"}), h("p", {text:"This chat won't be saved to your history."}));
@@ -1681,7 +1685,7 @@ function actStats(){
   return {p:u && u.prompt_tokens != null ? u.prompt_tokens : act.inTok, c:comp, est:!u, ttft:act.first ? Math.round(act.first - act.start) : null, ms:Math.round(end - act.start)};
 }
 function ctxOf(m){ if (!m) return null; if (m.ctx) return m.ctx; if (m.p === "pc") return 8192; return null; }
-function inspOn(){ return docked() && !!S.insp; }
+function inspOn(){ const c = chat(); return docked() && !!S.insp && !!(c && c.messages.length); }
 function setInsp(on){ S.insp = !!on; save(); document.body.classList.toggle("insp-on", inspOn()); renderInsp(); renderHeader(); }
 function inspTick(){ renderInsp(); clearInterval(inspTimer); if (busy && inspOn()) inspTimer = setInterval(() => { if (!busy) clearInterval(inspTimer); renderInsp(); }, 500); }
 function irow(k, v, cls){ return h("div", {class:"irow" + (cls ? " " + cls : "")}, h("span", {text:k}), h("b", {text:v})); }
@@ -2034,20 +2038,20 @@ function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " 
   else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
   return a; }
 async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
-// Avatars are flat 2D marks generated from a seed: a symmetric pattern of simple shapes on a color. Each one is unique.
-const AV_COLORS = ["#8a6a45", "#d0604f", "#3f8a73", "#5689d6", "#867870", "#69717d", "#d67a56", "#c05b82", "#a6cfc2", "#c8c4da", "#e4a43f", "#d6658f", "#9b5c47", "#5a5875", "#e0b39f", "#7b6cc6", "#e6ccd8", "#468c74", "#e07b54"];
+// Avatars: bold, flat marks of our own, generated from a seed and set on soft muted colors.
+const AV_COLORS = ["#a5c9bc", "#d9a7b8", "#e7b79c", "#c9c5dd", "#e5a94a", "#7f8fa6", "#c97b5f", "#8fae7f", "#b8a07c", "#e3cfd7", "#6f9fc9", "#d36f5c", "#9a8fb8", "#4f7f6c", "#d8c9a8", "#b5655e"];
 function rng(seed){ let x = seed >>> 0 || 1; return () => { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; return ((x >>> 0) % 10000) / 10000; }; }
 function avShape(seed){
-  const r = rng(seed), n = [3, 4, 5, 6, 8][Math.floor(r() * 5)], kind = Math.floor(r() * 5), d = 4 + r() * 3.2, sz = 2.2 + r() * 2.2, core = r(), f = v => v.toFixed(2);
-  let out = "";
-  for (let k = 0; k < n; k++) { const a = k * 360 / n, t = ' transform="rotate(' + a + ' 12 12)"';
-    if (kind === 0) out += '<ellipse cx="12" cy="' + f(12 - d) + '" rx="' + f(sz * .75) + '" ry="' + f(sz * 1.35) + '"' + t + '/>';
-    else if (kind === 1) out += '<circle cx="12" cy="' + f(12 - d - .6) + '" r="' + f(sz * .82) + '"' + t + '/>';
-    else if (kind === 2) out += '<rect x="' + f(12 - sz * .45) + '" y="' + f(12 - d - sz) + '" width="' + f(sz * .9) + '" height="' + f(sz * 2 + d * .5) + '" rx="' + f(sz * .45) + '"' + t + '/>';
-    else if (kind === 3) out += '<rect x="' + f(12 - sz * .7) + '" y="' + f(12 - d - sz * .7) + '" width="' + f(sz * 1.4) + '" height="' + f(sz * 1.4) + '" rx="' + f(sz * .3) + '"' + t + '/>';
-    else out += '<path d="M12 ' + f(12 - d - sz * 1.2) + 'L' + f(12 + sz) + ' ' + f(12 - d + sz * .6) + 'H' + f(12 - sz) + 'Z"' + t + '/>'; }
-  if (core > .4) out += '<circle cx="12" cy="12" r="' + f(1.4 + core * 2.2) + '"/>';
-  return out;
+  const r = rng(seed), fam = Math.floor(r() * 8), f = v => +v.toFixed(2), rot = (a, el) => el.replace("/>", ' transform="rotate(' + a + ' 12 12)"/>');
+  if (fam === 0) { const n = [3, 4, 6][Math.floor(r() * 3)], d = 4.2, rr = n === 6 ? 3.2 : 4.4; let o = ""; for (let k = 0; k < n; k++) o += rot(k * 360 / n, '<circle cx="12" cy="' + f(12 - d) + '" r="' + rr + '"/>'); return o + (r() > .5 ? '<circle cx="12" cy="12" r="' + (n === 6 ? 3.4 : 2.6) + '"/>' : ""); }
+  if (fam === 1) { const t = 6 + r() * 2.2, c = t * .35; return '<rect x="' + f(12 - t / 2) + '" y="3.5" width="' + f(t) + '" height="17" rx="' + f(c) + '"/><rect x="3.5" y="' + f(12 - t / 2) + '" width="17" height="' + f(t) + '" rx="' + f(c) + '"/>'; }
+  if (fam === 2) { const n = 2 + Math.floor(r() * 2), w = 16 / n; let o = '<path d="M4 20'; for (let k = 0; k < n; k++) o += 'V' + f(20 - (k + 1) * (16 / n)) + 'H' + f(4 + (k + 1) * w); return o + 'V20Z"/>'; }
+  if (fam === 3) { const n = 2 + Math.floor(r() * 2), hh = n === 2 ? 5.5 : 4, g = (16 - n * hh) / (n - 1); let o = ""; for (let k = 0; k < n; k++) { const w = 16 - (k % 2) * (4 + r() * 4); o += '<rect x="' + f(12 - w / 2) + '" y="' + f(4 + k * (hh + g)) + '" width="' + f(w) + '" height="' + hh + '" rx="' + f(hh / 2) + '"/>'; } return o; }
+  if (fam === 4) { const n = r() > .5 ? 2 : 3, gap = 16 / n, rr = n === 2 ? 3.6 : 2.5; let o = ""; for (let a = 0; a < n; a++) for (let b = 0; b < n; b++) o += '<circle cx="' + f(4 + gap / 2 + a * gap) + '" cy="' + f(4 + gap / 2 + b * gap) + '" r="' + rr + '"/>'; return o; }
+  if (fam === 5) { const n = [6, 8][Math.floor(r() * 2)]; let o = '<g stroke="currentColor" stroke-width="2.6" stroke-linecap="round">'; for (let k = 0; k < n; k++) o += rot(k * 360 / n, '<path d="M12 12V4"/>'); return o + '</g><circle cx="12" cy="12" r="3"/>' + (r() > .5 ? Array.from({length:n}, (_, k) => rot(k * 360 / n, '<circle cx="12" cy="4" r="2"/>')).join("") : ""); }
+  if (fam === 6) { const cut = r() > .5; return '<path fill-rule="evenodd" d="M12 3.5a8.5 8.5 0 1 1 0 17a8.5 8.5 0 0 1 0-17Zm0 ' + (cut ? '4.5a4 4 0 1 0 0 8a4 4 0 0 0 0-8Z' : '5a3 3 0 1 0 0 6a3 3 0 0 0 0-6Z') + '"/>' + (cut ? '<rect x="10.4" y="2" width="3.2" height="8" fill="currentColor" opacity="0"/>' : ""); }
+  const k = 4 + Math.floor(r() * 2) * 2, R = 8.5, rin = 4.2; let pts = []; for (let i = 0; i < k * 2; i++) { const a = Math.PI * i / k - Math.PI / 2, rad = i % 2 ? rin : R; pts.push(f(12 + rad * Math.cos(a)) + " " + f(12 + rad * Math.sin(a))); }
+  return '<path stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M' + pts.join("L") + 'Z"/>';
 }
 function lightColor(hex){ const n = parseInt(hex.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; }
 function genAvatar(g, c, size){
@@ -2071,7 +2075,7 @@ function chooseAvatar(after){
   const cur = prof().gen; deal(); if (cur) cells[17] = {g:cur.g, c:cur.c}; pick = cells[17];
   open("avpick", () => { const L = makeSheet("Choose an avatar"), hive = h("div", {class:"hive"});
     const draw = () => { hive.innerHTML = ""; let k = 0; rows.forEach((n, r) => { const row = h("div", {class:"hr"}); for (let i = 0; i < n; i++, k++) { const cell = cells[k], d = Math.hypot(i - (n - 1) / 2, (r - 2) * 1.1), size = Math.round(Math.max(36, 78 - d * 11));
-      row.append(h("button", {type:"button", class:cell === pick ? "on" : "", "aria-label":"Avatar " + (k + 1), onclick:e => { pick = cell; hive.querySelectorAll("button").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); }}, genAvatar(cell.g, cell.c, size))); } hive.append(row); }); };
+      row.append(h("button", {type:"button", class:cell === pick ? "on" : "", style:"opacity:" + Math.max(.45, 1 - d * .11).toFixed(2), "aria-label":"Avatar " + (k + 1), onclick:e => { pick = cell; hive.querySelectorAll("button").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); }}, genAvatar(cell.g, cell.c, size))); } hive.append(row); }); };
     draw();
     L.body.append(h("div", {style:"padding:0 18px 16px"}, h("div", {class:"gnote", style:"padding:0", text:"Use one of these instead of a photo."}), hive,
       h("div", {class:"avfoot"}, h("button", {class:"btn ghost", type:"button", html:ic("refresh-cw") + "Shuffle", onclick:() => { deal(); pick = cells[17]; draw(); }}), h("span", {class:"sp"}),
