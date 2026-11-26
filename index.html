@@ -818,6 +818,13 @@ details.more-opts .group{margin-top:8px}
 .page-head h2{margin:0;text-align:center;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .page-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 16px max(36px,env(safe-area-inset-bottom,0px))}
 .wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column}
+/* desktop: pages made of cards (Learn, Characters, Library) use the whole window, not a phone column */
+body.dock .page:not(.modal) .page-body:has(.lcards,.cgrid,.spg){padding:8px clamp(24px,3vw,56px) 56px}
+body.dock .page:not(.modal) .wrap:has(.lcards,.cgrid,.spg){max-width:none;width:100%}
+body.dock{--col:clamp(760px,50vw,980px)}
+body.dock .thread-inner,body.dock .composer,body.dock .editing,body.dock .app.is-empty .sug-below{max-width:var(--col)}
+body.dock .lcards{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+body.dock .cgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 
 /* dialog */
 .dialog{position:fixed;left:50%;top:50%;width:min(360px,calc(100vw - 40px));transform:translate(-50%,-46%) scale(.96);opacity:0;background:var(--sheet);border:1px solid var(--line);border-radius:24px;padding:22px 18px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
