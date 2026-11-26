@@ -473,6 +473,9 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .schip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.schip .ic{width:16px;height:16px}.schip .ic:last-child{width:13px;height:13px;color:var(--muted)}.schip:hover{background:var(--raised-2)}
 .sseg{display:flex;align-items:center;height:40px;padding:3px;border-radius:999px;background:var(--raised);flex:0 0 auto}.sseg button{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;font-size:13.5px;color:var(--muted)}.sseg button .ic{width:16px;height:16px}.sseg button.on{background:var(--raised-2);color:var(--fg)}
 .slib{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 13px;border-radius:14px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.slib .ic{width:17px;height:17px}.slib:hover,.slib.on{background:var(--raised-2);color:var(--fg)}
+.sori{display:flex;align-items:center;gap:2px;height:40px;padding:3px;border-radius:12px;background:var(--raised);flex:0 0 auto}.sori[hidden]{display:none}
+.sori button{display:grid;place-items:center;width:38px;height:34px;border-radius:9px;color:var(--muted)}.sori button:hover{color:var(--fg)}.sori button.on{background:var(--raised-2);color:var(--fg)}
+.ori{display:block;border:2px solid currentColor;border-radius:3px}.ori.square{width:15px;height:15px}.ori.portrait{width:12px;height:18px}.ori.landscape{width:20px;height:13px}
 .sgo{width:40px;height:40px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;flex:0 0 auto}.sgo .ic{width:20px;height:20px}
 @media (max-width:820px){.studiopg .mgrid{grid-template-columns:repeat(2,1fr)}.ssteps{grid-template-columns:1fr 1fr}.sspace{grid-template-columns:1fr}.srail{position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}.sback{order:-1}.sname{order:-1;padding:0 4px}.sgen{display:none}.snav{padding:7px 12px;background:var(--raised)}.sbanner{min-height:360px}.sbar{border-radius:24px}}
 @media (max-width:520px){.sbar{flex-wrap:wrap}.sbar textarea{order:-1;flex:1 0 100%;padding-bottom:4px}.slib span,.sseg span{display:none}.sseg button{padding:0 12px}.sgo{margin-left:auto}}
@@ -535,43 +538,14 @@ body.native .page.modal{top:calc(50% + 20px)}
 .page:not(.modal) .pnav{position:relative;top:auto;bottom:auto;width:auto;flex-direction:row;border-right:0;border-bottom:1px solid var(--line-soft);padding:8px 12px;overflow-x:auto}
 .page:not(.modal) .pnav button{flex:1;justify-content:center;min-width:120px}
 .page:not(.modal).has-nav .page-body{padding-top:6px}
-/* settings: a full window page, like a desktop app's preferences */
-body.dock .page.modal.mroot{inset:0;left:0;top:0;margin:0;width:auto;height:auto;border-radius:0;border:0;box-shadow:none;background:var(--bg);transform:none}
-body.native.dock .page.modal.mroot{top:40px}
-body.dock .page.modal.mroot.on{transform:none}
-body.dock .scrim:has(+ .page.modal.mroot){display:none}
-/* pages opened from a settings row stay inside the settings window, in the content area */
-body.dock .page.modal:not(.mroot){inset:0 0 0 300px;left:300px;top:0;margin:0;width:auto;height:auto;border-radius:0;border:0;box-shadow:none;background:var(--bg);transform:none;opacity:0}
-body.dock .page.modal:not(.mroot).on{opacity:1;transform:none}
-body.native.dock .page.modal:not(.mroot){top:40px}
-body.dock .page.modal:not(.mroot) .page-head{height:76px;padding:0 clamp(20px,4.4vw,88px);border-bottom:0}
-body.dock .page.modal:not(.mroot) .page-body{padding:4px clamp(28px,5vw,96px) 80px}
-body.dock .page.modal:not(.mroot) .wrap{max-width:900px;margin:0 auto}
-body.dock .page.modal:not(.mroot) .group{background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;overflow:hidden}
-body.dock .page.modal.mroot.has-nav>.page-head{position:absolute;left:0;top:0;width:300px;height:76px;display:flex;align-items:center;padding:0 22px;z-index:3;border:0}
-.page-head:has(.backapp){display:flex}.backapp span{white-space:nowrap}
-.backapp{display:flex;align-items:center;gap:10px;height:38px;padding:0 12px 0 6px;border-radius:10px;font-size:15px;color:var(--fg-soft)}.backapp .ic{width:18px;height:18px}.backapp:hover{color:var(--fg);background:var(--raised)}
-body.dock .page.modal.mroot.has-nav .pnav{top:76px;width:300px;padding:8px 18px 28px;border-right:0}
-body.dock .page.modal.mroot.has-nav .pnav button{padding:11px 14px;border-radius:10px;font-size:15px}
-body.dock .page.modal.mroot.has-nav .pnav button.on{background:var(--raised-2);color:var(--fg)}
-body.dock .page.modal.mroot.has-nav .page-body{margin-left:300px;padding:44px clamp(28px,5vw,96px) 90px}
-body.dock .page.modal.mroot.has-nav .wrap{max-width:900px;margin:0 auto}
-body.dock .page.modal.mroot.has-nav .glabel{font-size:28px;font-weight:600;letter-spacing:-.025em;padding:0 0 6px;color:var(--fg)}
-.gsub{margin:0 0 28px;color:var(--muted);font-size:15px;line-height:1.5}
-body.dock .page.modal.mroot.has-nav .group{background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;overflow:hidden;margin-bottom:18px}
-body.dock .page.modal.mroot.has-nav .row{padding:18px 24px;min-height:64px;border-top:0;border-bottom:1px solid var(--line-soft)}
-body.dock .page.modal.mroot.has-nav .group>.row:last-child{border-bottom:0}
-body.dock .page.modal.mroot.has-nav .row b{font-size:15px;font-weight:500}
-body.dock .page.modal.mroot.has-nav .row .tx span{font-size:13.5px}
-body.dock .page.modal.mroot.has-nav .gnote{padding:4px 4px 0;font-size:13.5px}
-.psearch{height:42px;background:var(--surface);border:1px solid var(--line-soft)}
-.laycards{display:flex;gap:12px;flex:0 0 auto}
-.lay{position:relative;display:flex;flex-direction:column;gap:8px;align-items:stretch;width:136px;padding:6px 6px 10px;border-radius:14px;border:1px solid var(--line-soft);background:var(--bg);font-size:13.5px;color:var(--muted);transition:border-color .15s,color .15s}
+.laycards{display:flex;gap:10px;flex:0 0 auto}
+.row.laytop{align-items:flex-start}.row.laytop .tx span,.row.ctl .tx span{white-space:normal;overflow:visible;text-overflow:clip}
+.lay{position:relative;display:flex;flex-direction:column;gap:7px;align-items:stretch;width:132px;padding:6px 6px 8px;border-radius:14px;border:1px solid var(--line-soft);background:var(--bg);font-size:13.5px;color:var(--muted);transition:border-color .15s,color .15s}
 .lay:hover{border-color:var(--line);color:var(--fg-soft)}
 .lay.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);color:var(--fg)}
 .lay-name{text-align:center}
 .lay-ok{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#000;display:grid;place-items:center}.lay-ok .ic{width:13px;height:13px}
-.lay-pic{position:relative;display:block;height:70px;border-radius:9px;background:var(--surface);overflow:hidden}
+.lay-pic{position:relative;display:block;height:54px;border-radius:9px;background:var(--surface);overflow:hidden}
 .lay-pic i{position:absolute;top:6px;bottom:6px;border-radius:5px;background:var(--raised-2)}
 .lay-pic .lp-main{left:44px;right:34px;background:var(--raised)}
 .lay-pic .lp-panel{right:6px;width:24px;background:var(--raised)}
@@ -865,6 +839,7 @@ details.more-opts .group{margin-top:8px}
 body.dock .page:not(.modal) .page-body:has(.lcards,.cgrid,.spg){padding:8px clamp(24px,3vw,56px) 56px}
 body.dock .page:not(.modal) .wrap:has(.lcards,.cgrid,.spg){max-width:none;width:100%}
 body.dock{--col:clamp(760px,50vw,980px)}
+body.dense .thread-inner{gap:12px}body.dense .bubble{padding:7px 14px}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer-wrap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:40px 24px 10px;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 88%,transparent) 35%,transparent);pointer-events:none}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer-wrap>*{pointer-events:auto}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer{background:color-mix(in srgb,var(--surface) 58%,transparent);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06)}
@@ -1725,7 +1700,7 @@ thread.addEventListener("scroll", () => {
   stick = gap < 80;
   $("#toBottom").classList.toggle("on", gap > 320);
 }, {passive:true});
-function stickDown(force){ if (force || stick) thread.scrollTop = thread.scrollHeight; }
+function stickDown(force){ if (force || (stick && S.autoScroll !== false)) thread.scrollTop = thread.scrollHeight; }
 $("#toBottom").onclick = () => thread.scrollTo({top:thread.scrollHeight, behavior:"smooth"});
 addEventListener("resize", () => stickDown(false));
 
@@ -2170,7 +2145,7 @@ function renderDrawer(){
   const chats = S.chats.filter(c => !c.temp && (!q || c.title.toLowerCase().includes(q) || c.messages.some(m => String(m.content || "").toLowerCase().includes(q)))).sort((a, b) => S.sideOrder === "name" ? a.title.localeCompare(b.title) : S.sideOrder === "oldest" ? a.updated - b.updated : (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.updated - a.updated);
   if (!chats.length) { list.append(h("div", {class:"empty-list", text:q ? "No chats match that." : "Your chats will show up here."})); return; }
   let last = "";
-  const all = chats.length, cap = q || drawerAll ? all : 14;
+  const all = chats.length, cap = q || drawerAll ? all : (S.sideCount || 14);
   chats.slice(0, cap).forEach(c => {
     const g = S.groupChats === false ? "" : (c.pinned && S.sideOrder !== "name" && S.sideOrder !== "oldest" ? "Pinned" : dayGroup(c.updated)); if (g && g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
     const k = c.companion ? compById(c.companion) : null;
@@ -2251,8 +2226,6 @@ function settingsNav(L){
   const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
-  const head = L.el.querySelector(".page-head"); if (head) head.replaceChildren(h("button", {class:"backapp", type:"button", "aria-label":"Back to app", html:ic("chevron-left") + "<span>Back to app</span>", onclick:() => closeTop()}));
-  const SUB = {General:"How Vesper opens and behaves", Account:"Your profile and how Vesper addresses you", Usage:"Token counts, kept on this device", Appearance:"Theme, fonts and display scale", "Your Vesper":"Memory and personal instructions", Chat:"How chats read and send", Capabilities:"What Vesper can use and connect to", Providers:"Where your models come from", Models:"Pick and manage the models you use", Timeline:"Revisit what you did and when", Create:"Image and video generation", Extensions:"Connect apps and add skills", Server:"Run and reach Vesper from other devices", Pairing:"Link your other devices", Browser:"Web access for Vesper", Notifications:"Alerts and reminders", Sounds:"Sound effects and voice", Shortcuts:"Keyboard shortcuts", Privacy:"What stays on this device", Data:"Export, import and clear your data", Experimental:"Early features that may change", Help:"Guides and support", About:"Version and credits"};
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
   const viewBox = h("div", {class:"settings-view", hidden:true}); L.body.append(viewBox);
   let active = 0, currentView = "";
@@ -2263,7 +2236,7 @@ function settingsNav(L){
     if (t) { let lab = null, any = false; const flush = () => { if (lab) lab.style.display = any ? "" : "none"; };
       [...L.body.children].forEach(el => { if (el === viewBox) return; if (el.classList.contains("glabel")) { flush(); lab = el; any = false; } else if (el.classList.contains("group")) { const v = [...el.querySelectorAll(".row")].some(r => r.style.display !== "none"); el.style.display = v ? "" : "none"; any = any || v; } else if (el.classList.contains("gnote")) el.style.display = "none"; }); flush(); }
     else [...L.body.children].forEach(el => { if (el !== viewBox) el.style.display = ""; });
-    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); L.body.querySelectorAll(".gsub").forEach(p => { p.style.display = t ? "none" : ""; }); };
+    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); };
   const go = (tab, view) => { if (view === "home") { const i = sections().findIndex(g => g.textContent === tab); if (i >= 0) { active = i; q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; } } else settingsGo(view); };
   const showView = view => { currentView = view;
     const tab = view.indexOf("prov") === 0 ? "Providers" : "Models", i = sections().findIndex(g => g.textContent === tab);
@@ -2274,7 +2247,7 @@ function settingsNav(L){
     [...nav.querySelectorAll("button")].forEach((b, k) => b.classList.toggle("on", k === active));
     scroller.scrollTop = 0; };
   settingsNavApi = {view:showView, section:name => go(name, "home")};
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); sections().forEach(g => { if (SUB[g.textContent] && !(g.nextSibling && g.nextSibling.classList && g.nextSibling.classList.contains("gsub"))) g.after(h("p", {class:"gsub", text:SUB[g.textContent]})); }); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
     sections().forEach(g => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = sections().indexOf(g); q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; }})); });
     show(); };
   q.addEventListener("input", show);
@@ -2451,7 +2424,7 @@ const stamp = t => { const d = new Date(t); return d.toLocaleDateString(undefine
 let studioLive = null;
 function openStudio(kind, swap, opts){
   if (studioLive && stack.includes(studioLive.L)) { studioLive.set(kind, opts); return; }
-  const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:"square", q:"", sort:"recent", busy:0};
+  const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:S.shapeDef || "square", q:"", sort:"recent", busy:0};
   open("studio", () => {
     const bar = studioBar(st);
     const L = makePage("Studio", (w, L2) => { bar.el.hidden = false; bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); }, {full:true});
@@ -2510,14 +2483,17 @@ function studioSpace(w, L, st, bar){
   bar.refresh = draw;
   w.append(h("div", {class:"sspace"}, rail, h("div", {class:"smain"}, h("label", {class:"ssearch", html:ic("search")}, q), grid))); draw();
 }
+// Picture orientation is shown as small rectangles, never as words.
+const ORIENT = [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]];
+function oriPick(cur, pick){ const g = h("div", {class:"sori", role:"radiogroup", "aria-label":"Picture orientation"}); ORIENT.forEach(([id, t]) => g.append(h("button", {type:"button", role:"radio", title:t, "aria-label":t, "aria-checked":String(cur === id), class:cur === id ? "on" : "", html:'<i class="ori ' + id + '"></i>', onclick:() => pick(id)}))); return g; }
 function studioBar(st){
-  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("div", {class:"sseg", role:"group", "aria-label":"Image or video"}), mImg = h("button", {type:"button", html:ic("image") + "<span>Image</span>"}), mVid = h("button", {type:"button", html:ic("video") + "<span>Video</span>"}), lib = h("button", {class:"slib", type:"button", title:"Library", "aria-label":"Library", html:ic("images") + "<span>Library</span>"}), shape = h("button", {class:"schip", type:"button", "aria-label":"Choose a shape"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
+  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("div", {class:"sseg", role:"group", "aria-label":"Image or video"}), mImg = h("button", {type:"button", html:ic("image") + "<span>Image</span>"}), mVid = h("button", {type:"button", html:ic("video") + "<span>Video</span>"}), lib = h("button", {class:"slib", type:"button", title:"Library", "aria-label":"Library", html:ic("images") + "<span>Library</span>"}), shape = h("div", {class:"sori", role:"radiogroup", "aria-label":"Picture orientation"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
   const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, lib, go), api = {el, refresh:() => {}, sync:() => {}};
   mode.append(mImg, mVid);
-  api.sync = () => { mImg.classList.toggle("on", st.kind !== "video"); mVid.classList.toggle("on", st.kind === "video"); lib.classList.toggle("on", st.proj === "__all"); shape.hidden = st.kind === "video"; shape.innerHTML = "<span>" + ({square:"Square", portrait:"Portrait", landscape:"Wide"})[st.shape] + "</span>" + ic("chevron-down"); };
+  api.sync = () => { mImg.classList.toggle("on", st.kind !== "video"); mVid.classList.toggle("on", st.kind === "video"); lib.classList.toggle("on", st.proj === "__all"); shape.hidden = st.kind === "video"; [...shape.children].forEach(b => { const on = b.dataset.o === st.shape; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); }); };
   mImg.onclick = () => { st.kind = "image"; api.sync(); }; mVid.onclick = () => { st.kind = "video"; api.sync(); };
   lib.onclick = () => { st.proj = "__all"; st.filter = "all"; if (api.L) api.L.refresh(); };
-  shape.onclick = () => menu("sshape", "Shape", [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]].map(([id, t]) => ({icon:"image", label:t, run:() => { st.shape = id; api.sync(); }})));
+  ORIENT.forEach(([id, t]) => shape.append(h("button", {type:"button", role:"radio", title:t, "aria-label":t, "data-o":id, html:'<i class="ori ' + id + '"></i>', onclick:() => { st.shape = id; api.sync(); }})));
   ta.oninput = () => { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; };
   ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); el.requestSubmit(); } };
   el.onsubmit = async e => { e.preventDefault(); const prompt = ta.value.trim(); if (!prompt) { ta.focus(); return; }
@@ -2549,7 +2525,8 @@ function applyAccent(){
   else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
   document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
   document.body.classList.toggle("tinted", !!t.wall);
-  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : ""; document.body.style.setProperty("--z", Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "1");
+  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); }
+  document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : ""; document.body.style.setProperty("--z", Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "1");
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
 function applyCalm(){
@@ -2667,7 +2644,7 @@ function renderSettingsRoot(w){
   storageUsed().then(n => { used.textContent = bytes(n); });
   const reqN = Object.keys(S.waitlist || {}).filter(k => k.indexOf("app:") === 0).length;
   w.append(glabel("General"), group(
-    docked() ? ctlRow("Interface layout", "Choose how the sidebar and details panel sit beside the chat", layoutCards()) : null,
+    h("div", {class:"row ctl laytop"}, h("div", {class:"tx"}, h("b", {text:"Interface layout"}), h("span", {text:"Choose how the sidebar and details panel sit beside the chat"})), layoutCards()),
     switchRow({icon:"panel-left", title:"Keep details panel open", sub:"Opening or closing it in one chat applies to all", get:() => S.insp, set:v => setInsp(v)}),
     ctlRow("Language", "Vesper speaks English today. Other languages are planned", h("span", {class:"cval", text:"English"})),
     ctlRow("Space at start", "Choose where Vesper opens", dropdown("Space at start", [["chat", "Chat"], ["last", "Last used"]], S.startSpace || "chat", v => { S.startSpace = v; save(); })),
@@ -2717,7 +2694,11 @@ function renderSettingsRoot(w){
   w.append(glabel("Chat"), group(
     switchRow({icon:"panel-left", title:"Details panel", sub:"Model, context and live activity beside the chat", get:() => S.insp, set:v => setInsp(v)}),
     switchRow({icon:"menu", title:"Collapse the sidebar", sub:"Keep a narrow icon rail on wide screens", get:() => S.sideOff, set:v => setSide(v)}),
-    row({icon:"message-square", title:"Message actions", sub:"Hover a reply to copy, edit, retry or read it aloud", chev:false})
+    row({icon:"message-square", title:"Message actions", sub:"Hover a reply to copy, edit, retry or read it aloud", chev:false}),
+    ctlRow("Chat width", "How wide the conversation column is. Wide suits big monitors, narrow reads more like a page", dropdown("Chat width", [["narrow", "Narrow"], ["default", "Comfortable"], ["wide", "Wide"]], S.chatW || "default", v => { S.chatW = v; save(); applyAccent(); })),
+    ctlRow("Message spacing", "Compact fits more of a long answer on screen. Comfortable leaves more air between messages", dropdown("Message spacing", [["comfortable", "Comfortable"], ["compact", "Compact"]], S.dense || "comfortable", v => { S.dense = v; save(); applyAccent(); })),
+    switchRow({icon:"arrow-down", title:"Follow the reply", sub:"Keep scrolling down while a reply is being written. Turn off to read from the top while it streams", get:() => S.autoScroll !== false, set:v => { S.autoScroll = v; save(); }}),
+    ctlRow("Chats in the sidebar", "How many recent chats show before Show more. Older chats are always kept and searchable", dropdown("Chats in the sidebar", [["8", "8"], ["14", "14"], ["25", "25"], ["50", "50"]], String(S.sideCount || 14), v => { S.sideCount = +v; save(); renderDrawer(); }))
   ), gnote("Private chats start from the home screen and never touch this browser's storage."));
   w.append(glabel("Capabilities"), group(
     row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => settingsGo("providers")}),
@@ -2764,6 +2745,7 @@ function renderSettingsRoot(w){
     row({icon:"refresh-cw", title:"Reset timeline", sub:"Back to the normal view", onclick:() => { S.tlLevel = 2; S.tlWidth = "comfortable"; tlCats.forEach(([k]) => { S.tlShow[k] = true; }); save(); applyTimeline(); again(); toast("Timeline reset"); }})
   ), gnote("These control what appears in the chat. The full message text is always kept in the chat history."));
   w.append(glabel("Create"), group(
+    ctlRow("Default picture shape", "The orientation new images start with in Studio. You can change it for each picture in the prompt bar", oriPick(S.shapeDef || "square", v => { S.shapeDef = v; save(); const T = stack[stack.length - 1]; if (T && T.refresh) T.refresh(); })),
     row({icon:"sparkles", title:"Studio", sub:"Describe an image or a scene and Vesper makes it", onclick:() => openStudio("image")}),
     row({icon:"images", title:"Library", sub:"Everything you made, saved on this device", onclick:() => openLibrary()}),
     row({icon:"clapperboard", title:"Projects", sub:"Each project keeps its own media in Studio", val:String(projects().length), onclick:() => openStudio("image")})
