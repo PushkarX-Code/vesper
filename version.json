@@ -1,8 +1,9 @@
 {
- "version": "3.2",
+ "version": "3.3",
  "notes": [
-  "A new Studio: a banner home, how it works, and projects",
-  "Every project has its own workspace and prompt bar",
-  "Library and Studio are now one place"
+  "Settings now covers every app preference in one place",
+  "Characters, Learn and Studio fill the screen on desktop",
+  "Live Characters is gone",
+  "Fixes for model discovery, menus, Studio and token counts"
  ]
 }

@@ -41,6 +41,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
+body.calm{--d:1ms}
+body.calm *,body.calm *::before,body.calm *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
 input,textarea,select{font:inherit;color:inherit}
 a{color:inherit}
@@ -233,6 +235,7 @@ body.dock.side-off .app,body.dock.side-off .page{margin-left:64px}
 body.dock.side-off .d-brand{flex-direction:column;align-items:center;gap:6px;padding:4px 0 10px}body.dock.side-off .d-brand b,body.dock.side-off #dSearchBtn,body.dock.side-off .d-sec,body.dock.side-off .chat-list,body.dock.side-off .d-search,body.dock.side-off .d-new kbd,body.dock.side-off .tagp,body.dock.side-off .d-user .nm,body.dock.side-off #openSupport{display:none!important}
 body.dock.side-off .d-brand .left,body.dock.side-off .d-tools{justify-content:center}
 body.dock.side-off .spaces{flex-direction:column;margin:0 0 10px}body.dock.side-off .spaces button{font-size:0;gap:0;height:34px;flex:0 0 34px}
+body.no-spaces .spaces button[data-space="agent"],body.no-spaces .spaces button[data-space="code"]{display:none}
 body.dock.side-off .d-new{font-size:0;gap:0;justify-content:center;padding:10px 0}
 body.dock.side-off .chat-list{display:none}body.dock.side-off .d-foot{margin-top:auto}body.dock.side-off .d-user{flex-direction:column;padding:6px 0;gap:8px}
 /* desktop: sheets become centered dialogs */
@@ -329,6 +332,7 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .seg button{height:32px;padding:0 12px;border-radius:9px;font-size:13.5px;color:var(--muted)}.seg button.on{background:var(--raised-2);color:var(--fg)}
 .tin{width:min(260px,46vw);height:38px;padding:0 12px;border-radius:10px;border:0;background:var(--raised);outline:0;font-size:14.5px;color:var(--fg)}.tin:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 45%,transparent)}
 .cval{font-size:14px;color:var(--fg-soft);font-weight:500;flex:0 0 auto}
+kbd.key{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 8px;border-radius:7px;background:var(--raised);box-shadow:inset 0 0 0 1px var(--line);font-family:var(--ui);font-size:12px;font-weight:500;color:var(--fg-soft);white-space:nowrap}
 .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;overflow:hidden;background:linear-gradient(135deg,#1d2a44,#0c0f18);box-shadow:inset 0 0 0 1px var(--line)}
 .av img{width:100%;height:100%;object-fit:cover}.av img.mk{width:78%;height:78%;object-fit:contain}.av b{font-size:14px;font-weight:600}.av .logo-flat{width:17px;height:17px}
 .av.isgen{background:none;box-shadow:none}.av .gav{width:100%;height:100%}
@@ -1098,6 +1102,16 @@ function load(){
   s.memOn = s.memOn !== false;
   s.memory = Array.isArray(s.memory) ? s.memory.filter(m => m && m.text) : [];
   s.haptics = s.haptics !== false;
+  s.calm = s.calm === true;
+  s.updOff = s.updOff === true;
+  s.spell = s.spell !== false;
+  s.wrap = s.wrap !== false;
+  s.follow = s.follow === "queue" ? "queue" : "steer";
+  s.sendKey = s.sendKey === "ctrl" ? "ctrl" : "enter";
+  s.startSpace = s.startSpace === "last" ? "last" : "chat";
+  s.spacesOn = s.spacesOn !== false;
+  s.layout = ["dock", "compact", "focus"].includes(s.layout) ? s.layout : "dock";
+  s.lastSpace = ["chat", "agent", "code"].includes(s.lastSpace) ? s.lastSpace : "chat";
   s.waitlist = s.waitlist && typeof s.waitlist === "object" ? s.waitlist : {};
   s.bg = s.bg && typeof s.bg === "object" ? {id:["none","classic","night","geo","organic","mono","ocean","cream","sage","paper","sky","blush","photo"].includes(s.bg.id) ? s.bg.id : "none", photo:typeof s.bg.photo === "string" ? s.bg.photo : undefined, dim:Math.min(80, Math.max(0, +s.bg.dim || 35))} : {id:"none", dim:35};
   s.companions = Array.isArray(s.companions) ? s.companions.filter(x => x && x.id && x.name) : [];
@@ -1433,7 +1447,7 @@ function seg(options, cur, onPick){
 /* ---------- main screen ---------- */
 const thread = $("#thread"), inner = $("#threadInner"), input = $("#input"), sendBtn = $("#send");
 let privateMode = false, editIdx = null, stick = true;
-let busy = false, busyChat = null, controller = null, live = null;
+let busy = false, busyChat = null, controller = null, live = null, queued = [];
 function greeting(){
   const hr = new Date().getHours();
   if (hr < 5) return "Up late";
@@ -1613,7 +1627,7 @@ function syncSend(){
   else { sendBtn.classList.remove("stop"); sendBtn.innerHTML = ic("arrow-up"); sendBtn.setAttribute("aria-label", "Send"); sendBtn.disabled = !input.value.trim() && !pending.length; }
 }
 input.addEventListener("input", () => { autosize(); syncSend(); });
-input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing && enterSends()) { e.preventDefault(); submit(); } });
+input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing && (S.sendKey === "ctrl" ? (e.ctrlKey || e.metaKey) : true)) { e.preventDefault(); submit(); } });
 $("#composer").addEventListener("submit", e => { e.preventDefault(); submit(); });
 $("#modelChip").onclick = () => openModels();
 $("#cancelEdit").onclick = () => cancelEdit();
@@ -1628,8 +1642,14 @@ function cancelEdit(){
   editIdx = null; $("#editing").hidden = true; input.value = ""; autosize(); syncSend();
 }
 function submit(){
-  if (busy) { if (controller) controller.abort(); return; }
-  const text = input.value.trim(); if (!text && !pending.length) return;
+  const text = input.value.trim();
+  if (busy) {
+    if (!text && !pending.length) return;
+    if (S.follow === "queue") { queued.push({text:text, pending:pending.slice(), chat:chat() ? chat().id : null}); input.value = ""; autosize(); pending = []; renderAttach(); syncSend(); toast("Queued. It sends when the reply finishes."); }
+    else if (controller) controller.abort();
+    return;
+  }
+  if (!text && !pending.length) return;
   if (!anyReady()) { openProviders(); return; }
   const m = modelByKey(curKey());
   if (!m) { openModels(); return; }
@@ -1757,6 +1777,7 @@ async function generate(){
   busy = false; busyChat = null; controller = null; live = null;
   c.updated = Date.now(); save(); syncSend(); inspTick();
   if (chat() === c) renderThread(true);
+  if (queued.length) { const q = queued.shift(); if (!q.chat || (chat() && chat().id === q.chat)) { input.value = q.text; pending = q.pending; renderAttach(); submit(); } }
 }
 
 /* ---------- details panel: the model, live activity and token use ---------- */
@@ -1849,7 +1870,25 @@ const SPACES = {
   agent:{icon:"robot", title:"Agent", text:"Give Vesper a goal. It plans the steps, uses tools and checks its work, asking before anything changes.", items:["Plans and runs multi step tasks", "Uses the web, your files and your apps", "Asks for your approval at each step"]},
   code:{icon:"code", title:"Code", text:"Open a folder and build with Vesper. It reads your project, edits files and runs commands, only with your approval.", items:["A built in code editor", "Works with local or cloud models", "Every change shown before it is saved"]}
 };
-function setSpace(id){ S.space = SPACES[id] ? id : "chat"; save(); renderSpace(); }
+function setSpace(id){ S.space = SPACES[id] ? id : "chat"; S.lastSpace = S.space; save(); renderSpace(); }
+function setLayout(v){
+  S.layout = v;
+  if (v === "dock") S.sideOff = false;
+  else { S.sideOff = true; if (v === "focus") S.insp = false; }
+  document.body.classList.toggle("side-off", S.sideOff);
+  save(); applyAccent(); renderHeader(); renderInsp();
+}
+function setSpaces(on){
+  S.spacesOn = !!on; document.body.classList.toggle("no-spaces", !S.spacesOn);
+  if (!S.spacesOn && S.space !== "chat") setSpace("chat");
+  save();
+}
+function applyWriting(){
+  const i = $("#input"); if (!i) return;
+  i.spellcheck = S.spell !== false;
+  i.setAttribute("wrap", S.wrap === false ? "off" : "soft");
+  i.style.whiteSpace = S.wrap === false ? "pre" : "";
+}
 function renderSpace(){
   const sp = S.space || "chat", v = $("#spaceView"); document.body.dataset.space = sp; renderInsp();
   document.querySelectorAll(".spaces button").forEach(b => { const on = b.dataset.space === sp; b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on)); });
@@ -1963,7 +2002,7 @@ function openSettings(swap){ open("settings", () => { const L = makePage("Settin
 // Settings opens as a floating window on wide screens, with a menu of its sections on the left.
 function settingsNav(L){
   if (!L.el.classList.contains("modal")) return;
-  const ICON = {Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Notifications:"bell", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Create:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Notifications:"bell", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Create:"sparkles", Extensions:"lightning", Server:"laptop", Browser:"share-2", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.append(nav);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
@@ -2206,6 +2245,7 @@ function applyAccent(){
   const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "";
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
+function applyCalm(){ document.body.classList.toggle("calm", !!S.calm); }
 function dropdown(label, opts, cur, pick){
   const sel = h("select", {class:"dd", "aria-label":label});
   const add = (into, [v, t]) => into.append(h("option", {value:v, text:t}));
@@ -2275,53 +2315,174 @@ function renderSettingsRoot(w){
   const lenL = (LENGTHS.find(l => l.id === S.len) || LENGTHS[1]).label;
   const pr = prof(), av = h("button", {class:"avbtn", type:"button", "aria-label":"Change profile photo", onclick:() => pickAvatar(() => { refreshAll(); })}, avatarEl("lg"));
   const refreshAll = () => { const top = stack[stack.length - 1]; if (top && top.refresh) top.refresh(); renderFoot(); };
+  const again = () => { const top = stack[stack.length - 1]; if (top && top.refresh) top.refresh(); renderFoot(); };
+  const cm = modelByKey(curKey()), cprov = cm ? provOf(cm.p) : null, cctx = cm ? ctxOf(cm) : null;
+  const where = cm ? (cm.p === "pc" ? "On this PC" : (cprov ? cprov.name : "Local")) : "No model picked";
+  const modelSub = cm ? where + (cctx ? ", " + nf(cctx) + " tokens of context" : "") + ", " + creativityWord(S.temp).toLowerCase() + " replies" : "Add a provider or a local server to begin";
+  const total = S.models.length, hiddenN = Math.max(0, total - shown);
+  const used = h("b", {class:"cval", text:"Calculating"});
+  storageUsed().then(n => { used.textContent = bytes(n); });
+  const reqN = Object.keys(S.waitlist || {}).filter(k => k.indexOf("app:") === 0).length;
+  w.append(glabel("General"), group(
+    h("div", {class:"field"}, h("div", {class:"flabel"}, h("span", {text:"Interface layout"}), h("em", {text:S.layout === "compact" ? "Compact rail" : S.layout === "focus" ? "Focus" : "Sidebar open"})),
+      seg([{id:"dock", label:"Docked"}, {id:"compact", label:"Rail"}, {id:"focus", label:"Focus"}], S.layout || "dock", v => setLayout(v)),
+      h("small", {text:"Choose how the sidebar and details panel sit beside the chat."})),
+    switchRow({icon:"panel-left", title:"Keep details panel open", sub:"Opening or closing it in one chat applies to all", get:() => S.insp, set:v => setInsp(v)}),
+    ctlRow("Language", "Vesper speaks English today. Other languages are planned", h("span", {class:"cval", text:"English"})),
+    ctlRow("Space at start", "Choose where Vesper opens", dropdown("Space at start", [["chat", "Chat"], ["last", "Last used"]], S.startSpace || "chat", v => { S.startSpace = v; save(); })),
+    row({icon:"shield", title:"Permissions", sub:"Vesper only asks for the microphone when you use voice input. Files and keys stay on this device", chev:false}),
+    switchRow({icon:"robot", title:"Show Agent and Code spaces", sub:"Both are in development. Hide them until they are ready", get:() => S.spacesOn !== false, set:v => setSpaces(v)}),
+    ctlRow("Follow-up behavior", "Send while a reply is coming: stop it or queue the next message", dropdown("Follow-up behavior", [["steer", "Steer"], ["queue", "Queue"]], S.follow || "steer", v => { S.follow = v; save(); })),
+    ctlRow("Submit messages with", "Shift Enter always adds a new line", dropdown("Submit messages with", [["enter", "Enter"], ["ctrl", "Ctrl Enter"]], S.sendKey || "enter", v => { S.sendKey = v; save(); syncEnterHint(); })),
+    row({icon:"image", title:"Pinch to zoom", sub:"Use your browser zoom. Vesper also has a Display scale setting in Appearance", chev:false}),
+    switchRow({icon:"pencil", title:"Spellcheck", sub:"Underline misspelled words in the message box", get:() => S.spell !== false, set:v => { S.spell = v; save(); applyWriting(); }}),
+    switchRow({icon:"menu", title:"Wrap long lines", sub:"Wrap the message box instead of scrolling sideways", get:() => S.wrap !== false, set:v => { S.wrap = v; save(); applyWriting(); }}),
+    row({icon:"message-square", title:"Help and feedback", sub:"Tell us what broke or what you need", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper feedback"; }})
+  ), gnote("These are defaults for new chats and for the app as a whole. Changes apply right away."));
   w.append(glabel("Account"), group(
     ctlRow("Profile photo", "PNG, JPEG or WebP, up to 10 MB, or an exclusive avatar", av),
-    ctlRow("Full name", "", textCtl("Full name", "name", "Your name")),
-    ctlRow("What should Vesper call you?", "", textCtl("What should Vesper call you?", "call", "A first name or nickname")),
-    ctlRow("What best describes your work?", "", dropdown("Work", [["", "Choose"]].concat(WORK.map(x => [x, x])), pr.work || "", v => { pr.work = v; save(); }))
-  ));
+    ctlRow("Full name", "Shown in the app and sent with chats", textCtl("Full name", "name", "Your name")),
+    ctlRow("What should Vesper call you?", "Used at the start of replies", textCtl("What should Vesper call you?", "call", "A first name or nickname")),
+    ctlRow("What best describes your work?", "Helps Vesper pick examples and tone", dropdown("Work", [["", "Choose"]].concat(WORK.map(x => [x, x])), pr.work || "", v => { pr.work = v; save(); })),
+    row({icon:"user", title:"Account type", sub:"Local profile. No sign in, no email, nothing sent to us", val:"Local", chev:false}),
+    row({icon:"crown", title:"Plan", sub:"Every feature is free, with no paid tier", val:"Free", chev:false})
+  ), gnote("Your name and photo are read by the app. Your name is sent with chats so replies are written for you."));
   const u = usageStats();
   w.append(glabel("Usage"), group(
     ctlRow("Tokens this week", "Sent and received, all models", h("b", {class:"cval", text:nf(u.wk)})),
     ctlRow("Tokens in total", nf(u.p) + " sent, " + nf(u.c) + " received", h("b", {class:"cval", text:nf(u.p + u.c)})),
     ctlRow("Replies measured", "Counted since the details panel arrived", h("b", {class:"cval", text:String(u.n)})),
-    ...u.by.map(([k, v]) => ctlRow(k, "", h("span", {class:"cval", text:nf(v) + " tokens"})))
-  ), gnote("Counted on this device only."));
+    ...u.by.map(([k, v]) => ctlRow(k, "", h("span", {class:"cval", text:nf(v) + " tokens"}))),
+    ctlRow("Storage used", "Chats, settings, cache and the library in this browser", used),
+    row({icon:"refresh-cw", title:"Reset usage counts", sub:"Removes token counts from past replies. Chats stay", onclick:() => dialog({title:"Reset usage counts?", text:"This clears the token counts from every past reply on this device. Chats and settings stay as they are.", ok:"Reset", onOk:() => { S.chats.forEach(c => c.messages.forEach(m => { delete m.stats; })); save(); again(); toast("Usage counts reset"); }})})
+  ), gnote("Counted on this device only. Most providers report exact tokens; a few models send estimates."));
   w.append(glabel("Appearance"), group(
     ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
-    ctlRow("Display scale", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); }))
-  ));
+    ctlRow("Display scale", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
+    switchRow({icon:"clock", title:"Reduce motion", sub:"Removes the shimmer, slides and fades", get:() => S.calm, set:v => { S.calm = v; save(); applyCalm(); }})
+  ), gnote("On a wide screen, 100% is drawn slightly smaller so the app reads like a desktop app."));
   w.append(glabel("Your Vesper"), group(
     row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
     row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
     row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
     switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }}),
-    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }})
+    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }}),
+    row({icon:"users", title:"Characters", sub:"Personalities with their own voice and chats", val:S.companions.length ? S.companions.length + " yours" : CHAR_LIBRARY.length + " ready", onclick:() => openCompanions()})
   ));
+  w.append(glabel("Chat"), group(
+    switchRow({icon:"panel-left", title:"Details panel", sub:"Model, context and live activity beside the chat", get:() => S.insp, set:v => setInsp(v)}),
+    switchRow({icon:"menu", title:"Collapse the sidebar", sub:"Keep a narrow icon rail on wide screens", get:() => S.sideOff, set:v => setSide(v)}),
+    row({icon:"message-square", title:"Message actions", sub:"Hover a reply to copy, edit, retry or read it aloud", chev:false})
+  ), gnote("Private chats start from the home screen and never touch this browser's storage."));
   w.append(glabel("Capabilities"), group(
     row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
     row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
     row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()}),
     row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}),
     row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()}),
-    row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()})
+    row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()}),
+    row({icon:"mic", title:"Voice input", sub:"Uses your browser's speech service. Audio is not saved", chev:false}),
+    row({icon:"paperclip", title:"Attachments", sub:"Photos are shrunk here. Text files are sent as text", chev:false})
+  ));
+  w.append(glabel("Models"), group(
+    row({icon:"cpu", title:"Model in use", sub:modelSub, val:cm ? cm.name : "", onclick:() => openModels()}),
+    row({icon:"sliders-horizontal", title:"Shown in the picker", sub:hiddenN ? hiddenN + (hiddenN === 1 ? " discovered model is hidden" : " discovered models are hidden") : "Every discovered model is shown", val:shown + " of " + total, onclick:() => manageModels()}),
+    row({icon:"robot", title:"Find your model", sub:"A pick that fits this computer's memory and graphics", onclick:() => openAdvisor()}),
+    row({icon:"refresh-cw", title:"Discover models", sub:"Ask each connected provider for its latest list", onclick:() => openProviders()})
+  ), gnote("A model is saved as provider::id, so two providers can offer the same name. Hidden models stay available in Manage models."));
+  w.append(glabel("Create"), group(
+    row({icon:"sparkles", title:"Studio", sub:"Describe an image or a scene and Vesper makes it", onclick:() => openStudio("image")}),
+    row({icon:"images", title:"Library", sub:"Everything you made, saved on this device", onclick:() => openLibrary()}),
+    row({icon:"clapperboard", title:"Projects", sub:"Each project keeps its own media in Studio", val:String(projects().length), onclick:() => openStudio("image")})
+  ), gnote("Images and videos stay in this browser. Prompts go to the generator you pick."));
+  w.append(glabel("Extensions"), group(
+    row({icon:"lightning", title:"Skills", sub:"Reusable instructions for one chat", val:String(SKILLS.length + (S.skills || []).length) + " ready", onclick:() => openSkills()}),
+    row({icon:"plug", title:"Connect apps", sub:"Ask for the apps you use. Nothing connects until you turn it on", val:reqN + " requested", onclick:() => openApps()})
+  ));
+  w.append(glabel("Server"), group(
+    row({icon:"laptop", title:"Local connections", sub:"Ollama, LM Studio and OpenAI compatible servers", val:S.conns.length ? String(S.conns.length) : "None", onclick:() => openLocal()}),
+    row({icon:"key-round", title:"Cloud providers", sub:"Free models from providers you connect", val:nReady ? String(nReady) : "None", onclick:() => openProviders()})
+  ), gnote("Local calls to private addresses are allowed by the browser from this page. No server is run by Node Folds."));
+  w.append(glabel("Browser"), group(
+    row({icon:"download", title:"Install Vesper", sub:"Use your browser's install option to add it to the home screen", chev:false}),
+    row({icon:"refresh-cw", title:"Offline files", sub:"Download the app files again on the next visit", onclick:() => dialog({title:"Clear the offline cache?", text:"Vesper downloads its files again the next time you open it. Chats, settings and the library stay.", ok:"Clear cache", onOk:clearOffline})}),
+    row({icon:"external-link", title:"Open the website", sub:"vesper.nodefolds.com", onclick:() => { location.href = "https://vesper.nodefolds.com"; }})
   ));
   w.append(glabel("Notifications"), group(
     switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
-    row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION, onclick:() => checkUpdate(true)})
-  ));
+    switchRow({icon:"bell", title:"Update notices", sub:"A small window when a new version is ready", get:() => !S.updOff, set:v => { S.updOff = !v; save(); }}),
+    row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION + ". Checking now is always allowed", onclick:() => checkUpdate(true)})
+  ), gnote("Vesper has no push notifications. These only use the device in front of you."));
   w.append(glabel("Privacy"), group(
     row({icon:"download", title:"Export chats", sub:"Save a backup file", onclick:exportChats, chev:false}),
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
+    row({icon:"ghost", title:"Private chats", sub:"Nothing is saved, not even the title", chev:false}),
+    row({icon:"key-round", title:"API keys", sub:"Kept in this browser and sent only to the provider you pick", chev:false}),
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
-  ), gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
+  ), gnote("No analytics, no ads and no account. Messages go only to the AI provider you pick."));
+  w.append(glabel("Data"), group(
+    row({icon:"message-square", title:"Chats stored", sub:"Private chats are never counted", val:String(S.chats.filter(c => !c.temp).length), chev:false}),
+    row({icon:"users", title:"Characters saved", sub:"Ready made and your own", val:String(S.companions.length), chev:false}),
+    row({icon:"trash-2", title:"Clear the library", sub:"Deletes every Studio image and video on this device", danger:true, onclick:() => dialog({title:"Clear the library?", text:"This deletes every image and video Studio saved on this device. Chats and settings stay.", ok:"Clear library", danger:true, onOk:clearLibrary})}),
+    row({icon:"download", title:"Clear offline cache", sub:"The app downloads again on the next visit", onclick:() => dialog({title:"Clear the offline cache?", text:"Vesper downloads its files again the next time you open it. Chats, settings and the library stay.", ok:"Clear cache", onOk:clearOffline})}),
+    row({icon:"user", title:"Reset profile", sub:"Removes your name, photo and work", danger:true, onclick:() => dialog({title:"Reset your profile?", text:"This removes your name, photo, avatar and work. Chats and settings stay.", ok:"Reset profile", danger:true, onOk:() => { S.profile = {}; save(); renderFoot(); again(); toast("Profile reset"); }})})
+  ), gnote("Clearing the cache or the library never touches your chats and settings."));
   if (DESKTOP) w.append(glabel("Desktop app"), group(
     row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()}),
     ctlRow("Closing the window", "Vesper keeps running in the tray so a local model stays ready", h("span", {class:"cval", text:"Tray"}))
   ));
-  w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}), row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()})));
-  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION + ", by Node Folds"})));
+  w.append(glabel("Help"), group(
+    row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}),
+    row({icon:"info", title:"Keyboard shortcuts", sub:"Every shortcut in the app", onclick:() => openShortcuts()}),
+    row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }}),
+    row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()})
+  ));
+  w.append(glabel("About"), group(
+    row({icon:"info", title:"Vesper", sub:"By Node Folds. Free and private", val:"Version " + APP_VERSION, chev:false}),
+    row({icon:"shield", title:"Privacy policy", sub:"nodefolds.com/privacy", onclick:() => { location.href = "https://nodefolds.com/privacy"; }}),
+    row({icon:"info", title:"Terms of use", sub:"nodefolds.com/terms", onclick:() => { location.href = "https://nodefolds.com/terms"; }}),
+    row({icon:"code", title:"Source code", sub:"github.com/PushkarX-Code/vesper", onclick:() => { location.href = "https://github.com/PushkarX-Code/vesper"; }}),
+    row({icon:"coffee", title:"Licenses", sub:"Fonts, icons and open source libraries", onclick:() => openLicenses()})
+  ));
+}
+function bytes(n){ n = Math.max(0, +n || 0); return n >= 1073741824 ? (n / 1073741824).toFixed(1) + " GB" : n >= 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
+async function storageUsed(){ let n = new Blob([localStorage.getItem(STORE) || ""]).size; try { const e = navigator.storage && navigator.storage.estimate ? await navigator.storage.estimate() : null; if (e && e.usage) n = e.usage; } catch (err) {} return n; }
+async function clearOffline(){ try { const r = navigator.serviceWorker && await navigator.serviceWorker.getRegistration(); if (r) await r.update(); const ks = await caches.keys(); await Promise.all(ks.map(k => caches.delete(k))); } catch (e) {} toast("Cache cleared. It downloads again on the next visit"); }
+async function clearLibrary(){ try { const db = await mdb(); await new Promise((res, rej) => { const tx = db.transaction("media", "readwrite"); tx.objectStore("media").clear(); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); } catch (e) {} Object.keys(murls).forEach(k => { try { URL.revokeObjectURL(murls[k]); } catch (e) {} delete murls[k]; }); S.projects = []; save(); toast("Library cleared"); const top = stack[stack.length - 1]; if (top && top.refresh) top.refresh(); }
+function openShortcuts(){
+  const keys = [
+    [DESKTOP ? "Ctrl N" : "Ctrl Shift O", "New chat"],
+    ["Ctrl B", "Show or hide the sidebar"],
+    ["Ctrl K", "Search chats"],
+    ["Ctrl I", "Open or close the details panel"],
+    ["Ctrl 1", "Chat space"],
+    ["Ctrl 2", "Agent space"],
+    ["Ctrl 3", "Code space"],
+    ["Ctrl ,", "Settings"],
+    ["Esc", "Close the top window, menu or dialog"]
+  ];
+  const msg = [["Enter", "Send a message, when Enter key sends is on"], ["Shift Enter", "Start a new line in the message box"], ["Microphone", "Speak instead of typing, on a phone"]];
+  open("shortcuts", () => makePage("Keyboard shortcuts", w => {
+    w.append(gnote("Shortcuts need a keyboard. On a phone, the buttons do the same job."));
+    w.append(glabel("App"), group(...keys.map(([k, t]) => ctlRow(t, "", h("kbd", {class:"key", text:k})))));
+    w.append(glabel("Message box"), group(...msg.map(([k, t]) => ctlRow(t, "", h("kbd", {class:"key", text:k})))));
+  }));
+}
+function openLicenses(){
+  const libs = [
+    ["Inter", "The app font", "SIL Open Font License 1.1"],
+    ["Phosphor Icons", "Most icons", "MIT"],
+    ["Lucide", "The Settings gear and a few icons", "ISC"],
+    ["marked", "Markdown in replies", "MIT"],
+    ["DOMPurify", "Cleans rendered replies", "Apache 2.0 or MPL 2.0"],
+    ["Tauri", "The Windows app shell", "MIT or Apache 2.0"],
+    ["llama.cpp", "Models on this PC", "MIT"]
+  ];
+  open("licenses", () => makePage("Licenses", w => {
+    w.append(gnote("Vesper is free. These projects make it work and each keeps its own license."));
+    w.append(glabel("Fonts and icons"), group(...libs.slice(0, 3).map(([n, d, l]) => row({title:n, sub:d + ". " + l, chev:false}))));
+    w.append(glabel("Libraries"), group(...libs.slice(3).map(([n, d, l]) => row({title:n, sub:d + ". " + l, chev:false}))));
+  }));
 }
 function creativityWord(t){ return t < 0.45 ? "Focused" : t < 1.05 ? "Balanced" : "Wild"; }
 
@@ -2946,12 +3107,12 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "3.2";
+const APP_VERSION = "3.3";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
 async function checkUpdate(manual){
-  if (!manual && Date.now() - updAt < 30 * 60e3) return; updAt = Date.now();
+  if (!manual && (S.updOff || Date.now() - updAt < 30 * 60e3)) return; updAt = Date.now();
   try {
     const v = await (await fetch((DESKTOP ? "https://pushkarx-code.github.io/vesper/" : "") + "version.json?t=" + Date.now(), {cache:"no-store"})).json();
     if (v && newer(v.version, APP_VERSION)) { if (manual || updShown !== v.version) { updShown = v.version; showUpdate(v); } }
@@ -3335,6 +3496,12 @@ function syncEnterHint(){ input.setAttribute("enterkeyhint", enterSends() ? "sen
 syncEnterHint();
 applyIcon();
 applyBg();
+applyCalm();
+applyWriting();
+setSpaces(S.spacesOn !== false);
+if (S.startSpace === "chat") S.space = "chat";
+else if (S.startSpace === "last") S.space = S.lastSpace;
+if (S.layout === "compact" || S.layout === "focus") { S.sideOff = true; if (S.layout === "focus") S.insp = false; }
 history.replaceState({vd:0}, "");
 applyInspW(); applyDock(); renderSpace(); refreshMain();
 if (DESKTOP) pcList().then(() => { refreshMain(); renderFoot(); });
