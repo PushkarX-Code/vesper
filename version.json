@@ -1,9 +1,8 @@
 {
- "version": "2.9",
+ "version": "3.0",
  "notes": [
-  "Image Studio and Video Studio are here",
-  "A Library for everything you create",
-  "Skills: give any chat a job in one tap",
-  "Full color app logos and settings icons"
+  "Details panel: see the model, live activity and token use",
+  "A new Settings window with your profile and usage",
+  "Themes, including gradient themes that tint the whole app"
  ]
 }

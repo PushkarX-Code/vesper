@@ -52,7 +52,7 @@ svg{display:block}
 .app{display:flex;flex-direction:column;height:100dvh;padding-top:env(safe-area-inset-top,0px)}
 
 /* header */
-.top{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;height:56px;flex:0 0 auto;
+.top{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;height:56px;flex:0 0 auto;
   padding-left:max(4px,env(safe-area-inset-left,0px));padding-right:max(4px,env(safe-area-inset-right,0px))}
 .top-center{display:flex;justify-content:center;min-width:0}
 .top-title{font-size:15px;font-weight:600;color:var(--fg-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
@@ -268,8 +268,84 @@ body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spa
 body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
 .sgl:hover{background:var(--raised);color:var(--fg)}.sgl .ic{width:18px;height:18px;color:var(--muted)}
+/* desktop motion: quick fades and small scale, never slides or drops */
+body.dock{--d:160ms}
+body.dock .page:not(.modal){transform:none;opacity:0}
+body.dock .page:not(.modal).on{opacity:1}
+body.dock .page.modal{transform:translate(-50%,-50%) scale(.98)}
+body.dock .page.modal.on{transform:translate(-50%,-50%)}
+body.dock .sheet:not(.pop){transform:translateY(-50%) scale(.98)}
+body.dock .sheet:not(.pop).on{transform:translateY(-50%)}
+body.dock .dialog{transform:translate(-50%,-50%) scale(.98)}
+body.dock .dialog.on{transform:translate(-50%,-50%)}
+/* menus open as small popovers next to what you clicked */
+body.dock .sheet.pop{top:0;left:0;bottom:auto;right:auto;width:240px;margin:0;max-height:60vh;padding:6px;border-radius:14px;border:1px solid var(--line);background:var(--sheet);box-shadow:0 18px 50px rgba(0,0,0,.55);opacity:0;transform:scale(.97);transform-origin:var(--ox,100%) 0}
+body.dock .sheet.pop.on{opacity:1;transform:none}
+.sheet.pop .grab,.sheet.pop .sheet-head{display:none}
+.sheet.pop .sheet-body{padding:0}
+.sheet.pop .mrow{padding:8px 10px;min-height:0;border-radius:9px;font-size:14px;gap:10px}.sheet.pop .mrow:hover{background:var(--raised)}.sheet.pop .mrow .ic{width:18px;height:18px}
+.sheet.pop .mrow .tx b{font-weight:500}
+.scrim.clear{background:transparent}
+/* avatar picker */
+.hive{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 0 8px}
+.hive .hr{display:flex;gap:8px;align-items:center}
+.hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
+.hive button:hover{transform:scale(1.06)}
+.hive button.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--fg)}
+.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg,.gav .logo-flat{width:58%;height:58%}
+.avfoot{display:flex;align-items:center;gap:8px;padding:12px 4px 2px}.avfoot .sp{flex:1}
+.avfoot .btn{height:38px;padding:0 16px;font-size:14px}
+/* settings window: header, menu with search, flat rows */
+.page.modal .page-head{border-bottom:1px solid var(--line-soft)}
+.page.modal.has-nav{padding-left:0}
+.page.modal.has-nav .page-body{margin-left:270px;padding:8px 28px 28px}
+.page.modal.has-nav .wrap{max-width:none}
+.page.modal.has-nav .pnav{top:62px;width:270px;padding:14px 14px}
+.psearch{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;margin:0 0 10px;border-radius:12px;background:var(--raised)}
+.psearch .ic{width:17px;height:17px;color:var(--faint)}.psearch input{flex:1;min-width:0;background:none;border:0;outline:0;font-size:14.5px}
+.pnav hr{border:0;border-top:1px solid var(--line-soft);margin:8px 12px}
+.page.modal.has-nav .glabel{font-size:16px;font-weight:600;color:var(--fg);padding:26px 0 4px}
+.page.modal.has-nav .group{background:none;border:0;border-radius:0;overflow:visible}
+.page.modal.has-nav .row{padding:16px 0;min-height:58px;border-bottom:1px solid var(--line-soft);border-top:0}
+.page.modal.has-nav .row .rico{display:none}
+.page.modal.has-nav .gnote{padding-left:0}
+.row.ctl{justify-content:space-between}
+.seg{display:inline-flex;gap:2px;padding:3px;border-radius:12px;background:var(--raised);flex:0 0 auto}
+.seg button{height:32px;padding:0 12px;border-radius:9px;font-size:13.5px;color:var(--muted)}.seg button.on{background:var(--raised-2);color:var(--fg)}
+.tin{width:min(260px,46vw);height:38px;padding:0 12px;border-radius:10px;border:0;background:var(--raised);outline:0;font-size:14.5px;color:var(--fg)}.tin:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 45%,transparent)}
+.cval{font-size:14px;color:var(--fg-soft);font-weight:500;flex:0 0 auto}
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;overflow:hidden;background:linear-gradient(135deg,#1d2a44,#0c0f18);box-shadow:inset 0 0 0 1px var(--line)}
+.av img{width:100%;height:100%;object-fit:cover}.av img.mk{width:78%;height:78%;object-fit:contain}.av b{font-size:14px;font-weight:600}.av .logo-flat{width:17px;height:17px}
+.av.isgen{background:none;box-shadow:none}.av .gav{width:100%;height:100%}
+.av.lg{width:52px;height:52px}.av.lg b{font-size:20px}.avbtn{border-radius:50%;flex:0 0 auto}.avbtn:hover .av{box-shadow:inset 0 0 0 1px var(--line),0 0 0 3px var(--raised-2)}
+.avgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.avgrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;background:var(--raised);font-size:12.5px;color:var(--fg-soft)}
+.avgrid button.on{box-shadow:inset 0 0 0 2px var(--accent)}.avgrid img{width:46px;height:46px;object-fit:contain}
+body.dock.tinted .page.modal,body.tinted .page.modal .pfoot,body.tinted .ihead{background:var(--sheet)}body.tinted .insp{background:rgba(0,0,0,.25)}
+.ddw{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;margin-right:-6px}
+.dd{appearance:none;-webkit-appearance:none;background:none;border:0;outline:0;color:var(--fg);font:inherit;font-size:14.5px;height:36px;padding:0 30px 0 12px;border-radius:10px;cursor:pointer;text-align:right}
+.dd:hover,.dd:focus-visible{background:var(--raised)}.dd option,.dd optgroup{background:var(--surface);color:var(--fg)}
+.ddw .ic{position:absolute;right:8px;top:50%;margin-top:-7px;width:14px;height:14px;pointer-events:none;color:var(--muted)}
+.switch[aria-checked="true"]{background:var(--grad,var(--accent))}
+/* details panel */
+.insp{display:none}
+body.insp-on .insp{display:block;position:fixed;right:0;top:0;bottom:0;width:320px;z-index:25;background:var(--surface);border-left:1px solid var(--line-soft);overflow-y:auto}
+body.native.insp-on .insp{top:40px}
+body.insp-on .app{margin-right:320px}
+.icon-btn.flip .ic{transform:scaleX(-1)}
+#topRight{display:flex;justify-content:flex-end;align-items:center}
+.ihead{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 6px 18px;position:sticky;top:0;background:var(--surface);z-index:1}.ihead b{font-size:15px;font-weight:600}.ihead .icon-btn{width:36px;height:36px}
+.isec{padding:10px 18px 14px;border-bottom:1px solid var(--line-soft)}
+.isec h4{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.imodel{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}.imodel b{font-size:15px}.imodel span{font-size:12px;color:var(--faint);word-break:break-all}
+.irow{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13.5px}.irow span{color:var(--muted)}.irow b{font-weight:500;text-align:right}
+.iphase{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:6px;border-radius:12px;background:var(--raised);font-size:14px}
+.iphase i{width:8px;height:8px;border-radius:50%;background:var(--faint)}.iphase.live i{background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
+.iphase b{flex:1;font-weight:500}.iphase span{color:var(--muted);font-variant-numeric:tabular-nums}
+.itail{margin-top:8px;max-height:180px;overflow:hidden;font-size:12.5px;line-height:1.5;color:var(--muted);white-space:pre-wrap;-webkit-mask:linear-gradient(transparent,#000 30%)}
+.ibar{height:6px;border-radius:6px;background:var(--raised);overflow:hidden;margin:8px 0 6px}.ibar i{display:block;height:100%;background:var(--grad,var(--accent))}
+.inote{font-size:12px;color:var(--faint)}
 /* colored icon tiles in settings */
-.rico{width:30px;height:30px;border-radius:9px;background:var(--c);color:#fff;display:grid;place-items:center;flex:0 0 auto}.rico .ic{width:17px;height:17px}
+.rico{width:22px;height:22px;display:grid;place-items:center;flex:0 0 auto;color:var(--fg-soft)}.rico .ic{width:20px;height:20px}.row.danger .rico{color:#ff6b6b}
 /* skills */
 .skill-chip{display:flex;align-items:center;gap:8px;margin:4px 6px 0;padding:6px 8px 6px 10px;border-radius:12px;background:color-mix(in srgb,#ffb340 14%,transparent);color:#ffcf80;font-size:13px;font-weight:500;width:max-content;max-width:100%}
 .skill-chip .ic{width:15px;height:15px}.skill-chip button{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;color:inherit}.skill-chip button:hover{background:rgba(255,255,255,.08)}
@@ -302,11 +378,12 @@ body.dock #skillChip{order:-1;width:auto}
 .setup .pct{font-size:12.5px;color:var(--muted)}
 @media (max-width:560px){.setup{flex-wrap:wrap}.setup .sa{width:100%;align-items:stretch}.setup .bar{width:100%}}
 /* one line composer on wide screens */
-body.dock .composer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px;padding:8px;border-radius:30px}
+body.dock .composer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px;padding:8px;border-radius:30px}
+body.dock .composer .c-btn,body.dock .composer .send,body.dock #modelChip{height:40px}body.dock .composer .c-btn{width:40px}
 body.dock .composer .c-row,body.dock .composer .c-side{display:contents}
 body.dock #attachRow{order:-1;width:100%}
 body.dock #attachBtn{order:0;background:var(--raised)}
-body.dock .composer textarea{order:1;flex:1;width:auto;min-width:0;padding:8px 8px}
+body.dock .composer textarea{order:1;flex:1;width:auto;min-width:0;padding:8px 6px;line-height:24px;min-height:40px}
 body.dock #modelChip{order:2;background:none}body.dock #modelChip:hover{background:var(--raised)}
 body.dock #micBtn{order:3}body.dock #send{order:4}
 body.dock .c-btn:hover{background:var(--raised)}
@@ -320,7 +397,6 @@ body.native .page.modal{top:calc(50% + 20px)}
 .page.modal.mroot .page-head h2{grid-column:1;grid-row:1}
 .page.modal.mroot .page-head>.icon-btn{grid-column:2;grid-row:1}
 .page.modal .group{background:var(--bg)}
-.page.modal.has-nav{padding-left:250px}
 .page.modal.has-nav .page-body{padding-bottom:28px}
 .pnav{position:absolute;left:0;top:0;bottom:0;width:250px;border-right:1px solid var(--line-soft);padding:16px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
 .pnav button{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;font-size:14.5px;color:var(--fg-soft);text-align:left}
@@ -693,6 +769,12 @@ select.input{appearance:none;background-image:none}
   <symbol id="i-images" viewBox="0 0 256 256" fill="currentColor"><path d="M216,40H72A16,16,0,0,0,56,56V72H40A16,16,0,0,0,24,88V200a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V184h16a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM72,56H216v62.75l-10.07-10.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L72,109.37ZM184,200H40V88H56v80a16,16,0,0,0,16,16H184Zm32-32H72V132l36-36,49.66,49.66a8,8,0,0,0,11.31,0L194.63,120,216,141.38V168ZM160,84a12,12,0,1,1,12,12A12,12,0,0,1,160,84Z"/></symbol>
   <symbol id="i-lightning" viewBox="0 0 256 256" fill="currentColor"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/></symbol>
   <symbol id="i-video" viewBox="0 0 256 256" fill="currentColor"><path d="M251.77,73a8,8,0,0,0-8.21.39L208,97.05V72a16,16,0,0,0-16-16H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V159l35.56,23.71A8,8,0,0,0,248,184a8,8,0,0,0,8-8V80A8,8,0,0,0,251.77,73ZM192,184H32V72H192V184Zm48-22.95-32-21.33V116.28L240,95Z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 256 256" fill="currentColor"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 256 256" fill="currentColor"><path d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 256 256" fill="currentColor"><path d="M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z"/></symbol>
+  <symbol id="i-desktop" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40ZM48,56H208a8,8,0,0,1,8,8v80H40V64A8,8,0,0,1,48,56ZM208,184H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"/></symbol>
   <symbol id="i-plug" viewBox="0 0 256 256" fill="currentColor"><path d="M237.66,18.34a8,8,0,0,0-11.32,0l-52.4,52.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L100,88.69l-6.34-6.35A8,8,0,0,0,82.34,93.66L88.69,100,65.37,123.31a32,32,0,0,0,0,45.26l5.38,5.37-52.41,52.4a8,8,0,0,0,11.32,11.32l52.4-52.41,5.37,5.38a32,32,0,0,0,45.26,0L156,167.31l6.34,6.35a8,8,0,0,0,11.32-11.32L167.31,156l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,52.41-52.4A8,8,0,0,0,237.66,18.34Zm-116.29,161a16,16,0,0,1-22.62,0L76.69,157.25a16,16,0,0,1,0-22.62L100,111.31,144.69,156Zm57.94-57.94L156,144.69,111.31,100l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,179.31,121.37ZM88.57,35A8,8,0,0,1,103.43,29l8,20A8,8,0,0,1,96.57,55ZM24.57,93A8,8,0,0,1,35,88.57l20,8A8,8,0,0,1,49,111.43l-20-8A8,8,0,0,1,24.57,93ZM231.43,163a8,8,0,0,1-10.4,4.46l-20-8A8,8,0,1,1,207,144.57l20,8A8,8,0,0,1,231.43,163Zm-64,58.06A8,8,0,0,1,152.57,227l-8-20A8,8,0,0,1,159.43,201Z"/></symbol>
   <symbol id="i-panel-left" viewBox="0 0 256 256" fill="currentColor"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
@@ -787,6 +869,7 @@ select.input{appearance:none;background-image:none}
   </div>
 </div>
 
+<aside class="insp" id="insp" aria-label="Model and activity details"></aside>
 <div class="scrim" id="drawerScrim"></div>
 <aside class="drawer layer" id="drawer" aria-label="Chats" inert>
   <div class="d-brand"><div class="left"><i class="logo-flat" aria-hidden="true"></i><b>Vesper</b></div><div class="d-tools"><button class="icon-btn" id="dSearchBtn" type="button" aria-label="Search chats" title="Search (Ctrl+K)"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></button><button class="icon-btn" id="dSideBtn" type="button" aria-label="Hide the sidebar" title="Sidebar (Ctrl+B)"><svg class="ic" aria-hidden="true"><use href="#i-panel-left"/></svg></button></div></div>
@@ -801,7 +884,7 @@ select.input{appearance:none;background-image:none}
   <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot">
-    <div class="d-user"><span class="av"><i class="logo-flat" aria-hidden="true"></i></span><button class="nm" id="dStatus" type="button"><b id="dStatusT">Free and private</b><small id="dStatusS">Keys and chats stay here</small></button><button class="icon-btn" id="openSupport" type="button" aria-label="Support Vesper" title="Support Vesper"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg></button><button class="icon-btn" id="openSettings" type="button" aria-label="Settings" title="Settings (Ctrl+,)"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button></div>
+    <div class="d-user"><span class="av" id="dAvatar"><i class="logo-flat" aria-hidden="true"></i></span><button class="nm" id="dStatus" type="button"><b id="dStatusT">Free and private</b><small id="dStatusS">Keys and chats stay here</small></button><button class="icon-btn" id="openSupport" type="button" aria-label="Support Vesper" title="Support Vesper"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg></button><button class="icon-btn" id="openSettings" type="button" aria-label="Settings" title="Settings (Ctrl+,)"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button></div>
   </div>
 </aside>
 
@@ -982,6 +1065,7 @@ function companionPrompt(k){
 function systemPrompt(c){
   const k = c && c.companion ? compById(c.companion) : null;
   let s = k ? companionPrompt(k) : SYSTEM;
+  const pf = S.profile || {}; if ((pf.call || pf.name || "").trim()) s += "\n\nCall the user " + (pf.call || pf.name).trim() + "."; if (pf.work) s += " They work in " + pf.work.toLowerCase() + ".";
   if (S.about.trim()) s += "\n\nAbout the user:\n" + S.about.trim();
   if (S.respond.trim()) s += "\n\nHow the user wants replies:\n" + S.respond.trim();
   if (S.open) s += "\n\n" + OPEN_RULE;
@@ -1057,7 +1141,7 @@ async function discover(pid){
     if (pid === "openrouter") {
       list = data.filter(m => m.id.endsWith(":free") || (m.pricing && +m.pricing.prompt === 0 && +m.pricing.completion === 0))
         .filter(m => !SKIP.test(m.id) && (!m.architecture || !m.architecture.output_modalities || m.architecture.output_modalities.includes("text")))
-        .map(m => ({id:m.id, name:(m.name || m.id).replace(/\s*\(free\)\s*$/i, "").replace(/^[^:]{2,30}:\s*/, ""), note:"Free"}));
+        .map(m => ({id:m.id, ctx:m.context_length || undefined, name:(m.name || m.id).replace(/\s*\(free\)\s*$/i, "").replace(/^[^:]{2,30}:\s*/, ""), note:"Free"}));
       const live = new Set(data.map(m => m.id));
       const inUse = new Set(S.chats.map(c => c.model));
       S.models = S.models.filter(m => m.p !== "openrouter" || m.added || inUse.has(mk(m)) || live.has(m.id) || DEFAULT_MODELS.some(d => d.id === m.id));
@@ -1219,9 +1303,16 @@ function dialog({title, text, ok = "OK", danger = false, input = null, placehold
   });
 }
 // action sheet: each item closes the sheet first, then runs, so a follow up panel opens cleanly after.
+let lastHit = null;
+addEventListener("pointerdown", e => { lastHit = e.target.closest("button,[role=button],a,.avbtn"); }, true);
 function menu(id, title, items){
+  const anchor = lastHit && lastHit.isConnected ? lastHit.getBoundingClientRect() : null;
   open(id, () => {
     const L = makeSheet(title);
+    if (docked() && anchor) { L.el.classList.add("pop"); L.scrim.classList.add("clear"); const w = 240, z = parseFloat(document.body.style.zoom) || 1;
+      let x = anchor.right - w, y = anchor.bottom + 6; if (x < 8) x = Math.min(anchor.left, innerWidth / z - w - 8); const right = x + w / 2 < anchor.left + anchor.width / 2;
+      L.el.style.left = x + "px"; L.el.style.top = y + "px"; L.el.style.setProperty("--ox", right ? "0%" : "100%");
+      requestAnimationFrame(() => { const r = L.el.getBoundingClientRect(); if (r.bottom > innerWidth && false) return; if (r.bottom > innerHeight / z - 8) L.el.style.top = Math.max(8, anchor.top - r.height - 6) + "px"; }); }
     items.forEach(it => L.body.append(h("button", {class:"mrow" + (it.danger ? " danger" : ""), type:"button", onclick:() => { closeTop(); it.run(); }}, icEl(it.icon), h("div", {class:"tx"}, h("b", {text:it.label})))));
     return L;
   });
@@ -1263,7 +1354,7 @@ function greeting(){
   if (hr < 17) return "Good afternoon";
   return "Good evening";
 }
-function refreshMain(){ renderHeader(); renderThread(); renderChip(); syncSend(); if (docked()) renderDrawer(); }
+function refreshMain(){ renderHeader(); renderThread(); renderChip(); syncSend(); if (docked()) renderDrawer(); renderInsp(); }
 function renderHeader(){
   const c = chat(); const empty = !c || !c.messages.length;
   const center = $("#topCenter"); center.innerHTML = "";
@@ -1273,6 +1364,7 @@ function renderHeader(){
   else if (!empty) center.append(h("span", {class:"top-title", text:c.title}));
   input.placeholder = k ? "Message " + k.name : "Ask anything";
   const right = $("#topRight"); right.innerHTML = "";
+  if (docked()) right.append(h("button", {class:"icon-btn flip" + (S.insp ? " on" : ""), type:"button", "aria-label":"Details", title:"Details (Ctrl+I)", onclick:() => setInsp(!S.insp), html:ic("panel-left")}));
   if (empty && anyReady() && !k) right.append(h("button", {class:"icon-btn" + (privateMode ? " on" : ""), type:"button", "aria-pressed":String(privateMode), "aria-label":"Private chat", onclick:togglePrivate, html:ic("ghost")}));
   else if (!empty) right.append(iconBtn("square-pen", "New chat", () => newChat()));
 }
@@ -1302,9 +1394,11 @@ async function pcSetup(m){
 }
 function renderFoot(){
   const t = $("#dStatusT"), sub = $("#dStatusS"); if (!t) return;
+  const da = $("#dAvatar"); if (da) da.replaceWith(Object.assign(avatarEl(), {id:"dAvatar"}));
   const n = Object.keys(PROVIDERS).filter(p => ready(p)).length;
-  if (DESKTOP) { t.textContent = pcFiles.length ? "Local AI ready" : "Set up local AI"; sub.textContent = pcFiles.length ? pcFiles.length + (pcFiles.length > 1 ? " models" : " model") + " on this PC" : "One click, works offline"; }
-  else { t.textContent = "Free and private"; sub.textContent = n ? n + (n > 1 ? " providers" : " provider") + " connected" : "Add a free model to start"; }
+  const nm = (prof().name || "").trim();
+  if (DESKTOP) { t.textContent = nm || (pcFiles.length ? "Local AI ready" : "Set up local AI"); sub.textContent = pcFiles.length ? pcFiles.length + (pcFiles.length > 1 ? " models" : " model") + " on this PC" : "One click, works offline"; }
+  else { t.textContent = nm || "Free and private"; sub.textContent = n ? n + (n > 1 ? " providers" : " provider") + " connected" : "Add a free model to start"; }
 }
 function renderHero(){
   inner.innerHTML = "";
@@ -1482,6 +1576,9 @@ async function generate(){
   const hasImg = !!(outgoing && outgoing.images && outgoing.images.length);
   if (history.length && history[0].role === "assistant") history.unshift({role:"user", content:"Hi."});
   const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
+  if (["openrouter", "groq", "cerebras", "pc"].includes(P.id)) payload.stream_options = {include_usage:true};
+  act = {chat:c.id, model:mk(m), phase:"Sending to " + (P.id === "pc" ? "this PC" : P.name), start:performance.now(), first:0, chars:0, rchars:0, rtail:"", usage:null, max:len.tokens, inTok:estTok(JSON.stringify(payload.messages))};
+  inspTick();
 
   busy = true; busyChat = c.id; syncSend();
   const wrap = h("div", {class:"msg ai"}); const ans = h("div", {class:"answer", html:`<span class="thinking"><span class="shimmer">Thinking</span></span>`});
@@ -1505,11 +1602,12 @@ async function generate(){
   try {
     if (P.id === "pc") {
       if (!DESKTOP) throw {friendly:"This model runs only in the Vesper app on your PC. Pick another model here."};
-      ans.innerHTML = `<span class="thinking"><span class="shimmer">Loading the model</span></span>`;
+      ans.innerHTML = `<span class="thinking"><span class="shimmer">Loading the model</span></span>`; act.phase = "Loading the model";
       try { await pcEnsure(m.id); } catch (e) { throw {friendly:String(e && e.message || e)}; }
       Object.assign(P, provOf("pc"));
       ans.innerHTML = `<span class="thinking"><span class="shimmer">Thinking</span></span>`;
     }
+    act.phase = "Waiting for the first word";
     const res = await apiFetch(P, "/chat/completions", {method:"POST", signal:controller.signal, headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
     if (!res.ok) {
       let b = null; try { b = await res.json(); } catch (e) {}
@@ -1520,7 +1618,7 @@ async function generate(){
     const ct = res.headers.get("content-type") || "";
     if (!ct.includes("event-stream") && ct.includes("json")) {
       const j = await res.json(); const msg = (j.choices && j.choices[0] && j.choices[0].message) || {};
-      text = msg.content || ""; reasoning = msg.reasoning || msg.reasoning_content || ""; paint();
+      text = msg.content || ""; reasoning = msg.reasoning || msg.reasoning_content || ""; if (j.usage) act.usage = j.usage; act.first = act.first || performance.now(); act.chars = text.length; paint();
     } else {
       const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
       const handleLine = line => {
@@ -1528,10 +1626,11 @@ async function generate(){
         const data = line.slice(5).trim(); if (data === "[DONE]") return;
         let j; try { j = JSON.parse(data); } catch (e) { return; }
         if (j.error) throw {friendly:friendlyError(+j.error.code || 0, j, P)};
+        if (j.usage) act.usage = j.usage;
         const d = (j.choices && j.choices[0] && j.choices[0].delta) || {};
         const r = typeof d.reasoning === "string" ? d.reasoning : (typeof d.reasoning_content === "string" ? d.reasoning_content : "");
-        if (r) { if (!t0) t0 = performance.now(); reasoning += r; sched(); }
-        if (typeof d.content === "string" && d.content) { if (t0 && !secs) secs = Math.max(1, Math.round((performance.now() - t0) / 1000)); text += d.content; sched(); }
+        if (r) { if (!t0) t0 = performance.now(); if (!act.first) act.first = t0; act.phase = "Thinking"; act.rchars += r.length; reasoning += r; act.rtail = reasoning.slice(-600); sched(); }
+        if (typeof d.content === "string" && d.content) { if (t0 && !secs) secs = Math.max(1, Math.round((performance.now() - t0) / 1000)); if (!act.first) act.first = performance.now(); act.phase = "Writing"; text += d.content; act.chars = text.length; sched(); }
       };
       while (true) {
         const {value, done} = await reader.read(); if (done) break;
@@ -1561,14 +1660,68 @@ async function generate(){
     const out = {role:"assistant", content:text, model:mk(m)};
     if (added.length) out.saved = added.length;
     if (reasoning) { out.reasoning = reasoning.slice(0, 20000); out.secs = secs || Math.max(1, Math.round((performance.now() - (t0 || performance.now())) / 1000)); }
+    out.stats = actStats();
     c.messages.push(out);
   } else if (aborted) c.messages.push({role:"assistant", error:true, content:"You stopped this reply.", model:mk(m)});
   else c.messages.push({role:"assistant", error:true, content:fail.friendly, fix:fail.fix || null, pid:P.id, model:mk(m)});
+  act.phase = text.trim() ? "Done" : aborted ? "Stopped" : "Failed"; act.end = performance.now();
   busy = false; busyChat = null; controller = null; live = null;
-  c.updated = Date.now(); save(); syncSend();
+  c.updated = Date.now(); save(); syncSend(); inspTick();
   if (chat() === c) renderThread(true);
 }
 
+/* ---------- details panel: the model, live activity and token use ---------- */
+let act = null, inspTimer = 0;
+const estTok = t => Math.ceil(String(t || "").length / 4);
+const nf = n => n == null ? "" : n >= 10000 ? (n / 1000).toFixed(n >= 100000 ? 0 : 1) + "k" : String(Math.round(n));
+const secTxt = ms => ms < 1000 ? Math.round(ms) + " ms" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s";
+function actStats(){
+  if (!act) return null; const end = act.end || performance.now(), u = act.usage;
+  const comp = u && u.completion_tokens != null ? u.completion_tokens : estTok("x".repeat(act.chars + act.rchars));
+  return {p:u && u.prompt_tokens != null ? u.prompt_tokens : act.inTok, c:comp, est:!u, ttft:act.first ? Math.round(act.first - act.start) : null, ms:Math.round(end - act.start)};
+}
+function ctxOf(m){ if (!m) return null; if (m.ctx) return m.ctx; if (m.p === "pc") return 8192; return null; }
+function inspOn(){ return docked() && !!S.insp; }
+function setInsp(on){ S.insp = !!on; save(); document.body.classList.toggle("insp-on", inspOn()); renderInsp(); renderHeader(); }
+function inspTick(){ renderInsp(); clearInterval(inspTimer); if (busy && inspOn()) inspTimer = setInterval(() => { if (!busy) clearInterval(inspTimer); renderInsp(); }, 500); }
+function irow(k, v, cls){ return h("div", {class:"irow" + (cls ? " " + cls : "")}, h("span", {text:k}), h("b", {text:v})); }
+function renderInsp(){
+  const el = $("#insp"); document.body.classList.toggle("insp-on", inspOn()); if (!inspOn()) return;
+  const c = chat(), m = modelByKey(curKey()), P = m && provOf(m.p), len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
+  el.innerHTML = "";
+  el.append(h("div", {class:"ihead"}, h("b", {text:"Details"}), iconBtn("x", "Close details", () => setInsp(false))));
+  const ctx = ctxOf(m);
+  el.append(h("div", {class:"isec"}, h("h4", {text:"Model"}),
+    h("div", {class:"imodel"}, h("b", {text:m ? m.name : "No model"}), h("span", {text:m ? m.id : "Pick one in the message box"})),
+    irow("Runs", !m ? "" : m.p === "pc" ? "On this PC" : P && P.local ? "Your server, " + P.name : "Cloud, " + (P ? P.name : m.p)),
+    irow("Context window", ctx ? nf(ctx) + " tokens" : "Not reported"),
+    irow("Reply limit", nf(len.tokens) + " tokens"),
+    irow("Creativity", creativityWord(S.temp) + ", " + S.temp)));
+  const now = performance.now(), live = act && busy && c && act.chat === c.id;
+  if (live || (act && c && act.chat === c.id && act.end && now - act.end < 60000)) {
+    const el2 = h("div", {class:"isec"}, h("h4", {text:"Activity"}));
+    const t = (act.end || now) - act.start, outTok = estTok("x".repeat(act.chars + act.rchars)), gen = act.first ? ((act.end || now) - act.first) / 1000 : 0, speed = gen > .3 ? outTok / gen : 0;
+    el2.append(h("div", {class:"iphase" + (live ? " live" : "")}, h("i"), h("b", {text:act.phase}), h("span", {text:secTxt(t)})));
+    el2.append(irow("First word", act.first ? secTxt(act.first - act.start) : "Waiting"), irow("Written", act.usage && act.usage.completion_tokens != null ? nf(act.usage.completion_tokens) + " tokens" : "about " + nf(outTok) + " tokens"), irow("Speed", speed ? speed.toFixed(1) + " tokens a second" : "Measuring"));
+    if (live && speed) { const left = Math.max(0, act.max - outTok) / speed; el2.append(irow("Time left", "at most " + secTxt(left * 1000))); }
+    if (live && act.phase === "Thinking" && act.rtail) el2.append(h("div", {class:"itail", text:act.rtail}));
+    el.append(el2);
+  }
+  if (c && c.messages.length) {
+    const used = estTok(systemPrompt(c)) + c.messages.filter(x => !x.error).reduce((n, x) => n + estTok(x.content) + estTok(x.reasoning ? "" : ""), 0);
+    const sec = h("div", {class:"isec"}, h("h4", {text:"This chat"}));
+    sec.append(irow("Messages", String(c.messages.length)), irow("In context", "about " + nf(used) + " tokens"));
+    if (ctx) { const pct = Math.min(100, used / ctx * 100); sec.append(h("div", {class:"ibar"}, h("i", {style:"width:" + pct.toFixed(1) + "%"})), h("div", {class:"inote", text:pct.toFixed(pct < 10 ? 1 : 0) + "% of the context window"})); }
+    const st = c.messages.filter(x => x.stats).map(x => x.stats), tot = st.reduce((a, x) => [a[0] + (x.p || 0), a[1] + (x.c || 0)], [0, 0]);
+    if (st.length) sec.append(irow("Sent, all replies", nf(tot[0]) + " tokens"), irow("Received, all replies", nf(tot[1]) + " tokens"));
+    el.append(sec);
+    const last = [...c.messages].reverse().find(x => x.stats);
+    if (last && !live) { const x = last.stats; el.append(h("div", {class:"isec"}, h("h4", {text:"Last reply"}),
+      irow("Sent", nf(x.p) + " tokens" + (x.est ? ", estimated" : "")), irow("Received", nf(x.c) + " tokens" + (x.est ? ", estimated" : "")),
+      irow("First word", x.ttft != null ? secTxt(x.ttft) : ""), irow("Total time", secTxt(x.ms)), irow("Speed", x.ms && x.c ? (x.c / Math.max(.3, (x.ms - (x.ttft || 0)) / 1000)).toFixed(1) + " tokens a second" : ""))); }
+  }
+  el.append(h("div", {class:"inote", style:"padding:4px 18px 18px", text:"Exact counts come from the provider when it reports them. Others are estimates."}));
+}
 /* ---------- drawer ---------- */
 const drawerL = {id:"drawer", el:$("#drawer"), scrim:$("#drawerScrim"), refresh:() => renderDrawer()};
 drawerL.scrim.addEventListener("click", () => { if (stack[stack.length - 1] === drawerL) closeTop(); });
@@ -1582,7 +1735,7 @@ function docked(){ return dockMQ.matches; }
 function applyDock(){ const on = docked(); document.body.classList.toggle("dock", on);
   if (on) { const i = stack.indexOf(drawerL); if (i >= 0) { stack.splice(i, 1); drawerL.scrim.classList.remove("on"); } $("#drawer").removeAttribute("inert"); appEl.inert = stack.length > 0; renderDrawer(); }
   else if (!stack.includes(drawerL)) { if (drawerInHist) { stack.unshift(drawerL); showLayer(drawerL); } else $("#drawer").setAttribute("inert", ""); } }
-dockMQ.addEventListener("change", applyDock);
+dockMQ.addEventListener("change", () => { applyDock(); renderInsp(); renderHeader(); });
 function setSide(off){ S.sideOff = !!off; save(); document.body.classList.toggle("side-off", S.sideOff); }
 function toggleSide(){ if (docked()) setSide(!S.sideOff); else $("#openDrawer").click(); }
 document.body.classList.toggle("side-off", !!S.sideOff);
@@ -1598,6 +1751,7 @@ addEventListener("keydown", e => {
   else if (k === "b" && !e.shiftKey) { e.preventDefault(); toggleSide(); }
   else if (k === "k" && docked()) { e.preventDefault(); if (S.sideOff) setSide(false); $("#drawer").classList.add("searching"); $("#chatSearch").focus(); }
   else if (k === ",") { e.preventDefault(); openSettings(); }
+  else if (k === "i" && docked()) { e.preventDefault(); setInsp(!S.insp); }
 });
 function dayGroup(t){
   const d = new Date(t), now = new Date();
@@ -1686,11 +1840,15 @@ function openSettings(swap){ open("settings", () => { const L = makePage("Settin
 // Settings opens as a floating window on wide screens, with a menu of its sections on the left.
 function settingsNav(L){
   if (!L.el.classList.contains("modal")) return;
-  const ICON = {Models:"cpu", Create:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Notifications:"bell", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Create:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.append(nav);
-  const build = () => { nav.innerHTML = ""; L.body.querySelectorAll(".glabel").forEach((g, i) => nav.append(h("button", {type:"button", class:i ? "" : "on", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => scroller.scrollTo({top:g.offsetTop - 8, behavior:"smooth"})}))); };
-  scroller.addEventListener("scroll", () => { const gs = [...L.body.querySelectorAll(".glabel")]; let k = 0; gs.forEach((g, i) => { if (g.offsetTop - 40 <= scroller.scrollTop) k = i; }); if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) k = gs.length - 1; [...nav.children].forEach((b, i) => b.classList.toggle("on", i === k)); }, {passive:true});
+  const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
+  q.addEventListener("input", () => { const t = q.value.trim().toLowerCase();
+    L.body.querySelectorAll(".row").forEach(r => r.style.display = !t || r.textContent.toLowerCase().includes(t) ? "" : "none");
+    L.body.querySelectorAll(".glabel").forEach(g => { const grp = g.nextElementSibling; const any = !t || (grp && [...grp.querySelectorAll(".row")].some(r => r.style.display !== "none")); g.style.display = any ? "" : "none"; if (grp && grp.classList.contains("group")) grp.style.display = any ? "" : "none"; }); });
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, "Desktop app":1, Help:1}; L.body.querySelectorAll(".glabel").forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", class:i ? "" : "on", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => scroller.scrollTo({top:g.offsetTop - 8, behavior:"smooth"})})); }); };
+  scroller.addEventListener("scroll", () => { const gs = [...L.body.querySelectorAll(".glabel")]; let k = 0; gs.forEach((g, i) => { if (g.offsetTop - 40 <= scroller.scrollTop) k = i; }); if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) k = gs.length - 1; [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", i === k)); }, {passive:true});
   const r = L.refresh; L.refresh = () => { r(); build(); }; build();
 }
 // Apps Vesper will connect to. Logos are from Simple Icons (CC0). Connectors are not built yet, so Request only saves interest on this device.
@@ -1832,37 +1990,140 @@ function openLibrary(swap){
     w.append(h("div", {class:"studio"}, chips, grid)); draw();
   }), swap);
 }
+// One simple theme: an accent color with its gradient, a background tone and a text size.
+// Themes: each one sets the whole look (background, surfaces, lines, highlight and its gradient). Gradient themes tint the app like a wallpaper.
+const THEMES = {
+  midnight:{name:"Midnight", g:"Classic", accent:"#6ea8ff", grad:"linear-gradient(135deg,#6ea8ff,#8b5cf6)", bg:"#000000"},
+  graphite:{name:"Graphite", g:"Classic", accent:"#c7cad3", grad:"linear-gradient(135deg,#e5e7eb,#8e8e93)", bg:"#0f0f11", surface:"#17171a", raised:"#222226", raised2:"#2c2c31", line:"#2c2c31", lineSoft:"#212125"},
+  ocean:{name:"Deep Ocean", g:"Gradient", accent:"#5fd4f4", grad:"linear-gradient(135deg,#38bdf8,#22d3ee)", bg:"#04121c", wall:"linear-gradient(160deg,#06263a 0%,#051521 45%,#030b12 100%)", tint:"8,30,46"},
+  alpine:{name:"Alpine", g:"Gradient", accent:"#6ee7b7", grad:"linear-gradient(135deg,#34d399,#a3e635)", bg:"#04140e", wall:"linear-gradient(160deg,#0b2e22 0%,#061a13 45%,#030c09 100%)", tint:"10,40,30"},
+  twilight:{name:"Twilight", g:"Gradient", accent:"#b4a2ff", grad:"linear-gradient(135deg,#a78bfa,#6366f1)", bg:"#0d0a1c", wall:"linear-gradient(160deg,#241a4a 0%,#130f2b 45%,#08071a 100%)", tint:"34,26,72"},
+  ember:{name:"Ember", g:"Gradient", accent:"#ffa36b", grad:"linear-gradient(135deg,#fb923c,#f43f5e)", bg:"#160807", wall:"linear-gradient(160deg,#3a140d 0%,#200a08 45%,#0d0505 100%)", tint:"58,22,14"},
+  sakura:{name:"Sakura", g:"Gradient", accent:"#ff9ec7", grad:"linear-gradient(135deg,#f472b6,#c084fc)", bg:"#170a12", wall:"linear-gradient(160deg,#3a1630 0%,#210c1b 45%,#0e060b 100%)", tint:"58,22,48"},
+  titanium:{name:"Titanium", g:"Gradient", accent:"#d6d3cf", grad:"linear-gradient(135deg,#e7e5e4,#a8a29e)", bg:"#0e0d0c", wall:"linear-gradient(160deg,#2a2826 0%,#171615 45%,#0b0a0a 100%)", tint:"42,40,38"}
+};
+function applyAccent(){
+  const st = document.documentElement.style, t = THEMES[S.theme] || THEMES.midnight;
+  st.setProperty("--accent", t.accent); st.setProperty("--grad", t.grad); st.setProperty("--bg", t.bg);
+  if (t.tint) { const c = t.tint; [["--surface", "rgba(" + c + ",.55)"], ["--sheet", "rgb(" + c + ")"], ["--raised", "rgba(255,255,255,.07)"], ["--raised-2", "rgba(255,255,255,.11)"], ["--line", "rgba(255,255,255,.12)"], ["--line-soft", "rgba(255,255,255,.07)"]].forEach(([k, v]) => st.setProperty(k, v)); }
+  else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
+  document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
+  document.body.classList.toggle("tinted", !!t.wall);
+  document.body.style.zoom = S.zoom && S.zoom !== 1 ? S.zoom : "";
+  const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
+}
+function dropdown(label, opts, cur, pick){
+  const sel = h("select", {class:"dd", "aria-label":label});
+  const add = (into, [v, t]) => into.append(h("option", {value:v, text:t}));
+  opts.forEach(o => Array.isArray(o[1]) ? sel.append((g => { o[1].forEach(x => add(g, x)); return g; })(h("optgroup", {label:o[0]}))) : add(sel, o));
+  sel.value = cur; sel.onchange = () => pick(sel.value);
+  return h("label", {class:"ddw"}, sel, icEl("chevron-down"));
+}
+const WORK = ["Design", "Video and content", "Marketing", "Engineering", "Writing", "Student", "Business", "Other"];
+function prof(){ S.profile = S.profile || {}; return S.profile; }
+function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " " + cls : "")});
+  if (pr.photo) a.append(h("img", {src:pr.photo, alt:""})); else if (pr.gen) { a.classList.add("isgen"); a.append(genAvatar(pr.gen.g, pr.gen.c)); } else if (pr.mark) a.append(h("img", {src:"icons/" + pr.mark + "/mark.webp", alt:"", class:"mk"}));
+  else if (pr.name) a.append(h("b", {text:pr.name.trim().charAt(0).toUpperCase()})); else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
+  return a; }
+async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
+// Generated avatars: one of our glyphs on a color. The first glyph is the Vesper mark.
+const AV_COLORS = ["#8b6a43", "#d65a4f", "#4f8f7a", "#5b8fd9", "#8a7a72", "#6f7782", "#d97757", "#c2577f", "#a9cfc4", "#c9c6db", "#e8a33d", "#d6608c", "#9a5a45", "#5b5873", "#e2b39d", "#7d6fc4", "#e5cbd8", "#3f8a6e", "#e07a52"];
+const AV_GLYPHS = [null,
+  '<circle cx="12" cy="7" r="4.4"/><circle cx="17" cy="12" r="4.4"/><circle cx="12" cy="17" r="4.4"/><circle cx="7" cy="12" r="4.4"/>',
+  '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
+  '<g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></g><circle cx="12" cy="12" r="2.6"/>',
+  '<circle cx="6" cy="6" r="2.4"/><circle cx="12" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="12" cy="12" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="12" cy="18" r="2.4"/><circle cx="18" cy="18" r="2.4"/>',
+  '<path d="M4 20v-6h5V9h5V4h6v16z"/>',
+  '<path d="M5 4h14v4h-4.5v8H19v4H5v-4h4.5V8H5z"/>',
+  '<rect x="4" y="4" width="7" height="7" rx="2.4"/><rect x="13" y="4" width="7" height="7" rx="2.4"/><rect x="4" y="13" width="7" height="7" rx="2.4"/><rect x="13" y="13" width="7" height="7" rx="2.4"/>'];
+function lightColor(hex){ const n = parseInt(hex.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; }
+function genAvatar(g, c, size){ const col = AV_COLORS[c % AV_COLORS.length], fg = lightColor(col) ? "#151515" : "#ffffff";
+  const el = h("span", {class:"gav", style:"background:" + col + ";color:" + fg + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
+  el.innerHTML = AV_GLYPHS[g % AV_GLYPHS.length] ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + AV_GLYPHS[g % AV_GLYPHS.length] + '</svg>' : '<i class="logo-flat" style="--logo:' + fg + '" aria-hidden="true"></i>';
+  return el; }
+let avFile = null;
+function pickAvatar(after){
+  if (!avFile) { avFile = h("input", {type:"file", accept:"image/png,image/jpeg,image/webp", hidden:true}); document.body.append(avFile); }
+  avFile.onchange = async () => { const f = avFile.files[0]; avFile.value = ""; if (!f) return; if (f.size > 10485760) { toast("Pick a photo under 10 MB"); return; }
+    try { const pr = prof(); pr.photo = await squareImage(f, 256); pr.gen = null; pr.mark = ""; save(); after(); } catch (e) { toast("That photo couldn't be opened"); } };
+  const pr = prof(), has = pr.photo || pr.gen || pr.mark;
+  menu("avmenu", "Profile photo", [{icon:"image", label:"Upload photo", run:() => avFile.click()}, {icon:"user", label:"Choose an avatar", run:() => chooseAvatar(after)}]
+    .concat(has ? [{icon:"trash-2", label:"Remove", danger:true, run:() => { pr.photo = ""; pr.gen = null; pr.mark = ""; save(); after(); }}] : []));
+}
+function chooseAvatar(after){
+  const rows = [5, 8, 9, 8, 5]; let cells = [], pick = null;
+  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5); cells = Array.from({length:n}, (_, i) => ({g:i === 17 ? 0 : Math.floor(Math.random() * AV_GLYPHS.length), c:cs[i % cs.length]})); };
+  const cur = prof().gen; deal(); if (cur) cells[17] = {g:cur.g, c:cur.c}; pick = cells[17];
+  open("avpick", () => { const L = makeSheet("Choose an avatar"), hive = h("div", {class:"hive"});
+    const draw = () => { hive.innerHTML = ""; let k = 0; rows.forEach((n, r) => { const row = h("div", {class:"hr"}); for (let i = 0; i < n; i++, k++) { const cell = cells[k], d = Math.hypot(i - (n - 1) / 2, (r - 2) * 1.1), size = Math.round(Math.max(36, 78 - d * 11));
+      row.append(h("button", {type:"button", class:cell === pick ? "on" : "", "aria-label":"Avatar " + (k + 1), onclick:e => { pick = cell; hive.querySelectorAll("button").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); }}, genAvatar(cell.g, cell.c, size))); } hive.append(row); }); };
+    draw();
+    L.body.append(h("div", {style:"padding:0 18px 16px"}, h("div", {class:"gnote", style:"padding:0", text:"Use one of these instead of a photo."}), hive,
+      h("div", {class:"avfoot"}, h("button", {class:"btn ghost", type:"button", html:ic("refresh-cw") + "Shuffle", onclick:() => { deal(); pick = cells[17]; draw(); }}), h("span", {class:"sp"}),
+        h("button", {class:"btn ghost", type:"button", text:"Cancel", onclick:() => closeTop()}),
+        h("button", {class:"btn primary", type:"button", text:"Save", onclick:() => { const pr = prof(); pr.gen = {g:pick.g, c:pick.c}; pr.photo = ""; pr.mark = ""; save(); closeTop(); after(); }}))));
+    L.el.style.width = "min(640px, calc(100vw - 40px))"; L.el.style.marginLeft = "0"; L.el.style.left = "50%"; L.el.style.translate = "-50% 0";
+    return L; });
+}
+function textCtl(label, key, ph){ const i = h("input", {class:"tin", value:prof()[key] || "", placeholder:ph, "aria-label":label, maxlength:"60"}); i.oninput = () => { prof()[key] = i.value; save(); renderFoot(); }; return i; }
+function usageStats(){ const by = {}; let p = 0, c = 0, n = 0, wk = 0; const since = Date.now() - 7 * 864e5;
+  S.chats.forEach(ch => ch.messages.forEach(m => { if (!m.stats) return; n++; p += m.stats.p || 0; c += m.stats.c || 0; if ((ch.updated || 0) >= since) wk += (m.stats.p || 0) + (m.stats.c || 0); const mm = modelByKey(m.model); const k = mm ? mm.name : (m.model || "Unknown").split("::").pop(); by[k] = (by[k] || 0) + (m.stats.p || 0) + (m.stats.c || 0); }));
+  return {p, c, n, wk, by:Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 5)}; }
+function ctlRow(title, sub, ctl){ return h("div", {class:"row ctl"}, h("div", {class:"tx"}, h("b", {text:title}), sub ? h("span", {text:sub}) : null), ctl); }
+function seg(opts, cur, pick){ const el = h("div", {class:"seg", role:"radiogroup"}); opts.forEach(([v, t]) => el.append(h("button", {type:"button", role:"radio", "aria-checked":String(v === cur), class:v === cur ? "on" : "", text:t, onclick:e => { [...el.children].forEach(x => { x.classList.toggle("on", x === e.currentTarget); x.setAttribute("aria-checked", String(x === e.currentTarget)); }); pick(v); }}))); return el; }
 function renderSettingsRoot(w){
   const nReady = Object.keys(PROVIDERS).filter(p => ready(p)).length;
   const shown = S.models.filter(m => !isHidden(m) && ready(m.p)).length;
   const lenL = (LENGTHS.find(l => l.id === S.len) || LENGTHS[1]).label;
-  w.append(glabel("Models"), group(
-    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
-    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
-    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()})
+  const pr = prof(), av = h("button", {class:"avbtn", type:"button", "aria-label":"Change profile photo", onclick:() => pickAvatar(() => { refreshAll(); })}, avatarEl("lg"));
+  const refreshAll = () => { const top = stack[stack.length - 1]; if (top && top.refresh) top.refresh(); renderFoot(); };
+  w.append(glabel("Account"), group(
+    ctlRow("Profile photo", "PNG, JPEG or WebP, up to 10 MB, or an exclusive avatar", av),
+    ctlRow("Full name", "", textCtl("Full name", "name", "Your name")),
+    ctlRow("What should Vesper call you?", "", textCtl("What should Vesper call you?", "call", "A first name or nickname")),
+    ctlRow("What best describes your work?", "", dropdown("Work", [["", "Choose"]].concat(WORK.map(x => [x, x])), pr.work || "", v => { pr.work = v; save(); }))
   ));
+  const u = usageStats();
+  w.append(glabel("Usage"), group(
+    ctlRow("Tokens this week", "Sent and received, all models", h("b", {class:"cval", text:nf(u.wk)})),
+    ctlRow("Tokens in total", nf(u.p) + " sent, " + nf(u.c) + " received", h("b", {class:"cval", text:nf(u.p + u.c)})),
+    ctlRow("Replies measured", "Counted since the details panel arrived", h("b", {class:"cval", text:String(u.n)})),
+    ...u.by.map(([k, v]) => ctlRow(k, "", h("span", {class:"cval", text:nf(v) + " tokens"})))
+  ), gnote("Counted on this device only."));
   w.append(glabel("Appearance"), group(
-    row({icon:"palette", title:"App icon", sub:"Exclusive finishes", val:(ICONS.find(i => i.id === S.icon) || ICONS[0]).name, onclick:() => openIcons()}),
-    row({icon:"image", title:"Chat background", sub:"Wallpaper behind your chats", val:(CHAT_BGS.find(b => b.id === S.bg.id) || CHAT_BGS[0]).name, onclick:() => openBackground()})
+    ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
+    ctlRow("Text size", "", dropdown("Text size", [["0.92", "Small"], ["1", "Default"], ["1.08", "Large"]], String(S.zoom || 1), v => { S.zoom = +v; save(); applyAccent(); }))
   ));
-  w.append(glabel("Chat"), group(
-    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
+  w.append(glabel("Your Vesper"), group(
     row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
     row({icon:"message-square", title:"Personalize", sub:(S.about.trim() || S.respond.trim()) ? "On" : "Tell Vesper about you", onclick:() => openPersonal()}),
     row({icon:"sparkles", title:"Response style", sub:lenL + " replies, " + creativityWord(S.temp).toLowerCase(), onclick:() => openStyle()}),
-    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }}),
-    switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }})
+    switchRow({icon:"brain", title:"Show model thinking", sub:"For models that reason first", get:() => S.thinking, set:v => { S.thinking = v; save(); }}),
+    switchRow({icon:"corner-down-left", title:"Enter key sends", sub:"Otherwise Enter adds a new line", get:enterSends, set:v => { S.enter = v; save(); syncEnterHint(); }})
   ));
-  w.append(glabel("Data"), group(
+  w.append(glabel("Capabilities"), group(
+    row({icon:"key-round", title:"Providers", sub:"Free cloud models", val:nReady ? nReady + " connected" : "None yet", ok:!!nReady, onclick:() => openProviders()}),
+    row({icon:"laptop", title:"Local models", sub:DESKTOP ? "On this PC, offline and private" : "Ollama, LM Studio and more", val:S.conns.length ? String(S.conns.length) : "", onclick:() => openLocal()}),
+    row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose what shows in the picker", val:shown + " shown", onclick:() => manageModels()}),
+    row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}),
+    row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()}),
+    row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()})
+  ));
+  w.append(glabel("Notifications"), group(
+    switchRow({icon:"vibrate", title:"Haptics", sub:"A light tap when you press things", get:() => S.haptics, set:v => { S.haptics = v; save(); buzz(14); }}),
+    row({icon:"download", title:"Check for updates", sub:"Version " + APP_VERSION, onclick:() => checkUpdate(true)})
+  ));
+  w.append(glabel("Privacy"), group(
     row({icon:"download", title:"Export chats", sub:"Save a backup file", onclick:exportChats, chev:false}),
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
+  ), gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
+  if (DESKTOP) w.append(glabel("Desktop app"), group(
+    row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()}),
+    ctlRow("Closing the window", "Vesper keeps running in the tray so a local model stays ready", h("span", {class:"cval", text:"Tray"}))
   ));
-  w.append(glabel("Create"), group(row({icon:"image", title:"Image and video", sub:mediaSummary(), onclick:() => openMedia()}), row({icon:"lightning", title:"Skills", sub:"Reusable instructions", onclick:() => openSkills()})));
-  w.append(glabel("Connect apps"), group(row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()})));
-  w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()})));
-  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()}), row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }})),
-    gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
+  w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}), row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()})));
+  w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION + ", by Node Folds"})));
 }
 function creativityWord(t){ return t < 0.45 ? "Focused" : t < 1.05 ? "Balanced" : "Wild"; }
 
@@ -2498,7 +2759,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "2.9";
+const APP_VERSION = "3.0";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
@@ -2836,6 +3097,7 @@ function applyIcon(){
   st.setProperty("--logo", i.tint); st.setProperty("--accent", i.accent); st.setProperty("--glow", i.glow);
   st.setProperty("--surface", i.surface); st.setProperty("--raised", i.raised); st.setProperty("--raised-2", i.raised2);
   st.setProperty("--sheet", i.sheet); st.setProperty("--line", i.line); st.setProperty("--line-soft", i.lineSoft);
+  applyAccent();
   const hm = document.querySelector(".hero .mark"); if (hm) hm.src = iconFile("mark.webp");
   if (DESKTOP && TAURI.window) fetch(iconFile("icon-512.png")).then(r => r.arrayBuffer()).then(b => TAURI.window.getCurrentWindow().setIcon(new Uint8Array(b))).catch(() => {});
 }
