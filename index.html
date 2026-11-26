@@ -535,6 +535,49 @@ body.native .page.modal{top:calc(50% + 20px)}
 .page:not(.modal) .pnav{position:relative;top:auto;bottom:auto;width:auto;flex-direction:row;border-right:0;border-bottom:1px solid var(--line-soft);padding:8px 12px;overflow-x:auto}
 .page:not(.modal) .pnav button{flex:1;justify-content:center;min-width:120px}
 .page:not(.modal).has-nav .page-body{padding-top:6px}
+/* settings: a full window page, like a desktop app's preferences */
+body.dock .page.modal.mroot{inset:0;left:0;top:0;margin:0;width:auto;height:auto;border-radius:0;border:0;box-shadow:none;background:var(--bg);transform:none}
+body.native.dock .page.modal.mroot{top:40px}
+body.dock .page.modal.mroot.on{transform:none}
+body.dock .scrim:has(+ .page.modal.mroot){display:none}
+/* pages opened from a settings row stay inside the settings window, in the content area */
+body.dock .page.modal:not(.mroot){inset:0 0 0 300px;left:300px;top:0;margin:0;width:auto;height:auto;border-radius:0;border:0;box-shadow:none;background:var(--bg);transform:none;opacity:0}
+body.dock .page.modal:not(.mroot).on{opacity:1;transform:none}
+body.native.dock .page.modal:not(.mroot){top:40px}
+body.dock .page.modal:not(.mroot) .page-head{height:76px;padding:0 clamp(20px,4.4vw,88px);border-bottom:0}
+body.dock .page.modal:not(.mroot) .page-body{padding:4px clamp(28px,5vw,96px) 80px}
+body.dock .page.modal:not(.mroot) .wrap{max-width:900px;margin:0 auto}
+body.dock .page.modal:not(.mroot) .group{background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;overflow:hidden}
+body.dock .page.modal.mroot.has-nav>.page-head{position:absolute;left:0;top:0;width:300px;height:76px;display:flex;align-items:center;padding:0 22px;z-index:3;border:0}
+.page-head:has(.backapp){display:flex}.backapp span{white-space:nowrap}
+.backapp{display:flex;align-items:center;gap:10px;height:38px;padding:0 12px 0 6px;border-radius:10px;font-size:15px;color:var(--fg-soft)}.backapp .ic{width:18px;height:18px}.backapp:hover{color:var(--fg);background:var(--raised)}
+body.dock .page.modal.mroot.has-nav .pnav{top:76px;width:300px;padding:8px 18px 28px;border-right:0}
+body.dock .page.modal.mroot.has-nav .pnav button{padding:11px 14px;border-radius:10px;font-size:15px}
+body.dock .page.modal.mroot.has-nav .pnav button.on{background:var(--raised-2);color:var(--fg)}
+body.dock .page.modal.mroot.has-nav .page-body{margin-left:300px;padding:44px clamp(28px,5vw,96px) 90px}
+body.dock .page.modal.mroot.has-nav .wrap{max-width:900px;margin:0 auto}
+body.dock .page.modal.mroot.has-nav .glabel{font-size:28px;font-weight:600;letter-spacing:-.025em;padding:0 0 6px;color:var(--fg)}
+.gsub{margin:0 0 28px;color:var(--muted);font-size:15px;line-height:1.5}
+body.dock .page.modal.mroot.has-nav .group{background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;overflow:hidden;margin-bottom:18px}
+body.dock .page.modal.mroot.has-nav .row{padding:18px 24px;min-height:64px;border-top:0;border-bottom:1px solid var(--line-soft)}
+body.dock .page.modal.mroot.has-nav .group>.row:last-child{border-bottom:0}
+body.dock .page.modal.mroot.has-nav .row b{font-size:15px;font-weight:500}
+body.dock .page.modal.mroot.has-nav .row .tx span{font-size:13.5px}
+body.dock .page.modal.mroot.has-nav .gnote{padding:4px 4px 0;font-size:13.5px}
+.psearch{height:42px;background:var(--surface);border:1px solid var(--line-soft)}
+.laycards{display:flex;gap:12px;flex:0 0 auto}
+.lay{position:relative;display:flex;flex-direction:column;gap:8px;align-items:stretch;width:136px;padding:6px 6px 10px;border-radius:14px;border:1px solid var(--line-soft);background:var(--bg);font-size:13.5px;color:var(--muted);transition:border-color .15s,color .15s}
+.lay:hover{border-color:var(--line);color:var(--fg-soft)}
+.lay.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);color:var(--fg)}
+.lay-name{text-align:center}
+.lay-ok{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#000;display:grid;place-items:center}.lay-ok .ic{width:13px;height:13px}
+.lay-pic{position:relative;display:block;height:70px;border-radius:9px;background:var(--surface);overflow:hidden}
+.lay-pic i{position:absolute;top:6px;bottom:6px;border-radius:5px;background:var(--raised-2)}
+.lay-pic .lp-main{left:44px;right:34px;background:var(--raised)}
+.lay-pic .lp-panel{right:6px;width:24px;background:var(--raised)}
+.lay-pic .lp-side{left:6px;width:32px}
+.lay-pic.compact .lp-side{width:10px}.lay-pic.compact .lp-main{left:22px}
+.lay-pic.focus .lp-side{width:10px}.lay-pic.focus .lp-main{left:22px;right:6px}
 .pfoot{position:absolute;left:250px;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--line-soft);background:var(--surface);font-size:14px}
 .pfoot .ic{width:18px;height:18px;color:#f0c26b}.pfoot b{font-weight:600}.pfoot span{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pfoot button{height:34px;padding:0 16px;border-radius:999px;background:var(--fg);color:#000;font-weight:600;font-size:14px}
@@ -2053,6 +2096,17 @@ function renderCodePanel(v){
   paint();
 }
 function setSpace(id){ S.space = SPACES[id] ? id : "chat"; S.lastSpace = S.space; save(); renderSpace(); }
+// Interface layout: three small previews, like picking a layout in a desktop app.
+function layoutCards(){
+  const cur = S.layout || "dock", wrap = h("div", {class:"laycards", role:"radiogroup", "aria-label":"Interface layout"});
+  [["dock", "Docked"], ["compact", "Rail"], ["focus", "Focus"]].forEach(([id, label]) => {
+    const on = cur === id;
+    wrap.append(h("button", {class:"lay" + (on ? " on" : ""), type:"button", role:"radio", "aria-checked":String(on), onclick:() => { setLayout(id); const L = stack[stack.length - 1]; if (L && L.refresh) L.refresh(); }},
+      h("span", {class:"lay-pic " + id}, h("i", {class:"lp-side"}), h("i", {class:"lp-main"}), id === "focus" ? null : h("i", {class:"lp-panel"})),
+      h("span", {class:"lay-name", text:label}), on ? h("span", {class:"lay-ok", html:ic("check")}) : null));
+  });
+  return wrap;
+}
 function setLayout(v){
   S.layout = v;
   if (v === "dock") S.sideOff = false;
@@ -2194,9 +2248,11 @@ let settingsNavApi = null;
 function settingsGo(view){ if (settingsNavApi) settingsNavApi.view(view); }
 // Every section stays in the left menu. Provider and model rows redraw the right pane instead of opening a layer.
 function settingsNav(L){
-  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"sparkles", Extensions:"lightning", Server:"laptop", Pairing:"share-2", Browser:"share-2", Experimental:"lightning", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
+  const head = L.el.querySelector(".page-head"); if (head) head.replaceChildren(h("button", {class:"backapp", type:"button", "aria-label":"Back to app", html:ic("chevron-left") + "<span>Back to app</span>", onclick:() => closeTop()}));
+  const SUB = {General:"How Vesper opens and behaves", Account:"Your profile and how Vesper addresses you", Usage:"Token counts, kept on this device", Appearance:"Theme, fonts and display scale", "Your Vesper":"Memory and personal instructions", Chat:"How chats read and send", Capabilities:"What Vesper can use and connect to", Providers:"Where your models come from", Models:"Pick and manage the models you use", Timeline:"Revisit what you did and when", Create:"Image and video generation", Extensions:"Connect apps and add skills", Server:"Run and reach Vesper from other devices", Pairing:"Link your other devices", Browser:"Web access for Vesper", Notifications:"Alerts and reminders", Sounds:"Sound effects and voice", Shortcuts:"Keyboard shortcuts", Privacy:"What stays on this device", Data:"Export, import and clear your data", Experimental:"Early features that may change", Help:"Guides and support", About:"Version and credits"};
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
   const viewBox = h("div", {class:"settings-view", hidden:true}); L.body.append(viewBox);
   let active = 0, currentView = "";
@@ -2207,7 +2263,7 @@ function settingsNav(L){
     if (t) { let lab = null, any = false; const flush = () => { if (lab) lab.style.display = any ? "" : "none"; };
       [...L.body.children].forEach(el => { if (el === viewBox) return; if (el.classList.contains("glabel")) { flush(); lab = el; any = false; } else if (el.classList.contains("group")) { const v = [...el.querySelectorAll(".row")].some(r => r.style.display !== "none"); el.style.display = v ? "" : "none"; any = any || v; } else if (el.classList.contains("gnote")) el.style.display = "none"; }); flush(); }
     else [...L.body.children].forEach(el => { if (el !== viewBox) el.style.display = ""; });
-    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); };
+    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); L.body.querySelectorAll(".gsub").forEach(p => { p.style.display = t ? "none" : ""; }); };
   const go = (tab, view) => { if (view === "home") { const i = sections().findIndex(g => g.textContent === tab); if (i >= 0) { active = i; q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; } } else settingsGo(view); };
   const showView = view => { currentView = view;
     const tab = view.indexOf("prov") === 0 ? "Providers" : "Models", i = sections().findIndex(g => g.textContent === tab);
@@ -2218,7 +2274,7 @@ function settingsNav(L){
     [...nav.querySelectorAll("button")].forEach((b, k) => b.classList.toggle("on", k === active));
     scroller.scrollTop = 0; };
   settingsNavApi = {view:showView, section:name => go(name, "home")};
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); sections().forEach(g => { if (SUB[g.textContent] && !(g.nextSibling && g.nextSibling.classList && g.nextSibling.classList.contains("gsub"))) g.after(h("p", {class:"gsub", text:SUB[g.textContent]})); }); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
     sections().forEach(g => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = sections().indexOf(g); q.value = ""; currentView = ""; show(); scroller.scrollTop = 0; }})); });
     show(); };
   q.addEventListener("input", show);
@@ -2611,9 +2667,7 @@ function renderSettingsRoot(w){
   storageUsed().then(n => { used.textContent = bytes(n); });
   const reqN = Object.keys(S.waitlist || {}).filter(k => k.indexOf("app:") === 0).length;
   w.append(glabel("General"), group(
-    h("div", {class:"field"}, h("div", {class:"flabel"}, h("span", {text:"Interface layout"}), h("em", {text:S.layout === "compact" ? "Compact rail" : S.layout === "focus" ? "Focus" : "Sidebar open"})),
-      seg([{id:"dock", label:"Docked"}, {id:"compact", label:"Rail"}, {id:"focus", label:"Focus"}], S.layout || "dock", v => setLayout(v)),
-      h("small", {text:"Choose how the sidebar and details panel sit beside the chat."})),
+    docked() ? ctlRow("Interface layout", "Choose how the sidebar and details panel sit beside the chat", layoutCards()) : null,
     switchRow({icon:"panel-left", title:"Keep details panel open", sub:"Opening or closing it in one chat applies to all", get:() => S.insp, set:v => setInsp(v)}),
     ctlRow("Language", "Vesper speaks English today. Other languages are planned", h("span", {class:"cval", text:"English"})),
     ctlRow("Space at start", "Choose where Vesper opens", dropdown("Space at start", [["chat", "Chat"], ["last", "Last used"]], S.startSpace || "chat", v => { S.startSpace = v; save(); })),
