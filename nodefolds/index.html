@@ -82,9 +82,9 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .ticks{display:flex;gap:8px;margin-top:8px}.ticks i{position:relative;width:46px;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.ticks i b{position:absolute;inset:0;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
 .stage{position:relative;width:100%;display:grid;place-items:center;perspective:2200px}
 .glow{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(110,168,255,.38),transparent 70%)}
-.device{position:relative;width:100%;max-height:72svh;aspect-ratio:1180/820;border-radius:clamp(22px,2.6vw,34px);padding:clamp(10px,1.2vw,16px);background:linear-gradient(150deg,#2e2e33,#0d0d10 45%,#24242a);box-shadow:0 70px 140px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.10),inset 0 0 0 1px rgba(255,255,255,.04)}
+.device{position:relative;width:min(100%,calc(76svh * 1.439));border-radius:clamp(22px,2.6vw,34px);padding:clamp(10px,1.2vw,16px);background:linear-gradient(150deg,#2e2e33,#0d0d10 45%,#24242a);box-shadow:0 70px 140px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.10),inset 0 0 0 1px rgba(255,255,255,.04)}
 .device::before{content:"";position:absolute;left:50%;top:calc(clamp(10px,1.2vw,16px) / 2 - 2.5px);width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#1d1d22;box-shadow:inset 0 0 1px rgba(255,255,255,.3)}
-.screen{position:relative;width:100%;height:100%;border-radius:clamp(12px,1.4vw,20px);overflow:hidden;background:#000;container-type:size}
+.screen{position:relative;width:100%;aspect-ratio:2200/1528;border-radius:clamp(12px,1.4vw,20px);overflow:hidden;background:#000;container-type:size}
 .shots{position:absolute;inset:0;overflow:hidden}
 .screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
 @media (max-width:860px){
@@ -99,6 +99,13 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .fc:hover{transform:scale(1.06)}.fc i{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c)}
 .fc.p1{top:7%;left:-7%}.fc.p2{top:47%;right:-6%}.fc.p3{bottom:6%;left:9%}
 @media (max-width:860px){.fchips{display:none}}
+@media (min-width:1700px){
+  .wrap{width:min(1500px,100% - 160px)}.nav{width:min(1280px,100% - 24px)}
+  .story .pin,.theater .pin{width:min(1700px,100% - 160px);gap:96px}
+  h1{font-size:clamp(110px,7.2vw,180px)}h2{font-size:clamp(64px,4.2vw,108px)}.dtx h3{font-size:clamp(60px,3.6vw,92px)}
+  .sub,.dtx p{font-size:22px;max-width:640px}.lede{font-size:24px;max-width:780px}
+  .eyebrow{font-size:14px}.card h3{font-size:24px}.card p{font-size:17px}
+}
 /* manifesto */
 .mani{height:240vh}
 .mani .pin{display:flex;align-items:center}
@@ -140,15 +147,16 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .dtx p{margin:18px 0 0;font-size:clamp(17px,1.7vw,20px);color:var(--muted);line-height:1.5;max-width:460px}
 .dstage{position:relative;width:100%;display:grid;place-items:center;perspective:2200px}
 .dstage .device{will-change:transform}
-.device.phone{position:absolute;right:-1%;bottom:-7%;width:30%;max-height:none;aspect-ratio:412/892;border-radius:clamp(22px,3.2vw,42px);padding:clamp(6px,.8vw,10px);z-index:3;box-shadow:0 60px 120px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.05)}
+.duo .device.phone{position:absolute;right:-1%;bottom:-7%;width:30%;max-height:none;border-radius:clamp(22px,3.2vw,42px);padding:clamp(6px,.8vw,10px);z-index:3;box-shadow:0 60px 120px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.05)}
+.duo{position:relative;width:min(100%,calc(76svh * 1.439))}.duo #ipad{width:100%}
 .device.phone::before{display:none}
-.device.phone .screen{border-radius:clamp(15px,2.4vw,33px)}
+.device.phone .screen{aspect-ratio:824/1784;border-radius:clamp(15px,2.4vw,33px)}
 .device.phone .screen img{object-position:top center}
 @media (max-width:860px){
   .theater .pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;padding:92px 0 24px}
-  .dstage{order:-1;perspective:none}
+  .dstage{order:-1;perspective:none;padding-bottom:8%}
   .dtexts{height:210px}.dtx h3{font-size:34px;margin-top:12px}.dtx p{font-size:16px;margin-top:10px}
-  .device.phone{width:34%;right:2%;bottom:-9%}
+  .duo .device.phone{width:34%;right:2%;bottom:-6%}
 }
 .chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(110,168,255,.16);padding:6px 12px;border-radius:999px;margin-bottom:14px}
 .nextw{padding:12vh 0 8vh}
@@ -238,11 +246,11 @@ footer a:hover{color:#fff}
     <div class="ticks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
   </div>
   <div class="stage"><div class="glow m" id="sglow"></div><div class="fchips" aria-hidden="true"><div class="fg m"><span class="fc p1" style="--c:#6ea8ff"><i></i>Free models</span><span class="fc p2" style="--c:#8b5cf6"><i></i>Switch in one tap</span><span class="fc p3" style="--c:#34d399"><i></i>No account</span></div><div class="fg m"><span class="fc p1" style="--c:#6ea8ff"><i></i>Context 0.3%</span><span class="fc p2" style="--c:#34d399"><i></i>89.9 tokens a second</span><span class="fc p3" style="--c:#f0c26b"><i></i>First word 0.8 s</span></div><div class="fg m"><span class="fc p1" style="--c:#4b9bff"><i></i>Verified by Vesper</span><span class="fc p2" style="--c:#ff7eb3"><i></i>10 characters</span><span class="fc p3" style="--c:#34d399"><i></i>Memory on</span></div><div class="fg m"><span class="fc p1" style="--c:#f0c26b"><i></i>Free image generation</span><span class="fc p2" style="--c:#6ea8ff"><i></i>Saved in your Library</span><span class="fc p3" style="--c:#8b5cf6"><i></i>Your own keys</span></div><div class="fg m"><span class="fc p1" style="--c:#a78bfa"><i></i>Twilight theme</span><span class="fc p2" style="--c:#ff7eb3"><i></i>Your own profile</span><span class="fc p3" style="--c:#6ea8ff"><i></i>Text size</span></div></div><div class="device m" id="device"><div class="screen"><div class="shots">
-    <img class="m" src="img/app-home.webp" alt="Vesper home" width="2040" height="1416">
-    <img class="m" src="img/app-details.webp" alt="Vesper chat with the details panel" width="2040" height="1416">
-    <img class="m" src="img/app-characters.webp" alt="Vesper characters" width="2040" height="1416">
-    <img class="m" src="img/app-studio.webp" alt="Vesper Image Studio" width="2040" height="1416">
-    <img class="m" src="img/app-themes.webp" alt="Vesper themes" width="2040" height="1416">
+    <img class="m" src="img/app-home.webp" alt="Vesper home" width="2200" height="1528">
+    <img class="m" src="img/app-details.webp" alt="Vesper chat with the details panel" width="2200" height="1528">
+    <img class="m" src="img/app-characters.webp" alt="Vesper characters" width="2200" height="1528">
+    <img class="m" src="img/app-studio.webp" alt="Vesper Image Studio" width="2200" height="1528">
+    <img class="m" src="img/app-themes.webp" alt="Vesper themes" width="2200" height="1528">
   </div></div></div></div>
 </div></section>
 
@@ -255,7 +263,7 @@ footer a:hover{color:#fff}
   <div class="eyebrow rv">Inside Vesper</div>
   <h2 class="rv">Small app.<br>Serious power.</h2>
   <div class="grid">
-    <div class="card wide rv"><div><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Runs on your PC</h3><p style="padding-bottom:28px">Vesper for Windows picks models that fit your computer, downloads them in one tap and runs them offline.</p></div><img src="img/app-pc.webp" alt="Vesper for Windows, models on this PC" loading="lazy" width="2040" height="1416"></div>
+    <div class="card wide rv"><div><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Runs on your PC</h3><p style="padding-bottom:28px">Vesper for Windows picks models that fit your computer, downloads them in one tap and runs them offline.</p></div><img src="img/app-pc.webp" alt="Vesper for Windows, models on this PC" width="2200" height="1528"></div>
     <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Private by design</h3><p>There is no Vesper server. Keys and chats stay on your device, always.</p></div>
     <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 3 6v3h8v-3c1-1 3-3 3-6a7 7 0 0 0-7-7z"/><path d="M9 22h6"/></svg></div><h3>Memory that helps</h3><p>It remembers what matters about you, and you can see and delete every fact.</p></div>
     <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>Learn as you go</h3><p>Short guides with real screens, and honest picks on which models are worth it.</p></div>
@@ -271,10 +279,10 @@ footer a:hover{color:#fff}
       <div class="dtx m" style="opacity:0"><span class="chip">Video Studio</span><h3>Direct videos<br>with words.</h3><p>Ads, reels and stories with real camera moves. Saved in your Library.</p></div>
     </div>
   </div>
-  <div class="dstage">
-    <div class="device m" id="ipad"><div class="screen"><div class="shots"><img src="img/app-studio.webp" alt="Vesper Image Studio" width="2040" height="1416" loading="lazy"></div></div></div>
-    <div class="device phone m" id="phone"><div class="screen"><div class="shots"><img src="img/phone-video.webp" alt="Vesper Video Studio on a phone" width="824" height="1784" loading="lazy"></div></div></div>
-  </div>
+  <div class="dstage"><div class="duo">
+    <div class="device m" id="ipad"><div class="screen"><div class="shots"><img src="img/app-studio.webp" alt="Vesper Studio home" width="2200" height="1528"></div></div></div>
+    <div class="device phone m" id="phone"><div class="screen"><div class="shots"><img src="img/phone-video.webp" alt="Vesper Studio on a phone" width="824" height="1784"></div></div></div>
+  </div></div>
 </div></section>
 
 <section class="nextw" id="next"><div class="wrap">
