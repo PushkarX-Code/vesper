@@ -292,7 +292,7 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
 .hive button:hover{transform:scale(1.06)}
 .hive button.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--fg)}
-.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg,.gav .logo-flat{width:58%;height:58%}
+.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg{width:64%;height:64%}
 .avfoot{display:flex;align-items:center;gap:8px;padding:12px 4px 2px}.avfoot .sp{flex:1}
 .avfoot .btn{height:38px;padding:0 16px;font-size:14px}
 /* settings window: header, menu with search, flat rows */
@@ -304,7 +304,7 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .psearch{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;margin:0 0 10px;border-radius:12px;background:var(--raised)}
 .psearch .ic{width:17px;height:17px;color:var(--faint)}.psearch input{flex:1;min-width:0;background:none;border:0;outline:0;font-size:14.5px}
 .pnav hr{border:0;border-top:1px solid var(--line-soft);margin:8px 12px}
-.page.modal.has-nav .glabel{font-size:16px;font-weight:600;color:var(--fg);padding:26px 0 4px}
+.page.modal.has-nav .glabel{font-size:18px;font-weight:600;color:var(--fg);padding:18px 0 6px}
 .page.modal.has-nav .group{background:none;border:0;border-radius:0;overflow:visible}
 .page.modal.has-nav .row{padding:16px 0;min-height:58px;border-bottom:1px solid var(--line-soft);border-top:0}
 .page.modal.has-nav .row .rico{display:none}
@@ -1844,11 +1844,19 @@ function settingsNav(L){
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.append(nav);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
-  q.addEventListener("input", () => { const t = q.value.trim().toLowerCase();
+  let active = 0;
+  // Each menu item opens its own section. Search looks across all of them.
+  const show = () => { const t = q.value.trim().toLowerCase(); let k = -1;
+    [...L.body.children].forEach(el => { if (el.classList.contains("glabel")) k++; el.hidden = !t && k !== active; });
     L.body.querySelectorAll(".row").forEach(r => r.style.display = !t || r.textContent.toLowerCase().includes(t) ? "" : "none");
-    L.body.querySelectorAll(".glabel").forEach(g => { const grp = g.nextElementSibling; const any = !t || (grp && [...grp.querySelectorAll(".row")].some(r => r.style.display !== "none")); g.style.display = any ? "" : "none"; if (grp && grp.classList.contains("group")) grp.style.display = any ? "" : "none"; }); });
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, "Desktop app":1, Help:1}; L.body.querySelectorAll(".glabel").forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", class:i ? "" : "on", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => scroller.scrollTo({top:g.offsetTop - 8, behavior:"smooth"})})); }); };
-  scroller.addEventListener("scroll", () => { const gs = [...L.body.querySelectorAll(".glabel")]; let k = 0; gs.forEach((g, i) => { if (g.offsetTop - 40 <= scroller.scrollTop) k = i; }); if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) k = gs.length - 1; [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", i === k)); }, {passive:true});
+    if (t) { let lab = null, any = false; const flush = () => { if (lab) lab.style.display = any ? "" : "none"; };
+      [...L.body.children].forEach(el => { if (el.classList.contains("glabel")) { flush(); lab = el; any = false; } else if (el.classList.contains("group")) { const v = [...el.querySelectorAll(".row")].some(r => r.style.display !== "none"); el.style.display = v ? "" : "none"; any = any || v; } else if (el.classList.contains("gnote")) el.style.display = "none"; }); flush(); }
+    else [...L.body.children].forEach(el => el.style.display = "");
+    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); };
+  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, "Desktop app":1, Help:1};
+    [...L.body.querySelectorAll(".glabel")].forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = i; q.value = ""; show(); scroller.scrollTop = 0; }})); });
+    show(); };
+  q.addEventListener("input", show);
   const r = L.refresh; L.refresh = () => { r(); build(); }; build();
 }
 // Apps Vesper will connect to. Logos are from Simple Icons (CC0). Connectors are not built yet, so Request only saves interest on this device.
@@ -2023,23 +2031,29 @@ const WORK = ["Design", "Video and content", "Marketing", "Engineering", "Writin
 function prof(){ S.profile = S.profile || {}; return S.profile; }
 function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " " + cls : "")});
   if (pr.photo) a.append(h("img", {src:pr.photo, alt:""})); else if (pr.gen) { a.classList.add("isgen"); a.append(genAvatar(pr.gen.g, pr.gen.c)); } else if (pr.mark) a.append(h("img", {src:"icons/" + pr.mark + "/mark.webp", alt:"", class:"mk"}));
-  else if (pr.name) a.append(h("b", {text:pr.name.trim().charAt(0).toUpperCase()})); else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
+  else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
   return a; }
 async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
-// Generated avatars: one of our glyphs on a color. The first glyph is the Vesper mark.
-const AV_COLORS = ["#8b6a43", "#d65a4f", "#4f8f7a", "#5b8fd9", "#8a7a72", "#6f7782", "#d97757", "#c2577f", "#a9cfc4", "#c9c6db", "#e8a33d", "#d6608c", "#9a5a45", "#5b5873", "#e2b39d", "#7d6fc4", "#e5cbd8", "#3f8a6e", "#e07a52"];
-const AV_GLYPHS = [null,
-  '<circle cx="12" cy="7" r="4.4"/><circle cx="17" cy="12" r="4.4"/><circle cx="12" cy="17" r="4.4"/><circle cx="7" cy="12" r="4.4"/>',
-  '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
-  '<g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></g><circle cx="12" cy="12" r="2.6"/>',
-  '<circle cx="6" cy="6" r="2.4"/><circle cx="12" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="12" cy="12" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="12" cy="18" r="2.4"/><circle cx="18" cy="18" r="2.4"/>',
-  '<path d="M4 20v-6h5V9h5V4h6v16z"/>',
-  '<path d="M5 4h14v4h-4.5v8H19v4H5v-4h4.5V8H5z"/>',
-  '<rect x="4" y="4" width="7" height="7" rx="2.4"/><rect x="13" y="4" width="7" height="7" rx="2.4"/><rect x="4" y="13" width="7" height="7" rx="2.4"/><rect x="13" y="13" width="7" height="7" rx="2.4"/>'];
+// Avatars are flat 2D marks generated from a seed: a symmetric pattern of simple shapes on a color. Each one is unique.
+const AV_COLORS = ["#8a6a45", "#d0604f", "#3f8a73", "#5689d6", "#867870", "#69717d", "#d67a56", "#c05b82", "#a6cfc2", "#c8c4da", "#e4a43f", "#d6658f", "#9b5c47", "#5a5875", "#e0b39f", "#7b6cc6", "#e6ccd8", "#468c74", "#e07b54"];
+function rng(seed){ let x = seed >>> 0 || 1; return () => { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; return ((x >>> 0) % 10000) / 10000; }; }
+function avShape(seed){
+  const r = rng(seed), n = [3, 4, 5, 6, 8][Math.floor(r() * 5)], kind = Math.floor(r() * 5), d = 4 + r() * 3.2, sz = 2.2 + r() * 2.2, core = r(), f = v => v.toFixed(2);
+  let out = "";
+  for (let k = 0; k < n; k++) { const a = k * 360 / n, t = ' transform="rotate(' + a + ' 12 12)"';
+    if (kind === 0) out += '<ellipse cx="12" cy="' + f(12 - d) + '" rx="' + f(sz * .75) + '" ry="' + f(sz * 1.35) + '"' + t + '/>';
+    else if (kind === 1) out += '<circle cx="12" cy="' + f(12 - d - .6) + '" r="' + f(sz * .82) + '"' + t + '/>';
+    else if (kind === 2) out += '<rect x="' + f(12 - sz * .45) + '" y="' + f(12 - d - sz) + '" width="' + f(sz * .9) + '" height="' + f(sz * 2 + d * .5) + '" rx="' + f(sz * .45) + '"' + t + '/>';
+    else if (kind === 3) out += '<rect x="' + f(12 - sz * .7) + '" y="' + f(12 - d - sz * .7) + '" width="' + f(sz * 1.4) + '" height="' + f(sz * 1.4) + '" rx="' + f(sz * .3) + '"' + t + '/>';
+    else out += '<path d="M12 ' + f(12 - d - sz * 1.2) + 'L' + f(12 + sz) + ' ' + f(12 - d + sz * .6) + 'H' + f(12 - sz) + 'Z"' + t + '/>'; }
+  if (core > .4) out += '<circle cx="12" cy="12" r="' + f(1.4 + core * 2.2) + '"/>';
+  return out;
+}
 function lightColor(hex){ const n = parseInt(hex.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; }
-function genAvatar(g, c, size){ const col = AV_COLORS[c % AV_COLORS.length], fg = lightColor(col) ? "#151515" : "#ffffff";
+function genAvatar(g, c, size){
+  const col = AV_COLORS[c % AV_COLORS.length], fg = lightColor(col) ? "#151515" : "#ffffff";
   const el = h("span", {class:"gav", style:"background:" + col + ";color:" + fg + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
-  el.innerHTML = AV_GLYPHS[g % AV_GLYPHS.length] ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + AV_GLYPHS[g % AV_GLYPHS.length] + '</svg>' : '<i class="logo-flat" style="--logo:' + fg + '" aria-hidden="true"></i>';
+  el.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + avShape(g) + '</svg>';
   return el; }
 let avFile = null;
 function pickAvatar(after){
@@ -2052,7 +2066,8 @@ function pickAvatar(after){
 }
 function chooseAvatar(after){
   const rows = [5, 8, 9, 8, 5]; let cells = [], pick = null;
-  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5); cells = Array.from({length:n}, (_, i) => ({g:i === 17 ? 0 : Math.floor(Math.random() * AV_GLYPHS.length), c:cs[i % cs.length]})); };
+  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5);
+    cells = Array.from({length:n}, (_, i) => ({g:1 + Math.floor(Math.random() * 2147483000), c:cs[i % cs.length]})); };
   const cur = prof().gen; deal(); if (cur) cells[17] = {g:cur.g, c:cur.c}; pick = cells[17];
   open("avpick", () => { const L = makeSheet("Choose an avatar"), hive = h("div", {class:"hive"});
     const draw = () => { hive.innerHTML = ""; let k = 0; rows.forEach((n, r) => { const row = h("div", {class:"hr"}); for (let i = 0; i < n; i++, k++) { const cell = cells[k], d = Math.hypot(i - (n - 1) / 2, (r - 2) * 1.1), size = Math.round(Math.max(36, 78 - d * 11));
