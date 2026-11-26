@@ -251,16 +251,6 @@ async function compose(browser, base) {
   await render("studio-video.webp", artPage(studio("/studio/video.webp", "Coming soon · Video Studio", "Direct videos<br>with words.",
     "Ads, reels and stories with real camera moves. Describe the shot and get the clip, ready to post.",
     "Slow push in on a woman in the rain, neon street, night", ["10 sec", "9:16", "Handheld", "Sound on"]), 1640), 1640);
-  const trio = [["aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.30)"], ["seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.40)"], ["scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)"]];
-  await render("studio-live.webp", artPage(mac(`<div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 78% 45%,rgba(110,120,255,.26),transparent 70%),#050507"></div>${nav}
-      <div style="position:absolute;left:64px;top:220px;z-index:2;width:540px">${chip("Coming soon · Live Characters")}${h1("Talk face<br>to face.")}${sub("Characters you can see and hear, live. Each with a real personality, a voice and their own story.")}
-        <div style="display:flex;gap:12px;margin-top:38px;font-size:16px;font-weight:600"><span style="padding:15px 24px;border-radius:999px;background:#f5f5f4;color:#000">Join the waitlist</span><span style="padding:15px 24px;border-radius:999px;color:#e9e9e7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)">Meet the characters</span></div></div>
-      <div style="position:absolute;right:50px;top:130px;display:flex;align-items:flex-end;gap:18px">
-      ${trio.map(([id, n, col, glow], i) => `<div style="position:relative;width:${i === 1 ? 270 : 230}px;height:${i === 1 ? 600 : 540}px;border-radius:24px;overflow:hidden;background:radial-gradient(70% 50% at 50% 35%,${glow},transparent 75%),#0b0b10;box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px ${i === 1 ? col : "rgba(255,255,255,.08)"}">
-        <img src="/studio/${id}.webp" style="position:absolute;left:50%;top:26px;height:${i === 1 ? 980 : 880}px;transform:translateX(-50%)">
-        <div style="position:absolute;inset:auto 0 0 0;padding:60px 18px 16px;background:linear-gradient(transparent,rgba(5,5,8,.92));display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600">${n}
-        <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:${i === 1 ? "#7ee8a0" : col}"><i style="width:7px;height:7px;border-radius:50%;background:${i === 1 ? "#7ee8a0" : col};${i === 1 ? "box-shadow:0 0 10px #7ee8a0" : ""}"></i>${i === 1 ? "Live" : "Soon"}</span></div></div>`).join("")}
-      </div>`), 1640), 1640);
   // a frozen confetti burst: seeded so every render matches
   const confetti = (x0, y0) => { let r = 7; const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
     const cols = ["#6ea8ff", "#f0c26b", "#ffffff", "#b89cff", "#7ee8a0", "#ffd9a0"];
@@ -279,7 +269,7 @@ async function compose(browser, base) {
         <div style="position:relative;width:420px;padding:30px 32px;border-radius:26px;background:linear-gradient(#111118,#111118) padding-box,linear-gradient(140deg,#6ea8ff,#f0c26b 60%,#6ea8ff) border-box;border:1.5px solid transparent;box-shadow:0 30px 80px rgba(70,90,255,.25)">
           <span style="position:absolute;top:28px;right:30px;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#000;background:#f0c26b;padding:6px 12px;border-radius:999px">Most loved</span>
           <div style="font-size:19px;font-weight:600">Plus</div><div style="font-size:44px;font-weight:600;letter-spacing:-.03em;margin:8px 0 2px">At launch</div><div style="font-size:15px;color:#8f8f8c;margin-bottom:18px">Join the waitlist for early access</div>
-          ${list(["Image Studio and Video Studio credits", "Live Characters with voice", "Premium characters", "Sync across your devices", "Priority help from the team"])}
+          ${list(["Image Studio and Video Studio credits", "New verified characters every month", "Premium characters", "Sync across your devices", "Priority help from the team"])}
           <div style="margin-top:22px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;font-weight:600;padding:15px;border-radius:14px;background:linear-gradient(135deg,#f5f5f4,#f0c26b);color:#000"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>You're on the list</div></div>
         <div style="width:300px;padding:30px 32px;border-radius:26px;background:rgba(18,18,22,.9);box-shadow:0 0 0 1px rgba(255,255,255,.09);display:flex;flex-direction:column">
           <div style="font-size:19px;font-weight:600">Business</div><div style="font-size:16.5px;color:#b4b4b1;line-height:1.55;margin:14px 0 auto">Teams, agencies and custom characters made for your brand.</div>

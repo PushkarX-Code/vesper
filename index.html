@@ -964,7 +964,6 @@ select.input{appearance:none;background-image:none}
   <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
   <button class="d-new" id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button>
   <button class="d-new" id="openCreate"><svg class="ic" aria-hidden="true"><use href="#i-palette"/></svg>Create</button>
-  <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot">
     <div class="d-user"><span class="av" id="dAvatar"><i class="logo-flat" aria-hidden="true"></i></span><button class="nm" id="dStatus" type="button"><b id="dStatusT">Free and private</b><small id="dStatusS">Keys and chats stay here</small></button><button class="icon-btn" id="openSupport" type="button" aria-label="Support Vesper" title="Support Vesper"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg></button><button class="icon-btn" id="openSettings" type="button" aria-label="Settings" title="Settings (Ctrl+,)"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button></div>
@@ -1358,8 +1357,9 @@ function dragToClose(L, handles){
   });
 }
 function makePage(title, render, opts){
-  const under = stack.some(l => l.el.classList.contains("modal"));
-  const modal = docked() && (!!(opts && opts.modal) || under);
+  const full = !!(opts && opts.full);
+  const under = !full && stack.some(l => l.el.classList.contains("modal"));
+  const modal = !full && docked() && (!!(opts && opts.modal) || under);
   const el = h("section", {class:"page layer" + (modal ? " modal" + (under ? "" : " mroot") : ""), role:"dialog", "aria-modal":"true", "aria-label":title, inert:true});
   const body = h("div", {class:"page-body"}); const wrap = h("div", {class:"wrap"}); body.append(wrap);
   el.append(h("div", {class:"page-head"}, modal && !under ? iconBtn("x", "Close", () => closeTop()) : iconBtn("chevron-left", "Back", () => closeTop()), h("h2", {text:title}), h("span")), body);
@@ -2108,7 +2108,7 @@ function openStudio(kind, swap, opts){
   const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:"square", q:"", sort:"recent", busy:0};
   open("studio", () => {
     const bar = studioBar(st);
-    const L = makePage("Studio", (w, L2) => { bar.el.hidden = false; bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); });
+    const L = makePage("Studio", (w, L2) => { bar.el.hidden = false; bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); }, {full:true});
     L.el.classList.add("studiopg"); L.el.append(bar.el); bar.L = L;
     L.onHide = () => { const v = L.el.querySelector("video.bgv"); if (v) v.pause(); studioLive = null; };
     studioLive = {L, set:(k, o) => { st.kind = k === "video" ? "video" : "image"; st.proj = (o && o.proj) || null; st.filter = "all"; L.refresh(); }};
@@ -2697,7 +2697,7 @@ function openCompanions(swap){
     });
     w.append(grid);
     w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Create your own", onclick:() => openCompEditor(null)})));
-  }), swap);
+  }, {full:true}), swap);
 }
 function openProfile(k){
   const lib = CHAR_LIBRARY.find(p => p.pid === k.pid), mine = S.companions.find(x => x.id === k.id) || S.companions.find(x => k.pid && x.pid === k.pid);
@@ -2780,8 +2780,6 @@ const LANDINGS = {
     feat:["Cinematic, product, anime and poster styles", "Any size, from story to banner", "Edit with words: change the light, swap the background"]},
   video:{title:"Video Studio", img:"studio/video.webp", h:"Direct videos<br>with words.", lead:"Ads, reels and stories with real camera moves. Describe the shot and get the clip, ready to post.",
     feat:["Vertical or wide, up to 30 seconds", "Camera moves like push in, orbit and handheld", "Sound and voice, made for social"]},
-  live:{title:"Live Characters", h:"Talk face<br>to face.", lead:"Characters you can see and hear, live. Each with a real personality, a voice and their own story.",
-    feat:["Seraphine, Aurelia and Scarlet first", "Voice calls that feel real", "Private, like the rest of Vesper"]},
   plus:{title:"Vesper Plus", h:"More power,<br>same privacy.", lead:"Everything in Vesper stays free. Plus adds the studios and the extras."}
 };
 function confetti(from){
@@ -2817,24 +2815,17 @@ function openLanding(id){
   open("land:" + id, () => makePage(L.title, w => {
     const land = h("div", {class:"land"}), tx = h("div", {class:"land-tx"}, h("span", {class:"lchip", html:"<i></i>Coming soon"}), h("h2", {html:L.h}), h("p", {class:"lead", text:L.lead}));
     if (L.img) land.append(h("div", {class:"land-hero", style:'background-image:url("' + L.img + '")'}, tx));
-    else if (id === "live") {
-      const trio = h("div", {class:"trio"});
-      [["aurelia", "Aurelia", "#f0c26b", "rgba(255,190,90,.3)"], ["seraphine", "Seraphine", "#b89cff", "rgba(150,110,255,.4)"], ["scarlet", "Scarlet", "#ff8f8f", "rgba(255,80,110,.32)"]].forEach(([f, n, c, g]) =>
-        trio.append(h("div", {class:"tc", style:"--g:" + g + ";--c:" + c}, h("img", {src:"studio/" + f + ".webp", alt:n, loading:"lazy"}), h("b", {}, n, h("span", {text:"Soon"})))));
-      land.append(trio, h("div", {style:"padding-top:10px"}, tx));
-      requestAnimationFrame(() => { trio.scrollLeft = (trio.scrollWidth - trio.clientWidth) / 2; });
-    } else land.append(h("div", {class:"plus-hero"}, tx));
+    else land.append(h("div", {class:"plus-hero"}, tx));
     const body = h("div", {class:"land-body"});
     if (id === "plus") body.append(
       h("div", {class:"plan"}, h("h4", {text:"Free"}), h("div", {class:"pr", text:"Forever"}), h("div", {class:"pn", text:"What you have today"}),
         featList(["Dozens of free AI models", "Characters and memory", "Models on your own PC", "No account, chats on your device"])),
       h("div", {class:"plan hot"}, h("h4", {}, "Plus", h("span", {text:"Most loved"})), h("div", {class:"pr", text:"At launch"}), h("div", {class:"pn", text:"Join the waitlist for early access"}),
-        featList(["Image Studio and Video Studio", "Live Characters with voice", "Premium characters", "Sync across your devices", "Priority help from the team"]), waitlist(id)));
+        featList(["Image Studio and Video Studio", "New verified characters every month", "Premium characters", "Sync across your devices", "Priority help from the team"]), waitlist(id)));
     else body.append(featList(L.feat), waitlist(id));
     land.append(body); w.append(land);
   }), true);
 }
-$("#openLive").onclick = () => openLanding("live");
 $("#openCreate").onclick = () => openStudio("image", !docked());
 document.querySelectorAll("#drawer .d-new").forEach(b => { b.title = b.textContent.replace(/Ctrl N|Soon/g, "").trim(); });
 
@@ -2842,7 +2833,6 @@ document.querySelectorAll("#drawer .d-new").forEach(b => { b.title = b.textConte
 const SUPPORT = {raised:0, goal:250, api:"https://vesper-chat.netlify.app/api/support", kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
 const PERKS = [
   ["sparkles", "Studios, sooner", "Image Studio and Video Studio move up the list"],
-  ["users", "Live Characters with real voices", "Seraphine, Aurelia and Scarlet, face to face"],
   ["circle-check", "New verified characters every month", "Fresh personalities, made with care"],
   ["download", "Vesper in the app stores", "Play Store and Microsoft Store versions"],
   ["heart", "Free forever, no ads, no tracking", "Your support keeps it that way"],
@@ -3270,7 +3260,7 @@ function openLearn(swap){
         h("span", {class:"mins", html:ic("clock") + g.mins + " min"}), g.logos.length ? h("div", {class:"logos"}, ...g.logos.map(brandLogo)) : null),
       h("div", {class:"lbody"}, h("b", {text:g.title}), h("span", {text:g.sub})))));
     w.append(grid);
-  }), swap);
+  }, {full:true}), swap);
 }
 function openGuide(g){
   open("guide:" + g.id, () => makePage(g.title, w => {
@@ -3281,7 +3271,7 @@ function openGuide(g){
       h("div", {class:"tx"}, h("b", {}, h("span", {text:name}), h("span", {class:"vtag " + (yes ? "yes" : "no"), html:ic(yes ? "circle-check" : "circle-x") + (yes ? "Worth it" : "Skip")})), h("p", {text:why})))))));
     if (g.verdicts) w.append(gnote("Our picks as of November 2026. Models improve fast, so Vesper's Best for this PC suggestions always come first."));
     if (g.go) w.append(h("div", {style:"padding-top:20px"}, h("button", {class:"btn primary block", type:"button", text:g.go[0], onclick:g.go[1]})));
-  }));
+  }, {full:true}));
 }
 $("#openLearn").onclick = () => openLearn(true);
 

@@ -54,15 +54,11 @@ These are on the way. Each has its own page in the app sidebar, where you can jo
 
 **Image Studio.** Any image from one sentence: posters, products, portraits and whole worlds.
 
-<p align="center"><img src="docs/studio-image.webp" alt="Image Studio, coming soon. Any image from one sentence." width="100%"></p>
+<p align="center"><img src="docs/studio-image.webp" alt="Image Studio. Any image from one sentence." width="100%"></p>
 
 **Video Studio.** Ads, reels and stories with real camera moves. Describe the shot and get the clip.
 
-<p align="center"><img src="docs/studio-video.webp" alt="Video Studio, coming soon. Direct videos with words." width="100%"></p>
-
-**Live Characters.** Characters you can see and hear, live, face to face.
-
-<p align="center"><img src="docs/studio-live.webp" alt="Live Characters, coming soon. Talk face to face with Seraphine, Aurelia and Scarlet." width="100%"></p>
+<p align="center"><img src="docs/studio-video.webp" alt="Video Studio. Direct videos with words." width="100%"></p>
 
 **Vesper Plus.** Everything in Vesper stays free. Plus adds the studios and the extras.
 
