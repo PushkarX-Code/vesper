@@ -290,24 +290,12 @@ body.dock .app.is-empty .hero .mark{display:none}
 body.dock .app.is-empty .thread{flex:0 0 auto;overflow:visible}
 body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p:not(.hsub),body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
 body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 34px}
-.hmeta{display:none}
-/* home: a roomy two row box, with the model, skill and length choices under it */
-body.dock .app.is-empty .composer{position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:0;padding:16px 16px 12px 18px;border-radius:22px;background:color-mix(in srgb,var(--raised) 80%,var(--bg));border:1px solid var(--line);box-shadow:0 20px 70px rgba(0,0,0,.4);margin-bottom:70px}
-body.dock .app.is-empty .composer #attachRow{grid-column:1/-1;grid-row:1}
-body.dock .app.is-empty .composer textarea{grid-column:1/-1;grid-row:2;order:0;font-size:17px;line-height:26px;min-height:68px;padding:2px 2px 8px}
-body.dock .app.is-empty .composer #attachBtn{grid-column:1;grid-row:3;justify-self:start;order:0;background:none;width:38px;height:38px}
-body.dock .app.is-empty .composer #micBtn{grid-column:2;grid-row:3;order:0;width:38px;height:38px}
-body.dock .app.is-empty .composer #send{grid-column:3;grid-row:3;order:0;width:38px;height:38px;margin-left:4px}
-body.dock .app.is-empty .composer #skillChip{display:none!important}
-body.dock .app.is-empty .hmeta{display:inline-flex;align-items:center;gap:6px;position:absolute;top:calc(100% + 14px);height:30px;font-size:14.5px;color:var(--fg-soft);padding:0 8px;border-radius:8px;white-space:nowrap}
-body.dock .app.is-empty .hmeta:hover{background:var(--raised);color:var(--fg)}
-body.dock .app.is-empty .hmeta .ic{width:13px;height:13px;color:var(--muted)}
-body.dock .app.is-empty #homeSkill{left:2px}
-body.dock .app.is-empty .hlen{right:2px;padding:0}.hlen select{appearance:none;-webkit-appearance:none;background:none;border:0;outline:0;color:inherit;font:inherit;height:30px;padding:0 10px;cursor:pointer;text-align:right}.hlen select option{background:var(--surface);color:var(--fg)}
-body.dock .app.is-empty #modelChip{position:absolute;top:calc(100% + 14px);right:150px;height:30px;padding:0 8px;background:none;font-size:14.5px;border-radius:8px}
-body.dock .app.is-empty #modelChip:hover{background:var(--raised)}
+/* home: our own pill, just larger and calmer */
+body.dock .app.is-empty .composer{padding:10px 12px 10px 14px;border-radius:34px;box-shadow:0 20px 70px rgba(0,0,0,.4)}
+body.dock .app.is-empty .composer textarea{font-size:17px;line-height:28px;min-height:44px;padding:8px 8px}
+body.dock .app.is-empty .composer .c-btn,body.dock .app.is-empty .composer .send,body.dock .app.is-empty #modelChip{height:44px}body.dock .app.is-empty .composer .c-btn{width:44px}
 .hl .hmark{width:40px;height:40px;background:var(--accent);flex:0 0 auto}
-body.dock .app.is-empty .hero.ready h1.hl{display:flex;align-items:center;justify-content:center;gap:16px;font-weight:400;letter-spacing:-.035em}
+body.dock .app.is-empty .hero.ready h1.hl{font-weight:400;letter-spacing:-.035em}
 body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spacing:-.02em}
 body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px;min-height:0}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
@@ -1074,8 +1062,6 @@ body.dock .btn.block{width:auto;height:38px;padding:0 16px;font-size:14px;border
       <div class="attach-row" id="attachRow" hidden></div>
       <div class="skill-chip" id="skillChip" hidden></div>
       <textarea id="input" rows="1" placeholder="Ask anything" aria-label="Message" enterkeyhint="send"></textarea>
-      <button class="hmeta" id="homeSkill" type="button" aria-label="Choose a skill"><span id="homeSkillT">No skill</span><svg class="ic" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-      <label class="hmeta hlen"><select id="homeLen" aria-label="Reply length"></select></label>
       <div class="c-row">
         <div class="c-side">
           <button class="c-btn" id="attachBtn" type="button" aria-label="Attach a photo or file" title="Attach"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>
@@ -1677,10 +1663,10 @@ function renderHero(){
   inner.innerHTML = ""; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1;
   const hero = h("div", {class:"hero ready plain"}), main = h("div", {class:"hero-main"});
   if (privateMode) main.append(h("h1", {class:"hl", html:"Private chat<i>.</i>"}), h("p", {class:"hsub", text:"This chat will not be saved to your history."}));
-  else { const nm = ((prof().call || prof().name || "").trim().split(/\s+/)[0] || ""); main.append(h("h1", {class:"hl"}, h("i", {class:"logo-flat hmark", "aria-hidden":"true"}), h("span", {text:greeting() + (nm ? ", " + nm : "")}))); }
+  else { const nm = ((prof().call || prof().name || "").trim().split(/\s+/)[0] || ""); main.append(h("h1", {class:"hl", text:greeting() + (nm ? ", " + nm : "")})); }
   if (!anyReady()) main.append(h("p", {class:"hsub", text:"No model yet. Add one in Settings, under Providers or Models."}));
   hero.append(main); inner.append(hero);
-  input.placeholder = "Type / for skills";
+  input.placeholder = "Ask anything, or type / for skills";
 }
 // Suggestions while typing: finishes your sentence from ready made prompts and your own earlier ones.
 const PROMPTS = ["Write a hook for a 15 second product video", "Write a UGC ad script for a skincare serum, 30 seconds", "Write a podcast style ad read for a coffee brand", "Give me 10 opening lines for a short video about productivity", "Plan a week of short videos for a small bakery", "Write a video script with a hook, three beats and a call to action", "Turn this idea into a 60 second explainer script", "Write captions for a product demo reel", "Give me thumbnail ideas for a video about learning to cook", "Brainstorm content ideas for this week", "Write a voiceover for a travel montage, calm and cinematic", "Rewrite this script to sound more natural and less like an ad", "Write a cold email to a brand offering UGC content", "Write a product description that sounds human", "Explain this simply, in plain words", "Summarize this in five bullet points", "Plan my day hour by hour, realistic", "Help me prepare for a job interview", "Write a polite follow up email", "Translate this into Spanish and keep the tone", "Explain how this code works, step by step", "Find the bug in this code and fix it", "Write a function that parses a CSV file", "Give me a study plan for learning a new skill in 30 days", "Compare two options and recommend one", "Write a story opening with a strong first line", "Make this paragraph shorter and clearer", "Create a checklist for launching a new product", "Write a shot list for a 30 second commercial", "Describe a cinematic scene I can use as an image prompt"];
@@ -1824,8 +1810,6 @@ input.addEventListener("keydown", e => { if (!sugList.length) return;
 input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing && (S.sendKey === "ctrl" ? (e.ctrlKey || e.metaKey) : true)) { e.preventDefault(); submit(); } });
 $("#composer").addEventListener("submit", e => { e.preventDefault(); submit(); });
 $("#modelChip").onclick = () => openModels();
-$("#homeSkill").onclick = () => pickSkill();
-{ const hl = $("#homeLen"); LENGTHS.forEach(l => hl.append(h("option", {value:l.id, text:l.label + " replies"}))); hl.value = S.len || "normal"; hl.onchange = () => { S.len = hl.value; save(); }; }
 $("#cancelEdit").onclick = () => cancelEdit();
 function startEdit(i){
   if (busy) { toast("Wait for the reply to finish"); return; }
