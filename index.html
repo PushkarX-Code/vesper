@@ -350,12 +350,19 @@ body:not([data-space="chat"]) #thread,body:not([data-space="chat"]) .composer-wr
 .sv .chip{margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
 /* details panel */
 .insp{display:none}
-body.insp-on .insp{display:block;position:fixed;right:0;top:0;bottom:0;width:320px;z-index:25;background:var(--surface);border-left:1px solid var(--line-soft);overflow-y:auto}
+body.insp-on .insp{display:block;position:fixed;right:0;top:0;bottom:0;width:var(--insp-w,320px);z-index:25;background:var(--surface);border-left:1px solid var(--line-soft);overflow-y:auto}
 body.native.insp-on .insp{top:40px}
-body.insp-on .app{margin-right:320px}
+body.insp-on .app{margin-right:var(--insp-w,320px)}
 .icon-btn.flip .ic{transform:scaleX(-1)}
 #topRight{display:flex;justify-content:flex-end;align-items:center}
-.ihead{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 6px 18px;position:sticky;top:0;background:var(--surface);z-index:1}.ihead b{font-size:15px;font-weight:600}.ihead .icon-btn{width:36px;height:36px}
+.ihead{display:flex;align-items:center;gap:4px;padding:8px 6px 8px 10px;position:sticky;top:0;background:var(--surface);z-index:1;border-bottom:1px solid var(--line-soft)}.ihead .icon-btn{width:32px;height:32px;flex:0 0 auto}
+.itabs{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}.itabs::-webkit-scrollbar{display:none}
+.itab{display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:8px;font-size:13px;color:var(--muted);white-space:nowrap;flex:0 0 auto}
+.itab .ic{width:15px;height:15px}.itab:hover{color:var(--fg-soft);background:var(--raised)}.itab.on{background:var(--raised-2);color:var(--fg)}
+.itab .ix{display:grid;place-items:center;width:18px;height:18px;margin-right:-4px;border-radius:5px;font-style:normal}.itab .ix .ic{width:12px;height:12px}.itab .ix:hover{background:rgba(255,255,255,.1)}
+.ibody{padding:14px 16px 20px}.ibody .mview img,.ibody .mview video{max-height:none}
+.iresize{position:fixed;top:0;bottom:0;right:calc(var(--insp-w,320px) - 3px);width:6px;cursor:col-resize;z-index:26}body.native .iresize{top:40px}.iresize:hover,body.resizing .iresize{background:color-mix(in srgb,var(--accent) 45%,transparent)}
+body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizing .insp{transition:none}
 .isec{padding:10px 18px 14px;border-bottom:1px solid var(--line-soft)}
 .isec h4{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .imodel{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}.imodel b{font-size:15px}.imodel span{font-size:12px;color:var(--faint);word-break:break-all}
@@ -1704,6 +1711,16 @@ async function generate(){
 
 /* ---------- details panel: the model, live activity and token use ---------- */
 let act = null, inspTimer = 0;
+// Panel tabs: Details is always there; other tabs (Preview now, editor, browser and logins in Phase 2) open beside it.
+let pTabs = [], pActive = "details";
+function openPanelTab(tab){ const i = pTabs.findIndex(t => t.id === tab.id); if (i >= 0) pTabs[i] = tab; else pTabs.push(tab); pActive = tab.id; if (!S.insp) { S.insp = true; save(); } renderInsp(); renderHeader(); }
+function closePanelTab(id){ pTabs = pTabs.filter(t => t.id !== id); if (pActive === id) pActive = pTabs.length ? pTabs[pTabs.length - 1].id : "details"; renderInsp(); }
+function previewMedia(it){ openPanelTab({id:"pv:" + it.id, title:it.kind === "video" ? "Video" : "Image", icon:it.kind === "video" ? "video" : "image", render:b => {
+  b.append(h("div", {class:"mview"}, it.kind === "video" ? h("video", {src:murl(it), controls:true, autoplay:true, loop:true, playsinline:true}) : h("img", {src:murl(it), alt:it.prompt}), h("p", {text:it.prompt}),
+    h("div", {class:"acts2"}, h("a", {class:"btn primary", href:murl(it), download:"vesper-" + it.id + (it.kind === "video" ? ".mp4" : ".png"), html:ic("download") + "Download"}), h("button", {class:"btn ghost", type:"button", text:"Open Library", onclick:() => openLibrary()})))); }}); }
+function applyInspW(){ document.body.style.setProperty("--insp-w", Math.round(S.inspW || 320) + "px"); }
+function inspDrag(e){ e.preventDefault(); const z = parseFloat(document.body.style.zoom) || 1, move = ev => { S.inspW = Math.max(280, Math.min(innerWidth / z * .6, innerWidth / z - ev.clientX / z)); applyInspW(); };
+  document.body.classList.add("resizing"); addEventListener("pointermove", move); addEventListener("pointerup", () => { removeEventListener("pointermove", move); document.body.classList.remove("resizing"); save(); }, {once:true}); }
 const estTok = t => Math.ceil(String(t || "").length / 4);
 const nf = n => n == null ? "" : n >= 10000 ? (n / 1000).toFixed(n >= 100000 ? 0 : 1) + "k" : String(Math.round(n));
 const secTxt = ms => ms < 1000 ? Math.round(ms) + " ms" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s";
@@ -1713,7 +1730,7 @@ function actStats(){
   return {p:u && u.prompt_tokens != null ? u.prompt_tokens : act.inTok, c:comp, est:!u, ttft:act.first ? Math.round(act.first - act.start) : null, ms:Math.round(end - act.start)};
 }
 function ctxOf(m){ if (!m) return null; if (m.ctx) return m.ctx; if (m.p === "pc") return 8192; return null; }
-function inspOn(){ const c = chat(); return docked() && !!S.insp && (S.space || "chat") === "chat" && !!(c && c.messages.length); }
+function inspOn(){ const c = chat(); return docked() && !!S.insp && (S.space || "chat") === "chat" && (!!(c && c.messages.length) || pTabs.length > 0); }
 function setInsp(on){ S.insp = !!on; save(); document.body.classList.toggle("insp-on", inspOn()); renderInsp(); renderHeader(); }
 function inspTick(){ renderInsp(); clearInterval(inspTimer); if (busy && inspOn()) inspTimer = setInterval(() => { if (!busy) clearInterval(inspTimer); renderInsp(); }, 500); }
 function irow(k, v, cls){ return h("div", {class:"irow" + (cls ? " " + cls : "")}, h("span", {text:k}), h("b", {text:v})); }
@@ -1721,7 +1738,11 @@ function renderInsp(){
   const el = $("#insp"); document.body.classList.toggle("insp-on", inspOn()); if (!inspOn()) return;
   const c = chat(), m = modelByKey(curKey()), P = m && provOf(m.p), len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
   el.innerHTML = "";
-  el.append(h("div", {class:"ihead"}, h("b", {text:"Details"}), iconBtn("x", "Close details", () => setInsp(false))));
+  const tabs = h("div", {class:"itabs", role:"tablist"});
+  [{id:"details", title:"Details", icon:"info"}].concat(pTabs).forEach(t => { const b = h("button", {class:"itab" + (t.id === pActive ? " on" : ""), type:"button", role:"tab", "aria-selected":String(t.id === pActive), title:t.title, onclick:() => { pActive = t.id; renderInsp(); }}, icEl(t.icon), h("span", {text:t.title}));
+    if (t.id !== "details") b.append(h("i", {class:"ix", role:"button", "aria-label":"Close " + t.title, html:ic("x"), onclick:e => { e.stopPropagation(); closePanelTab(t.id); }})); tabs.append(b); });
+  el.append(h("div", {class:"iresize", "aria-hidden":"true", onpointerdown:inspDrag}), h("div", {class:"ihead"}, tabs, iconBtn("x", "Close panel", () => setInsp(false))));
+  if (pActive !== "details") { const t = pTabs.find(x => x.id === pActive); if (t) { const body = h("div", {class:"ibody"}); el.append(body); t.render(body); return; } pActive = "details"; }
   const ctx = ctxOf(m);
   el.append(h("div", {class:"isec"}, h("h4", {text:"Model"}),
     h("div", {class:"imodel"}, h("b", {text:m ? m.name : "No model"}), h("span", {text:m ? m.id : "Pick one in the message box"})),
@@ -1756,7 +1777,7 @@ function renderInsp(){
   const asked = Object.keys(S.waitlist || {}).filter(k => k.startsWith("app:")).length;
   el.append(h("div", {class:"isec"}, h("button", {class:"irow ilink", type:"button", onclick:() => openApps()}, h("span", {text:"Connectors"}), h("b", {text:asked ? asked + " requested" : "None yet"}))));
   const outs = h("div", {class:"isec"}, h("h4", {text:"Outputs"})); el.append(outs);
-  mediaAll().then(all => { if (!all.length) { outs.append(h("div", {class:"inote", text:"Images and videos you create show up here."})); return; } all.slice(0, 4).forEach(it => outs.append(h("button", {class:"iout", type:"button", onclick:() => openMedia1(it)}, it.kind === "video" ? h("span", {class:"ith", html:ic("video")}) : h("img", {src:murl(it), alt:""}), h("span", {text:it.prompt})))); outs.append(h("button", {class:"inote ilink2", type:"button", text:"Show more", onclick:() => openLibrary()})); }).catch(() => {});
+  mediaAll().then(all => { if (!all.length) { outs.append(h("div", {class:"inote", text:"Images and videos you create show up here."})); return; } all.slice(0, 4).forEach(it => outs.append(h("button", {class:"iout", type:"button", onclick:() => previewMedia(it)}, it.kind === "video" ? h("span", {class:"ith", html:ic("video")}) : h("img", {src:murl(it), alt:""}), h("span", {text:it.prompt})))); outs.append(h("button", {class:"inote ilink2", type:"button", text:"Show more", onclick:() => openLibrary()})); }).catch(() => {});
   el.append(h("div", {class:"inote", style:"padding:4px 18px 18px", text:"Exact counts come from the provider when it reports them. Others are estimates."}));
 }
 /* ---------- drawer ---------- */
@@ -3214,7 +3235,7 @@ syncEnterHint();
 applyIcon();
 applyBg();
 history.replaceState({vd:0}, "");
-applyDock(); renderSpace(); refreshMain();
+applyInspW(); applyDock(); renderSpace(); refreshMain();
 if (DESKTOP) pcList().then(() => { refreshMain(); renderFoot(); });
 else if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 })();
