@@ -138,7 +138,7 @@ svg{display:block}
 .hero .mark{height:84px;width:auto;filter:drop-shadow(0 14px 40px var(--glow,rgba(110,140,255,.38)))}
 .hero h1{font-size:clamp(28px,8vw,36px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin:10px 0 0;text-wrap:balance}
 .hero h1 i{font-style:normal;color:var(--accent)}
-.hero h1.hl{font-size:clamp(36px,3.6vw,50px);font-weight:500;letter-spacing:-.045em;line-height:1.06;margin:0;text-align:center;background:linear-gradient(180deg,#ffffff 45%,#c3c9d6 140%);-webkit-background-clip:text;background-clip:text;color:transparent;font-feature-settings:"ss01","cv11","calt"}
+body.dock .app.is-empty .hero.ready h1.hl,.hero h1.hl{white-space:nowrap;font-size:clamp(34px,3.4vw,46px);font-weight:500;letter-spacing:-.045em;line-height:1.06;margin:0;text-align:center;background:linear-gradient(180deg,#ffffff 45%,#c3c9d6 140%);-webkit-background-clip:text;background-clip:text;color:transparent;font-feature-settings:"ss01","cv11","calt"}
 .hero h1.hl i{font-style:normal;-webkit-text-fill-color:var(--accent)}
 .hero .hsub{color:var(--muted);font-size:15px;line-height:1.5;margin:16px 0 0;text-align:center;max-width:none}
 .hero p{margin:0;color:var(--muted);font-size:15.5px;max-width:34ch}
@@ -288,8 +288,11 @@ body.dock .app.is-empty .top{position:absolute;top:0;left:0;right:0}
 body.dock .app.is-empty .hero .mark{display:none}
 .cta.row{flex-direction:row;justify-content:center;max-width:none;width:auto}.cta.row .btn{height:40px;padding:0 18px;font-size:14px}
 body.dock .app.is-empty .thread{flex:0 0 auto;overflow:visible}
-body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p,body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
-body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 26px}
+body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p:not(.hsub),body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
+body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 34px}
+body.dock .app.is-empty .composer{padding:10px 12px;border-radius:34px;box-shadow:0 18px 60px rgba(0,0,0,.35)}
+body.dock .app.is-empty .composer textarea{font-size:17px;line-height:28px;min-height:44px;padding:8px 8px}
+body.dock .app.is-empty .composer .c-btn,body.dock .app.is-empty .composer .send,body.dock .app.is-empty #modelChip{height:44px}body.dock .app.is-empty .composer .c-btn{width:44px}
 body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spacing:-.02em}
 body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px;min-height:0}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
@@ -553,6 +556,28 @@ body.native .page.modal{top:calc(50% + 20px)}
 .lay-pic .lp-side{left:6px;width:32px}
 .lay-pic.compact .lp-side{width:10px}.lay-pic.compact .lp-main{left:22px}
 .lay-pic.focus .lp-side{width:10px}.lay-pic.focus .lp-main{left:22px;right:6px}
+/* settings design system: every page, inline view and legacy block uses the same cards, rows, fields and buttons */
+.page.modal .group{background:color-mix(in srgb,var(--bg) 55%,var(--surface));border:1px solid var(--line-soft);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.page.modal .group>.row,.page.modal .group>.field{border:0;border-bottom:1px solid var(--line-soft);border-radius:0;padding:15px 20px;min-height:60px;margin:0}
+.page.modal .group>.row:last-child,.page.modal .group>.field:last-child{border-bottom:0}
+.page.modal .group>.row:hover{background:color-mix(in srgb,var(--raised) 50%,transparent)}
+.page.modal .group>.row.ctl:hover,.page.modal .group>.row:not(button):hover{background:none}
+.page.modal .group>.row b{font-size:15px;font-weight:500}.page.modal .group>.row .tx span{font-size:13.5px;line-height:1.45}
+.page.modal .group>.field{display:flex;flex-direction:column;gap:10px}
+.page.modal.has-nav .settings-view .glabel,.page.modal:not(.mroot) .glabel{font-size:13px;font-weight:500;color:var(--muted);padding:22px 4px 8px;letter-spacing:0}
+.settings-view .glabel:first-child,.page.modal:not(.mroot) .wrap>.glabel:first-child{padding-top:6px}
+.page.modal .gnote{padding:2px 4px 10px;font-size:13px}
+.page.modal .input{height:42px;padding:0 14px;border-radius:10px;font-size:14.5px;background:var(--bg);border:1px solid var(--line)}
+.page.modal textarea.input{height:auto;padding:12px 14px;min-height:120px}
+.page.modal .input:focus{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.page.modal .btn{height:36px;padding:0 14px;font-size:14px;border-radius:10px}
+.page.modal .btn.danger{background:none;border:1px solid color-mix(in srgb,var(--danger) 40%,transparent)}
+.page.modal .btns{gap:8px;align-items:center}
+.page.modal .status{font-size:13px}
+.page.modal .steps{list-style:none;padding:0;margin:0;counter-reset:st;display:flex;flex-direction:column;gap:10px}
+.page.modal .steps li{counter-increment:st;display:flex;gap:12px;align-items:flex-start;margin:0;font-size:14px;line-height:1.5;color:var(--fg-soft)}
+.page.modal .steps li::before{content:counter(st);flex:0 0 22px;height:22px;border-radius:50%;background:var(--raised);color:var(--fg);font-size:12px;font-weight:600;display:grid;place-items:center;margin-top:1px}
+.page.modal .range{margin:6px 0}
 .pfoot{position:absolute;left:250px;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--line-soft);background:var(--surface);font-size:14px}
 .pfoot .ic{width:18px;height:18px;color:#f0c26b}.pfoot b{font-weight:600}.pfoot span{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pfoot button{height:34px;padding:0 16px;border-radius:999px;background:var(--fg);color:#000;font-weight:600;font-size:14px}
@@ -882,6 +907,7 @@ button.row:active{background:var(--raised)}
 .field small{color:var(--muted);font-size:13px;line-height:1.5}
 .inrow{display:flex;gap:8px;align-items:center}
 .inrow .input{flex:1;min-width:0}
+.keyin{flex:0 1 330px}.row.actions{justify-content:flex-end}.settings-view>.row:first-child{min-height:0;padding:2px 0 10px;border-bottom:0;gap:6px;width:auto}.settings-view>.row:first-child .rico{display:flex;width:18px;height:18px}.settings-view>.row:first-child .tx span{display:none}.settings-view>.row:first-child,.settings-view>.row:first-child *{border:0!important;box-shadow:none!important}.settings-view>.row:first-child b{font-size:13.5px;font-weight:500;color:var(--muted)}.settings-view>.row:first-child:hover b{color:var(--fg)}.row.actions .status{flex:1}
 .switch{width:48px;height:30px;border-radius:999px;background:var(--raised-2);position:relative;flex:0 0 auto;transition:background .2s}
 .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#cfcfcc;transition:transform .22s var(--ease),background .2s}
 .switch[aria-checked="true"]{background:var(--accent)}
@@ -1341,7 +1367,7 @@ function friendlyError(status, body, P){
   return msg ? "Error from " + P.name + ": " + msg : "Something went wrong. Check your connection and try again.";
 }
 const netError = P => P.local
-  ? "Couldn't reach " + P.name + " at " + P.base + ". Check that the server is running, that it allows this site, and that this phone is on the same WiFi."
+  ? "Couldn't reach " + P.name + " at " + P.base + ". Check that the server is running, that it allows this site, and that this device is on the same network."
   : "Couldn't reach " + P.name + ". Check your internet and try again.";
 
 /* discover models a provider offers right now. New finds start hidden so the picker stays short. */
@@ -1634,7 +1660,7 @@ function renderHero(){
   inner.innerHTML = ""; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1;
   const hero = h("div", {class:"hero ready plain"}), main = h("div", {class:"hero-main"});
   if (privateMode) main.append(h("h1", {class:"hl", html:"Private chat<i>.</i>"}), h("p", {class:"hsub", text:"This chat will not be saved to your history."}));
-  else main.append(h("h1", {class:"hl", html:"What are we making<br>today<i>.</i>"}));
+  else main.append(h("h1", {class:"hl", html:"What are we making today<i>.</i>"}));
   if (!anyReady()) main.append(h("p", {class:"hsub", text:"No model yet. Add one in Settings, under Providers or Models."}));
   hero.append(main); inner.append(hero);
 }
@@ -2970,24 +2996,23 @@ function openProvider(pid, swap, opts){
         else set(r.status === 401 || r.status === 403 ? "This key was rejected. Make a new one at " + P.siteName + "." : "Test failed with error " + r.status + ".", "bad");
       } catch (e) { set("Couldn't reach " + P.name + ". Check your internet.", "bad"); }
     }});
-    w.append(glabel(ready(pid) ? "Connected" : "Not connected"), group(h("div", {class:"field"}, h("label", {text:"API key"}), h("div", {class:"inrow"}, key, show), h("div", {class:"btns"}, saveBtn, testBtn), st)));
-    w.append(gnote(P.usage + ". Your key stays on this device and is only sent to " + P.name + "."));
+    w.append(glabel("API key"), group(
+      h("div", {class:"row ctl keyrow"}, h("div", {class:"tx"}, h("b", {text:ready(pid) ? "Connected" : "Not connected"}), h("span", {text:P.usage + ". Kept on this device and only sent to " + P.name + "."})), h("div", {class:"inrow keyin"}, key, show)),
+      h("div", {class:"row actions"}, st, h("div", {class:"btns"}, testBtn, saveBtn))));
     if (P.key) {
       const fst = h("div", {class:"status"});
       w.append(glabel("Models"), group(
-        h("div", {class:"field"}, h("div", {class:"btns"},
-          h("button", {class:"btn", type:"button", html:ic("refresh-cw") + "Find new models", onclick:async () => {
-            fst.className = "status"; fst.textContent = "Looking…";
-            const r = await discover(pid);
-            if (r.err) { fst.className = "status bad"; fst.textContent = "Couldn't load the list: " + r.err + "."; }
-            else { fst.className = "status good"; fst.textContent = r.added ? r.added + " new. Turn " + (r.added === 1 ? "it" : "them") + " on in Manage models." : "No new models. You have them all."; }
-          }}),
-          h("button", {class:"btn", type:"button", text:"Manage models", onclick:() => opts && opts.nav ? opts.nav("models", "manage") : manageModels()})), fst)));
-      w.append(h("div", {style:"padding-top:14px"}, h("button", {class:"btn danger block", type:"button", text:"Remove key", onclick:() => dialog({title:"Remove " + P.name + " key?", text:"Its models stop working until you add a key again.", ok:"Remove", danger:true, onOk:() => { delete S.keys[pid]; fixModels(); save(); renderChip(); note.text = ""; L.refresh(); }})})));
+        row({icon:"refresh-cw", title:"Find new models", sub:"Ask " + P.name + " for its latest list", chev:false, onclick:async () => {
+          fst.className = "status"; fst.textContent = "Looking...";
+          const r = await discover(pid);
+          if (r.err) { fst.className = "status bad"; fst.textContent = "Could not load the list: " + r.err + "."; }
+          else { fst.className = "status good"; fst.textContent = r.added ? r.added + " new. Turn " + (r.added === 1 ? "it" : "them") + " on in Manage models." : "No new models. You have them all."; }
+        }}),
+        row({icon:"sliders-horizontal", title:"Manage models", sub:"Choose which of its models show in the picker", onclick:() => opts && opts.nav ? opts.nav("models", "manage") : manageModels()}),
+        row({icon:"trash-2", title:"Remove key", sub:"Its models stop working until you add a key again", danger:true, chev:false, onclick:() => dialog({title:"Remove " + P.name + " key?", text:"Its models stop working until you add a key again.", ok:"Remove", danger:true, onOk:() => { delete S.keys[pid]; fixModels(); save(); renderChip(); renderHeader(); if (!chat()) renderThread(); L.refresh(); }})})), fst);
     }
-    w.append(glabel("Get a free key"), group(h("div", {class:"field"},
-      h("ol", {class:"steps"}, ...P.steps.map(s => h("li", {text:s}))),
-      h("a", {class:"btn block", href:P.site, target:"_blank", rel:"noopener noreferrer", html:"Open " + esc(P.siteName) + ic("external-link")}))));
+    w.append(glabel("Get a free key"), group(h("div", {class:"field"}, h("ol", {class:"steps"}, ...P.steps.map(x => h("li", {text:x})))),
+      row({icon:"external-link", title:"Open " + P.siteName, sub:"Sign up and create a key, then paste it above", onclick:() => window.open(P.site, "_blank", "noopener,noreferrer"), chev:false})));
   };
   if (opts && opts.into) return inlineLayer(render, opts.into, opts.after);
   open("prov:" + pid, () => makePage(PROVIDERS[pid].name, render), swap);
@@ -3000,7 +3025,7 @@ function openLocal(swap, opts){
   const render = w => {
     if (inline) w.append(row({icon:"chevron-left", title:"All models", sub:"Back to models", onclick:() => go("home"), chev:false}));
     if (DESKTOP && !inline) w.append(glabel("On this PC"), group(row({icon:"cpu", title:"Models on this PC", sub:"Download and run models right here, offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()})), glabel("Other computers and servers"));
-    w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. It only needs to be on the same WiFi as this phone."));
+    w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. It only needs to be on the same network as this device."));
     if (S.conns.some(c => c.id !== "pc")) w.append(glabel("Your connections"), group(...S.conns.filter(c => c.id !== "pc").map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => go("conn:" + c.id)}))));
     w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Add a local model", onclick:() => go("conn:new")})));
     w.append(glabel("Not sure which model?"), group(row({icon:"cpu", title:"Which model fits my computer?", sub:"Picks based on your memory and graphics card", onclick:() => go("advisor")})));
@@ -3011,9 +3036,9 @@ function openLocal(swap, opts){
 function localTips(kind){
   const o = esc(location.origin);
   const common = "<li>When Chrome asks to let this site reach devices on your local network, tap Allow.</li>";
-  if (kind === "ollama") return `<li>Install Ollama on your computer and get a model, for example <span class="codechip">ollama pull llama3.2</span>.</li><li>Let this phone and this site reach it: set <span class="codechip">OLLAMA_HOST=0.0.0.0</span> and <span class="codechip">OLLAMA_ORIGINS=${o}</span>, then restart Ollama.</li><li>On this phone, use your computer's WiFi address with port 11434. On the computer itself, localhost works.</li>` + common;
-  if (kind === "lmstudio") return `<li>In LM Studio, open the Developer tab and start the server.</li><li>In its settings, turn on Enable CORS and Serve on Local Network.</li><li>On this phone, use your computer's WiFi address with port 1234.</li>` + common;
-  if (kind === "llamacpp") return `<li>Start llama server with <span class="codechip">--host 0.0.0.0</span> so other devices can reach it.</li><li>On this phone, use your computer's WiFi address with port 8080.</li>` + common;
+  if (kind === "ollama") return `<li>Install Ollama on your computer and get a model, for example <span class="codechip">ollama pull llama3.2</span>.</li><li>Let this device and this site reach it: set <span class="codechip">OLLAMA_HOST=0.0.0.0</span> and <span class="codechip">OLLAMA_ORIGINS=${o}</span>, then restart Ollama.</li><li>From another device, use your computer's WiFi address with port 11434. On the computer itself, localhost works.</li>` + common;
+  if (kind === "lmstudio") return `<li>In LM Studio, open the Developer tab and start the server.</li><li>In its settings, turn on Enable CORS and Serve on Local Network.</li><li>From another device, use your computer's WiFi address with port 1234.</li>` + common;
+  if (kind === "llamacpp") return `<li>Start llama server with <span class="codechip">--host 0.0.0.0</span> so other devices can reach it.</li><li>From another device, use your computer's WiFi address with port 8080.</li>` + common;
   return `<li>Any server with an OpenAI compatible API works. Its address usually ends in /v1.</li><li>The server must allow requests from <span class="codechip">${o}</span> (CORS).</li>` + common;
 }
 function normBase(v){
@@ -3068,7 +3093,7 @@ function openConn(id, swap, opts){
     if (!saved) w.append(glabel("App"), seg(kinds, draft.kind, pickKind));
     w.append(glabel("Connection"), group(
       h("div", {class:"field"}, h("label", {text:"Name"}), name),
-      h("div", {class:"field"}, h("label", {text:"Server address"}), base, h("small", {text:"On this phone, use your computer's WiFi address, like http://192.168.1.20:11434. Find it in your computer's network settings."})),
+      h("div", {class:"field"}, h("label", {text:"Server address"}), base, h("small", {text:"From another device, use your computer's WiFi address, like http://192.168.1.20:11434. Find it in your computer's network settings."})),
       h("div", {class:"field"}, h("label", {text:"API key, optional"}), key),
       h("div", {class:"field"}, h("div", {class:"btns"},
         h("button", {class:"btn primary", type:"button", text:saved ? "Save and test" : "Connect", onclick:() => connect(false)}),
