@@ -137,7 +137,7 @@ Vesper can talk to a model running on your own computer through Ollama, LM Studi
 
 1. Open **Settings**, then **Local models**, then **Add a local model**.
 2. Pick your app and enter your computer's WiFi address, for example `http://192.168.1.20:11434/v1` for Ollama.
-3. Follow the setup steps shown in the app. For Ollama that means setting `OLLAMA_HOST=0.0.0.0` and `OLLAMA_ORIGINS=https://pushkarx-code.github.io`, then restarting it.
+3. Follow the setup steps shown in the app. For Ollama that means setting `OLLAMA_HOST=0.0.0.0` and `OLLAMA_ORIGINS=https://vesper.nodefolds.com`, then restarting it.
 4. Tap **Connect**. When Chrome asks to let the site reach devices on your local network, tap **Allow**.
 
 ## Under the hood
@@ -145,10 +145,10 @@ Vesper can talk to a model running on your own computer through Ollama, LM Studi
 * One HTML file with plain JavaScript and CSS. No framework and no build step.
 * [marked](https://github.com/markedjs/marked) and [DOMPurify](https://github.com/cure53/DOMPurify) render replies safely as formatted text. Both ship in `vendor/`.
 * [Inter](https://rsms.me/inter/) is the typeface, served from `fonts/`. Icons come from [Lucide](https://lucide.dev).
-* No third party requests besides the AI provider you pick.
+* Your chats go straight to the AI provider you pick. The Support page also calls the Ko-fi counter, and the Studio loads its banner from a public image host.
 * A small service worker and a web manifest make it installable.
 * The README pictures and the promo slides in `docs/promo/` are real screenshots with demo data, made by `node docs/art/make-art.js`.
-* Hosted for free on GitHub Pages.
+* The live app is hosted at [vesper.nodefolds.com](https://vesper.nodefolds.com). GitHub Pages serves an older mirror.
 
 ### Project structure
 

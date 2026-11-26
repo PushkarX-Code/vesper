@@ -1,0 +1,2 @@
+-- Local development seed. The production database has no seed data.
+-- Add rows here only for supabase db reset on a developer machine.

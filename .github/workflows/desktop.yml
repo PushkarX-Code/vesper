@@ -7,6 +7,15 @@ on:
     paths:
       - "desktop/**"
       - "index.html"
+      - "sw.js"
+      - "version.json"
+      - "manifest*.webmanifest"
+      - "fonts/**"
+      - "vendor/**"
+      - "icons/**"
+      - "chars/**"
+      - "studio/**"
+      - "learn/**"
       - ".github/workflows/desktop.yml"
   push:
     tags:
