@@ -41,7 +41,7 @@ img{display:block;max-width:100%}
 /* scenes */
 .scene{position:relative}
 .pin{position:sticky;top:0;height:100svh;overflow:hidden}
-#device,#wall,#mark,#h1{will-change:transform}
+#device,#ipad,#phone,#mark,#h1{will-change:transform}
 /* hero */
 .hero{height:150vh}
 .hero .pin{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px}
@@ -132,23 +132,28 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .card.wide img{width:100%;height:auto;border-radius:16px 16px 0 0;box-shadow:0 0 0 1px var(--line)}
 @media (max-width:600px){.card.wide{grid-column:auto;grid-template-columns:1fr}}
 .rv{opacity:0;transform:translate3d(0,28px,0) scale(.99);transition:opacity .72s var(--ease) var(--reveal-delay,0ms),transform .84s var(--ease) var(--reveal-delay,0ms)}.rv.in{opacity:1;transform:translate3d(0,0,0) scale(1)}
-/* studio theater */
-.theater{height:320vh}
-.theater .pin{display:grid;place-items:center}
-.screenwall{position:absolute;inset:0;overflow:hidden;background:#050507}
-.screenwall img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 30%,transparent 50%,rgba(0,0,0,.9))}
-.ttl{position:absolute;left:0;right:0;bottom:9vh;text-align:center;padding:0 20px}
-.ttl .tt{position:absolute;left:0;right:0;bottom:0}
+/* studio: iPad with Image Studio, phone with Video Studio sliding up */
+.theater{height:420vh}
+.theater .pin{display:grid;grid-template-columns:4fr 7fr;align-items:center;gap:64px;width:min(1360px,100% - 64px);margin:0 auto}
+.dtexts{position:relative;height:330px}.dtx{position:absolute;inset:0}
+.dtx h3{margin:18px 0 0;font-size:clamp(38px,4.4vw,62px);font-weight:600;letter-spacing:-.045em;line-height:1.04}
+.dtx p{margin:18px 0 0;font-size:clamp(17px,1.7vw,20px);color:var(--muted);line-height:1.5;max-width:460px}
+.dstage{position:relative;width:100%;display:grid;place-items:center;perspective:2200px}
+.dstage .device{will-change:transform}
+.device.phone{position:absolute;right:-1%;bottom:-7%;width:30%;max-height:none;aspect-ratio:412/892;border-radius:clamp(22px,3.2vw,42px);padding:clamp(6px,.8vw,10px);z-index:3;box-shadow:0 60px 120px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.05)}
+.device.phone::before{display:none}
+.device.phone .screen{border-radius:clamp(15px,2.4vw,33px)}
+.device.phone .screen img{object-position:top center}
+@media (max-width:860px){
+  .theater .pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;padding:92px 0 24px}
+  .dstage{order:-1;perspective:none}
+  .dtexts{height:210px}.dtx h3{font-size:34px;margin-top:12px}.dtx p{font-size:16px;margin-top:10px}
+  .device.phone{width:34%;right:2%;bottom:-9%}
+}
 .chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(110,168,255,.16);padding:6px 12px;border-radius:999px;margin-bottom:14px}
-.ttl h3{margin:0;font-size:clamp(34px,5.4vw,72px);font-weight:600;letter-spacing:-.045em}
-.ttl p{margin:10px 0 0;color:var(--soft);font-size:clamp(16px,1.6vw,19px)}
-.st-head{position:absolute;top:13vh;left:0;right:0;text-align:center}
 .nextw{padding:12vh 0 8vh}
 .ngrid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:48px}
 .ngrid .card{grid-column:span 2;min-height:230px}.ngrid .card.big{grid-column:span 3}
-.cst{position:absolute;top:24px;right:24px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;color:var(--muted);background:rgba(255,255,255,.06)}
-.cst.dev{color:var(--accent);background:rgba(110,168,255,.14)}
 @media (max-width:860px){.ngrid{grid-template-columns:1fr}.ngrid .card,.ngrid .card.big{grid-column:auto}}
 .plus{padding:44px;border-radius:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:linear-gradient(#0d0d12,#0d0d12) padding-box,linear-gradient(120deg,#6ea8ff,#f0c26b 55%,#6ea8ff) border-box;border:1.5px solid transparent;box-shadow:0 30px 100px rgba(70,90,255,.2)}
 .plus h3{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.035em}
@@ -259,22 +264,29 @@ footer a:hover{color:#fff}
 </div></section>
 
 <section class="scene theater" id="studio"><div class="pin">
-  <div class="screenwall m" id="wall"><img class="m" src="img/image-studio-4k.jpg" alt="Image Studio examples"><img class="m" src="img/video-studio-4k.jpg" alt="Video Studio examples" style="opacity:0"><div class="shade"></div></div>
-  <div class="st-head m" id="sthead"><div class="eyebrow">Create</div><h2>The studio<br>is open.</h2></div>
-  <div class="ttl"><div class="tt m"><span class="chip">Image Studio</span><h3>Any image. One sentence.</h3><p>Posters, products, portraits and whole worlds. Free, with no key.</p></div>
-    <div class="tt m" style="opacity:0"><span class="chip">Video Studio</span><h3>Direct videos with words.</h3><p>Ads, reels and stories with real camera moves. Saved in your Library.</p></div></div>
+  <div>
+    <div class="eyebrow">Create</div>
+    <div class="dtexts">
+      <div class="dtx m"><span class="chip">Image Studio</span><h3>Any image.<br>One sentence.</h3><p>Posters, products, portraits and whole worlds. Free, with no key.</p></div>
+      <div class="dtx m" style="opacity:0"><span class="chip">Video Studio</span><h3>Direct videos<br>with words.</h3><p>Ads, reels and stories with real camera moves. Saved in your Library.</p></div>
+    </div>
+  </div>
+  <div class="dstage">
+    <div class="device m" id="ipad"><div class="screen"><div class="shots"><img src="img/app-studio.webp" alt="Vesper Image Studio" width="2040" height="1416" loading="lazy"></div></div></div>
+    <div class="device phone m" id="phone"><div class="screen"><div class="shots"><img src="img/phone-video.webp" alt="Vesper Video Studio on a phone" width="824" height="1784" loading="lazy"></div></div></div>
+  </div>
 </div></section>
 
 <section class="nextw" id="next"><div class="wrap">
-  <div class="eyebrow rv">What is next</div>
+  <div class="eyebrow rv">Roadmap</div>
   <h2 class="rv">Chat is just<br>the start.</h2>
   <p class="sub rv">Vesper is growing into a full workspace for Windows. Here is what we are building.</p>
   <div class="ngrid">
-    <div class="card rv big"><span class="cst dev">In development</span><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><h3>Code</h3><p>Open a folder and build with Vesper. A built in editor, with every change shown before it is saved.</p></div>
-    <div class="card rv big"><span class="cst dev">In development</span><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 13h.01M15 13h.01"/></svg></div><h3>Agent</h3><p>Give Vesper a goal. It plans the steps, uses tools and asks before it acts.</p></div>
-    <div class="card rv"><span class="cst">Planned</span><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div><h3>Built in browser</h3><p>Browse and research next to your chat, in the same window.</p></div>
-    <div class="card rv"><span class="cst">Planned</span><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Encrypted chat folders</h3><p>Each chat keeps its files in an encrypted folder on your PC, deleted with the chat.</p></div>
-    <div class="card rv"><span class="cst">Planned</span><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><h3>Shared memory</h3><p>Switch chats and keep the same memory, when you turn it on.</p></div>
+    <div class="card rv big"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><h3>Code</h3><p>Open a folder and build with Vesper. A built in editor, with every change shown before it is saved.</p></div>
+    <div class="card rv big"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 13h.01M15 13h.01"/></svg></div><h3>Agent</h3><p>Give Vesper a goal. It plans the steps, uses tools and asks before it acts.</p></div>
+    <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div><h3>Built in browser</h3><p>Browse and research next to your chat, in the same window.</p></div>
+    <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Encrypted chat folders</h3><p>Each chat keeps its files in an encrypted folder on your PC, deleted with the chat.</p></div>
+    <div class="card rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><h3>Shared memory</h3><p>Switch chats and keep the same memory, when you turn it on.</p></div>
   </div>
 </div></section>
 
@@ -302,7 +314,7 @@ footer a:hover{color:#fff}
     <p class="fine">Vesper keeps chats and provider keys on your device. When you use an AI provider, your request goes directly to that provider. Provider limits and fees may apply. <a data-link="privacy">Read our Privacy Policy</a> for full details.</p>
     <div class="dir">
       <div><h4>Products</h4><a href="#vesper">Vesper</a><a data-link="windows">Vesper for Windows</a><a href="#vesper">Characters</a><a data-link="web">Open Vesper</a></div>
-      <div><h4>Explore</h4><a href="#principles">Our principles</a><a href="#studio">Image Studio</a><a href="#studio">Video Studio</a><a href="#next">What is next</a></div>
+      <div><h4>Explore</h4><a href="#principles">Our principles</a><a href="#studio">Image Studio</a><a href="#studio">Video Studio</a><a href="#next">Roadmap</a></div>
       <div><h4>Resources</h4><a href="#download">Downloads</a><a data-link="github">GitHub repository</a><a data-link="web">Guides and resources</a></div>
       <div><h4>Support</h4><a href="support">Contact support</a><a href="support#report">Report a problem</a><a data-link="kofi">Support Vesper</a></div>
       <div><h4>Node Folds</h4><a href="#top">About us</a><a data-link="email">Business enquiries</a><a data-link="privacy">Privacy policy</a><a data-link="terms">Terms of use</a></div>
@@ -376,7 +388,7 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
   // cards spotlight
   $$(".card").forEach(c => c.addEventListener("pointermove", e => { const r = c.getBoundingClientRect(); c.style.setProperty("--x", e.clientX - r.left + "px"); c.style.setProperty("--y", e.clientY - r.top + "px"); }));
   const hero = $(".hero"), story = $(".story"), mani = $(".mani"), theater = $(".theater");
-  const txs = $$(".tx"), shots = $$(".screen img"), ticks = $$(".ticks b"), walls = $$("#wall img"), tts = $$(".tt"), rvs = $$(".rv");
+  const txs = $$(".tx"), shots = $$(".screen img"), ticks = $$(".ticks b"), tts = $$(".dtx"), rvs = $$(".rv");
   // smoothed values glide toward their targets, like a camera move
   const S = {}, T = {}; const k = RM ? 1 : .16;
   const sm = (key, target) => { T[key] = target; if (S[key] === undefined) S[key] = target; return S[key]; };
@@ -429,16 +441,15 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
     // principles: words light up as you read
     const mp = sm("mani", R[2].p), lit = mp * 1.15 * words.length;
     words.forEach((w, i) => w.style.opacity = .13 + .87 * clamp(lit - i));
-    // studio: the picture opens from a card to the full screen, then cuts to video
-    const th = R[3], tp = sm("theater", th.p), te = ease(clamp(tp / .45));
-    const inset = (1 - te) * Math.min(18, 30 * innerWidth / 1440 + 6), rad = (1 - te) * 36;
-    $("#wall").style.clipPath = "inset(" + (inset * 2.4) + "% " + inset + "% " + (inset * .6) + "% " + inset + "% round " + rad + "px)";
-    $("#sthead").style.opacity = 1 - clamp(tp * 6); $("#sthead").style.transform = "translateY(" + (-tp * 120) + "px)";
-    const cut = clamp((tp - .58) / .14);
-    walls[0].style.opacity = 1 - cut; walls[1].style.opacity = cut;
-    walls.forEach((img, i) => img.style.transform = "scale(" + (1.18 - te * .14 + (i ? (1 - cut) * .06 : 0)) + ")");
-    tts[0].style.opacity = clamp((tp - .18) / .12) * (1 - cut); tts[0].style.transform = "translateY(" + ((1 - clamp((tp - .18) / .12)) * 30) + "px)";
-    tts[1].style.opacity = cut; tts[1].style.transform = "translateY(" + ((1 - cut) * 30) + "px)";
+    // studio: the iPad rises with Image Studio, then the phone with Video Studio slides up over it
+    const th = R[3], tp = sm("theater", th.p), e1 = ease(clamp(tp / .3)), e2 = ease(clamp((tp - .45) / .3));
+    const ip = $("#ipad"), ph = $("#phone"), small = innerWidth <= 860;
+    ip.style.transform = small ? "translateY(" + ((1 - e1) * 8) + "vh) scale(" + (.94 + e1 * .06 - e2 * .03) + ")"
+      : "translateY(" + ((1 - e1) * 22) + "vh) rotateX(" + ((1 - e1) * 14) + "deg) rotateY(" + (-4 + e1 * 1.5 - e2 * 2) + "deg) translateX(" + (-e2 * 5) + "%) scale(" + (.9 + e1 * .1 - e2 * .05) + ")";
+    ip.style.opacity = .3 + e1 * .7 - e2 * .22;
+    ph.style.transform = "translateY(" + ((1 - e2) * 115) + "vh)";
+    tts[0].style.opacity = clamp(e1 * 1.6) * (1 - clamp((tp - .4) / .1)); tts[0].style.transform = "translateY(" + ((1 - e1) * 30 - clamp((tp - .4) / .1) * 20) + "px)";
+    tts[1].style.opacity = clamp((tp - .55) / .1); tts[1].style.transform = "translateY(" + ((1 - clamp((tp - .55) / .1)) * 30) + "px)";
     // the rest rises in gently
   }
   if ("IntersectionObserver" in window) {
