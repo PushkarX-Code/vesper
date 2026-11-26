@@ -228,8 +228,13 @@ body.dock .app,body.dock .page{margin-left:280px}
 body.dock .page{width:auto;left:0;right:0}
 body.dock #openDrawer{visibility:hidden}
 body.dock .d-new:hover,body.dock .ci:hover,body.dock .d-foot button:hover{background:var(--raised)}
-body.dock.side-off .drawer{transform:translateX(-100%);visibility:hidden}
-body.dock.side-off .app,body.dock.side-off .page{margin-left:0}
+body.dock.side-off .drawer{width:64px;padding-left:10px;padding-right:10px;overflow:hidden;align-items:stretch}
+body.dock.side-off .app,body.dock.side-off .page{margin-left:64px}
+body.dock.side-off .d-brand{flex-direction:column;align-items:center;gap:6px;padding:4px 0 10px}body.dock.side-off .d-brand b,body.dock.side-off #dSearchBtn,body.dock.side-off .d-sec,body.dock.side-off .chat-list,body.dock.side-off .d-search,body.dock.side-off .d-new kbd,body.dock.side-off .tagp,body.dock.side-off .d-user .nm,body.dock.side-off #openSupport{display:none!important}
+body.dock.side-off .d-brand .left,body.dock.side-off .d-tools{justify-content:center}
+body.dock.side-off .spaces{flex-direction:column;margin:0 0 10px}body.dock.side-off .spaces button{font-size:0;gap:0;height:34px;flex:0 0 34px}
+body.dock.side-off .d-new{font-size:0;gap:0;justify-content:center;padding:10px 0}
+body.dock.side-off .chat-list{display:none}body.dock.side-off .d-foot{margin-top:auto}body.dock.side-off .d-user{flex-direction:column;padding:6px 0;gap:8px}
 /* desktop: sheets become centered dialogs */
 body.dock .sheet{top:50%;bottom:auto;max-height:min(80vh,720px);border:1px solid var(--line);border-radius:20px;opacity:0;transform:translateY(-48%) scale(.97)}
 body.dock .sheet.on{opacity:1;transform:translateY(-50%)}
@@ -378,8 +383,8 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .iout{display:flex;align-items:center;gap:10px;width:100%;padding:6px 0;text-align:left;font-size:13.5px;color:var(--fg-soft)}.iout img,.iout .ith{width:28px;height:28px;border-radius:7px;object-fit:cover;flex:0 0 auto;background:var(--raised);display:grid;place-items:center}.iout .ith .ic{width:15px;height:15px}
 .iout span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ilink2{padding:4px 0 0}.ilink2:hover{color:var(--fg)}
 /* studio: banner home and project workspace */
-.studiopg .page-body{padding:0 20px 120px}
-.studiopg .wrap{max-width:1180px;width:100%}
+.studiopg .page-body{padding:0 28px 120px}
+.studiopg .wrap{max-width:none;width:100%}
 .sbanner{position:relative;border-radius:24px;overflow:hidden;min-height:clamp(300px,44vh,460px);display:flex;align-items:flex-end;background:#0b0b0d;margin-top:6px;isolation:isolate}
 .sbanner .bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 .sshade{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.45) 46%,rgba(0,0,0,.08) 100%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 40%)}
@@ -417,9 +422,11 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .sbar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(760px,calc(100% - 32px));display:flex;align-items:flex-end;gap:6px;padding:8px;border-radius:28px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.5);z-index:4}
 .sbar textarea{flex:1;min-width:0;background:none;border:0;outline:0;resize:none;padding:9px 6px;font-size:15.5px;line-height:22px;max-height:120px;min-height:40px}
 .schip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.schip .ic{width:16px;height:16px}.schip .ic:last-child{width:13px;height:13px;color:var(--muted)}.schip:hover{background:var(--raised-2)}
+.sseg{display:flex;align-items:center;height:40px;padding:3px;border-radius:999px;background:var(--raised);flex:0 0 auto}.sseg button{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;font-size:13.5px;color:var(--muted)}.sseg button .ic{width:16px;height:16px}.sseg button.on{background:var(--raised-2);color:var(--fg)}
+.slib{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 13px;border-radius:14px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.slib .ic{width:17px;height:17px}.slib:hover,.slib.on{background:var(--raised-2);color:var(--fg)}
 .sgo{width:40px;height:40px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;flex:0 0 auto}.sgo .ic{width:20px;height:20px}
 @media (max-width:820px){.studiopg .mgrid{grid-template-columns:repeat(2,1fr)}.ssteps{grid-template-columns:1fr 1fr}.sspace{grid-template-columns:1fr}.srail{position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}.sback{order:-1}.sname{order:-1;padding:0 4px}.sgen{display:none}.snav{padding:7px 12px;background:var(--raised)}.sbanner{min-height:360px}.sbar{border-radius:24px}}
-@media (max-width:520px){.schip span{display:none}}
+@media (max-width:520px){.sbar{flex-wrap:wrap}.sbar textarea{order:-1;flex:1 0 100%;padding-bottom:4px}.slib span,.sseg span{display:none}.sseg button{padding:0 12px}.sgo{margin-left:auto}}
 /* colored icon tiles in settings */
 .rico{width:22px;height:22px;display:grid;place-items:center;flex:0 0 auto;color:var(--fg-soft)}.rico .ic{width:20px;height:20px}.row.danger .rico{color:#ff6b6b}
 /* skills */
@@ -957,10 +964,7 @@ select.input{appearance:none;background-image:none}
   <button class="d-new d-primary" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat<kbd>Ctrl N</kbd></button>
   <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
   <button class="d-new" id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button>
-  <div class="d-sec">Create</div>
-  <button class="d-new" id="openImage"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Image Studio</button>
-  <button class="d-new" id="openVideo"><svg class="ic" aria-hidden="true"><use href="#i-video"/></svg>Video Studio</button>
-  <button class="d-new" id="openLibrary"><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg>Library</button>
+  <button class="d-new" id="openCreate"><svg class="ic" aria-hidden="true"><use href="#i-palette"/></svg>Create</button>
   <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot">
@@ -1856,7 +1860,7 @@ function toggleSide(){ if (docked()) setSide(!S.sideOff); else $("#openDrawer").
 document.body.classList.toggle("side-off", !!S.sideOff);
 $("#tbSide").onclick = toggleSide;
 $("#dStatus").onclick = () => DESKTOP ? openPC() : openProviders();
-$("#dSideBtn").onclick = () => { if (docked()) setSide(true); else closeTop(); };
+$("#dSideBtn").onclick = () => { if (docked()) setSide(!S.sideOff); else closeTop(); };
 $("#dSearchBtn").onclick = () => { const d = $("#drawer"), on = d.classList.toggle("searching"); if (on) $("#chatSearch").focus(); else { $("#chatSearch").value = ""; renderDrawer(); } };
 // Keyboard shortcuts, like a desktop chat app
 addEventListener("keydown", e => {
@@ -2099,8 +2103,8 @@ function openStudio(kind, swap, opts){
   const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:"square", q:"", sort:"recent", busy:0};
   open("studio", () => {
     const bar = studioBar(st);
-    const L = makePage("Studio", (w, L2) => { bar.el.hidden = !st.proj; if (st.proj) bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); });
-    L.el.classList.add("studiopg"); L.el.append(bar.el);
+    const L = makePage("Studio", (w, L2) => { bar.el.hidden = false; bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); });
+    L.el.classList.add("studiopg"); L.el.append(bar.el); bar.L = L;
     L.onHide = () => { const v = L.el.querySelector("video.bgv"); if (v) v.pause(); studioLive = null; };
     studioLive = {L, set:(k, o) => { st.kind = k === "video" ? "video" : "image"; st.proj = (o && o.proj) || null; st.filter = "all"; L.refresh(); }};
     return L;
@@ -2115,7 +2119,7 @@ function studioHome(w, L, st){
   const credit = h("span", {class:"scredit", text:STUDIO_BANNER.credit, hidden:true}); vid.addEventListener("playing", () => { credit.hidden = false; }, {once:true});
   w.append(h("section", {class:"sbanner"}, vid, h("div", {class:"sshade"}),
     h("div", {class:"sbtx"}, h("span", {class:"stag", text:"Vesper Studio"}), h("h2", {html:"Imagine it.<br>Create it."}), h("p", {text:"Describe a picture or a scene and watch it appear. Free, private and saved only on your device."}),
-      h("div", {class:"sbbtn"}, h("button", {class:"btn primary", type:"button", html:ic("plus") + "New project", onclick:() => newProject(st, L)}), h("button", {class:"btn ghost", type:"button", text:"How it works", onclick:() => { const t = w.querySelector(".shd"); if (t) t.scrollIntoView({behavior:"smooth", block:"start"}); }}))),
+      h("div", {class:"sbbtn"}, h("button", {class:"btn primary", type:"button", html:ic("plus") + "New project", onclick:() => newProject(st, L)}))),
     credit));
   w.append(h("h3", {class:"shd", text:"How it works"}), h("div", {class:"ssteps"}, ...STEPS.map(([i, t, d], k) => h("div", {class:"sstep"}, h("span", {class:"snum", text:String(k + 1)}), h("div", {class:"sico", html:ic(i)}), h("b", {text:t}), h("p", {text:d})))));
   const grid = h("div", {class:"spg"});
@@ -2153,14 +2157,17 @@ function studioSpace(w, L, st, bar){
   w.append(h("div", {class:"sspace"}, rail, h("div", {class:"smain"}, h("label", {class:"ssearch", html:ic("search")}, q), grid))); draw();
 }
 function studioBar(st){
-  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("button", {class:"schip", type:"button", "aria-label":"Choose image or video"}), shape = h("button", {class:"schip", type:"button", "aria-label":"Choose a shape"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
-  const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, go), api = {el, refresh:() => {}, sync:() => {}};
-  api.sync = () => { mode.innerHTML = ic(st.kind === "video" ? "video" : "image") + "<span>" + (st.kind === "video" ? "Video" : "Image") + "</span>" + ic("chevron-down"); shape.hidden = st.kind === "video"; shape.innerHTML = "<span>" + ({square:"Square", portrait:"Portrait", landscape:"Wide"})[st.shape] + "</span>" + ic("chevron-down"); };
-  mode.onclick = () => menu("smode", "Create", [{icon:"image", label:"Image", run:() => { st.kind = "image"; api.sync(); }}, {icon:"video", label:"Video", run:() => { st.kind = "video"; api.sync(); }}]);
+  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("div", {class:"sseg", role:"group", "aria-label":"Image or video"}), mImg = h("button", {type:"button", html:ic("image") + "<span>Image</span>"}), mVid = h("button", {type:"button", html:ic("video") + "<span>Video</span>"}), lib = h("button", {class:"slib", type:"button", title:"Library", "aria-label":"Library", html:ic("images") + "<span>Library</span>"}), shape = h("button", {class:"schip", type:"button", "aria-label":"Choose a shape"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
+  const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, lib, go), api = {el, refresh:() => {}, sync:() => {}};
+  mode.append(mImg, mVid);
+  api.sync = () => { mImg.classList.toggle("on", st.kind !== "video"); mVid.classList.toggle("on", st.kind === "video"); lib.classList.toggle("on", st.proj === "__all"); shape.hidden = st.kind === "video"; shape.innerHTML = "<span>" + ({square:"Square", portrait:"Portrait", landscape:"Wide"})[st.shape] + "</span>" + ic("chevron-down"); };
+  mImg.onclick = () => { st.kind = "image"; api.sync(); }; mVid.onclick = () => { st.kind = "video"; api.sync(); };
+  lib.onclick = () => { st.proj = "__all"; st.filter = "all"; if (api.L) api.L.refresh(); };
   shape.onclick = () => menu("sshape", "Shape", [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]].map(([id, t]) => ({icon:"image", label:t, run:() => { st.shape = id; api.sync(); }})));
   ta.oninput = () => { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; };
   ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); el.requestSubmit(); } };
   el.onsubmit = async e => { e.preventDefault(); const prompt = ta.value.trim(); if (!prompt) { ta.focus(); return; }
+    if (!st.proj && api.L) newProject(st, api.L);
     const kind = st.kind, proj = st.proj && st.proj[0] !== "_" ? st.proj : undefined; st.busy++; api.refresh(); ta.value = ""; ta.style.height = "auto";
     try { const blob = kind === "video" ? await genVideo(prompt) : await genImage(prompt, st.shape); await mediaPut({id:uid(), kind, prompt, at:Date.now(), blob, project:proj, via:kind === "video" ? "pollinations" : (media().image || "free")}); buzz(14); }
     catch (err) { toast(String(err && err.message || err).slice(0, 140)); }
@@ -2819,9 +2826,8 @@ function openLanding(id){
   }), true);
 }
 $("#openLive").onclick = () => openLanding("live");
-$("#openImage").onclick = () => openStudio("image", !docked());
-$("#openVideo").onclick = () => openStudio("video", !docked());
-$("#openLibrary").onclick = () => openLibrary(!docked());
+$("#openCreate").onclick = () => openStudio("image", !docked());
+document.querySelectorAll("#drawer .d-new").forEach(b => { b.title = b.textContent.replace(/Ctrl N|Soon/g, "").trim(); });
 
 /* support: goal bar plus the Ko-fi panel inside the app */
 const SUPPORT = {raised:0, goal:250, api:"https://vesper-chat.netlify.app/api/support", kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
