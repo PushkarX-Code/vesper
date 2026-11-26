@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://vesper-chat.netlify.app"><img src="docs/banner.webp" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
+  <a href="https://vesper.nodefolds.com"><img src="docs/banner.webp" alt="Vesper. Private AI chat for phone and PC. Free cloud models with your own key, or models that run right on your computer." width="100%"></a>
 </p>
 
 <p align="center">
-  <a href="https://vesper-chat.netlify.app"><b>Try Demo</b></a>
+  <a href="https://vesper.nodefolds.com"><b>Try Demo</b></a>
 </p>
 
 ## What it is
