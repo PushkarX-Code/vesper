@@ -268,6 +268,33 @@ body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spa
 body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
 .sgl:hover{background:var(--raised);color:var(--fg)}.sgl .ic{width:18px;height:18px;color:var(--muted)}
+/* desktop motion: quick fades and small scale, never slides or drops */
+body.dock{--d:160ms}
+body.dock .page:not(.modal){transform:none;opacity:0}
+body.dock .page:not(.modal).on{opacity:1}
+body.dock .page.modal{transform:translate(-50%,-50%) scale(.98)}
+body.dock .page.modal.on{transform:translate(-50%,-50%)}
+body.dock .sheet:not(.pop){transform:translateY(-50%) scale(.98)}
+body.dock .sheet:not(.pop).on{transform:translateY(-50%)}
+body.dock .dialog{transform:translate(-50%,-50%) scale(.98)}
+body.dock .dialog.on{transform:translate(-50%,-50%)}
+/* menus open as small popovers next to what you clicked */
+body.dock .sheet.pop{top:0;left:0;bottom:auto;right:auto;width:240px;margin:0;max-height:60vh;padding:6px;border-radius:14px;border:1px solid var(--line);background:var(--sheet);box-shadow:0 18px 50px rgba(0,0,0,.55);opacity:0;transform:scale(.97);transform-origin:var(--ox,100%) 0}
+body.dock .sheet.pop.on{opacity:1;transform:none}
+.sheet.pop .grab,.sheet.pop .sheet-head{display:none}
+.sheet.pop .sheet-body{padding:0}
+.sheet.pop .mrow{padding:8px 10px;min-height:0;border-radius:9px;font-size:14px;gap:10px}.sheet.pop .mrow:hover{background:var(--raised)}.sheet.pop .mrow .ic{width:18px;height:18px}
+.sheet.pop .mrow .tx b{font-weight:500}
+.scrim.clear{background:transparent}
+/* avatar picker */
+.hive{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 0 8px}
+.hive .hr{display:flex;gap:8px;align-items:center}
+.hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
+.hive button:hover{transform:scale(1.06)}
+.hive button.on{box-shadow:0 0 0 3px var(--sheet),0 0 0 5px var(--fg)}
+.gav{border-radius:50%;display:grid;place-items:center;overflow:hidden}.gav svg,.gav .logo-flat{width:58%;height:58%}
+.avfoot{display:flex;align-items:center;gap:8px;padding:12px 4px 2px}.avfoot .sp{flex:1}
+.avfoot .btn{height:38px;padding:0 16px;font-size:14px}
 /* settings window: header, menu with search, flat rows */
 .page.modal .page-head{border-bottom:1px solid var(--line-soft)}
 .page.modal.has-nav{padding-left:0}
@@ -289,6 +316,7 @@ body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;ma
 .cval{font-size:14px;color:var(--fg-soft);font-weight:500;flex:0 0 auto}
 .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;overflow:hidden;background:linear-gradient(135deg,#1d2a44,#0c0f18);box-shadow:inset 0 0 0 1px var(--line)}
 .av img{width:100%;height:100%;object-fit:cover}.av img.mk{width:78%;height:78%;object-fit:contain}.av b{font-size:14px;font-weight:600}.av .logo-flat{width:17px;height:17px}
+.av.isgen{background:none;box-shadow:none}.av .gav{width:100%;height:100%}
 .av.lg{width:52px;height:52px}.av.lg b{font-size:20px}.avbtn{border-radius:50%;flex:0 0 auto}.avbtn:hover .av{box-shadow:inset 0 0 0 1px var(--line),0 0 0 3px var(--raised-2)}
 .avgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.avgrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;background:var(--raised);font-size:12.5px;color:var(--fg-soft)}
 .avgrid button.on{box-shadow:inset 0 0 0 2px var(--accent)}.avgrid img{width:46px;height:46px;object-fit:contain}
@@ -1275,9 +1303,16 @@ function dialog({title, text, ok = "OK", danger = false, input = null, placehold
   });
 }
 // action sheet: each item closes the sheet first, then runs, so a follow up panel opens cleanly after.
+let lastHit = null;
+addEventListener("pointerdown", e => { lastHit = e.target.closest("button,[role=button],a,.avbtn"); }, true);
 function menu(id, title, items){
+  const anchor = lastHit && lastHit.isConnected ? lastHit.getBoundingClientRect() : null;
   open(id, () => {
     const L = makeSheet(title);
+    if (docked() && anchor) { L.el.classList.add("pop"); L.scrim.classList.add("clear"); const w = 240, z = parseFloat(document.body.style.zoom) || 1;
+      let x = anchor.right - w, y = anchor.bottom + 6; if (x < 8) x = Math.min(anchor.left, innerWidth / z - w - 8); const right = x + w / 2 < anchor.left + anchor.width / 2;
+      L.el.style.left = x + "px"; L.el.style.top = y + "px"; L.el.style.setProperty("--ox", right ? "0%" : "100%");
+      requestAnimationFrame(() => { const r = L.el.getBoundingClientRect(); if (r.bottom > innerWidth && false) return; if (r.bottom > innerHeight / z - 8) L.el.style.top = Math.max(8, anchor.top - r.height - 6) + "px"; }); }
     items.forEach(it => L.body.append(h("button", {class:"mrow" + (it.danger ? " danger" : ""), type:"button", onclick:() => { closeTop(); it.run(); }}, icEl(it.icon), h("div", {class:"tx"}, h("b", {text:it.label})))));
     return L;
   });
@@ -1987,17 +2022,47 @@ function dropdown(label, opts, cur, pick){
 const WORK = ["Design", "Video and content", "Marketing", "Engineering", "Writing", "Student", "Business", "Other"];
 function prof(){ S.profile = S.profile || {}; return S.profile; }
 function avatarEl(cls){ const pr = prof(), a = h("span", {class:"av" + (cls ? " " + cls : "")});
-  if (pr.photo) a.append(h("img", {src:pr.photo, alt:""})); else if (pr.mark) a.append(h("img", {src:"icons/" + pr.mark + "/mark.webp", alt:"", class:"mk"}));
+  if (pr.photo) a.append(h("img", {src:pr.photo, alt:""})); else if (pr.gen) { a.classList.add("isgen"); a.append(genAvatar(pr.gen.g, pr.gen.c)); } else if (pr.mark) a.append(h("img", {src:"icons/" + pr.mark + "/mark.webp", alt:"", class:"mk"}));
   else if (pr.name) a.append(h("b", {text:pr.name.trim().charAt(0).toUpperCase()})); else a.append(h("i", {class:"logo-flat", "aria-hidden":"true"}));
   return a; }
 async function squareImage(file, size){ const img = await createImageBitmap(file); const c = document.createElement("canvas"); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, hh = img.height * k; c.getContext("2d").drawImage(img, (size - w) / 2, (size - hh) / 2, w, hh); return c.toDataURL("image/jpeg", .86); }
+// Generated avatars: one of our glyphs on a color. The first glyph is the Vesper mark.
+const AV_COLORS = ["#8b6a43", "#d65a4f", "#4f8f7a", "#5b8fd9", "#8a7a72", "#6f7782", "#d97757", "#c2577f", "#a9cfc4", "#c9c6db", "#e8a33d", "#d6608c", "#9a5a45", "#5b5873", "#e2b39d", "#7d6fc4", "#e5cbd8", "#3f8a6e", "#e07a52"];
+const AV_GLYPHS = [null,
+  '<circle cx="12" cy="7" r="4.4"/><circle cx="17" cy="12" r="4.4"/><circle cx="12" cy="17" r="4.4"/><circle cx="7" cy="12" r="4.4"/>',
+  '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
+  '<g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></g><circle cx="12" cy="12" r="2.6"/>',
+  '<circle cx="6" cy="6" r="2.4"/><circle cx="12" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="12" cy="12" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="12" cy="18" r="2.4"/><circle cx="18" cy="18" r="2.4"/>',
+  '<path d="M4 20v-6h5V9h5V4h6v16z"/>',
+  '<path d="M5 4h14v4h-4.5v8H19v4H5v-4h4.5V8H5z"/>',
+  '<rect x="4" y="4" width="7" height="7" rx="2.4"/><rect x="13" y="4" width="7" height="7" rx="2.4"/><rect x="4" y="13" width="7" height="7" rx="2.4"/><rect x="13" y="13" width="7" height="7" rx="2.4"/>'];
+function lightColor(hex){ const n = parseInt(hex.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; }
+function genAvatar(g, c, size){ const col = AV_COLORS[c % AV_COLORS.length], fg = lightColor(col) ? "#151515" : "#ffffff";
+  const el = h("span", {class:"gav", style:"background:" + col + ";color:" + fg + (size ? ";width:" + size + "px;height:" + size + "px" : "")});
+  el.innerHTML = AV_GLYPHS[g % AV_GLYPHS.length] ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + AV_GLYPHS[g % AV_GLYPHS.length] + '</svg>' : '<i class="logo-flat" style="--logo:' + fg + '" aria-hidden="true"></i>';
+  return el; }
+let avFile = null;
 function pickAvatar(after){
-  open("avatar", () => { const L = makeSheet("Profile photo"), file = h("input", {type:"file", accept:"image/png,image/jpeg,image/webp", hidden:true});
-    file.onchange = async () => { const f = file.files[0]; if (!f) return; if (f.size > 10485760) { toast("Pick a photo under 10 MB"); return; } try { prof().photo = await squareImage(f, 256); prof().mark = ""; save(); closeTop(); after(); } catch (e) { toast("That photo couldn't be opened"); } };
-    const grid = h("div", {class:"avgrid"});
-    ICONS.forEach(i => grid.append(h("button", {type:"button", class:prof().mark === i.id && !prof().photo ? "on" : "", "aria-label":i.name, title:i.name, onclick:() => { prof().mark = i.id; prof().photo = ""; save(); closeTop(); after(); }}, h("img", {src:"icons/" + i.id + "/mark.webp", alt:""}), h("span", {text:i.name}))));
-    L.body.append(h("div", {style:"padding:4px 16px 18px;display:flex;flex-direction:column;gap:12px"}, h("button", {class:"btn primary block", type:"button", html:ic("upload") + "Upload a photo", onclick:() => file.click()}), h("div", {class:"gnote", style:"padding:0", text:"Or pick an exclusive avatar"}), grid,
-      (prof().photo || prof().mark) ? h("button", {class:"btn ghost block", type:"button", text:"Remove photo", onclick:() => { prof().photo = ""; prof().mark = ""; save(); closeTop(); after(); }}) : null), file);
+  if (!avFile) { avFile = h("input", {type:"file", accept:"image/png,image/jpeg,image/webp", hidden:true}); document.body.append(avFile); }
+  avFile.onchange = async () => { const f = avFile.files[0]; avFile.value = ""; if (!f) return; if (f.size > 10485760) { toast("Pick a photo under 10 MB"); return; }
+    try { const pr = prof(); pr.photo = await squareImage(f, 256); pr.gen = null; pr.mark = ""; save(); after(); } catch (e) { toast("That photo couldn't be opened"); } };
+  const pr = prof(), has = pr.photo || pr.gen || pr.mark;
+  menu("avmenu", "Profile photo", [{icon:"image", label:"Upload photo", run:() => avFile.click()}, {icon:"user", label:"Choose an avatar", run:() => chooseAvatar(after)}]
+    .concat(has ? [{icon:"trash-2", label:"Remove", danger:true, run:() => { pr.photo = ""; pr.gen = null; pr.mark = ""; save(); after(); }}] : []));
+}
+function chooseAvatar(after){
+  const rows = [5, 8, 9, 8, 5]; let cells = [], pick = null;
+  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5); cells = Array.from({length:n}, (_, i) => ({g:i === 17 ? 0 : Math.floor(Math.random() * AV_GLYPHS.length), c:cs[i % cs.length]})); };
+  const cur = prof().gen; deal(); if (cur) cells[17] = {g:cur.g, c:cur.c}; pick = cells[17];
+  open("avpick", () => { const L = makeSheet("Choose an avatar"), hive = h("div", {class:"hive"});
+    const draw = () => { hive.innerHTML = ""; let k = 0; rows.forEach((n, r) => { const row = h("div", {class:"hr"}); for (let i = 0; i < n; i++, k++) { const cell = cells[k], d = Math.hypot(i - (n - 1) / 2, (r - 2) * 1.1), size = Math.round(Math.max(36, 78 - d * 11));
+      row.append(h("button", {type:"button", class:cell === pick ? "on" : "", "aria-label":"Avatar " + (k + 1), onclick:e => { pick = cell; hive.querySelectorAll("button").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); }}, genAvatar(cell.g, cell.c, size))); } hive.append(row); }); };
+    draw();
+    L.body.append(h("div", {style:"padding:0 18px 16px"}, h("div", {class:"gnote", style:"padding:0", text:"Use one of these instead of a photo."}), hive,
+      h("div", {class:"avfoot"}, h("button", {class:"btn ghost", type:"button", html:ic("refresh-cw") + "Shuffle", onclick:() => { deal(); pick = cells[17]; draw(); }}), h("span", {class:"sp"}),
+        h("button", {class:"btn ghost", type:"button", text:"Cancel", onclick:() => closeTop()}),
+        h("button", {class:"btn primary", type:"button", text:"Save", onclick:() => { const pr = prof(); pr.gen = {g:pick.g, c:pick.c}; pr.photo = ""; pr.mark = ""; save(); closeTop(); after(); }}))));
+    L.el.style.width = "min(640px, calc(100vw - 40px))"; L.el.style.marginLeft = "0"; L.el.style.left = "50%"; L.el.style.translate = "-50% 0";
     return L; });
 }
 function textCtl(label, key, ph){ const i = h("input", {class:"tin", value:prof()[key] || "", placeholder:ph, "aria-label":label, maxlength:"60"}); i.oninput = () => { prof()[key] = i.value; save(); renderFoot(); }; return i; }
