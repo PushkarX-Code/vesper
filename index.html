@@ -228,8 +228,13 @@ body.dock .app,body.dock .page{margin-left:280px}
 body.dock .page{width:auto;left:0;right:0}
 body.dock #openDrawer{visibility:hidden}
 body.dock .d-new:hover,body.dock .ci:hover,body.dock .d-foot button:hover{background:var(--raised)}
-body.dock.side-off .drawer{transform:translateX(-100%);visibility:hidden}
-body.dock.side-off .app,body.dock.side-off .page{margin-left:0}
+body.dock.side-off .drawer{width:64px;padding-left:10px;padding-right:10px;overflow:hidden;align-items:stretch}
+body.dock.side-off .app,body.dock.side-off .page{margin-left:64px}
+body.dock.side-off .d-brand{flex-direction:column;align-items:center;gap:6px;padding:4px 0 10px}body.dock.side-off .d-brand b,body.dock.side-off #dSearchBtn,body.dock.side-off .d-sec,body.dock.side-off .chat-list,body.dock.side-off .d-search,body.dock.side-off .d-new kbd,body.dock.side-off .tagp,body.dock.side-off .d-user .nm,body.dock.side-off #openSupport{display:none!important}
+body.dock.side-off .d-brand .left,body.dock.side-off .d-tools{justify-content:center}
+body.dock.side-off .spaces{flex-direction:column;margin:0 0 10px}body.dock.side-off .spaces button{font-size:0;gap:0;height:34px;flex:0 0 34px}
+body.dock.side-off .d-new{font-size:0;gap:0;justify-content:center;padding:10px 0}
+body.dock.side-off .chat-list{display:none}body.dock.side-off .d-foot{margin-top:auto}body.dock.side-off .d-user{flex-direction:column;padding:6px 0;gap:8px}
 /* desktop: sheets become centered dialogs */
 body.dock .sheet{top:50%;bottom:auto;max-height:min(80vh,720px);border:1px solid var(--line);border-radius:20px;opacity:0;transform:translateY(-48%) scale(.97)}
 body.dock .sheet.on{opacity:1;transform:translateY(-50%)}
@@ -284,7 +289,7 @@ body.dock .sheet:not(.pop).on{transform:translateY(-50%)}
 body.dock .dialog{transform:translate(-50%,-50%) scale(.98)}
 body.dock .dialog.on{transform:translate(-50%,-50%)}
 /* menus open as small popovers next to what you clicked */
-body.dock .sheet.pop{top:0;left:0;bottom:auto;right:auto;width:240px;margin:0;max-height:60vh;padding:6px;border-radius:14px;border:1px solid var(--line);background:var(--sheet);box-shadow:0 18px 50px rgba(0,0,0,.55);opacity:0;transform:scale(.97);transform-origin:var(--ox,100%) 0}
+body.dock .sheet.pop{top:0;left:0;bottom:auto;right:auto;width:240px;margin:0;max-height:60vh;padding:6px;border-radius:14px;border:1px solid var(--line);background:var(--sheet);box-shadow:0 18px 50px rgba(0,0,0,.55);opacity:0;transform:scale(.97);transform-origin:var(--ox,100%) var(--oy,0)}
 body.dock .sheet.pop.on{opacity:1;transform:none}
 .sheet.pop .grab,.sheet.pop .sheet-head{display:none}
 .sheet.pop .sheet-body{padding:0}
@@ -378,8 +383,8 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .iout{display:flex;align-items:center;gap:10px;width:100%;padding:6px 0;text-align:left;font-size:13.5px;color:var(--fg-soft)}.iout img,.iout .ith{width:28px;height:28px;border-radius:7px;object-fit:cover;flex:0 0 auto;background:var(--raised);display:grid;place-items:center}.iout .ith .ic{width:15px;height:15px}
 .iout span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ilink2{padding:4px 0 0}.ilink2:hover{color:var(--fg)}
 /* studio: banner home and project workspace */
-.studiopg .page-body{padding:0 20px 120px}
-.studiopg .wrap{max-width:1180px;width:100%}
+.studiopg .page-body{padding:0 28px 120px}
+.studiopg .wrap{max-width:none;width:100%}
 .sbanner{position:relative;border-radius:24px;overflow:hidden;min-height:clamp(300px,44vh,460px);display:flex;align-items:flex-end;background:#0b0b0d;margin-top:6px;isolation:isolate}
 .sbanner .bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 .sshade{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.45) 46%,rgba(0,0,0,.08) 100%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 40%)}
@@ -417,15 +422,16 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .sbar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(760px,calc(100% - 32px));display:flex;align-items:flex-end;gap:6px;padding:8px;border-radius:28px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.5);z-index:4}
 .sbar textarea{flex:1;min-width:0;background:none;border:0;outline:0;resize:none;padding:9px 6px;font-size:15.5px;line-height:22px;max-height:120px;min-height:40px}
 .schip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.schip .ic{width:16px;height:16px}.schip .ic:last-child{width:13px;height:13px;color:var(--muted)}.schip:hover{background:var(--raised-2)}
+.sseg{display:flex;align-items:center;height:40px;padding:3px;border-radius:999px;background:var(--raised);flex:0 0 auto}.sseg button{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;font-size:13.5px;color:var(--muted)}.sseg button .ic{width:16px;height:16px}.sseg button.on{background:var(--raised-2);color:var(--fg)}
+.slib{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 13px;border-radius:14px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.slib .ic{width:17px;height:17px}.slib:hover,.slib.on{background:var(--raised-2);color:var(--fg)}
 .sgo{width:40px;height:40px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;flex:0 0 auto}.sgo .ic{width:20px;height:20px}
 @media (max-width:820px){.studiopg .mgrid{grid-template-columns:repeat(2,1fr)}.ssteps{grid-template-columns:1fr 1fr}.sspace{grid-template-columns:1fr}.srail{position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}.sback{order:-1}.sname{order:-1;padding:0 4px}.sgen{display:none}.snav{padding:7px 12px;background:var(--raised)}.sbanner{min-height:360px}.sbar{border-radius:24px}}
-@media (max-width:520px){.schip span{display:none}}
+@media (max-width:520px){.sbar{flex-wrap:wrap}.sbar textarea{order:-1;flex:1 0 100%;padding-bottom:4px}.slib span,.sseg span{display:none}.sseg button{padding:0 12px}.sgo{margin-left:auto}}
 /* colored icon tiles in settings */
 .rico{width:22px;height:22px;display:grid;place-items:center;flex:0 0 auto;color:var(--fg-soft)}.rico .ic{width:20px;height:20px}.row.danger .rico{color:#ff6b6b}
 /* skills */
-.skill-chip{display:flex;align-items:center;gap:8px;margin:4px 6px 0;padding:6px 8px 6px 10px;border-radius:12px;background:color-mix(in srgb,#ffb340 14%,transparent);color:#ffcf80;font-size:13px;font-weight:500;width:max-content;max-width:100%}
+.skill-chip{--c:#ffb340;display:flex;align-items:center;gap:8px;margin:4px 6px 0;padding:6px 8px 6px 10px;border-radius:12px;background:color-mix(in srgb,var(--c) 14%,transparent);color:color-mix(in srgb,var(--c) 70%,#fff);font-size:13px;font-weight:500;width:max-content;max-width:100%}
 .skill-chip .ic{width:15px;height:15px}.skill-chip button{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;color:inherit}.skill-chip button:hover{background:rgba(255,255,255,.08)}
-body.dock #skillChip{order:-1;width:auto}
 /* studios and library */
 .studio{display:flex;flex-direction:column;gap:12px;max-width:820px;margin:0 auto;padding-top:6px}
 .studio textarea{width:100%;min-height:96px;resize:vertical;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);outline:0;font-size:15.5px;line-height:1.5}
@@ -458,7 +464,7 @@ body.dock .composer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px;pad
 body.dock .composer .c-btn,body.dock .composer .send,body.dock #modelChip{height:40px}body.dock .composer .c-btn{width:40px}
 body.dock .composer .c-row,body.dock .composer .c-side{display:contents}
 body.dock #attachRow{order:-1;width:100%}
-body.dock #attachBtn{order:0;background:var(--raised)}
+body.dock #attachBtn{order:-1;background:var(--raised)}body.dock .skill-chip{order:0;margin:0;height:40px;padding:0 8px 0 12px;border-radius:999px;align-self:flex-end}
 body.dock .composer textarea{order:1;flex:1;width:auto;min-width:0;padding:8px 6px;line-height:24px;min-height:40px}
 body.dock #modelChip{order:2;background:none}body.dock #modelChip:hover{background:var(--raised)}
 body.dock #micBtn{order:3}body.dock #send{order:4}
@@ -957,10 +963,7 @@ select.input{appearance:none;background-image:none}
   <button class="d-new d-primary" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat<kbd>Ctrl N</kbd></button>
   <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
   <button class="d-new" id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button>
-  <div class="d-sec">Create</div>
-  <button class="d-new" id="openImage"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Image Studio</button>
-  <button class="d-new" id="openVideo"><svg class="ic" aria-hidden="true"><use href="#i-video"/></svg>Video Studio</button>
-  <button class="d-new" id="openLibrary"><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg>Library</button>
+  <button class="d-new" id="openCreate"><svg class="ic" aria-hidden="true"><use href="#i-palette"/></svg>Create</button>
   <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
   <div class="chat-list" id="chatList"></div>
   <div class="d-foot">
@@ -1385,15 +1388,17 @@ function dialog({title, text, ok = "OK", danger = false, input = null, placehold
 // action sheet: each item closes the sheet first, then runs, so a follow up panel opens cleanly after.
 let lastHit = null;
 addEventListener("pointerdown", e => { lastHit = e.target.closest("button,[role=button],a,.avbtn"); }, true);
+let menuAnchorEl = null;
 function menu(id, title, items){
-  const anchor = lastHit && lastHit.isConnected ? lastHit.getBoundingClientRect() : null;
+  const hit = lastHit && lastHit.isConnected ? lastHit : null; if (hit && !hit.closest(".mrow")) menuAnchorEl = hit;
+  const anchorEl = menuAnchorEl && menuAnchorEl.isConnected ? menuAnchorEl : null, anchor = anchorEl ? anchorEl.getBoundingClientRect() : null, inComposer = !!(anchorEl && anchorEl.closest(".composer"));
   open(id, () => {
     const L = makeSheet(title);
-    if (docked() && anchor) { L.el.classList.add("pop"); L.scrim.classList.add("clear"); const w = 240, z = parseFloat(document.body.style.zoom) || 1;
-      let x = anchor.right - w, y = anchor.bottom + 6; if (x < 8) x = Math.min(anchor.left, innerWidth / z - w - 8); const right = x + w / 2 < anchor.left + anchor.width / 2;
-      L.el.style.left = x + "px"; L.el.style.top = y + "px"; L.el.style.setProperty("--ox", right ? "0%" : "100%");
-      requestAnimationFrame(() => { const r = L.el.getBoundingClientRect(); if (r.bottom > innerWidth && false) return; if (r.bottom > innerHeight / z - 8) L.el.style.top = Math.max(8, anchor.top - r.height - 6) + "px"; }); }
-    items.forEach(it => L.body.append(h("button", {class:"mrow" + (it.danger ? " danger" : ""), type:"button", onclick:() => { closeTop(); it.run(); }}, icEl(it.icon), h("div", {class:"tx"}, h("b", {text:it.label})))));
+    if (docked() && anchor) { L.el.classList.add("pop"); L.scrim.classList.add("clear"); const w = 240, z = parseFloat(document.body.style.zoom) || 1, vw = innerWidth / z;
+      const leftHalf = anchor.left + anchor.width / 2 < vw / 2; let x = leftHalf ? anchor.left : anchor.right - w; x = Math.max(8, Math.min(x, vw - w - 8));
+      L.el.style.left = x + "px"; L.el.style.top = anchor.bottom + 6 + "px"; L.el.style.setProperty("--ox", leftHalf ? "0%" : "100%");
+      requestAnimationFrame(() => { const r = L.el.getBoundingClientRect(); if (inComposer || r.bottom > innerHeight / z - 8) { L.el.style.top = Math.max(8, anchor.top - r.height - 6) + "px"; L.el.style.setProperty("--oy", "100%"); } }); }
+    items.forEach(it => { const icn = icEl(it.icon); if (it.tint && RICO[it.icon]) icn.style.color = RICO[it.icon]; L.body.append(h("button", {class:"mrow" + (it.danger ? " danger" : ""), type:"button", onclick:() => { closeTop(); it.run(); }}, icn, h("div", {class:"tx"}, h("b", {text:it.label})))); });
     return L;
   });
 }
@@ -1402,7 +1407,7 @@ function menu(id, title, items){
 const glabel = t => h("div", {class:"glabel", text:t});
 const gnote = t => h("div", {class:"gnote", text:t});
 const group = (...rows) => h("div", {class:"group"}, ...rows);
-const RICO = {"key-round":"#ff9f0a", laptop:"#0a84ff", cpu:"#0a84ff", "sliders-horizontal":"#5e5ce6", palette:"#ff375f", image:"#30b0c7", images:"#ff9f0a", video:"#ff453a", vibrate:"#ff9f0a", brain:"#bf5af2", "message-square":"#34c759", sparkles:"#5e5ce6", lightning:"#ffb340", "corner-down-left":"#636366", download:"#0a84ff", upload:"#0a84ff", "graduation-cap":"#ff9f0a", info:"#636366", heart:"#ff375f", plug:"#30d158", ghost:"#636366", users:"#0a84ff", "share-2":"#0a84ff", clock:"#5e5ce6"};
+const RICO = {clapperboard:"#ff453a", camera:"#ff9f0a", mic:"#bf5af2", code:"#30b0c7", paperclip:"#0a84ff", "key-round":"#ff9f0a", laptop:"#0a84ff", cpu:"#0a84ff", "sliders-horizontal":"#5e5ce6", palette:"#ff375f", image:"#30b0c7", images:"#ff9f0a", video:"#ff453a", vibrate:"#ff9f0a", brain:"#bf5af2", "message-square":"#34c759", sparkles:"#5e5ce6", lightning:"#ffb340", "corner-down-left":"#636366", download:"#0a84ff", upload:"#0a84ff", "graduation-cap":"#ff9f0a", info:"#636366", heart:"#ff375f", plug:"#30d158", ghost:"#636366", users:"#0a84ff", "share-2":"#0a84ff", clock:"#5e5ce6"};
 function rico(name, danger){ return h("span", {class:"rico", style:"--c:" + (danger ? "#ff453a" : (RICO[name] || "#636366")), html:ic(name)}); }
 function row({icon, title, sub, val, ok, onclick, danger, chev = true}){
   const tag = onclick ? "button" : "div";
@@ -1856,7 +1861,7 @@ function toggleSide(){ if (docked()) setSide(!S.sideOff); else $("#openDrawer").
 document.body.classList.toggle("side-off", !!S.sideOff);
 $("#tbSide").onclick = toggleSide;
 $("#dStatus").onclick = () => DESKTOP ? openPC() : openProviders();
-$("#dSideBtn").onclick = () => { if (docked()) setSide(true); else closeTop(); };
+$("#dSideBtn").onclick = () => { if (docked()) setSide(!S.sideOff); else closeTop(); };
 $("#dSearchBtn").onclick = () => { const d = $("#drawer"), on = d.classList.toggle("searching"); if (on) $("#chatSearch").focus(); else { $("#chatSearch").value = ""; renderDrawer(); } };
 // Keyboard shortcuts, like a desktop chat app
 addEventListener("keydown", e => {
@@ -2001,12 +2006,14 @@ function openApps(){
 /* ---------- create: image and video studios, library, skills ---------- */
 // Generated media is kept on this device in IndexedDB. Prompts go only to the generator you pick.
 const SKILLS = [
-  {id:"summarize", name:"Summarize", text:"Sum up what the user shares in short bullet points, then give a one line takeaway."},
-  {id:"translate", name:"Translate", text:"Translate the user's text. Ask for the target language if it is not clear. Keep tone and formatting."},
-  {id:"code", name:"Code helper", text:"Act as a senior engineer. Give working code first, then a short explanation. Point out bugs and edge cases."},
-  {id:"email", name:"Email writer", text:"Write clear, friendly emails with a short subject line, short paragraphs and one clear ask."},
-  {id:"script", name:"Video script", text:"Write short video scripts: a hook in the first line, scene by scene beats, on screen text and a call to action."},
-  {id:"teach", name:"Teacher", text:"Explain step by step in plain words with one small example, then ask one question to check understanding."}
+  {id:"script", icon:"clapperboard", name:"Video script", text:"Write short video scripts: a hook in the first line, scene by scene beats, on screen text and a call to action."},
+  {id:"ugc", icon:"camera", name:"UGC ad", text:"Write UGC style ads that sound like a real person talking to a friend: a hook, a problem, a quick demo moment, proof and a soft call to action. Keep it under 30 seconds when spoken."},
+  {id:"hook", icon:"lightning", name:"Hook writer", text:"Give 10 different opening lines for a short video, each under 12 words, each using a different angle (curiosity, pain, result, story, contrast). Mark the strongest one."},
+  {id:"podcast", icon:"mic", name:"Podcast ad", text:"Write podcast style ad reads: natural, conversational, host voice, one personal detail, one clear benefit and one easy next step. Give a 30 second and a 60 second version."},
+  {id:"ideas", icon:"sparkles", name:"Content ideas", text:"Give a batch of fresh content ideas for the topic: a title, the hook and the format for each. Avoid generic advice."},
+  {id:"summarize", icon:"brain", name:"Summarize", text:"Sum up what the user shares in short bullet points, then give a one line takeaway."},
+  {id:"code", icon:"code", name:"Code helper", text:"Act as a senior engineer. Give working code first, then a short explanation. Point out bugs and edge cases."},
+  {id:"teach", icon:"graduation-cap", name:"Teacher", text:"Explain step by step in plain words with one small example, then ask one question to check understanding."}
 ];
 let pendingSkill = null;
 const skillOf = id => id ? (SKILLS.concat(S.skills || []).find(x => x.id === id) || null) : null;
@@ -2014,9 +2021,9 @@ function setSkill(id){ const c = chat(); if (c) { c.skill = id || undefined; sav
 function renderSkill(){
   const el = $("#skillChip"); if (!el) return; const c = chat(), sk = skillOf(c ? c.skill : pendingSkill);
   el.hidden = !sk; el.innerHTML = ""; if (!sk) return;
-  el.append(h("span", {html:ic("lightning")}), h("span", {text:sk.name}), h("button", {type:"button", "aria-label":"Stop using " + sk.name, html:ic("x"), onclick:() => setSkill(null)}));
+  el.style.setProperty("--c", RICO[sk.icon || "sparkles"] || "#ffb340"); el.append(h("span", {html:ic(sk.icon || "sparkles")}), h("span", {text:sk.name}), h("button", {type:"button", "aria-label":"Stop using " + sk.name, html:ic("x"), onclick:() => setSkill(null)}));
 }
-function pickSkill(){ menu("skills", "Use a skill", SKILLS.concat(S.skills || []).map(sk => ({icon:"lightning", label:sk.name, run:() => setSkill(sk.id)})).concat([{icon:"plus", label:"Create a skill", run:() => newSkill()}])); }
+function pickSkill(){ menu("skills", "Use a skill", SKILLS.concat(S.skills || []).map(sk => ({icon:sk.icon || "sparkles", tint:true, label:sk.name, run:() => setSkill(sk.id)})).concat([{icon:"plus", label:"Create a skill", run:() => newSkill()}])); }
 function newSkill(after){
   dialog({title:"Name your skill", input:"", placeholder:"For example, Product copy", ok:"Next", onOk:name => { name = (name || "").trim(); if (!name) return;
     setTimeout(() => dialog({title:"What should it do?", input:"", placeholder:"Write short product descriptions in a warm tone", ok:"Save", onOk:text => { text = (text || "").trim(); if (!text) return;
@@ -2025,9 +2032,9 @@ function newSkill(after){
 function openSkills(){
   open("skillsp", () => makePage("Skills", (w, L) => {
     w.append(gnote("A skill adds instructions to a chat. Pick one from the plus button in the message box."));
-    w.append(glabel("Ready to use"), group(...SKILLS.map(sk => row({icon:"lightning", title:sk.name, sub:sk.text, chev:false}))));
+    w.append(glabel("Ready to use"), group(...SKILLS.map(sk => row({icon:sk.icon, title:sk.name, sub:sk.text, chev:false}))));
     const mine = S.skills || [];
-    w.append(glabel("Yours"), mine.length ? group(...mine.map(sk => row({icon:"lightning", title:sk.name, sub:sk.text, onclick:() => menu("skillmenu", sk.name, [{icon:"trash-2", label:"Delete", danger:true, run:() => { S.skills = (S.skills || []).filter(x => x.id !== sk.id); save(); L.refresh(); }}])}))) : gnote("None yet."));
+    w.append(glabel("Yours"), mine.length ? group(...mine.map(sk => row({icon:"sparkles", title:sk.name, sub:sk.text, onclick:() => menu("skillmenu", sk.name, [{icon:"trash-2", label:"Delete", danger:true, run:() => { S.skills = (S.skills || []).filter(x => x.id !== sk.id); save(); L.refresh(); }}])}))) : gnote("None yet."));
     w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Create a skill", onclick:() => newSkill(() => L.refresh())})));
   }));
 }
@@ -2099,8 +2106,8 @@ function openStudio(kind, swap, opts){
   const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:"square", q:"", sort:"recent", busy:0};
   open("studio", () => {
     const bar = studioBar(st);
-    const L = makePage("Studio", (w, L2) => { bar.el.hidden = !st.proj; if (st.proj) bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); });
-    L.el.classList.add("studiopg"); L.el.append(bar.el);
+    const L = makePage("Studio", (w, L2) => { bar.el.hidden = false; bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); });
+    L.el.classList.add("studiopg"); L.el.append(bar.el); bar.L = L;
     L.onHide = () => { const v = L.el.querySelector("video.bgv"); if (v) v.pause(); studioLive = null; };
     studioLive = {L, set:(k, o) => { st.kind = k === "video" ? "video" : "image"; st.proj = (o && o.proj) || null; st.filter = "all"; L.refresh(); }};
     return L;
@@ -2115,7 +2122,7 @@ function studioHome(w, L, st){
   const credit = h("span", {class:"scredit", text:STUDIO_BANNER.credit, hidden:true}); vid.addEventListener("playing", () => { credit.hidden = false; }, {once:true});
   w.append(h("section", {class:"sbanner"}, vid, h("div", {class:"sshade"}),
     h("div", {class:"sbtx"}, h("span", {class:"stag", text:"Vesper Studio"}), h("h2", {html:"Imagine it.<br>Create it."}), h("p", {text:"Describe a picture or a scene and watch it appear. Free, private and saved only on your device."}),
-      h("div", {class:"sbbtn"}, h("button", {class:"btn primary", type:"button", html:ic("plus") + "New project", onclick:() => newProject(st, L)}), h("button", {class:"btn ghost", type:"button", text:"How it works", onclick:() => { const t = w.querySelector(".shd"); if (t) t.scrollIntoView({behavior:"smooth", block:"start"}); }}))),
+      h("div", {class:"sbbtn"}, h("button", {class:"btn primary", type:"button", html:ic("plus") + "New project", onclick:() => newProject(st, L)}))),
     credit));
   w.append(h("h3", {class:"shd", text:"How it works"}), h("div", {class:"ssteps"}, ...STEPS.map(([i, t, d], k) => h("div", {class:"sstep"}, h("span", {class:"snum", text:String(k + 1)}), h("div", {class:"sico", html:ic(i)}), h("b", {text:t}), h("p", {text:d})))));
   const grid = h("div", {class:"spg"});
@@ -2153,14 +2160,17 @@ function studioSpace(w, L, st, bar){
   w.append(h("div", {class:"sspace"}, rail, h("div", {class:"smain"}, h("label", {class:"ssearch", html:ic("search")}, q), grid))); draw();
 }
 function studioBar(st){
-  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("button", {class:"schip", type:"button", "aria-label":"Choose image or video"}), shape = h("button", {class:"schip", type:"button", "aria-label":"Choose a shape"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
-  const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, go), api = {el, refresh:() => {}, sync:() => {}};
-  api.sync = () => { mode.innerHTML = ic(st.kind === "video" ? "video" : "image") + "<span>" + (st.kind === "video" ? "Video" : "Image") + "</span>" + ic("chevron-down"); shape.hidden = st.kind === "video"; shape.innerHTML = "<span>" + ({square:"Square", portrait:"Portrait", landscape:"Wide"})[st.shape] + "</span>" + ic("chevron-down"); };
-  mode.onclick = () => menu("smode", "Create", [{icon:"image", label:"Image", run:() => { st.kind = "image"; api.sync(); }}, {icon:"video", label:"Video", run:() => { st.kind = "video"; api.sync(); }}]);
+  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("div", {class:"sseg", role:"group", "aria-label":"Image or video"}), mImg = h("button", {type:"button", html:ic("image") + "<span>Image</span>"}), mVid = h("button", {type:"button", html:ic("video") + "<span>Video</span>"}), lib = h("button", {class:"slib", type:"button", title:"Library", "aria-label":"Library", html:ic("images") + "<span>Library</span>"}), shape = h("button", {class:"schip", type:"button", "aria-label":"Choose a shape"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
+  const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, lib, go), api = {el, refresh:() => {}, sync:() => {}};
+  mode.append(mImg, mVid);
+  api.sync = () => { mImg.classList.toggle("on", st.kind !== "video"); mVid.classList.toggle("on", st.kind === "video"); lib.classList.toggle("on", st.proj === "__all"); shape.hidden = st.kind === "video"; shape.innerHTML = "<span>" + ({square:"Square", portrait:"Portrait", landscape:"Wide"})[st.shape] + "</span>" + ic("chevron-down"); };
+  mImg.onclick = () => { st.kind = "image"; api.sync(); }; mVid.onclick = () => { st.kind = "video"; api.sync(); };
+  lib.onclick = () => { st.proj = "__all"; st.filter = "all"; if (api.L) api.L.refresh(); };
   shape.onclick = () => menu("sshape", "Shape", [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]].map(([id, t]) => ({icon:"image", label:t, run:() => { st.shape = id; api.sync(); }})));
   ta.oninput = () => { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; };
   ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); el.requestSubmit(); } };
   el.onsubmit = async e => { e.preventDefault(); const prompt = ta.value.trim(); if (!prompt) { ta.focus(); return; }
+    if (!st.proj && api.L) newProject(st, api.L);
     const kind = st.kind, proj = st.proj && st.proj[0] !== "_" ? st.proj : undefined; st.busy++; api.refresh(); ta.value = ""; ta.style.height = "auto";
     try { const blob = kind === "video" ? await genVideo(prompt) : await genImage(prompt, st.shape); await mediaPut({id:uid(), kind, prompt, at:Date.now(), blob, project:proj, via:kind === "video" ? "pollinations" : (media().image || "free")}); buzz(14); }
     catch (err) { toast(String(err && err.message || err).slice(0, 140)); }
@@ -2556,9 +2566,9 @@ function renderAttach(){
   syncSend();
 }
 $("#attachBtn").onclick = () => menu("plusmenu", "Add", [
-  {icon:"paperclip", label:"Photos and files", run:() => $("#attachFile").click()},
-  {icon:"lightning", label:"Use a skill", run:() => pickSkill()},
-  {icon:"image", label:"Create an image", run:() => openStudio("image")}]);
+  {icon:"paperclip", tint:true, label:"Photos and files", run:() => $("#attachFile").click()},
+  {icon:"lightning", tint:true, label:"Use a skill", run:() => pickSkill()},
+  {icon:"image", tint:true, label:"Create an image", run:() => openStudio("image")}]);
 $("#attachFile").addEventListener("change", async e => {
   const files = Array.from(e.target.files || []); e.target.value = "";
   for (const f of files) {
@@ -2819,9 +2829,8 @@ function openLanding(id){
   }), true);
 }
 $("#openLive").onclick = () => openLanding("live");
-$("#openImage").onclick = () => openStudio("image", !docked());
-$("#openVideo").onclick = () => openStudio("video", !docked());
-$("#openLibrary").onclick = () => openLibrary(!docked());
+$("#openCreate").onclick = () => openStudio("image", !docked());
+document.querySelectorAll("#drawer .d-new").forEach(b => { b.title = b.textContent.replace(/Ctrl N|Soon/g, "").trim(); });
 
 /* support: goal bar plus the Ko-fi panel inside the app */
 const SUPPORT = {raised:0, goal:250, api:"https://vesper-chat.netlify.app/api/support", kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
