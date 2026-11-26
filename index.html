@@ -295,7 +295,7 @@ body.dock .app.is-empty .composer{padding:10px 12px 10px 14px;border-radius:34px
 body.dock .app.is-empty .composer textarea{font-size:17px;line-height:28px;min-height:44px;padding:8px 8px}
 body.dock .app.is-empty .composer .c-btn,body.dock .app.is-empty .composer .send,body.dock .app.is-empty #modelChip{height:44px}body.dock .app.is-empty .composer .c-btn{width:44px}
 .hl .hmark{width:40px;height:40px;background:var(--accent);flex:0 0 auto}
-body.dock .app.is-empty .hero.ready h1.hl{font-weight:400;letter-spacing:-.035em}
+body.dock .app.is-empty .hero.ready h1.hl{display:flex;align-items:center;justify-content:center;gap:16px;font-weight:400;letter-spacing:-.035em}
 body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spacing:-.02em}
 body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px;min-height:0}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
@@ -1663,7 +1663,7 @@ function renderHero(){
   inner.innerHTML = ""; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1;
   const hero = h("div", {class:"hero ready plain"}), main = h("div", {class:"hero-main"});
   if (privateMode) main.append(h("h1", {class:"hl", html:"Private chat<i>.</i>"}), h("p", {class:"hsub", text:"This chat will not be saved to your history."}));
-  else { const nm = ((prof().call || prof().name || "").trim().split(/\s+/)[0] || ""); main.append(h("h1", {class:"hl", text:greeting() + (nm ? ", " + nm : "")})); }
+  else { const nm = ((prof().call || prof().name || "").trim().split(/\s+/)[0] || ""); main.append(h("h1", {class:"hl"}, h("i", {class:"logo-flat hmark", "aria-hidden":"true"}), h("span", {text:greeting() + (nm ? ", " + nm : "")}))); }
   if (!anyReady()) main.append(h("p", {class:"hsub", text:"No model yet. Add one in Settings, under Providers or Models."}));
   hero.append(main); inner.append(hero);
   input.placeholder = "Ask anything, or type / for skills";
