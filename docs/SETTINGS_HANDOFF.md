@@ -1,6 +1,24 @@
-# Handoff: full Settings detail
+# Handoff: Settings, current state and history
 
-The owner asked for every detail from the OpenCode Preferences screenshot in Vesper Settings, without removing what was already there. This file records how each request was mapped so a design pass can adjust the layout without deleting working behavior. No feature is faked: a row either changes real state or says plainly that it is a note.
+## Current state
+
+At the owner's request, Settings now has exactly two tabs: **Providers** and **Models**. All other sections were removed from the menu. The left menu stays fixed and only the right pane changes. No row in Settings opens a sheet, page or dialog over Settings. Models is the only place to add models.
+
+Implementation contract:
+
+- `openSettings()` creates `makePage("Settings", () => {}, {modal:true})` and calls `settingsNav(L)`.
+- `settingsNav(L)` builds two buttons, tracks `tab` and `view`, and replaces `L.refresh` with `show(tab, view)`. Nothing else is in the menu, including the old search box.
+- `renderSettingsView(w, L, tab, view, go)` routes to the right pane. Providers shows `openProviders()` inline or `openProvider(pid)` inline. Models shows `renderModelsHome()`, `renderModelPicker()`, `manageModels()`, `openLocal()`, `openConn(id)` or `openAdvisor()` inline.
+- `inlineLayer(render, into, after)` clears the pane and calls the same render function the standalone page uses. Existing page functions accept `{into, nav}` so their logic stays in one place.
+- Each inline view has a Back row inside the right pane. The left menu buttons are the only way to switch tabs.
+- On a phone the two tabs sit in a horizontal bar above the right pane. On desktop they are in the fixed left rail.
+- Theme consistency: `.page.modal .group` is transparent, `.dialog` uses `var(--sheet)` instead of a hard coded dark color, and tinted details panels use `var(--sheet)`. Do not add new overlay background colors. Modals, dialogs, sheets and panes must read as one surface.
+
+Checks after any change: open Settings, confirm only Providers and Models appear in the menu; click every row in both tabs and confirm the layer stack stays at `["Settings"]`; add a local model from the Models tab and confirm the form appears in the right pane; reload and confirm no theme surface has a different color.
+
+## History
+
+The rest of this file records the earlier detailed Settings work. Those sections are no longer in the product, but the behaviors listed under chat, notifications, timeline, wake lock and code font remain in the code and should not be deleted.
 
 ## Sections in order
 

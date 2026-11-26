@@ -348,7 +348,7 @@ kbd.key{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 8px
 .av.lg{width:52px;height:52px}.av.lg b{font-size:20px}.avbtn{border-radius:50%;flex:0 0 auto}.avbtn:hover .av{box-shadow:inset 0 0 0 1px var(--line),0 0 0 3px var(--raised-2)}
 .avgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.avgrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;background:var(--raised);font-size:12.5px;color:var(--fg-soft)}
 .avgrid button.on{box-shadow:inset 0 0 0 2px var(--accent)}.avgrid img{width:46px;height:46px;object-fit:contain}
-body.dock.tinted .page.modal,body.tinted .page.modal .pfoot,body.tinted .ihead{background:var(--sheet)}body.tinted .insp{background:rgba(0,0,0,.25)}
+body.dock.tinted .page.modal,body.tinted .page.modal .pfoot,body.tinted .ihead{background:var(--sheet)}body.tinted .insp{background:var(--sheet)}
 .ddw{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;margin-right:-6px}
 .dd{appearance:none;-webkit-appearance:none;background:none;border:0;outline:0;color:var(--fg);font:inherit;font-size:14.5px;height:36px;padding:0 30px 0 12px;border-radius:10px;cursor:pointer;text-align:right}
 .dd:hover,.dd:focus-visible{background:var(--raised)}.dd option,.dd optgroup{background:var(--surface);color:var(--fg)}
@@ -491,11 +491,14 @@ body.native .page.modal{top:calc(50% + 20px)}
 .page.modal.mroot .page-head{padding-left:22px;grid-template-columns:1fr 48px}
 .page.modal.mroot .page-head h2{grid-column:1;grid-row:1}
 .page.modal.mroot .page-head>.icon-btn{grid-column:2;grid-row:1}
-.page.modal .group{background:var(--bg)}
+.page.modal .group{background:transparent}
 .page.modal.has-nav .page-body{padding-bottom:28px}
 .pnav{position:absolute;left:0;top:0;bottom:0;width:250px;border-right:1px solid var(--line-soft);padding:16px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
 .pnav button{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;font-size:14.5px;color:var(--fg-soft);text-align:left}
 .pnav button:hover{background:var(--raised)}.pnav button.on{background:var(--raised);color:var(--fg)}.pnav .ic{width:18px;height:18px}
+.page:not(.modal) .pnav{position:relative;top:auto;bottom:auto;width:auto;flex-direction:row;border-right:0;border-bottom:1px solid var(--line-soft);padding:8px 12px;overflow-x:auto}
+.page:not(.modal) .pnav button{flex:1;justify-content:center;min-width:120px}
+.page:not(.modal).has-nav .page-body{padding-top:6px}
 .pfoot{position:absolute;left:250px;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--line-soft);background:var(--surface);font-size:14px}
 .pfoot .ic{width:18px;height:18px;color:#f0c26b}.pfoot b{font-weight:600}.pfoot span{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pfoot button{height:34px;padding:0 16px;border-radius:999px;background:var(--fg);color:#000;font-weight:600;font-size:14px}
@@ -781,7 +784,7 @@ details.more-opts .group{margin-top:8px}
 .wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column}
 
 /* dialog */
-.dialog{position:fixed;left:50%;top:50%;width:min(360px,calc(100vw - 40px));transform:translate(-50%,-46%) scale(.96);opacity:0;background:#151517;border:1px solid var(--line);border-radius:24px;padding:22px 18px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.dialog{position:fixed;left:50%;top:50%;width:min(360px,calc(100vw - 40px));transform:translate(-50%,-46%) scale(.96);opacity:0;background:var(--sheet);border:1px solid var(--line);border-radius:24px;padding:22px 18px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
 .dialog.on{transform:translate(-50%,-50%);opacity:1}
 .dialog h3{margin:0 2px;font-size:18px;font-weight:600;letter-spacing:-.01em}
 .dialog p{margin:0 2px;color:var(--muted);font-size:15px;line-height:1.5;overflow-wrap:anywhere}
@@ -2028,29 +2031,75 @@ function openModels(){
   });
 }
 
+/* Inline layers: render a page body straight into a pane so Settings never opens a window over itself. */
+function inlineLayer(render, into, after){
+  const L = {el:{querySelector:()=>null}, dynamic:true};
+  L.refresh = () => { into.innerHTML = ""; render(into, L); if (after) after(); };
+  L.refresh();
+  return L;
+}
 /* ---------- settings ---------- */
-function openSettings(swap){ open("settings", () => { const L = makePage("Settings", renderSettingsRoot, {modal:true}); settingsNav(L); return L; }, swap); }
-// Settings opens as a floating window on wide screens, with a menu of its sections on the left.
+function openSettings(swap){ open("settings", () => { const L = makePage("Settings", () => {}, {modal:true}); settingsNav(L); return L; }, swap); }
+// Settings has exactly two tabs. The left menu stays in place and every action redraws only the right pane.
 function settingsNav(L){
-  if (!L.el.classList.contains("modal")) return;
-  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"sparkles", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"sparkles", Extensions:"lightning", Server:"laptop", Pairing:"share-2", Browser:"share-2", Experimental:"lightning", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
-  const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
-  L.el.classList.add("has-nav"); L.el.append(nav);
-  const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
-  let active = 0;
-  // Each menu item opens its own section. Search looks across all of them.
-  const show = () => { const t = q.value.trim().toLowerCase(); let k = -1;
-    [...L.body.children].forEach(el => { if (el.classList.contains("glabel")) k++; el.hidden = !t && k !== active; });
-    L.body.querySelectorAll(".row").forEach(r => r.style.display = !t || r.textContent.toLowerCase().includes(t) ? "" : "none");
-    if (t) { let lab = null, any = false; const flush = () => { if (lab) lab.style.display = any ? "" : "none"; };
-      [...L.body.children].forEach(el => { if (el.classList.contains("glabel")) { flush(); lab = el; any = false; } else if (el.classList.contains("group")) { const v = [...el.querySelectorAll(".row")].some(r => r.style.display !== "none"); el.style.display = v ? "" : "none"; any = any || v; } else if (el.classList.contains("gnote")) el.style.display = "none"; }); flush(); }
-    else [...L.body.children].forEach(el => el.style.display = "");
-    [...nav.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("on", !t && i === active)); };
-  const build = () => { nav.innerHTML = ""; nav.append(qbox); const BREAK = {Appearance:1, Providers:1, Sounds:1, Experimental:1, "Desktop app":1, Help:1};
-    [...L.body.querySelectorAll(".glabel")].forEach((g, i) => { if (BREAK[g.textContent]) nav.append(h("hr")); nav.append(h("button", {type:"button", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => { active = i; q.value = ""; show(); scroller.scrollTop = 0; }})); });
-    show(); };
-  q.addEventListener("input", show);
-  const r = L.refresh; L.refresh = () => { r(); build(); }; build();
+  const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"});
+  L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
+  const btns = [["providers", "Providers", "key-round"], ["models", "Models", "cpu"]].map(([id, label, icon]) =>
+    h("button", {type:"button", "aria-label":label, html:ic(icon) + "<span>" + label + "</span>", onclick:() => show(id, "home")}));
+  nav.append(...btns);
+  let tab = "providers", view = "home";
+  const go = (t, v) => show(t, v);
+  function show(t, v){
+    tab = t; view = v || "home";
+    btns.forEach((b, i) => b.classList.toggle("on", (i === 0) === (tab === "providers")));
+    L.body.innerHTML = "";
+    renderSettingsView(L.body, L, tab, view, go);
+    const sc = L.body.parentNode; if (sc) sc.scrollTop = 0;
+  }
+  L.refresh = () => show(tab, view);
+  show("providers", "home");
+}
+function renderSettingsView(w, L, tab, view, go){
+  if (tab === "providers") return view === "home" ? openProviders(null, {into:w, nav:go}) : openProvider(view, null, {into:w, nav:go});
+  if (view === "home") return renderModelsHome(w, L, go);
+  if (view === "picker") return renderModelPicker(w, L, go);
+  if (view === "manage") return manageModels(null, {into:w, nav:go});
+  if (view === "local") return openLocal(null, {into:w, nav:go});
+  if (view.indexOf("conn:") === 0) return openConn(view.slice(5) === "new" ? null : view.slice(5), null, {into:w, nav:go});
+  if (view === "advisor") return openAdvisor(null, {into:w, nav:go});
+  return renderModelsHome(w, L, go);
+}
+function renderModelsHome(w, L, go){
+  const cm = modelByKey(curKey()), shown = S.models.filter(m => !isHidden(m) && ready(m.p)).length, p = cm ? provOf(cm.p) : null;
+  w.append(gnote("Models run through a provider or on your own computer. Add them here, then pick one for your chats."));
+  w.append(glabel("In use"), group(
+    row({icon:"cpu", title:"Current model", sub:cm ? (p ? p.name : "Local") + (ctxOf(cm) ? ", " + nf(ctxOf(cm)) + " tokens" : "") : "No model picked", val:cm ? cm.name : "", onclick:() => go("models", "picker")}),
+    row({icon:"sliders-horizontal", title:"Choose a model", sub:"Pick from the models you have turned on", onclick:() => go("models", "picker")})
+  ));
+  w.append(glabel("Add models"), group(
+    row({icon:"key-round", title:"Cloud providers", sub:"Connect free providers to get their models", onclick:() => go("providers", "home")}),
+    row({icon:"laptop", title:"Local models", sub:"Ollama, LM Studio and OpenAI compatible servers", val:S.conns.length ? String(S.conns.length) : "", onclick:() => go("models", "local")}),
+    row({icon:"sliders-horizontal", title:"Manage models", sub:"Show, hide, add or remove models", val:shown + " shown", onclick:() => go("models", "manage")}),
+    row({icon:"robot", title:"Find your model", sub:"A pick based on your memory and graphics", onclick:() => go("models", "advisor")})
+  ));
+  w.append(gnote("Hidden models stay saved. Turn them on in Manage models."));
+}
+function renderModelPicker(w, L, go){
+  w.append(row({icon:"chevron-left", title:"All models", sub:"Back to models", onclick:() => go("models", "home"), chev:false}));
+  if (!anyReady()) { w.append(gnote("Connect a provider or a local model first.")); return; }
+  const cur = curKey(), vis = S.models.filter(m => (!isHidden(m) || mk(m) === cur) && ready(m.p));
+  const list = h("div"); let q = "";
+  const use = m => { S.model = mk(m); const c = chat(); if (c) c.model = mk(m); save(); renderChip(); renderHeader(); if (!chat()) renderThread(); toast("Using " + m.name); L.refresh(); };
+  const draw = () => { list.innerHTML = ""; let n = 0;
+    provIds().filter(pid => ready(pid)).forEach(pid => {
+      const ms = vis.filter(m => m.p === pid && (!q || (m.name + " " + m.id).toLowerCase().includes(q)));
+      if (!ms.length) return;
+      list.append(glabel(provOf(pid).name), group(...ms.map(m => row({title:m.name, sub:m.note || m.id, val:mk(m) === cur ? "In use" : "Use", ok:mk(m) === cur, onclick:() => use(m)})))); n += ms.length;
+    });
+    if (!n) list.append(gnote("No shown model matches. Hidden ones are in Manage models.")); };
+  const search = h("input", {class:"input msearch", type:"search", placeholder:"Search models", "aria-label":"Search models"});
+  search.oninput = () => { q = search.value.trim().toLowerCase(); draw(); };
+  w.append(search, list); draw();
 }
 // Apps Vesper will connect to. Logos are from Simple Icons (CC0). Connectors are not built yet, so Request only saves interest on this device.
 const APPS = {"gmail":["Gmail","#EA4335","M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z","Search, sum up and draft emails","Google"],"googledrive":["Google Drive","#4285F4","M12.01 1.485c-2.082 0-3.754.02-3.743.047.01.02 1.708 3.001 3.774 6.62l3.76 6.574h3.76c2.081 0 3.753-.02 3.742-.047-.005-.02-1.708-3.001-3.775-6.62l-3.76-6.574zm-4.76 1.73a789.828 789.861 0 0 0-3.63 6.319L0 15.868l1.89 3.298 1.885 3.297 3.62-6.335 3.618-6.33-1.88-3.287C8.1 4.704 7.255 3.22 7.25 3.214zm2.259 12.653-.203.348c-.114.198-.96 1.672-1.88 3.287a423.93 423.948 0 0 1-1.698 2.97c-.01.026 3.24.042 7.222.042h7.244l1.796-3.157c.992-1.734 1.85-3.23 1.906-3.323l.104-.167h-7.249z","Find files and answers in your Drive","Google"],"googlecalendar":["Google Calendar","#4285F4","M18.316 5.684H24v12.632h-5.684V5.684zM5.684 24h12.632v-5.684H5.684V24zM18.316 5.684V0H1.895A1.894 1.894 0 0 0 0 1.895v16.421h5.684V5.684h12.632zm-7.207 6.25v-.065c.272-.144.5-.349.687-.617s.279-.595.279-.982c0-.379-.099-.72-.3-1.025a2.05 2.05 0 0 0-.832-.714 2.703 2.703 0 0 0-1.197-.257c-.6 0-1.094.156-1.481.467-.386.311-.65.671-.793 1.078l1.085.452c.086-.249.224-.461.413-.633.189-.172.445-.257.767-.257.33 0 .602.088.816.264a.86.86 0 0 1 .322.703c0 .33-.12.589-.36.778-.24.19-.535.284-.886.284h-.567v1.085h.633c.407 0 .748.109 1.02.327.272.218.407.499.407.843 0 .336-.129.614-.387.832s-.565.327-.924.327c-.351 0-.651-.103-.897-.311-.248-.208-.422-.502-.521-.881l-1.096.452c.178.616.505 1.082.977 1.401.472.319.984.478 1.538.477a2.84 2.84 0 0 0 1.293-.291c.382-.193.684-.458.902-.794.218-.336.327-.72.327-1.149 0-.429-.115-.797-.344-1.105a2.067 2.067 0 0 0-.881-.689zm2.093-1.931l.602.913L15 10.045v5.744h1.187V8.446h-.827l-2.158 1.557zM22.105 0h-3.289v5.184H24V1.895A1.894 1.894 0 0 0 22.105 0zm-3.289 23.5l4.684-4.684h-4.684V23.5zM0 22.105C0 23.152.848 24 1.895 24h3.289v-5.184H0v3.289z","Check your schedule and plan events","Google"],"googledocs":["Google Docs","#4285F4","M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727h-6zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818v1.364zm0-3.273H7.091V9.273h9.818v1.363zM14.727 6h6l-6-6v6z","Read and draft documents","Google"],"googlesheets":["Google Sheets","#34A853","M11.318 12.545H7.91v-1.909h3.41v1.91zM14.728 0v6h6l-6-6zm1.363 10.636h-3.41v1.91h3.41v-1.91zm0 3.273h-3.41v1.91h3.41v-1.91zM20.727 6.5v15.864c0 .904-.732 1.636-1.636 1.636H4.909a1.636 1.636 0 0 1-1.636-1.636V1.636C3.273.732 4.005 0 4.909 0h9.318v6.5h6.5zm-3.273 2.773H6.545v7.909h10.91v-7.91zm-6.136 4.636H7.91v1.91h3.41v-1.91z","Analyze and update spreadsheets","Google"],"github":["GitHub","#181717","M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12","Look up code, issues and pull requests","Work"],"notion":["Notion","#000000","M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z","Search your pages and notes","Work"],"linear":["Linear","#5E6AD2","M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z","Track issues and projects","Work"],"trello":["Trello","#0052CC","M21.147 0H2.853A2.86 2.86 0 000 2.853v18.294A2.86 2.86 0 002.853 24h18.294A2.86 2.86 0 0024 21.147V2.853A2.86 2.86 0 0021.147 0zM10.34 17.287a.953.953 0 01-.953.953h-4a.954.954 0 01-.954-.953V5.38a.953.953 0 01.954-.953h4a.954.954 0 01.953.953zm9.233-5.467a.944.944 0 01-.953.947h-4a.947.947 0 01-.953-.947V5.38a.953.953 0 01.953-.953h4a.954.954 0 01.953.953z","See and update your boards","Work"],"todoist":["Todoist","#E44332","M21 0H3C1.35 0 0 1.35 0 3v3.858s3.854 2.24 4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.608 8.136-4.675.279-.161.58-.107.748-.01.164.097.606.348.84.48.232.134.221.502.013.622l-9.712 5.59c-.346.2-.69.204-1.048.002C3.478 10.907.998 9.463 0 8.882v2.02l4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.609 8.136-4.676.279-.16.58-.106.748-.008.164.096.606.347.84.48.232.133.221.5.013.62-.208.121-9.288 5.346-9.712 5.59-.346.2-.69.205-1.048.002C3.478 14.951.998 13.506 0 12.926v2.02l4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.609 8.136-4.676.279-.16.58-.106.748-.009.164.097.606.348.84.48.232.133.221.502.013.622l-9.712 5.59c-.346.199-.69.204-1.048.001C3.478 18.994.998 17.55 0 16.97V21c0 1.65 1.35 3 3 3h18c1.65 0 3-1.35 3-3V3c0-1.65-1.35-3-3-3z","Turn chats into tasks","Work"],"obsidian":["Obsidian","#7C3AED","M19.355 18.538a68.967 68.959 0 0 0 1.858-2.954.81.81 0 0 0-.062-.9c-.516-.685-1.504-2.075-2.042-3.362-.553-1.321-.636-3.375-.64-4.377a1.707 1.707 0 0 0-.358-1.05l-3.198-4.064a3.744 3.744 0 0 1-.076.543c-.106.503-.307 1.004-.536 1.5-.134.29-.29.6-.446.914l-.31.626c-.516 1.068-.997 2.227-1.132 3.59-.124 1.26.046 2.73.815 4.481.128.011.257.025.386.044a6.363 6.363 0 0 1 3.326 1.505c.916.79 1.744 1.922 2.415 3.5zM8.199 22.569c.073.012.146.02.22.02.78.024 2.095.092 3.16.29.87.16 2.593.64 4.01 1.055 1.083.316 2.198-.548 2.355-1.664.114-.814.33-1.735.725-2.58l-.01.005c-.67-1.87-1.522-3.078-2.416-3.849a5.295 5.295 0 0 0-2.778-1.257c-1.54-.216-2.952.19-3.84.45.532 2.218.368 4.829-1.425 7.531zM5.533 9.938c-.023.1-.056.197-.098.29L2.82 16.059a1.602 1.602 0 0 0 .313 1.772l4.116 4.24c2.103-3.101 1.796-6.02.836-8.3-.728-1.73-1.832-3.081-2.55-3.831zM9.32 14.01c.615-.183 1.606-.465 2.745-.534-.683-1.725-.848-3.233-.716-4.577.154-1.552.7-2.847 1.235-3.95.113-.235.223-.454.328-.664.149-.297.288-.577.419-.86.217-.47.379-.885.46-1.27.08-.38.08-.72-.014-1.043-.095-.325-.297-.675-.68-1.06a1.6 1.6 0 0 0-1.475.36l-4.95 4.452a1.602 1.602 0 0 0-.513.952l-.427 2.83c.672.59 2.328 2.316 3.335 4.711.09.21.175.43.253.653z","Chat with your vault","Work"],"evernote":["Evernote","#00A82D","M8.222 5.393c0 .239-.02.637-.256.895-.257.24-.652.259-.888.259H4.552c-.73 0-1.165 0-1.46.04-.159.02-.356.1-.455.14-.04.019-.04 0-.02-.02L8.38.796c.02-.02.04-.02.02.02-.04.099-.118.298-.138.457-.04.298-.04.736-.04 1.472v2.647zm5.348 17.869c-.67-.438-1.026-1.015-1.164-1.373a2.924 2.924 0 01-.217-1.095 3.007 3.007 0 013-3.004c.493 0 .888.398.888.895a.88.88 0 01-.454.776c-.099.06-.237.1-.336.12-.098.02-.473.06-.65.218-.198.16-.356.418-.356.697 0 .298.118.577.316.776.355.358.829.557 1.342.557a2.436 2.436 0 002.427-2.447c0-1.214-.809-2.29-1.875-2.766-.158-.08-.414-.14-.651-.2a8.04 8.04 0 00-.592-.1c-.829-.1-2.901-.755-3.04-2.605 0 0-.611 2.785-1.835 3.54-.118.06-.276.12-.454.16-.177.04-.374.06-.434.06-1.993.12-4.105-.517-5.565-2.03 0 0-.987-.815-1.5-3.103-.118-.558-.355-1.553-.493-2.488-.06-.338-.08-.597-.099-.836 0-.975.592-1.631 1.342-1.73h4.026c.69 0 1.086-.18 1.342-.42.336-.317.415-.775.415-1.312V1.354C9.05.617 9.703 0 10.669 0h.474c.197 0 .434.02.651.04.158.02.296.06.533.12 1.204.298 1.46 1.532 1.46 1.532s2.27.398 3.415.597c1.085.199 3.77.378 4.282 3.104 1.204 6.487.474 12.775.415 12.775-.849 6.129-5.901 5.83-5.901 5.83a4.1 4.1 0 01-2.428-.736zm4.54-13.034c-.652-.06-1.204.2-1.402.697-.04.1-.079.219-.059.278.02.06.06.08.099.1.237.12.631.179 1.204.239.572.06.967.1 1.223.06.04 0 .08-.02.119-.08.04-.06.02-.18.02-.28-.06-.536-.553-.934-1.204-1.014z","Find notes and clips","Work"],"figma":["Figma","#F24E1E","M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z","Talk through your designs","Work"],"dropbox":["Dropbox","#0061FF","M6 1.807L0 5.629l6 3.822 6.001-3.822L6 1.807zM18 1.807l-6 3.822 6 3.822 6-3.822-6-3.822zM0 13.274l6 3.822 6.001-3.822L6 9.452l-6 3.822zM18 9.452l-6 3.822 6 3.822 6-3.822-6-3.822zM6 18.371l6.001 3.822 6-3.822-6-3.822L6 18.371z","Find and read your files","Work"],"spotify":["Spotify","#1ED760","M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z","Make playlists from a mood","Media"],"youtube":["YouTube","#FF0000","M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z","Sum up videos and find clips","Media"],"discord":["Discord","#5865F2","M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z","Catch up on your servers","Social"],"telegram":["Telegram","#26A5E4","M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z","Talk to Vesper in Telegram","Social"],"whatsapp":["WhatsApp","#25D366","M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z","Talk to Vesper in WhatsApp","Social"],"reddit":["Reddit","#FF4500","M12 0C5.373 0 0 5.373 0 12c0 3.314 1.343 6.314 3.515 8.485l-2.286 2.286C.775 23.225 1.097 24 1.738 24H12c6.627 0 12-5.373 12-12S18.627 0 12 0Zm4.388 3.199c1.104 0 1.999.895 1.999 1.999 0 1.105-.895 2-1.999 2-.946 0-1.739-.657-1.947-1.539v.002c-1.147.162-2.032 1.15-2.032 2.341v.007c1.776.067 3.4.567 4.686 1.363.473-.363 1.064-.58 1.707-.58 1.547 0 2.802 1.254 2.802 2.802 0 1.117-.655 2.081-1.601 2.531-.088 3.256-3.637 5.876-7.997 5.876-4.361 0-7.905-2.617-7.998-5.87-.954-.447-1.614-1.415-1.614-2.538 0-1.548 1.255-2.802 2.803-2.802.645 0 1.239.218 1.712.585 1.275-.79 2.881-1.291 4.64-1.365v-.01c0-1.663 1.263-3.034 2.88-3.207.188-.911.993-1.595 1.959-1.595Zm-8.085 8.376c-.784 0-1.459.78-1.506 1.797-.047 1.016.64 1.429 1.426 1.429.786 0 1.371-.369 1.418-1.385.047-1.017-.553-1.841-1.338-1.841Zm7.406 0c-.786 0-1.385.824-1.338 1.841.047 1.017.634 1.385 1.418 1.385.785 0 1.473-.413 1.426-1.429-.046-1.017-.721-1.797-1.506-1.797Zm-3.703 4.013c-.974 0-1.907.048-2.77.135-.147.015-.241.168-.183.305.483 1.154 1.622 1.964 2.953 1.964 1.33 0 2.47-.81 2.953-1.964.057-.137-.037-.29-.184-.305-.863-.087-1.795-.135-2.769-.135Z","Sum up threads and trends","Social"],"x":["X","#000000","M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z","Draft posts and read trends","Social"],"zoom":["Zoom","#0B5CFF","M5.033 14.649H.743a.74.74 0 0 1-.686-.458.74.74 0 0 1 .16-.808L3.19 10.41H1.06A1.06 1.06 0 0 1 0 9.35h3.957c.301 0 .57.18.686.458a.74.74 0 0 1-.161.808L1.51 13.59h2.464c.585 0 1.06.475 1.06 1.06zM24 11.338c0-1.14-.927-2.066-2.066-2.066-.61 0-1.158.265-1.537.686a2.061 2.061 0 0 0-1.536-.686c-1.14 0-2.066.926-2.066 2.066v3.311a1.06 1.06 0 0 0 1.06-1.06v-2.251a1.004 1.004 0 0 1 2.013 0v2.251c0 .586.474 1.06 1.06 1.06v-3.311a1.004 1.004 0 0 1 2.012 0v2.251c0 .586.475 1.06 1.06 1.06zM16.265 12a2.728 2.728 0 1 1-5.457 0 2.728 2.728 0 0 1 5.457 0zm-1.06 0a1.669 1.669 0 1 0-3.338 0 1.669 1.669 0 0 0 3.338 0zm-4.82 0a2.728 2.728 0 1 1-5.458 0 2.728 2.728 0 0 1 5.457 0zm-1.06 0a1.669 1.669 0 1 0-3.338 0 1.669 1.669 0 0 0 3.338 0z","Sum up your meetings","Work"]};
@@ -2619,15 +2668,18 @@ function openLicenses(){
 }
 function creativityWord(t){ return t < 0.45 ? "Focused" : t < 1.05 ? "Balanced" : "Wild"; }
 
-function openProviders(swap){
-  open("providers", () => makePage("Providers", w => {
+function openProviders(swap, opts){
+  const render = w => {
     w.append(gnote("Each provider gives free access with a daily limit. Connect two or three and switch when one runs out."));
-    w.append(glabel("Cloud providers"), group(...Object.keys(PROVIDERS).map(pid => row({title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "Connected" : "Add key", ok:ready(pid), onclick:() => openProvider(pid)}))));
-  }), swap);
+    w.append(glabel("Cloud providers"), group(...Object.keys(PROVIDERS).map(pid => row({title:PROVIDERS[pid].name, sub:PROVIDERS[pid].usage, val:ready(pid) ? "Connected" : "Add key", ok:ready(pid), onclick:() => opts && opts.nav ? opts.nav("providers", pid) : openProvider(pid)}))));
+  };
+  if (opts && opts.into) return inlineLayer(render, opts.into, opts.after);
+  open("providers", () => makePage("Providers", render), swap);
 }
-function openProvider(pid, swap){
+function openProvider(pid, swap, opts){
   const note = {text:"", cls:""};
-  open("prov:" + pid, () => makePage(PROVIDERS[pid].name, (w, L) => {
+  const render = (w, L) => {
+    if (opts && opts.into) w.append(row({icon:"chevron-left", title:"All providers", sub:"Back to providers", onclick:() => opts.nav("providers", "home"), chev:false}));
     const P = provOf(pid);
     const key = h("input", {class:"input", type:"password", value:P.key, placeholder:"Paste your key", spellcheck:"false", autocapitalize:"off", autocomplete:"off", "aria-label":P.name + " API key"});
     const show = h("button", {class:"btn", type:"button", text:"Show", onclick:() => { const on = key.type === "password"; key.type = on ? "text" : "password"; show.textContent = on ? "Hide" : "Show"; }});
@@ -2662,24 +2714,31 @@ function openProvider(pid, swap){
             if (r.err) { fst.className = "status bad"; fst.textContent = "Couldn't load the list: " + r.err + "."; }
             else { fst.className = "status good"; fst.textContent = r.added ? r.added + " new. Turn " + (r.added === 1 ? "it" : "them") + " on in Manage models." : "No new models. You have them all."; }
           }}),
-          h("button", {class:"btn", type:"button", text:"Manage models", onclick:() => manageModels()})), fst)));
+          h("button", {class:"btn", type:"button", text:"Manage models", onclick:() => opts && opts.nav ? opts.nav("models", "manage") : manageModels()})), fst)));
       w.append(h("div", {style:"padding-top:14px"}, h("button", {class:"btn danger block", type:"button", text:"Remove key", onclick:() => dialog({title:"Remove " + P.name + " key?", text:"Its models stop working until you add a key again.", ok:"Remove", danger:true, onOk:() => { delete S.keys[pid]; fixModels(); save(); renderChip(); note.text = ""; L.refresh(); }})})));
     }
     w.append(glabel("Get a free key"), group(h("div", {class:"field"},
       h("ol", {class:"steps"}, ...P.steps.map(s => h("li", {text:s}))),
       h("a", {class:"btn block", href:P.site, target:"_blank", rel:"noopener noreferrer", html:"Open " + esc(P.siteName) + ic("external-link")}))));
-  }), swap);
+  };
+  if (opts && opts.into) return inlineLayer(render, opts.into, opts.after);
+  open("prov:" + pid, () => makePage(PROVIDERS[pid].name, render), swap);
 }
 
 /* local models */
-function openLocal(swap){
-  open("local", () => makePage("Local models", w => {
-    if (DESKTOP) w.append(glabel("On this PC"), group(row({icon:"cpu", title:"Models on this PC", sub:"Download and run models right here, offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()})), glabel("Other computers and servers"));
-    w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. Your computer can stay offline. It only needs to be on the same WiFi as this phone."));
-    if (S.conns.some(c => c.id !== "pc")) w.append(glabel("Your connections"), group(...S.conns.filter(c => c.id !== "pc").map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => openConn(c.id)}))));
-    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Add a local model", onclick:() => openConn(null)})));
-    w.append(glabel("Not sure which model?"), group(row({icon:"cpu", title:"Which model fits my computer?", sub:"Picks based on your memory and graphics card", onclick:() => openAdvisor()})));
-  }), swap);
+function openLocal(swap, opts){
+  const inline = !!(opts && opts.into);
+  const go = (v) => opts && opts.nav ? opts.nav("models", v) : (v.indexOf("conn:") === 0 ? openConn(v.slice(5) === "new" ? null : v.slice(5)) : openAdvisor());
+  const render = w => {
+    if (inline) w.append(row({icon:"chevron-left", title:"All models", sub:"Back to models", onclick:() => go("home"), chev:false}));
+    if (DESKTOP && !inline) w.append(glabel("On this PC"), group(row({icon:"cpu", title:"Models on this PC", sub:"Download and run models right here, offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()})), glabel("Other computers and servers"));
+    w.append(gnote("Run models on your own computer with Ollama, LM Studio or any OpenAI compatible server. It only needs to be on the same WiFi as this phone."));
+    if (S.conns.some(c => c.id !== "pc")) w.append(glabel("Your connections"), group(...S.conns.filter(c => c.id !== "pc").map(c => row({icon:"laptop", title:c.name, sub:c.base, val:S.models.filter(m => m.p === c.id).length + " models", onclick:() => go("conn:" + c.id)}))));
+    w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn primary block", type:"button", html:ic("plus") + "Add a local model", onclick:() => go("conn:new")})));
+    w.append(glabel("Not sure which model?"), group(row({icon:"cpu", title:"Which model fits my computer?", sub:"Picks based on your memory and graphics card", onclick:() => go("advisor")})));
+  };
+  if (inline) return inlineLayer(render, opts.into, opts.after);
+  open("local", () => makePage("Local models", render), swap);
 }
 function localTips(kind){
   const o = esc(location.origin);
@@ -2694,11 +2753,12 @@ function normBase(v){
   if (v && !/^https?:\/\//i.test(v)) v = "http://" + v;
   return v;
 }
-function openConn(id, swap){
+function openConn(id, swap, opts){
   const existing = id && S.conns.find(c => c.id === id);
   const draft = existing ? Object.assign({}, existing) : {id:"c" + uid(), kind:"ollama", name:"Ollama", base:"http://localhost:11434/v1", key:""};
   const note = {text:"", cls:""};
-  open("conn:" + draft.id, () => makePage(existing ? existing.name : "Add a local model", (w, L) => {
+  const render = (w, L) => {
+    if (opts && opts.into) w.append(row({icon:"chevron-left", title:"Local models", sub:"Back to local models", onclick:() => opts.nav("models", "local"), chev:false}));
     const saved = S.conns.find(c => c.id === draft.id);
     const name = h("input", {class:"input", value:draft.name, "aria-label":"Name", oninput:e => { draft.name = e.target.value; }});
     const base = h("input", {class:"input", value:draft.base, inputmode:"url", spellcheck:"false", autocapitalize:"off", placeholder:"http://192.168.1.20:11434/v1", "aria-label":"Server address", oninput:e => { draft.base = e.target.value; }});
@@ -2735,7 +2795,7 @@ function openConn(id, swap){
       Object.assign(draft, conn); fixModels(); save(); renderChip(); renderHeader(); if (!chat()) renderThread();
       note.offerSave = false;
       note.text = found ? (found.ids.length ? "Connected. Found " + found.ids.length + " model" + (found.ids.length === 1 ? "" : "s") + (added ? "" : ", nothing new") + "." : "Connected, but the server listed no models. Add one by name below.") : "Saved without testing. Add a model by name below.";
-      note.cls = found ? "good" : ""; L.el.querySelector(".page-head h2").textContent = conn.name; L.refresh();
+      note.cls = found ? "good" : ""; const head = L.el && L.el.querySelector ? L.el.querySelector(".page-head h2") : null; if (head) head.textContent = conn.name; L.refresh();
     };
     if (!saved) w.append(glabel("App"), seg(kinds, draft.kind, pickKind));
     w.append(glabel("Connection"), group(
@@ -2756,15 +2816,19 @@ function openConn(id, swap){
     }
     w.append(glabel("Set up your computer"), group(h("div", {class:"field"}, h("ol", {class:"steps", html:localTips(draft.kind)}))));
     if (saved) w.append(h("div", {style:"padding-top:16px"}, h("button", {class:"btn danger block", type:"button", text:"Remove this connection", onclick:() => dialog({title:"Remove " + saved.name + "?", text:"Its models leave the picker. Your chats stay.", ok:"Remove", danger:true, onOk:() => {
-      S.conns = S.conns.filter(c => c.id !== saved.id); S.models = S.models.filter(m => m.p !== saved.id); fixModels(); save(); renderChip(); closeTop(); toast("Connection removed");
+      S.conns = S.conns.filter(c => c.id !== saved.id); S.models = S.models.filter(m => m.p !== saved.id); fixModels(); save(); renderChip();
+      if (opts && opts.into) opts.nav("models", "local"); else closeTop(); toast("Connection removed");
     }})})));
-  }), swap);
+  };
+  if (opts && opts.into) return inlineLayer(render, opts.into, opts.after);
+  open("conn:" + draft.id, () => makePage(existing ? existing.name : "Add a local model", render), swap);
 }
 
 /* manage models */
-function manageModels(swap){
+function manageModels(swap, opts){
   const note = {text:"", cls:""};
-  open("manage", () => makePage("Manage models", (w, L) => {
+  const render = (w, L) => {
+    if (opts && opts.into) w.append(row({icon:"chevron-left", title:"All models", sub:"Back to models", onclick:() => opts.nav("models", "home"), chev:false}));
     const st = h("div", {class:"status " + note.cls, text:note.text});
     w.append(group(h("div", {class:"field"},
       h("button", {class:"btn", type:"button", html:ic("refresh-cw") + "Find new models", onclick:async () => {
@@ -2797,7 +2861,9 @@ function manageModels(swap){
           save(); L.refresh(); toast("Model added");
         }}))));
     }
-  }), swap);
+  };
+  if (opts && opts.into) return inlineLayer(render, opts.into, opts.after);
+  open("manage", () => makePage("Manage models", render), swap);
 }
 
 function openPersonal(){
@@ -3240,7 +3306,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "3.4";
+const APP_VERSION = "3.5";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
@@ -3323,7 +3389,8 @@ function adviseModels(ram, vram, list){
   const fast = fastPool[fastPool.length - 1] || list[0];
   return {best, fast, bestOnGpu:!!gpuFit && best.gb <= gpuFit};
 }
-function openAdvisor(){
+function openAdvisor(swap, opts){
+  if (opts && opts.into) { opts.nav("models", "local"); return; }
   if (DESKTOP) { openPC(); return; }
   const st = {ram:16, vram:8};
   open("advisor", () => makePage("Find your model", w => {

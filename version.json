@@ -1,9 +1,8 @@
 {
- "version": "3.4",
+ "version": "3.5",
  "notes": [
-  "More Settings detail for timeline, notifications, sounds and providers",
-  "Shortcut search and a reset option",
-  "Pairing and screen wake controls for local models",
-  "All earlier Settings and full screen work"
+  "Settings now has only Providers and Models",
+  "Model and provider actions open in the right pane, not over Settings",
+  "The same theme colors are used across the app"
  ]
 }
