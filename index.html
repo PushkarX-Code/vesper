@@ -1054,6 +1054,7 @@ const PRESETS = {
 /* ---------- state ---------- */
 const STORE = "vesper.v1";
 const mk = m => m.p + "::" + m.id;
+const modelKey = (id, models) => { if (!id) return null; if (String(id).includes("::")) return String(id); const m = models.find(x => x.id === id); return m ? mk(m) : null; };
 function provOf(pid, s){
   s = s || S;
   if (PROVIDERS[pid]) return Object.assign({id:pid, key:(s.keys || {})[pid] || "", local:false}, PROVIDERS[pid]);
@@ -1079,7 +1080,7 @@ function load(){
     if (m) { m.name = d.name; m.note = d.note; } else s.models.push(Object.assign({}, d));
   });
   const seen = new Set(); s.models = s.models.filter(m => { const k = mk(m); if (seen.has(k)) return false; seen.add(k); return true; });
-  const byOldId = id => { if (!id) return null; if (String(id).includes("::")) return id; const m = s.models.find(x => x.id === id); return m ? mk(m) : null; };
+  const byOldId = id => modelKey(id, s.models);
   const firstV2 = s.v !== 2;
   s.model = byOldId(s.model);
   if (firstV2) {
@@ -1363,7 +1364,7 @@ function makePage(title, render, opts){
   const body = h("div", {class:"page-body"}); const wrap = h("div", {class:"wrap"}); body.append(wrap);
   el.append(h("div", {class:"page-head"}, modal && !under ? iconBtn("x", "Close", () => closeTop()) : iconBtn("chevron-left", "Back", () => closeTop()), h("h2", {text:title}), h("span")), body);
   const scrim = modal && !under ? h("div", {class:"scrim"}) : null;
-  if (scrim) { document.body.append(scrim); scrim.addEventListener("click", () => { stack.filter(l => l.el.classList.contains("modal")).forEach(() => closeTop()); }); }
+  if (scrim) { document.body.append(scrim); scrim.addEventListener("click", () => { if (stack.length) closeTop(); }); }
   document.body.append(el);
   const L = {el, body:wrap, dynamic:true, scrim};
   L.refresh = () => { const st = body.scrollTop; wrap.innerHTML = ""; render(wrap, L); body.scrollTop = st; };
@@ -1394,10 +1395,11 @@ function menu(id, title, items){
   const anchorEl = menuAnchorEl && menuAnchorEl.isConnected ? menuAnchorEl : null, anchor = anchorEl ? anchorEl.getBoundingClientRect() : null, inComposer = !!(anchorEl && anchorEl.closest(".composer"));
   open(id, () => {
     const L = makeSheet(title);
-    if (docked() && anchor) { L.el.classList.add("pop"); L.scrim.classList.add("clear"); const w = 240, z = parseFloat(document.body.style.zoom) || 1, vw = innerWidth / z;
-      const leftHalf = anchor.left + anchor.width / 2 < vw / 2; let x = leftHalf ? anchor.left : anchor.right - w; x = Math.max(8, Math.min(x, vw - w - 8));
-      L.el.style.left = x + "px"; L.el.style.top = anchor.bottom + 6 + "px"; L.el.style.setProperty("--ox", leftHalf ? "0%" : "100%");
-      requestAnimationFrame(() => { const r = L.el.getBoundingClientRect(); if (inComposer || r.bottom > innerHeight / z - 8) { L.el.style.top = Math.max(8, anchor.top - r.height - 6) + "px"; L.el.style.setProperty("--oy", "100%"); } }); }
+    if (docked() && anchor) { L.el.classList.add("pop"); L.scrim.classList.add("clear"); const w = 240, z = parseFloat(document.body.style.zoom) || 1, vw = innerWidth / z, vh = innerHeight / z;
+      const a = {left:anchor.left / z, right:anchor.right / z, top:anchor.top / z, bottom:anchor.bottom / z, width:anchor.width / z};
+      const leftHalf = a.left + a.width / 2 < vw / 2; let x = leftHalf ? a.left : a.right - w; x = Math.max(8, Math.min(x, vw - w - 8));
+      L.el.style.left = x + "px"; L.el.style.top = a.bottom + 6 + "px"; L.el.style.setProperty("--ox", leftHalf ? "0%" : "100%");
+      requestAnimationFrame(() => { const r = L.el.getBoundingClientRect(); if (inComposer || r.bottom / z > vh - 8) { L.el.style.top = Math.max(8, a.top - r.height / z - 6) + "px"; L.el.style.setProperty("--oy", "100%"); } }); }
     items.forEach(it => { const icn = icEl(it.icon); if (it.tint && RICO[it.icon]) icn.style.color = RICO[it.icon]; L.body.append(h("button", {class:"mrow" + (it.danger ? " danger" : ""), type:"button", onclick:() => { closeTop(); it.run(); }}, icn, h("div", {class:"tx"}, h("b", {text:it.label})))); });
     return L;
   });
@@ -1636,7 +1638,7 @@ function submit(){
   if (editIdx != null) { c.messages = c.messages.slice(0, editIdx); editIdx = null; $("#editing").hidden = true; }
   const title = text || (pending[0] ? pending[0].name : "New chat");
   if (!c.messages.length) c.title = title.slice(0, 48) + (title.length > 48 ? "…" : "");
-  const um = {role:"user", content:text};
+  const um = {role:"user", content:text, at:Date.now()};
   const imgs = pending.filter(a => a.kind === "image").map(a => a.url), files = pending.filter(a => a.kind === "file").map(a => ({name:a.name, text:a.text}));
   if (imgs.length) um.images = imgs;
   if (files.length) um.files = files;
@@ -1744,13 +1746,13 @@ async function generate(){
     if (!text && found.length) text = added.length ? "Got it. I'll remember that." : "Okay.";
   }
   if (text.trim()) {
-    const out = {role:"assistant", content:text, model:mk(m)};
+    const out = {role:"assistant", content:text, model:mk(m), at:Date.now()};
     if (added.length) out.saved = added.length;
     if (reasoning) { out.reasoning = reasoning.slice(0, 20000); out.secs = secs || Math.max(1, Math.round((performance.now() - (t0 || performance.now())) / 1000)); }
     out.stats = actStats();
     c.messages.push(out);
-  } else if (aborted) c.messages.push({role:"assistant", error:true, content:"You stopped this reply.", model:mk(m)});
-  else c.messages.push({role:"assistant", error:true, content:fail.friendly, fix:fail.fix || null, pid:P.id, model:mk(m)});
+  } else if (aborted) c.messages.push({role:"assistant", error:true, content:"You stopped this reply.", model:mk(m), at:Date.now()});
+  else c.messages.push({role:"assistant", error:true, content:fail.friendly, fix:fail.fix || null, pid:P.id, model:mk(m), at:Date.now()});
   act.phase = text.trim() ? "Done" : aborted ? "Stopped" : "Failed"; act.end = performance.now();
   busy = false; busyChat = null; controller = null; live = null;
   c.updated = Date.now(); save(); syncSend(); inspTick();
@@ -2149,9 +2151,12 @@ function studioSpace(w, L, st, bar){
     ...[["all", "images", "All media"], ["image", "image", "Images"], ["video", "video", "Videos"]].map(([id, icon, t]) => h("button", {class:"snav" + (st.filter === id ? " on" : ""), type:"button", html:ic(icon) + "<span>" + t + "</span>", onclick:() => { st.filter = id; L.refresh(); }})),
     h("div", {class:"sgen"}, h("span", {text:"Generator"}), h("button", {type:"button", text:gen, onclick:() => openMedia()})));
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search media", value:st.q}), grid = h("div", {class:"mgrid"});
+  let drawSeq = 0;
   const draw = async () => {
+    const seq = ++drawSeq;
     grid.innerHTML = ""; for (let i = 0; i < st.busy; i++) grid.append(h("div", {class:"mitem busy", text:"Creating"}));
     const items = (await mediaAll()).filter(it => (isAll || (isLoose ? !it.project : it.project === st.proj)) && (st.filter === "all" || it.kind === st.filter) && (!st.q || it.prompt.toLowerCase().includes(st.q)));
+    if (seq !== drawSeq) return; // a newer refresh owns the grid
     if (!items.length && !st.busy) { grid.className = ""; grid.append(h("div", {class:"sempty"}, h("i", {class:"logo-flat", "aria-hidden":"true"}), h("h3", {text:"Start creating"}), h("p", {text:st.q ? "Nothing matches that search." : "Describe an image or a video in the bar below."}))); return; }
     grid.className = "mgrid"; items.forEach(it => grid.append(mtile(it, () => openMedia1(it, draw))));
   };
@@ -2261,10 +2266,9 @@ function chooseAvatar(after){
 }
 function textCtl(label, key, ph){ const i = h("input", {class:"tin", value:prof()[key] || "", placeholder:ph, "aria-label":label, maxlength:"60"}); i.oninput = () => { prof()[key] = i.value; save(); renderFoot(); }; return i; }
 function usageStats(){ const by = {}; let p = 0, c = 0, n = 0, wk = 0; const since = Date.now() - 7 * 864e5;
-  S.chats.forEach(ch => ch.messages.forEach(m => { if (!m.stats) return; n++; p += m.stats.p || 0; c += m.stats.c || 0; if ((ch.updated || 0) >= since) wk += (m.stats.p || 0) + (m.stats.c || 0); const mm = modelByKey(m.model); const k = mm ? mm.name : (m.model || "Unknown").split("::").pop(); by[k] = (by[k] || 0) + (m.stats.p || 0) + (m.stats.c || 0); }));
+  S.chats.forEach(ch => ch.messages.forEach(m => { if (!m.stats) return; n++; p += m.stats.p || 0; c += m.stats.c || 0; if ((m.at || ch.updated || 0) >= since) wk += (m.stats.p || 0) + (m.stats.c || 0); const mm = modelByKey(m.model); const k = mm ? mm.name : (m.model || "Unknown").split("::").pop(); by[k] = (by[k] || 0) + (m.stats.p || 0) + (m.stats.c || 0); }));
   return {p, c, n, wk, by:Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 5)}; }
 function ctlRow(title, sub, ctl){ return h("div", {class:"row ctl"}, h("div", {class:"tx"}, h("b", {text:title}), sub ? h("span", {text:sub}) : null), ctl); }
-function seg(opts, cur, pick){ const el = h("div", {class:"seg", role:"radiogroup"}); opts.forEach(([v, t]) => el.append(h("button", {type:"button", role:"radio", "aria-checked":String(v === cur), class:v === cur ? "on" : "", text:t, onclick:e => { [...el.children].forEach(x => { x.classList.toggle("on", x === e.currentTarget); x.setAttribute("aria-checked", String(x === e.currentTarget)); }); pick(v); }}))); return el; }
 function renderSettingsRoot(w){
   const nReady = Object.keys(PROVIDERS).filter(p => ready(p)).length;
   const shown = S.models.filter(m => !isHidden(m) && ready(m.p)).length;
@@ -2724,7 +2728,7 @@ function startCompanion(k, fresh){
   let c = fresh ? null : S.chats.filter(x => x.companion === k.id).sort((a, b) => b.updated - a.updated)[0];
   if (!c) {
     c = {id:uid(), title:k.name, model:S.model, companion:k.id, messages:[], updated:Date.now()};
-    if ((k.greeting || "").trim()) c.messages.push({role:"assistant", content:k.greeting.trim(), greeting:true});
+    if ((k.greeting || "").trim()) c.messages.push({role:"assistant", content:k.greeting.trim(), greeting:true, at:Date.now()});
     S.chats.unshift(c);
   }
   S.current = c.id; S.model = c.model; save();
@@ -3324,7 +3328,7 @@ $("#importFile").addEventListener("change", async e => {
     if (!Array.isArray(j) && Array.isArray(j.memory)) addMemories(j.memory.map(m => m && m.text).filter(Boolean).map(String));
     list.forEach(c => {
       if (!c || !c.id || !Array.isArray(c.messages) || S.chats.some(x => x.id === c.id)) return;
-      const nc = {id:String(c.id), title:String(c.title || "Imported chat"), model:c.model, updated:+c.updated || Date.now(), companion:c.companion && compById(String(c.companion)) ? String(c.companion) : undefined,
+      const nc = {id:String(c.id), title:String(c.title || "Imported chat"), model:modelKey(c.model, S.models) || S.model, updated:+c.updated || Date.now(), companion:c.companion && compById(String(c.companion)) ? String(c.companion) : undefined,
         messages:c.messages.filter(m => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string").map(m => Object.assign({}, m))};
       S.chats.push(nc); n++;
     });
