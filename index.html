@@ -138,6 +138,9 @@ svg{display:block}
 .hero .mark{height:84px;width:auto;filter:drop-shadow(0 14px 40px var(--glow,rgba(110,140,255,.38)))}
 .hero h1{font-size:clamp(28px,8vw,36px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin:10px 0 0;text-wrap:balance}
 .hero h1 i{font-style:normal;color:var(--accent)}
+.hero h1.hl{font-size:clamp(36px,3.6vw,50px);font-weight:500;letter-spacing:-.045em;line-height:1.06;margin:0;text-align:center;background:linear-gradient(180deg,#ffffff 45%,#c3c9d6 140%);-webkit-background-clip:text;background-clip:text;color:transparent;font-feature-settings:"ss01","cv11","calt"}
+.hero h1.hl i{font-style:normal;-webkit-text-fill-color:var(--accent)}
+.hero .hsub{color:var(--muted);font-size:15px;line-height:1.5;margin:16px 0 0;text-align:center;max-width:none}
 .hero p{margin:0;color:var(--muted);font-size:15.5px;max-width:34ch}
 .cta{display:flex;flex-direction:column;gap:8px;width:100%;max-width:300px;margin-top:14px}
 .suggest{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:560px;margin:0 auto}
@@ -288,9 +291,9 @@ body.dock .app.is-empty .thread{flex:0 0 auto;overflow:visible}
 body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p,body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
 body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 26px}
 body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spacing:-.02em}
-body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px}
+body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px;min-height:0}
 .sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
-.sgl:hover{background:var(--raised);color:var(--fg)}.sgl .ic{width:18px;height:18px;color:var(--muted)}
+.sgl:hover,.sgl.on{background:var(--raised);color:var(--fg)}.sgl .typed{color:var(--fg);font-weight:500}.sgl .ic{width:18px;height:18px;color:var(--muted)}
 /* desktop motion: quick fades and small scale, never slides or drops */
 body.dock{--d:160ms}
 body.dock .page:not(.modal){transform:none;opacity:0}
@@ -340,7 +343,7 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .row.ctl{justify-content:space-between}
 .seg{display:inline-flex;gap:2px;padding:3px;border-radius:12px;background:var(--raised);flex:0 0 auto}
 .seg button{height:32px;padding:0 12px;border-radius:9px;font-size:13.5px;color:var(--muted)}.seg button.on{background:var(--raised-2);color:var(--fg)}
-.tin{width:min(260px,46vw);height:38px;padding:0 12px;border-radius:10px;border:0;background:var(--raised);outline:0;font-size:14.5px;color:var(--fg)}.tin:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 45%,transparent)}
+.tin.num{width:130px;text-align:right}.tin{width:min(260px,46vw);height:38px;padding:0 12px;border-radius:10px;border:0;background:var(--raised);outline:0;font-size:14.5px;color:var(--fg)}.tin:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 45%,transparent)}
 .cval{font-size:14px;color:var(--fg-soft);font-weight:500;flex:0 0 auto}
 kbd.key{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 8px;border-radius:7px;background:var(--raised);box-shadow:inset 0 0 0 1px var(--line);font-family:var(--ui);font-size:12px;font-weight:500;color:var(--fg-soft);white-space:nowrap}
 .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;overflow:hidden;background:linear-gradient(135deg,#1d2a44,#0c0f18);box-shadow:inset 0 0 0 1px var(--line)}
@@ -473,9 +476,7 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .schip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.schip .ic{width:16px;height:16px}.schip .ic:last-child{width:13px;height:13px;color:var(--muted)}.schip:hover{background:var(--raised-2)}
 .sseg{display:flex;align-items:center;height:40px;padding:3px;border-radius:999px;background:var(--raised);flex:0 0 auto}.sseg button{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;font-size:13.5px;color:var(--muted)}.sseg button .ic{width:16px;height:16px}.sseg button.on{background:var(--raised-2);color:var(--fg)}
 .slib{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 13px;border-radius:14px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.slib .ic{width:17px;height:17px}.slib:hover,.slib.on{background:var(--raised-2);color:var(--fg)}
-.sori{display:flex;align-items:center;gap:2px;height:40px;padding:3px;border-radius:12px;background:var(--raised);flex:0 0 auto}.sori[hidden]{display:none}
-.sori button{display:grid;place-items:center;width:38px;height:34px;border-radius:9px;color:var(--muted)}.sori button:hover{color:var(--fg)}.sori button.on{background:var(--raised-2);color:var(--fg)}
-.ori{display:block;border:2px solid currentColor;border-radius:3px}.ori.square{width:15px;height:15px}.ori.portrait{width:12px;height:18px}.ori.landscape{width:20px;height:13px}
+.sbar .ddw{margin:0;height:40px;border-radius:12px;background:var(--raised);flex:0 0 auto}.sbar .ddw .dd{height:40px;font-size:13.5px;color:var(--fg-soft);padding:0 26px 0 12px;text-align:left}.sbar .ddw .dd:hover{background:var(--raised-2)}
 .sgo{width:40px;height:40px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;flex:0 0 auto}.sgo .ic{width:20px;height:20px}
 @media (max-width:820px){.studiopg .mgrid{grid-template-columns:repeat(2,1fr)}.ssteps{grid-template-columns:1fr 1fr}.sspace{grid-template-columns:1fr}.srail{position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}.sback{order:-1}.sname{order:-1;padding:0 4px}.sgen{display:none}.snav{padding:7px 12px;background:var(--raised)}.sbanner{min-height:360px}.sbar{border-radius:24px}}
 @media (max-width:520px){.sbar{flex-wrap:wrap}.sbar textarea{order:-1;flex:1 0 100%;padding-bottom:4px}.slib span,.sseg span{display:none}.sseg button{padding:0 12px}.sgo{margin-left:auto}}
@@ -839,6 +840,7 @@ details.more-opts .group{margin-top:8px}
 body.dock .page:not(.modal) .page-body:has(.lcards,.cgrid,.spg){padding:8px clamp(24px,3vw,56px) 56px}
 body.dock .page:not(.modal) .wrap:has(.lcards,.cgrid,.spg){max-width:none;width:100%}
 body.dock{--col:clamp(760px,50vw,980px)}
+body.noglass *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}body.noglass .composer,body.noglass .sbar{background:var(--surface)!important}
 body.dense .thread-inner{gap:12px}body.dense .bubble{padding:7px 14px}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer-wrap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:40px 24px 10px;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 88%,transparent) 35%,transparent);pointer-events:none}
 body.dock:not([data-space="agent"]):not([data-space="code"]) .app:not(.is-empty) .composer-wrap>*{pointer-events:auto}
@@ -1145,6 +1147,7 @@ function provOf(pid, s){
 const ready = (pid, s) => { const p = provOf(pid, s); return !!p && (p.local || !!p.key); };
 
 let S = load();
+(function purgeOld(){ const d = S.keepDays; if (!d || !Array.isArray(S.chats)) return; const cut = Date.now() - d * 864e5; const n = S.chats.length; S.chats = S.chats.filter(c => c.pinned || (c.updated || Date.now()) > cut); if (S.chats.length !== n && !S.chats.some(c => c.id === S.current)) S.current = null; })();
 function load(){
   let s = null;
   try { s = JSON.parse(localStorage.getItem(STORE) || "null"); } catch (e) {}
@@ -1615,28 +1618,34 @@ function renderFoot(){
   else { t.textContent = nm || "Free and private"; sub.textContent = n ? n + (n > 1 ? " providers" : " provider") + " connected" : "Add a free model to start"; }
 }
 function renderHero(){
-  inner.innerHTML = "";
-  const hero = h("div", {class:"hero"});
-  const main = h("div", {class:"hero-main", html:`<img class="mark" src="${iconFile("mark.webp")}" alt="" width="360" height="352" decoding="async">`});
-  if (!anyReady()) {
-    if (DESKTOP) { main.append(h("h1", {text:"Welcome to Vesper"}), h("p", {text:"Run a private AI on this PC, or connect a free cloud model."})); const sc = setupCard(); if (sc) main.append(sc); main.append(h("div", {class:"cta"}, h("button", {class:"btn ghost block", type:"button", text:"Use a cloud model", onclick:() => openProviders()}))); hero.append(main); inner.append(hero); return; }
-    main.append(h("h1", {text:"Welcome to Vesper"}), h("p", {text:"Connect a free model to start."}),
-      h("div", {class:"cta row"}, h("button", {class:"btn primary", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost", type:"button", text:"Use a local model", onclick:() => openLocal()})));
-    hero.append(main);
-  } else {
-    if (privateMode) main.append(h("h1", {html:"Private chat<i>.</i>"}), h("p", {text:"This chat won't be saved to your history."}));
-    else main.append(h("h1", {html:esc(greeting()) + "<i>.</i>"}), h("p", {text:"What's on your mind?"}));
-    const sc = setupCard(); if (sc) main.append(sc);
-    hero.classList.add("ready");
-    const sg = h("div", {class:"suggest"}), below = $("#sugBelow"); below.innerHTML = "";
-    if (S.ideas !== false) {
-      SUGGEST.forEach(s => below.append(h("button", {class:"sgl", type:"button", html:ic(s.icon) + "<span>" + esc(s.title + " " + s.sub) + "</span>", onclick:() => { input.value = s.prompt; autosize(); submit(); }})));
-      SUGGEST.forEach(s => sg.append(h("button", {class:"sg", type:"button", onclick:() => { input.value = s.prompt; autosize(); submit(); }}, h("b", {text:s.title}), h("span", {text:s.sub}))));
-    }
-    hero.append(main, sg);
-  }
-  inner.append(hero);
+  inner.innerHTML = ""; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1;
+  const hero = h("div", {class:"hero ready plain"}), main = h("div", {class:"hero-main"});
+  if (privateMode) main.append(h("h1", {class:"hl", html:"Private chat<i>.</i>"}), h("p", {class:"hsub", text:"This chat will not be saved to your history."}));
+  else main.append(h("h1", {class:"hl", html:"What are we making<br>today<i>.</i>"}));
+  if (!anyReady()) main.append(h("p", {class:"hsub", text:"No model yet. Add one in Settings, under Providers or Models."}));
+  hero.append(main); inner.append(hero);
 }
+// Suggestions while typing: finishes your sentence from ready made prompts and your own earlier ones.
+const PROMPTS = ["Write a hook for a 15 second product video", "Write a UGC ad script for a skincare serum, 30 seconds", "Write a podcast style ad read for a coffee brand", "Give me 10 opening lines for a short video about productivity", "Plan a week of short videos for a small bakery", "Write a video script with a hook, three beats and a call to action", "Turn this idea into a 60 second explainer script", "Write captions for a product demo reel", "Give me thumbnail ideas for a video about learning to cook", "Brainstorm content ideas for this week", "Write a voiceover for a travel montage, calm and cinematic", "Rewrite this script to sound more natural and less like an ad", "Write a cold email to a brand offering UGC content", "Write a product description that sounds human", "Explain this simply, in plain words", "Summarize this in five bullet points", "Plan my day hour by hour, realistic", "Help me prepare for a job interview", "Write a polite follow up email", "Translate this into Spanish and keep the tone", "Explain how this code works, step by step", "Find the bug in this code and fix it", "Write a function that parses a CSV file", "Give me a study plan for learning a new skill in 30 days", "Compare two options and recommend one", "Write a story opening with a strong first line", "Make this paragraph shorter and clearer", "Create a checklist for launching a new product", "Write a shot list for a 30 second commercial", "Describe a cinematic scene I can use as an image prompt"];
+let sugList = [], sugIdx = -1, sugHold = false;
+function sugFor(t){
+  const q = t.trim().toLowerCase(); if (q.length < 2) return [];
+  const mine = (S.chats || []).map(c => c.messages && c.messages.find(m => m.role === "user")).filter(Boolean).map(m => String(m.content || "").split("\n")[0].trim()).filter(x => x.length > 6 && x.length < 110).slice(0, 40);
+  const words = q.split(/\s+/).filter(Boolean), score = x => { const l = x.toLowerCase(); if (l === q) return 0; if (l.startsWith(q)) return 3; if (words.every(w => l.includes(w))) return 2; const lw = words[words.length - 1]; return lw.length > 2 && l.includes(lw) ? 1 : 0; };
+  const seen = new Set(), out = [];
+  [...mine, ...PROMPTS].map(x => [x, score(x)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).forEach(([x]) => { if (!seen.has(x.toLowerCase()) && out.length < 4) { seen.add(x.toLowerCase()); out.push(x); } });
+  if (!out.length && q.length >= 8) ["in plain words", "step by step", "with a few examples", "and keep it short"].slice(0, 3).forEach(e => out.push(t.trim().replace(/[.?!]+$/, "") + " " + e));
+  return out;
+}
+function renderTypeSug(){
+  const below = $("#sugBelow"), c = chat(); if (!below) return;
+  if (S.ideas === false || (c && c.messages.length) || sugHold) { below.innerHTML = ""; sugList = []; sugIdx = -1; return; }
+  const t = input.value; sugList = sugFor(t); sugIdx = -1; below.innerHTML = "";
+  sugList.forEach((x, i) => { const lead = x.toLowerCase().startsWith(t.trim().toLowerCase()) ? t.trim().length : 0;
+    below.append(h("button", {class:"sgl", type:"button", "data-i":i, html:ic("sparkles") + "<span><b class=\"typed\">" + esc(x.slice(0, lead)) + "</b>" + esc(x.slice(lead)) + "</span>", onclick:() => acceptSug(i)})); });
+}
+function paintSug(){ [...$("#sugBelow").children].forEach((b, i) => b.classList.toggle("on", i === sugIdx)); }
+function acceptSug(i){ const x = sugList[i]; if (!x) return; input.value = x; autosize(); syncSend(); sugHold = true; $("#sugBelow").innerHTML = ""; sugList = []; sugIdx = -1; input.focus(); input.setSelectionRange(x.length, x.length); }
 function renderThread(keep){
   const c = chat();
   appEl.classList.toggle("is-empty", !c || !c.messages.length);
@@ -1669,7 +1678,7 @@ function msgEl(c, m, i){
     if (last) pills.append(pillBtn("refresh-cw", "Try again", () => retry()));
     pills.append(pillBtn("sparkles", "Change model", () => openModels()));
     if (m.fix === "key" && PROVIDERS[m.pid]) pills.append(pillBtn("key-round", "Fix key", () => openProvider(m.pid)));
-    if (m.fix === "local" && S.conns.some(x => x.id === m.pid)) pills.append(pillBtn("laptop", "Check server", () => openConn(m.pid)));
+    if (m.fix === "local" && S.conns.some(x => x.id === m.pid)) pills.append(pillBtn("laptop", "Check server", () => toSettings("conn:" + m.pid)));
     wrap.append(h("div", {class:"errcard"}, h("p", {text:m.content}), pills));
     return wrap;
   }
@@ -1681,6 +1690,7 @@ function msgEl(c, m, i){
   if (last && !m.greeting) acts.append(actBtn("refresh-cw", "Retry", () => retry()));
   if (m.saved) acts.append(h("button", {class:"memtag", type:"button", onclick:() => openMemory(), html:ic("brain") + "<span>Memory updated</span>"}));
   const mm = modelByKey(m.model); if (mm) acts.append(h("span", {class:"by", text:mm.name}));
+  if (S.devStats && m.stats) { const st = m.stats, sec = (st.ms || 0) / 1000; acts.append(h("span", {class:"by", text:(st.p || 0) + " in, " + (st.c || 0) + (st.est ? " out (est.)" : " out") + ", " + sec.toFixed(1) + " s" + (sec > 0 && st.c ? ", " + Math.round(st.c / sec) + " tok/s" : "") + (st.ttft ? ", first word " + (st.ttft / 1000).toFixed(1) + " s" : "")})); }
   wrap.append(a, acts);
   return wrap;
 }
@@ -1743,7 +1753,13 @@ function syncSend(){
   if (busy) { sendBtn.disabled = false; sendBtn.classList.add("stop"); sendBtn.innerHTML = ic("stop"); sendBtn.setAttribute("aria-label", "Stop"); }
   else { sendBtn.classList.remove("stop"); sendBtn.innerHTML = ic("arrow-up"); sendBtn.setAttribute("aria-label", "Send"); sendBtn.disabled = !input.value.trim() && !pending.length; }
 }
-input.addEventListener("input", () => { autosize(); syncSend(); });
+input.addEventListener("input", () => { autosize(); syncSend(); sugHold = false; renderTypeSug(); });
+input.addEventListener("keydown", e => { if (!sugList.length) return;
+  if (e.key === "ArrowDown") { e.preventDefault(); sugIdx = (sugIdx + 1) % sugList.length; paintSug(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); sugIdx = (sugIdx - 1 + sugList.length) % sugList.length; paintSug(); }
+  else if (e.key === "Tab" && !e.shiftKey) { e.preventDefault(); e.stopImmediatePropagation(); acceptSug(sugIdx >= 0 ? sugIdx : 0); }
+  else if (e.key === "Enter" && sugIdx >= 0) { e.preventDefault(); e.stopImmediatePropagation(); acceptSug(sugIdx); }
+  else if (e.key === "Escape") { sugHold = true; renderTypeSug(); } }, true);
 input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing && (S.sendKey === "ctrl" ? (e.ctrlKey || e.metaKey) : true)) { e.preventDefault(); submit(); } });
 $("#composer").addEventListener("submit", e => { e.preventDefault(); submit(); });
 $("#modelChip").onclick = () => openModels();
@@ -1767,10 +1783,10 @@ function submit(){
     return;
   }
   if (!text && !pending.length) return;
-  if (!anyReady()) { openProviders(); return; }
+  if (!anyReady()) { toSettings("providers"); return; }
   const m = modelByKey(curKey());
   if (!m) { openModels(); return; }
-  if (!ready(m.p)) { toast("Add your " + provOf(m.p).name + " key first"); notifyEvent("attention", "Vesper needs a key", "Add a key for " + provOf(m.p).name + " to keep chatting."); openProvider(m.p); return; }
+  if (!ready(m.p)) { toast("Add your " + provOf(m.p).name + " key in Settings first"); notifyEvent("attention", "Vesper needs a key", "Add a key for " + provOf(m.p).name + " in Settings to keep chatting."); toSettings("prov:" + m.p); return; }
   const c = ensureChat();
   if (editIdx != null) { c.messages = c.messages.slice(0, editIdx); editIdx = null; $("#editing").hidden = true; }
   const title = text || (pending[0] ? pending[0].name : "New chat");
@@ -1792,17 +1808,27 @@ function retry(){
 }
 
 /* streaming */
+let lastReq = null;
+const KEEP_KEYS = ["keys", "chats", "memory", "companions", "projects", "profile", "conns", "waitlist", "current", "skills", "models", "model", "media", "stats", "usage"];
+function exportSettings(){ const o = {vesperSettings:1}; Object.keys(S).forEach(k => { if (!KEEP_KEYS.includes(k)) o[k] = S[k]; });
+  const a = h("a", {href:URL.createObjectURL(new Blob([JSON.stringify(o, null, 1)], {type:"application/json"})), download:"vesper-settings.json"}); document.body.append(a); a.click(); a.remove(); toast("Settings saved"); }
+function importSettings(){ const f = h("input", {type:"file", accept:"application/json,.json"}); f.onchange = async () => { try { const o = JSON.parse(await f.files[0].text()); if (!o || !o.vesperSettings) throw 0; Object.keys(o).forEach(k => { if (k !== "vesperSettings" && !KEEP_KEYS.includes(k)) S[k] = o[k]; }); save(); toast("Settings loaded"); setTimeout(() => location.reload(), 500); } catch (e) { toast("That is not a Vesper settings file"); } }; f.click(); }
+function resetSettings(){ Object.keys(S).forEach(k => { if (!KEEP_KEYS.includes(k)) delete S[k]; }); S.temp = 0.8; save(); toast("Settings reset"); setTimeout(() => location.reload(), 500); }
 async function generate(){
   const c = chat(); if (!c) return;
   const m = modelByKey(c.model); const P = m && provOf(m.p);
-  if (!m || !P) { openModels(); return; }
+  if (!m || !P) { anyReady() ? openModels() : toSettings("providers"); return; }
   const len = LENGTHS.find(l => l.id === S.len) || LENGTHS[1];
   const history = c.messages.filter(x => !x.error).map(toApi);
   const outgoing = [...c.messages].reverse().find(x => x.role === "user" && !x.error);
   const hasImg = !!(outgoing && outgoing.images && outgoing.images.length);
   if (history.length && history[0].role === "assistant") history.unshift({role:"user", content:"Hi."});
-  const payload = {model:m.id, stream:true, temperature:S.temp, max_tokens:len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(history)};
-  if (["openrouter", "groq", "cerebras", "pc"].includes(P.id)) payload.stream_options = {include_usage:true};
+  const hist = S.histMax ? history.slice(-S.histMax) : history; if (hist.length && hist[0].role === "assistant") hist.unshift({role:"user", content:"Continue."});
+  const payload = {model:m.id, stream:S.stream !== false, temperature:S.temp, max_tokens:S.maxTok || len.tokens, messages:[{role:"system", content:systemPrompt(c)}].concat(hist)};
+  if (S.topP) payload.top_p = S.topP; if (S.freq) payload.frequency_penalty = S.freq; if (S.pres) payload.presence_penalty = S.pres;
+  if (S.seed !== undefined && S.seed !== "") payload.seed = S.seed; if (S.stop) payload.stop = S.stop.split(",").map(x => x.trim()).filter(Boolean).slice(0, 4); if (S.reason) payload.reasoning_effort = S.reason;
+  if (payload.stream && ["openrouter", "groq", "cerebras", "pc"].includes(P.id)) payload.stream_options = {include_usage:true};
+  lastReq = {url:P.base.replace(/\/+$/, "") + "/chat/completions", provider:P.id, payload};
   act = {chat:c.id, model:mk(m), phase:"Sending to " + (P.id === "pc" ? "this PC" : P.name), start:performance.now(), first:0, chars:0, rchars:0, rtail:"", usage:null, max:len.tokens, inTok:estTok(JSON.stringify(payload.messages))};
   if (P.id === "pc") wakeOn();
   inspTick();
@@ -2114,7 +2140,7 @@ function setSide(off){ S.sideOff = !!off; save(); document.body.classList.toggle
 function toggleSide(){ if (docked()) setSide(!S.sideOff); else $("#openDrawer").click(); }
 document.body.classList.toggle("side-off", !!S.sideOff);
 $("#tbSide").onclick = toggleSide;
-$("#dStatus").onclick = () => DESKTOP ? openPC() : openProviders();
+$("#dStatus").onclick = () => toSettings("providers");
 $("#dSideBtn").onclick = () => { if (docked()) setSide(!S.sideOff); else closeTop(); };
 $("#dSearchBtn").onclick = () => { const d = $("#drawer"), on = d.classList.toggle("searching"); if (on) $("#chatSearch").focus(); else { $("#chatSearch").value = ""; renderDrawer(); } };
 // Keyboard shortcuts, like a desktop chat app
@@ -2170,7 +2196,7 @@ function pickModel(m){
   save(); renderChip(); closeTop();
 }
 function openModels(){
-  if (!anyReady()) { openProviders(); return; }
+  if (!anyReady()) { toSettings("providers"); return; }
   open("models", () => {
     const L = makeSheet("Models");
     const cur = curKey();
@@ -2194,16 +2220,6 @@ function openModels(){
         });
       });
       if (q && !shown) list.append(h("div", {class:"mempty", text:"No shown model matches. Hidden ones are in Manage models."}));
-      if (q) return;
-      const notReady = Object.keys(PROVIDERS).filter(p => !ready(p));
-      if (notReady.length) {
-        list.append(h("div", {class:"mgroup", text:"Connect more"}));
-        notReady.forEach(pid => list.append(h("button", {class:"mrow", type:"button", onclick:() => openProvider(pid, true)},
-          h("div", {class:"tx"}, h("b", {text:PROVIDERS[pid].name}), h("span", {text:PROVIDERS[pid].usage})), h("span", {class:"tag", text:"Add key"}), icEl("chevron-right", "chev"))));
-      }
-      list.append(h("div", {class:"mgroup", text:"More"}),
-        h("button", {class:"mrow", type:"button", onclick:() => openLocal(true)}, icEl("laptop"), h("div", {class:"tx"}, h("b", {text:"Local models"}), h("span", {text:S.conns.length ? S.conns.map(x => x.name).join(", ") : "Run models on your own computer"})), icEl("chevron-right", "chev")),
-        h("button", {class:"mrow", type:"button", onclick:() => manageModels(true)}, icEl("sliders-horizontal"), h("div", {class:"tx"}, h("b", {text:"Manage models"}), h("span", {text:"Show, hide, add or find more"})), icEl("chevron-right", "chev")));
     }
     draw();
     return L;
@@ -2220,10 +2236,12 @@ function inlineLayer(render, into, after){
 /* ---------- settings ---------- */
 function openSettings(swap){ open("settings", () => { const L = makePage("Settings", renderSettingsRoot, {modal:true}); settingsNav(L); return L; }, swap); }
 let settingsNavApi = null;
+// Models and keys are added only in Settings. Everything else that needs one sends people here.
+function toSettings(view){ if (settingsNavApi && stack.some(l => l.el && l.el.classList.contains("mroot"))) { settingsNavApi.view(view); return; } openSettings(); setTimeout(() => { if (settingsNavApi) settingsNavApi.view(view); }, 420); }
 function settingsGo(view){ if (settingsNavApi) settingsNavApi.view(view); }
 // Every section stays in the left menu. Provider and model rows redraw the right pane instead of opening a layer.
 function settingsNav(L){
-  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const ICON = {General:"sliders-horizontal", Account:"user", Usage:"chart", "Your Vesper":"brain", Capabilities:"briefcase", Providers:"key-round", Notifications:"bell", Sounds:"volume-2", Shortcuts:"menu", Privacy:"shield", "Desktop app":"desktop", Models:"cpu", Timeline:"clock", Create:"clapperboard", Parameters:"sliders-horizontal", Developer:"code", Extensions:"plug", Server:"desktop", Pairing:"laptop", Browser:"external-link", Experimental:"sparkles", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
   const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
   L.el.classList.add("has-nav"); L.el.insertBefore(nav, L.el.children[1] || null);
   const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search settings"}), qbox = h("label", {class:"psearch", html:ic("search")}, q);
@@ -2395,26 +2413,30 @@ function openMedia1(it, after){
     return L; });
 }
 // Generators
-const SIZES = {square:[1024, 1024], portrait:[832, 1216], landscape:[1216, 832]};
+// Aspect ratios: the shape of a picture or clip. Shown as ratios in a dropdown, sized from the long side set in Settings, Create.
+const ASPECTS = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3", "21:9", "4:5"];
+const OLDSHAPE = {square:"1:1", portrait:"9:16", landscape:"16:9"};
+const ratioId = v => ASPECTS.includes(v) ? v : (OLDSHAPE[v] || "1:1");
+function sizeFor(v){ const [a, b] = ratioId(v).split(":").map(Number), L = S.imgLong || 1024, r8 = x => Math.max(256, Math.round(x / 8) * 8); return a >= b ? [r8(L), r8(L * b / a)] : [r8(L * a / b), r8(L)]; }
 async function blobFrom(res){ if (!res.ok) { let t = ""; try { t = (await res.text()).slice(0, 160); } catch (e) {} throw new Error(res.status === 429 ? "Too many requests. Wait a few seconds and try again." : (res.status === 401 || res.status === 403) ? "The key was not accepted." : "The generator said: " + (t || res.status)); } return res.blob(); }
 async function genImage(prompt, shape){
-  const m = media(), [w, hgt] = SIZES[shape] || SIZES.square, via = m.image || "free", q = encodeURIComponent(prompt), seed = Math.floor(Math.random() * 1e9);
-  if (via === "free") return blobFrom(await fetch("https://image.pollinations.ai/prompt/" + q + "?width=" + w + "&height=" + hgt + "&nologo=true&seed=" + seed));
+  const m = media(), [w, hgt] = sizeFor(shape), ratio = ratioId(shape), via = m.image || "free", q = encodeURIComponent(prompt), seed = S.imgSeed !== undefined && S.imgSeed !== "" && S.imgSeed !== null ? Number(S.imgSeed) : Math.floor(Math.random() * 1e9), extra = (S.imgModel ? "&model=" + encodeURIComponent(S.imgModel) : "") + (S.imgEnhance ? "&enhance=true" : "");
+  if (via === "free") return blobFrom(await fetch("https://image.pollinations.ai/prompt/" + q + "?width=" + w + "&height=" + hgt + "&nologo=true&seed=" + seed + extra));
   if (via === "pollinations") { if (!m.pKey) throw new Error("Add your Pollinations key in Settings, Image and video."); return blobFrom(await fetch("https://gen.pollinations.ai/image/" + q + "?model=" + encodeURIComponent(m.pImg || "flux") + "&width=" + w + "&height=" + hgt + "&seed=" + seed, {headers:{Authorization:"Bearer " + m.pKey}})); }
   if (via === "openai") { if (!m.oKey) throw new Error("Add your API key in Settings, Image and video.");
-    const size = shape === "portrait" ? "1024x1536" : shape === "landscape" ? "1536x1024" : "1024x1024";
+    const [ra, rb] = ratio.split(":").map(Number), size = ra / rb > 1.15 ? "1536x1024" : ra / rb < .87 ? "1024x1536" : "1024x1024";
     const res = await fetch((m.oBase || "https://api.openai.com/v1").replace(/\/+$/, "") + "/images/generations", {method:"POST", headers:{"Content-Type":"application/json", Authorization:"Bearer " + m.oKey}, body:JSON.stringify({model:m.oModel || "gpt-image-1", prompt, size, n:1})});
     if (!res.ok) await blobFrom(res); const j = await res.json(), d = j.data && j.data[0]; if (!d) throw new Error("No image came back.");
     if (d.b64_json) return (await fetch("data:image/png;base64," + d.b64_json)).blob(); return blobFrom(await fetch(d.url)); }
   if (via === "openrouter") { const key = S.keys && S.keys.openrouter; if (!key) throw new Error("Add your OpenRouter key in Providers first.");
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {method:"POST", headers:{"Content-Type":"application/json", Authorization:"Bearer " + key}, body:JSON.stringify({model:m.orImg || "google/gemini-2.5-flash-image", modalities:["image", "text"], messages:[{role:"user", content:prompt}]})});
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {method:"POST", headers:{"Content-Type":"application/json", Authorization:"Bearer " + key}, body:JSON.stringify({model:m.orImg || "google/gemini-2.5-flash-image", modalities:["image", "text"], image_config:{aspect_ratio:ratio}, messages:[{role:"user", content:prompt}]})});
     if (!res.ok) await blobFrom(res); const j = await res.json(), msg = j.choices && j.choices[0] && j.choices[0].message, u = msg && msg.images && msg.images[0] && msg.images[0].image_url && msg.images[0].image_url.url;
     if (!u) throw new Error("This model did not return an image. Pick an image model."); return (await fetch(u)).blob(); }
   throw new Error("Pick an image generator in Settings.");
 }
-async function genVideo(prompt){
+async function genVideo(prompt, shape){
   const m = media(); if (!m.pKey) throw new Error("Video needs a Pollinations key. Add it in Settings, Image and video.");
-  return blobFrom(await fetch("https://gen.pollinations.ai/video/" + encodeURIComponent(prompt) + "?model=" + encodeURIComponent(m.pVid || "seedance"), {headers:{Authorization:"Bearer " + m.pKey}}));
+  return blobFrom(await fetch("https://gen.pollinations.ai/video/" + encodeURIComponent(prompt) + "?model=" + encodeURIComponent(m.pVid || "seedance") + "&aspectRatio=" + encodeURIComponent(ratioId(shape)), {headers:{Authorization:"Bearer " + m.pKey}}));
 }
 // Studio: a home with a banner, how it works and projects, then a workspace per project with a prompt bar.
 const STUDIO_BANNER = {src:"https://d2ol7oe51mr4n9.cloudfront.net/user_2wC4cmbjNFlqEz3cX7be7cO9GDv/c9249d15-1981-48b1-b054-d07e350eb66c.mp4", poster:"studio/banner.webp", credit:"GRANDMA vs WASP by @mrabujoe"};
@@ -2424,7 +2446,7 @@ const stamp = t => { const d = new Date(t); return d.toLocaleDateString(undefine
 let studioLive = null;
 function openStudio(kind, swap, opts){
   if (studioLive && stack.includes(studioLive.L)) { studioLive.set(kind, opts); return; }
-  const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:S.shapeDef || "square", q:"", sort:"recent", busy:0};
+  const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:ratioId(S.shapeDef), q:"", sort:"recent", busy:0};
   open("studio", () => {
     const bar = studioBar(st);
     const L = makePage("Studio", (w, L2) => { bar.el.hidden = false; bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); }, {full:true});
@@ -2483,23 +2505,19 @@ function studioSpace(w, L, st, bar){
   bar.refresh = draw;
   w.append(h("div", {class:"sspace"}, rail, h("div", {class:"smain"}, h("label", {class:"ssearch", html:ic("search")}, q), grid))); draw();
 }
-// Picture orientation is shown as small rectangles, never as words.
-const ORIENT = [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]];
-function oriPick(cur, pick){ const g = h("div", {class:"sori", role:"radiogroup", "aria-label":"Picture orientation"}); ORIENT.forEach(([id, t]) => g.append(h("button", {type:"button", role:"radio", title:t, "aria-label":t, "aria-checked":String(cur === id), class:cur === id ? "on" : "", html:'<i class="ori ' + id + '"></i>', onclick:() => pick(id)}))); return g; }
 function studioBar(st){
-  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("div", {class:"sseg", role:"group", "aria-label":"Image or video"}), mImg = h("button", {type:"button", html:ic("image") + "<span>Image</span>"}), mVid = h("button", {type:"button", html:ic("video") + "<span>Video</span>"}), lib = h("button", {class:"slib", type:"button", title:"Library", "aria-label":"Library", html:ic("images") + "<span>Library</span>"}), shape = h("div", {class:"sori", role:"radiogroup", "aria-label":"Picture orientation"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
+  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("div", {class:"sseg", role:"group", "aria-label":"Image or video"}), mImg = h("button", {type:"button", html:ic("image") + "<span>Image</span>"}), mVid = h("button", {type:"button", html:ic("video") + "<span>Video</span>"}), lib = h("button", {class:"slib", type:"button", title:"Library", "aria-label":"Library", html:ic("images") + "<span>Library</span>"}), shape = dropdown("Aspect ratio", ASPECTS.map(a => [a, a]), ratioId(S.shapeDef), v => { st.shape = v; }), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
   const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, lib, go), api = {el, refresh:() => {}, sync:() => {}};
   mode.append(mImg, mVid);
-  api.sync = () => { mImg.classList.toggle("on", st.kind !== "video"); mVid.classList.toggle("on", st.kind === "video"); lib.classList.toggle("on", st.proj === "__all"); shape.hidden = st.kind === "video"; [...shape.children].forEach(b => { const on = b.dataset.o === st.shape; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); }); };
+  api.sync = () => { mImg.classList.toggle("on", st.kind !== "video"); mVid.classList.toggle("on", st.kind === "video"); lib.classList.toggle("on", st.proj === "__all"); shape.querySelector("select").value = ratioId(st.shape); };
   mImg.onclick = () => { st.kind = "image"; api.sync(); }; mVid.onclick = () => { st.kind = "video"; api.sync(); };
   lib.onclick = () => { st.proj = "__all"; st.filter = "all"; if (api.L) api.L.refresh(); };
-  ORIENT.forEach(([id, t]) => shape.append(h("button", {type:"button", role:"radio", title:t, "aria-label":t, "data-o":id, html:'<i class="ori ' + id + '"></i>', onclick:() => { st.shape = id; api.sync(); }})));
   ta.oninput = () => { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; };
   ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); el.requestSubmit(); } };
   el.onsubmit = async e => { e.preventDefault(); const prompt = ta.value.trim(); if (!prompt) { ta.focus(); return; }
     if (!st.proj && api.L) newProject(st, api.L);
     const kind = st.kind, proj = st.proj && st.proj[0] !== "_" ? st.proj : undefined; st.busy++; api.refresh(); ta.value = ""; ta.style.height = "auto";
-    try { const blob = kind === "video" ? await genVideo(prompt) : await genImage(prompt, st.shape); await mediaPut({id:uid(), kind, prompt, at:Date.now(), blob, project:proj, via:kind === "video" ? "pollinations" : (media().image || "free")}); buzz(14); }
+    try { const blob = kind === "video" ? await genVideo(prompt, st.shape) : await genImage(prompt, st.shape); await mediaPut({id:uid(), kind, prompt, at:Date.now(), blob, project:proj, via:kind === "video" ? "pollinations" : (media().image || "free")}); buzz(14); }
     catch (err) { toast(String(err && err.message || err).slice(0, 140)); }
     st.busy--; api.refresh(); };
   api.sync(); return api;
@@ -2525,7 +2543,7 @@ function applyAccent(){
   else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
   document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
   document.body.classList.toggle("tinted", !!t.wall);
-  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); }
+  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); { const W = {narrow:"clamp(620px,38vw,700px)", wide:"clamp(900px,64vw,1280px)"}[S.chatW]; if (W) document.body.style.setProperty("--col", W); else document.body.style.removeProperty("--col"); document.body.classList.toggle("dense", S.dense === "compact"); document.body.classList.toggle("noglass", S.glass === false); }
   document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : ""; document.body.style.setProperty("--z", Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "1");
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
@@ -2628,6 +2646,11 @@ function textCtl(label, key, ph){ const i = h("input", {class:"tin", value:prof(
 function usageStats(){ const by = {}; let p = 0, c = 0, n = 0, wk = 0; const since = Date.now() - 7 * 864e5;
   S.chats.forEach(ch => ch.messages.forEach(m => { if (!m.stats) return; n++; p += m.stats.p || 0; c += m.stats.c || 0; if ((m.at || ch.updated || 0) >= since) wk += (m.stats.p || 0) + (m.stats.c || 0); const mm = modelByKey(m.model); const k = mm ? mm.name : (m.model || "Unknown").split("::").pop(); by[k] = (by[k] || 0) + (m.stats.p || 0) + (m.stats.c || 0); }));
   return {p, c, n, wk, by:Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 5)}; }
+// Number and text fields for technical settings. Empty means "not set", so the model or service decides.
+function numCtl(key, o){ o = o || {}; const i = h("input", {class:"tin num", type:"number", inputmode:"decimal", placeholder:o.placeholder || "Default", "aria-label":key}); if (o.min !== undefined) i.min = o.min; if (o.max !== undefined) i.max = o.max; if (o.step !== undefined) i.step = o.step;
+  if (S[key] !== undefined && S[key] !== null && S[key] !== "") i.value = S[key];
+  i.onchange = () => { if (i.value === "") delete S[key]; else { let v = +i.value; if (o.min !== undefined) v = Math.max(o.min, v); if (o.max !== undefined) v = Math.min(o.max, v); S[key] = v; i.value = v; } save(); if (o.after) o.after(); }; return i; }
+function textCtl(key, placeholder){ const i = h("input", {class:"tin", type:"text", placeholder:placeholder || "None", "aria-label":key, spellcheck:"false"}); i.value = S[key] || ""; i.onchange = () => { const v = i.value.trim(); if (v) S[key] = v; else delete S[key]; save(); }; return i; }
 function ctlRow(title, sub, ctl){ return h("div", {class:"row ctl"}, h("div", {class:"tx"}, h("b", {text:title}), sub ? h("span", {text:sub}) : null), ctl); }
 function renderSettingsRoot(w){
   const nReady = Object.keys(PROVIDERS).filter(p => ready(p)).length;
@@ -2681,6 +2704,7 @@ function renderSettingsRoot(w){
     ctlRow("Code font", "The font used inside code blocks", dropdown("Code font", [["system", "System mono"], ["menlo", "Menlo"], ["consolas", "Consolas"]], S.mono || "system", v => { S.mono = v; save(); applyTimeline(); })),
     ctlRow("Terminal font", "Vesper has no terminal. The coding agent is planned", h("span", {class:"cval", text:"Not used"})),
     ctlRow("Zoom", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); })),
+    switchRow({icon:"sparkles", title:"Glass effects", sub:"Frosted blur behind the message bar and panels. Turn off on older graphics cards for smoother scrolling", get:() => S.glass !== false, set:v => { S.glass = v; save(); applyAccent(); }}),
     ctlRow("Reduce motion", "Reduce animations or match your system", dropdown("Reduce motion", [["system", "System"], ["off", "Off"], ["on", "On"]], S.calm || "system", v => { S.calm = v; save(); applyCalm(); }))
   ), gnote("On a wide screen, 100% is drawn slightly smaller so the app reads like a desktop app."));
   w.append(glabel("Your Vesper"), group(
@@ -2736,6 +2760,19 @@ function renderSettingsRoot(w){
     ["model", "Model name", "Model shown under each reply"],
     ["attachments", "Attachments", "Photos and files in messages"]
   ];
+  w.append(glabel("Parameters"), group(
+    ctlRow("Creativity", "How varied replies are, from 0 to 2. Low is focused and repeatable, high is looser. Around 0.7 suits everyday use", numCtl("temp", {min:0, max:2, step:0.05, placeholder:"0.8"})),
+    ctlRow("Top P", "Limits word choice to the most likely options, from 0.05 to 1. Change this or Creativity, rarely both. Empty lets the model decide", numCtl("topP", {min:0.05, max:1, step:0.05})),
+    ctlRow("Max reply length", "A hard cap on one reply, in tokens (about three quarters of a word each). Empty uses the length from Response style", numCtl("maxTok", {min:16, max:64000, step:1, placeholder:"From style"})),
+    ctlRow("Frequency penalty", "Discourages repeating the same words, from -2 to 2. A little above 0 reduces loops", numCtl("freq", {min:-2, max:2, step:0.1})),
+    ctlRow("Presence penalty", "Nudges the model toward new topics, from -2 to 2. Higher wanders more", numCtl("pres", {min:-2, max:2, step:0.1})),
+    ctlRow("Seed", "On models that support it, the same seed and prompt give the same reply. Empty means random", numCtl("seed", {min:0, step:1, placeholder:"Random"})),
+    ctlRow("Stop sequences", "Replies end as soon as one of these appears. Separate with commas, up to four", textCtl("stop", "For example ###, END")),
+    ctlRow("Reasoning effort", "For models that think before answering. Higher is slower and more careful. Models without it may ignore it or return an error", dropdown("Reasoning effort", [["", "Model default"], ["low", "Low"], ["medium", "Medium"], ["high", "High"]], S.reason || "", v => { if (v) S.reason = v; else delete S.reason; save(); })),
+    ctlRow("History sent", "How many recent messages go with each new one. Fewer saves tokens and cost on long chats, but the model forgets older turns", dropdown("History sent", [["0", "Whole chat"], ["10", "Last 10"], ["20", "Last 20"], ["40", "Last 40"]], String(S.histMax || 0), v => { if (+v) S.histMax = +v; else delete S.histMax; save(); })),
+    switchRow({icon:"lightning", title:"Stream replies", sub:"Show words as they arrive. Turn off to receive each reply in one piece, which suits slow or unstable connections", get:() => S.stream !== false, set:v => { S.stream = v; save(); }}),
+    row({icon:"refresh-cw", title:"Reset parameters", sub:"Back to the defaults. Your chats and keys are not touched", chev:false, onclick:() => { ["topP", "maxTok", "freq", "pres", "seed", "stop", "reason", "histMax", "stream"].forEach(k => delete S[k]); S.temp = 0.8; save(); toast("Parameters reset"); const T = stack[stack.length - 1]; if (T && T.refresh) T.refresh(); }})
+  ), gnote("These are sent with every message. A model or provider that does not support one may ignore it or return an error. If so, clear the field."));
   w.append(glabel("Timeline"), group(
     h("div", {class:"field"}, h("div", {class:"flabel"}, h("span", {text:"Timeline detail"}), tlWord), tlRange,
       h("div", {class:"range-row"}, ...tlNames.map(n => h("span", {text:n}))), h("small", {text:"Choose how much detail appears in the chat timeline."})),
@@ -2745,7 +2782,11 @@ function renderSettingsRoot(w){
     row({icon:"refresh-cw", title:"Reset timeline", sub:"Back to the normal view", onclick:() => { S.tlLevel = 2; S.tlWidth = "comfortable"; tlCats.forEach(([k]) => { S.tlShow[k] = true; }); save(); applyTimeline(); again(); toast("Timeline reset"); }})
   ), gnote("These control what appears in the chat. The full message text is always kept in the chat history."));
   w.append(glabel("Create"), group(
-    ctlRow("Default picture shape", "The orientation new images start with in Studio. You can change it for each picture in the prompt bar", oriPick(S.shapeDef || "square", v => { S.shapeDef = v; save(); const T = stack[stack.length - 1]; if (T && T.refresh) T.refresh(); })),
+    ctlRow("Default aspect ratio", "The shape new pictures and clips start with in Studio. 16:9 is widescreen video, 9:16 is vertical for Reels and Shorts, 21:9 is cinematic. You can change it for each one in the prompt bar", dropdown("Default aspect ratio", ASPECTS.map(a => [a, a]), ratioId(S.shapeDef), v => { S.shapeDef = v; save(); })),
+    ctlRow("Picture size", "Length of the longest side in pixels. Bigger is sharper but slower, and some free generators cap the size", dropdown("Picture size", [["768", "768 px"], ["1024", "1024 px"], ["1280", "1280 px"], ["1536", "1536 px"]], String(S.imgLong || 1024), v => { S.imgLong = +v; save(); })),
+    ctlRow("Free generator model", "Which model the free generator uses. Flux is more detailed, Turbo is faster", dropdown("Free generator model", [["", "Automatic"], ["flux", "Flux"], ["turbo", "Turbo"]], S.imgModel || "", v => { S.imgModel = v; save(); })),
+    ctlRow("Fixed seed", "A number that makes the same prompt give the same picture again. Leave empty for a new picture each time", numCtl("imgSeed", {placeholder:"Random", min:0, step:1})),
+    switchRow({icon:"sparkles", title:"Improve prompts", sub:"Lets the free generator rewrite short prompts into richer ones before drawing. Turn off for exact control", get:() => !!S.imgEnhance, set:v => { S.imgEnhance = v; save(); }}),
     row({icon:"sparkles", title:"Studio", sub:"Describe an image or a scene and Vesper makes it", onclick:() => openStudio("image")}),
     row({icon:"images", title:"Library", sub:"Everything you made, saved on this device", onclick:() => openLibrary()}),
     row({icon:"clapperboard", title:"Projects", sub:"Each project keeps its own media in Studio", val:String(projects().length), onclick:() => openStudio("image")})
@@ -2790,6 +2831,7 @@ function renderSettingsRoot(w){
     row({icon:"refresh-cw", title:"Reset shortcut defaults", sub:"Restores Enter to send and the standard keys", onclick:() => { S.sendKey = "enter"; S.enter = null; save(); syncEnterHint(); again(); toast("Shortcuts reset"); }})
   ));
   w.append(glabel("Privacy"), group(
+    ctlRow("Delete old chats", "Chats you have not touched for this long are removed when Vesper opens. Pinned chats are kept. This cannot be undone", dropdown("Delete old chats", [["0", "Never"], ["30", "After 30 days"], ["90", "After 90 days"], ["365", "After a year"]], String(S.keepDays || 0), v => { if (+v) S.keepDays = +v; else delete S.keepDays; save(); })),
     row({icon:"download", title:"Export chats", sub:"Save a backup file", onclick:exportChats, chev:false}),
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
     row({icon:"ghost", title:"Private chats", sub:"Nothing is saved, not even the title", chev:false}),
@@ -2807,11 +2849,19 @@ function renderSettingsRoot(w){
     row({icon:"cpu", title:"Models on this PC", sub:pcInfo ? specLine(pcInfo) : "Download and run models offline", val:pcFiles.length ? String(pcFiles.length) : "", onclick:() => openPC()}),
     ctlRow("Closing the window", "Vesper keeps running in the tray so a local model stays ready", h("span", {class:"cval", text:"Tray"}))
   ));
+  w.append(glabel("Developer"), group(
+    switchRow({icon:"chart", title:"Reply details", sub:"Show tokens in and out, speed and time to first word under each reply", get:() => !!S.devStats, set:v => { S.devStats = v; save(); renderThread(true); }}),
+    row({icon:"copy", title:"Copy last request as cURL", sub:"The last message Vesper sent to a model, ready for a terminal. Your key is replaced with a placeholder", chev:false, onclick:() => { if (!lastReq) { toast("Send a message first"); return; } copyText("curl " + lastReq.url + " \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $API_KEY\" \\\n  -d '" + JSON.stringify(lastReq.payload).replace(/'/g, "'\\''") + "'"); }}),
+    row({icon:"copy", title:"Copy last request as JSON", sub:"The exact body sent to the model, including your parameters and history", chev:false, onclick:() => { if (!lastReq) { toast("Send a message first"); return; } copyText(JSON.stringify(lastReq.payload, null, 2)); }}),
+    row({icon:"download", title:"Export settings", sub:"Save your preferences as a file to move to another computer. Keys, chats and memory are not included", chev:false, onclick:exportSettings}),
+    row({icon:"upload", title:"Import settings", sub:"Load a settings file made by Vesper. It replaces matching preferences and leaves everything else", chev:false, onclick:importSettings}),
+    row({icon:"trash-2", title:"Reset all settings", sub:"Every preference back to default. Chats, keys, memory and your library are kept", danger:true, chev:false, onclick:() => dialog({title:"Reset all settings?", text:"Preferences return to their defaults. Chats, keys, memory and your library stay as they are.", ok:"Reset", danger:true, onOk:() => { resetSettings(); }})})
+  ), gnote("For people who build with models. Nothing here is sent anywhere."));
   w.append(glabel("Experimental"), group(
     switchRow({icon:"clock", title:"Group chats by day", sub:"Show day headings in the chat list", get:() => S.groupChats !== false, set:v => { S.groupChats = v; save(); renderDrawer(); }}),
     ctlRow("Sidebar order", "How chats are arranged in the list", dropdown("Sidebar order", [["recent", "Pinned then recent"], ["name", "Name"], ["oldest", "Oldest first"]], S.sideOrder, v => { S.sideOrder = v; save(); renderDrawer(); })),
     switchRow({icon:"menu", title:"Compact timeline", sub:"Hide message actions and extra notes in the chat", get:() => S.tlLevel === 0, set:v => { S.tlLevel = v ? 0 : 2; save(); applyTimeline(); again(); }}),
-    switchRow({icon:"sparkles", title:"Idea cards", sub:"Show prompt ideas on an empty chat", get:() => S.ideas !== false, set:v => { S.ideas = v; save(); renderThread(); }})
+    switchRow({icon:"sparkles", title:"Suggestions while typing", sub:"Under the message box on a new chat, Vesper finishes your sentence from ready prompts and your own earlier ones. Tab accepts the first, arrows pick", get:() => S.ideas !== false, set:v => { S.ideas = v; save(); renderTypeSug(); }})
   ), gnote("These work today. They may change as Vesper grows."));
   w.append(glabel("Help"), group(
     row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()}),
@@ -3770,21 +3820,21 @@ function brandLogo(id){
 
 /* ---------- Learn: short guides with real screens ---------- */
 const LEARN = [
-  {id:"start", title:"Start chatting in a minute", sub:"Get a free key and send your first message.", mins:2, shot:"connect-2", logos:["openrouter", "googlegemini", "mistralai"], go:["Connect a model", () => openProviders()], steps:[
+  {id:"start", title:"Start chatting in a minute", sub:"Get a free key and send your first message.", mins:2, shot:"connect-2", logos:["openrouter", "googlegemini", "mistralai"], go:["Open Settings, Providers", () => toSettings("providers")], steps:[
     ["connect-1", "Tap Connect a model", "On the welcome screen, tap Connect a model. Vesper talks to free AI providers, so all you need is a free key from one of them."],
     ["connect-2", "Pick a provider", "OpenRouter is the easiest start: one key opens many free models. Groq is the fastest. Google Gemini can read photos. You can add more later."],
     ["connect-3", "Paste your free key", "Tap Open to get your key on the provider's site, copy it, paste it here, then tap Save key and Test. The key stays on your device."],
     ["connect-4", "Say hello", "Back on the home screen, type anything or tap a suggestion. That's it."]]},
-  {id:"models", title:"Pick the right cloud model", sub:"Which free model to use for what.", mins:3, shot:"models-1", logos:["googlegemini", "meta", "nvidia", "openrouter"], go:["Open the model picker", () => openModels()], steps:[
+  {id:"models", title:"Pick the right cloud model", sub:"Which free model to use for what.", mins:3, shot:"models-1", logos:["googlegemini", "meta", "nvidia", "openrouter"], go:["Open Settings, Models", () => toSettings("home")], steps:[
     ["models-1", "Open the model picker", "Tap the model name in the message box. Models are grouped by provider and the check marks the one in use. Your pick sticks to each chat."],
     [null, "Match the model to the job", "Use Gemini 2.5 Flash for photos and everyday questions, Llama 3.3 70B on Groq when you want instant replies, GPT OSS 120B on Cerebras for hard reasoning, and Auto when you just want something that works."],
     [null, "Hit a limit? Switch", "Every free plan has a daily cap. When one runs out, tap Change model on the message and pick another provider. Connecting two or three providers means you never stop."]]},
-  {id:"pc", title:"Run AI on your own PC", sub:"Private, offline and free for good.", mins:3, shot:"pc-1", logos:["qwen", "google", "huggingface"], go:["Find my model", () => (DESKTOP ? openPC() : openAdvisor())], steps:[
+  {id:"pc", title:"Run AI on your own PC", sub:"Private, offline and free for good.", mins:3, shot:"pc-1", logos:["qwen", "google", "huggingface"], go:["Open Settings, Models", () => toSettings("advisor")], steps:[
     ["pc-1", "Open Models on this PC", "In the Vesper app for Windows, go to Settings, Local models, Models on this PC. Vesper reads your memory and graphics card and shows what fits."],
     [null, "Download the best fit", "Tap Download on the Best for this PC pick. Models come straight from Hugging Face, and a broken download picks up where it stopped."],
     [null, "Tap Use and chat", "The first message loads the model, which takes a few seconds. After that it runs offline and nothing you type leaves your PC."],
     ["advisor", "On a phone instead?", "Open Which model fits my computer in Local models. It gives you the exact Ollama command for your PC, then you connect to it over WiFi."]]},
-  {id:"worth", title:"Which models are worth it", sub:"Honest picks, and what to skip.", mins:4, shot:"advisor", logos:["qwen", "google", "meta", "nvidia"], go:["Find my model", () => (DESKTOP ? openPC() : openAdvisor())], verdicts:[
+  {id:"worth", title:"Which models are worth it", sub:"Honest picks, and what to skip.", mins:4, shot:"advisor", logos:["qwen", "google", "meta", "nvidia"], go:["Open Settings, Models", () => toSettings("advisor")], verdicts:[
     ["On your PC", [
       [1, "qwen", "Qwen 3 14B", "The sweet spot. Smart and steady with a 12 GB graphics card or 32 GB of memory."],
       [1, "google", "Gemma 3 12B", "The best writer at its size. Great for long chats and stories."],
