@@ -291,6 +291,11 @@ body.dock .sheet.pop.on{opacity:1;transform:none}
 .sheet.pop .mrow .tx b{font-weight:500}
 .scrim.clear{background:transparent}
 /* avatar picker */
+.avprev{display:flex;justify-content:center;padding:6px 0 18px}
+.avgrid2{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;justify-items:center;padding:14px;border-radius:16px;background:var(--raised)}
+.avgrid2 button{border-radius:50%;transition:transform .12s}.avgrid2 button:hover{transform:scale(1.08)}
+.avgrid2 button.on{box-shadow:0 0 0 2px var(--raised),0 0 0 4px var(--accent)}
+@media (max-width:520px){.avgrid2{grid-template-columns:repeat(6,1fr)}}
 .hive{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 0 8px}
 .hive .hr{display:flex;gap:8px;align-items:center}
 .hive button{border-radius:50%;display:grid;place-items:center;transition:transform .12s}
@@ -2066,20 +2071,20 @@ function pickAvatar(after){
   menu("avmenu", "Profile photo", [{icon:"image", label:"Upload photo", run:() => avFile.click()}, {icon:"user", label:"Choose an avatar", run:() => chooseAvatar(after)}]
     .concat(has ? [{icon:"trash-2", label:"Remove", danger:true, run:() => { pr.photo = ""; pr.gen = null; pr.mark = ""; save(); after(); }}] : []));
 }
+// Avatar picker, our own layout: a large live preview on top and an even grid of rosettes below.
 function chooseAvatar(after){
-  const rows = [5, 8, 9, 8, 5]; let cells = [], pick = null;
-  const deal = () => { const n = rows.reduce((a, b) => a + b, 0), cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5);
-    cells = Array.from({length:n}, (_, i) => ({g:1 + Math.floor(Math.random() * 2147483000), c:cs[i % cs.length]})); };
-  const cur = prof().gen; deal(); if (cur) cells[17] = {g:cur.g, c:cur.c}; pick = cells[17];
-  open("avpick", () => { const L = makeSheet("Choose an avatar"), hive = h("div", {class:"hive"});
-    const draw = () => { hive.innerHTML = ""; let k = 0; rows.forEach((n, r) => { const row = h("div", {class:"hr"}); for (let i = 0; i < n; i++, k++) { const cell = cells[k], d = Math.hypot(i - (n - 1) / 2, (r - 2) * 1.1), size = Math.round(Math.max(36, 78 - d * 11));
-      row.append(h("button", {type:"button", class:cell === pick ? "on" : "", style:"opacity:" + Math.max(.45, 1 - d * .11).toFixed(2), "aria-label":"Avatar " + (k + 1), onclick:e => { pick = cell; hive.querySelectorAll("button").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); }}, genAvatar(cell.g, cell.c, size))); } hive.append(row); }); };
+  const N = 24; let cells = [], pick = null;
+  const deal = () => { const cs = AV_COLORS.map((_, i) => i).sort(() => Math.random() - .5); cells = Array.from({length:N}, (_, i) => ({g:1 + Math.floor(Math.random() * 2147483000), c:cs[i % cs.length]})); };
+  const cur = prof().gen; deal(); if (cur) cells[0] = {g:cur.g, c:cur.c}; pick = cells[0];
+  open("avpick", () => { const L = makeSheet("Choose an avatar"), prev = h("div", {class:"avprev"}), grid = h("div", {class:"avgrid2"});
+    const paint = () => { prev.innerHTML = ""; prev.append(genAvatar(pick.g, pick.c, 104)); };
+    const draw = () => { grid.innerHTML = ""; cells.forEach((cell, k) => grid.append(h("button", {type:"button", class:cell === pick ? "on" : "", "aria-label":"Avatar " + (k + 1), onclick:e => { pick = cell; grid.querySelectorAll("button").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); paint(); }}, genAvatar(cell.g, cell.c, 46)))); paint(); };
     draw();
-    L.body.append(h("div", {style:"padding:0 18px 16px"}, h("div", {class:"gnote", style:"padding:0", text:"Use one of these instead of a photo."}), hive,
-      h("div", {class:"avfoot"}, h("button", {class:"btn ghost", type:"button", html:ic("refresh-cw") + "Shuffle", onclick:() => { deal(); pick = cells[17]; draw(); }}), h("span", {class:"sp"}),
+    L.body.append(h("div", {style:"padding:2px 18px 16px"}, prev, grid,
+      h("div", {class:"avfoot"}, h("button", {class:"btn ghost", type:"button", html:ic("refresh-cw") + "New set", onclick:() => { deal(); pick = cells[0]; draw(); }}), h("span", {class:"sp"}),
         h("button", {class:"btn ghost", type:"button", text:"Cancel", onclick:() => closeTop()}),
         h("button", {class:"btn primary", type:"button", text:"Save", onclick:() => { const pr = prof(); pr.gen = {g:pick.g, c:pick.c}; pr.photo = ""; pr.mark = ""; save(); closeTop(); after(); }}))));
-    L.el.style.width = "min(640px, calc(100vw - 40px))"; L.el.style.marginLeft = "0"; L.el.style.left = "50%"; L.el.style.translate = "-50% 0";
+    L.el.style.width = "min(520px, calc(100vw - 40px))"; L.el.style.marginLeft = "0"; L.el.style.left = "50%"; L.el.style.translate = "-50% 0";
     return L; });
 }
 function textCtl(label, key, ph){ const i = h("input", {class:"tin", value:prof()[key] || "", placeholder:ph, "aria-label":label, maxlength:"60"}); i.oninput = () => { prof()[key] = i.value; save(); renderFoot(); }; return i; }
