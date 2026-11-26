@@ -1841,7 +1841,7 @@ function docked(){ return dockMQ.matches; }
 function applyDock(){ const on = docked(); document.body.classList.toggle("dock", on);
   if (on) { const i = stack.indexOf(drawerL); if (i >= 0) { stack.splice(i, 1); drawerL.scrim.classList.remove("on"); } $("#drawer").removeAttribute("inert"); appEl.inert = stack.length > 0; renderDrawer(); }
   else if (!stack.includes(drawerL)) { if (drawerInHist) { stack.unshift(drawerL); showLayer(drawerL); } else $("#drawer").setAttribute("inert", ""); } }
-dockMQ.addEventListener("change", () => { applyDock(); renderInsp(); renderHeader(); });
+dockMQ.addEventListener("change", () => { applyDock(); applyAccent(); renderInsp(); renderHeader(); });
 // Workspaces: Chat works today; Agent and Code are the next big features and say so honestly.
 const SPACES = {
   agent:{icon:"robot", title:"Agent", text:"Give Vesper a goal. It plans the steps, uses tools and checks its work, asking before anything changes.", items:["Plans and runs multi step tasks", "Uses the web, your files and your apps", "Asks for your approval at each step"]},
@@ -2189,6 +2189,8 @@ const THEMES = {
   sakura:{name:"Sakura", g:"Gradient", accent:"#ff9ec7", grad:"linear-gradient(135deg,#f472b6,#c084fc)", bg:"#170a12", wall:"linear-gradient(160deg,#3a1630 0%,#210c1b 45%,#0e060b 100%)", tint:"58,22,48"},
   titanium:{name:"Titanium", g:"Gradient", accent:"#d6d3cf", grad:"linear-gradient(135deg,#e7e5e4,#a8a29e)", bg:"#0e0d0c", wall:"linear-gradient(160deg,#2a2826 0%,#171615 45%,#0b0a0a 100%)", tint:"42,40,38"}
 };
+// 100% is the recommended size: on a computer the app is drawn a little smaller than its phone size, so it reads like a normal desktop app.
+const DESK_BASE = .87;
 function applyAccent(){
   const st = document.documentElement.style, t = THEMES[S.theme] || THEMES.midnight;
   st.setProperty("--accent", t.accent); st.setProperty("--grad", t.grad); st.setProperty("--bg", t.bg);
@@ -2196,7 +2198,7 @@ function applyAccent(){
   else if (t.surface) [["--surface", t.surface], ["--sheet", t.surface], ["--raised", t.raised], ["--raised-2", t.raised2], ["--line", t.line], ["--line-soft", t.lineSoft]].forEach(([k, v]) => st.setProperty(k, v));
   document.body.style.backgroundImage = t.wall || ""; document.body.style.backgroundAttachment = t.wall ? "fixed" : "";
   document.body.classList.toggle("tinted", !!t.wall);
-  document.body.style.zoom = S.zoom && S.zoom !== 1 ? S.zoom : "";
+  const sc = (S.scale || 100) / 100 * (docked() ? DESK_BASE : 1); document.body.style.zoom = Math.abs(sc - 1) > .004 ? String(+sc.toFixed(3)) : "";
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc && S.bg.id === "none") tc.content = t.bg;
 }
 function dropdown(label, opts, cur, pick){
@@ -2284,7 +2286,7 @@ function renderSettingsRoot(w){
   ), gnote("Counted on this device only."));
   w.append(glabel("Appearance"), group(
     ctlRow("Theme", "Changes the whole look of the app", dropdown("Theme", ["Classic", "Gradient"].map(g => [g, Object.entries(THEMES).filter(([, t]) => t.g === g).map(([id, t]) => [id, t.name])]), S.theme || "midnight", v => { S.theme = v; save(); applyAccent(); })),
-    ctlRow("Text size", "", dropdown("Text size", [["0.92", "Small"], ["1", "Default"], ["1.08", "Large"]], String(S.zoom || 1), v => { S.zoom = +v; save(); applyAccent(); }))
+    ctlRow("Display scale", "Size of text and controls. 100% suits most screens", dropdown("Display scale", [["75", "75%"], ["90", "90%"], ["100", "100% (recommended)"], ["110", "110%"], ["125", "125%"], ["150", "150%"]], String(S.scale || 100), v => { S.scale = +v; save(); applyAccent(); }))
   ));
   w.append(glabel("Your Vesper"), group(
     row({icon:"brain", title:"Memory", sub:S.memOn ? (S.memory.length ? S.memory.length + (S.memory.length === 1 ? " thing remembered" : " things remembered") : "On, nothing saved yet") : "Off", onclick:() => openMemory()}),
