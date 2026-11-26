@@ -377,6 +377,49 @@ body.resizing{user-select:none;cursor:col-resize}body.resizing .app,body.resizin
 .ilink{width:100%;text-align:left}.ilink:hover b{color:var(--fg)}
 .iout{display:flex;align-items:center;gap:10px;width:100%;padding:6px 0;text-align:left;font-size:13.5px;color:var(--fg-soft)}.iout img,.iout .ith{width:28px;height:28px;border-radius:7px;object-fit:cover;flex:0 0 auto;background:var(--raised);display:grid;place-items:center}.iout .ith .ic{width:15px;height:15px}
 .iout span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ilink2{padding:4px 0 0}.ilink2:hover{color:var(--fg)}
+/* studio: banner home and project workspace */
+.studiopg .page-body{padding:0 20px 120px}
+.studiopg .wrap{max-width:1180px;width:100%}
+.sbanner{position:relative;border-radius:24px;overflow:hidden;min-height:clamp(300px,44vh,460px);display:flex;align-items:flex-end;background:#0b0b0d;margin-top:6px;isolation:isolate}
+.sbanner .bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.sshade{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.45) 46%,rgba(0,0,0,.08) 100%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 40%)}
+.sbtx{padding:clamp(22px,4vw,44px);max-width:580px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.stag{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.sbtx h2{margin:0;font-size:clamp(34px,5vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1.02}
+.sbtx p{margin:0;color:#d4d4d1;font-size:16px;line-height:1.5;max-width:46ch}
+.sbbtn{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.sbbtn .btn{height:44px;padding:0 20px;display:inline-flex;align-items:center;gap:8px}.sbbtn .btn .ic{width:18px;height:18px}
+.scredit{position:absolute;right:16px;bottom:12px;font-size:11.5px;color:rgba(255,255,255,.6)}
+.shd{margin:34px 2px 14px;font-size:20px;font-weight:600;letter-spacing:-.02em}
+.ssteps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sstep{position:relative;padding:18px;border-radius:18px;background:var(--surface);border:1px solid var(--line-soft);display:flex;flex-direction:column;gap:6px}
+.sstep .snum{position:absolute;top:16px;right:16px;font-size:12px;font-weight:600;color:var(--faint)}
+.sico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);margin-bottom:6px}.sico .ic{width:20px;height:20px}
+.sstep b{font-size:15.5px}.sstep p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.45}
+.shead{display:flex;align-items:center;justify-content:space-between;margin:34px 2px 14px}.shead .shd{margin:0}
+.spg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.pcard{display:flex;flex-direction:column;gap:10px;text-align:left}
+.pcard .cover{aspect-ratio:16/10;border-radius:18px;overflow:hidden;background:var(--surface);border:1px solid var(--line-soft);display:grid;gap:2px;transition:border-color .15s,transform .15s}
+.pcard:hover .cover{border-color:var(--line);transform:translateY(-2px)}
+.cover.c1{grid-template-columns:1fr}.cover.c2{grid-template-columns:1fr 1fr}.cover.c4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.cover img,.cover video{width:100%;height:100%;object-fit:cover;display:block}.cover .ph{display:grid;place-items:center;color:var(--faint)}.cover .ph .ic{width:26px;height:26px}
+.pcard.new .cover{display:grid;place-items:center;color:var(--muted);border-style:dashed}.pcard.new .cover .ic{width:26px;height:26px}
+.pcard .pm b{display:block;font-size:14.5px;font-weight:500}.pcard .pm span{font-size:12.5px;color:var(--faint)}
+.sspace{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-top:6px}
+.srail{display:flex;flex-direction:column;gap:2px;position:sticky;top:0;align-self:start}
+.sback{display:flex;align-items:center;gap:6px;padding:8px 8px 8px 2px;font-size:14px;color:var(--muted)}.sback .ic{width:16px;height:16px}.sback:hover{color:var(--fg)}
+.sname{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 4px 12px 10px}.sname b{font-size:17px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sname .icon-btn{width:30px;height:30px}
+.snav{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:12px;font-size:14.5px;color:var(--fg-soft);text-align:left}.snav .ic{width:18px;height:18px}.snav:hover{background:var(--raised)}.snav.on{background:var(--raised-2);color:var(--fg)}
+.sgen{margin-top:14px;padding:12px;border-radius:14px;border:1px solid var(--line-soft);display:flex;flex-direction:column;gap:2px;font-size:12.5px;color:var(--faint)}.sgen button{text-align:left;font-size:14px;color:var(--fg-soft)}.sgen button:hover{color:var(--accent)}
+.smain{min-width:0}
+.ssearch{display:flex;align-items:center;gap:10px;height:42px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line-soft);margin-bottom:16px;max-width:420px}.ssearch .ic{width:17px;height:17px;color:var(--faint)}.ssearch input{flex:1;background:none;border:0;outline:0;font-size:14.5px}
+.studiopg .mgrid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.sempty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:12vh 0 8vh;color:var(--muted)}.sempty .logo-flat{width:48px;height:48px}.sempty h3{margin:10px 0 0;font-size:22px;color:var(--fg);font-weight:600}.sempty p{margin:0;font-size:14.5px}
+.sbar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(760px,calc(100% - 32px));display:flex;align-items:flex-end;gap:6px;padding:8px;border-radius:28px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.5);z-index:4}
+.sbar textarea{flex:1;min-width:0;background:none;border:0;outline:0;resize:none;padding:9px 6px;font-size:15.5px;line-height:22px;max-height:120px;min-height:40px}
+.schip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:var(--raised);font-size:13.5px;color:var(--fg-soft);flex:0 0 auto}.schip .ic{width:16px;height:16px}.schip .ic:last-child{width:13px;height:13px;color:var(--muted)}.schip:hover{background:var(--raised-2)}
+.sgo{width:40px;height:40px;border-radius:50%;background:var(--fg);color:#000;display:grid;place-items:center;flex:0 0 auto}.sgo .ic{width:20px;height:20px}
+@media (max-width:820px){.ssteps{grid-template-columns:1fr 1fr}.sspace{grid-template-columns:1fr}.srail{position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}.sback{order:-1}.sname{order:-1;padding:0 4px}.sgen{display:none}.snav{padding:7px 12px;background:var(--raised)}.sbanner{min-height:360px}.sbar{border-radius:24px}}
+@media (max-width:520px){.schip span{display:none}}
 /* colored icon tiles in settings */
 .rico{width:22px;height:22px;display:grid;place-items:center;flex:0 0 auto;color:var(--fg-soft)}.rico .ic{width:20px;height:20px}.row.danger .rico{color:#ff6b6b}
 /* skills */
@@ -2045,31 +2088,82 @@ async function genVideo(prompt){
   const m = media(); if (!m.pKey) throw new Error("Video needs a Pollinations key. Add it in Settings, Image and video.");
   return blobFrom(await fetch("https://gen.pollinations.ai/video/" + encodeURIComponent(prompt) + "?model=" + encodeURIComponent(m.pVid || "seedance"), {headers:{Authorization:"Bearer " + m.pKey}}));
 }
-function openStudio(kind, swap){
-  let shape = "square", busy = false, last = "";
-  open("studio:" + kind, () => makePage(kind === "video" ? "Video Studio" : "Image Studio", (w, L) => {
-    const ta = h("textarea", {placeholder:kind === "video" ? "Describe a short video" : "Describe an image", "aria-label":"Prompt"}); ta.value = last; ta.oninput = () => { last = ta.value; };
-    const grid = h("div", {class:"mgrid"}), go = h("button", {class:"go", type:"button", html:ic("sparkles") + "Create"});
-    const shapes = h("div", {class:"chips"}); if (kind === "image") [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]].forEach(([id, t]) => shapes.append(h("button", {type:"button", class:id === shape ? "on" : "", text:t, onclick:e => { shape = id; [...shapes.children].forEach(x => x.classList.toggle("on", x === e.currentTarget)); }})));
-    const via = h("span", {class:"via"}, h("span", {text:kind === "video" ? (media().pKey ? "Pollinations" : "Not set up") : IMG_VIA[media().image || "free"]}), h("button", {type:"button", text:"Change", onclick:() => openMedia()}));
-    const draw = async () => { grid.innerHTML = ""; (await mediaAll(kind)).slice(0, 24).forEach(it => grid.append(mtile(it, () => openMedia1(it, draw)))); };
-    go.onclick = async () => { const prompt = ta.value.trim(); if (!prompt || busy) { if (!prompt) ta.focus(); return; }
-      busy = true; go.disabled = true; go.innerHTML = ic("sparkles") + "Creating"; const ph = h("div", {class:"mitem busy", text:kind === "video" ? "Making your video" : "Making your image"}); grid.prepend(ph);
-      try { const blob = kind === "video" ? await genVideo(prompt) : await genImage(prompt, shape); await mediaPut({id:uid(), kind, prompt, at:Date.now(), blob, via:kind === "video" ? "pollinations" : (media().image || "free")}); buzz(14); }
-      catch (e) { toast(String(e && e.message || e).slice(0, 140)); }
-      busy = false; go.disabled = false; go.innerHTML = ic("sparkles") + "Create"; ph.remove(); draw(); };
-    ta.addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) go.click(); });
-    w.append(h("div", {class:"studio"}, ta, h("div", {class:"tools"}, shapes, via, go), grid)); draw();
-  }), swap);
+// Studio: a home with a banner, how it works and projects, then a workspace per project with a prompt bar.
+const STUDIO_BANNER = {src:"https://d2ol7oe51mr4n9.cloudfront.net/user_2wC4cmbjNFlqEz3cX7be7cO9GDv/c9249d15-1981-48b1-b054-d07e350eb66c.mp4", poster:"https://cdn.higgsfield.ai/db1bcb28-b282-4f74-872c-90faed8dceac.jpg", credit:"GRANDMA vs WASP by @mrabujoe"};
+const STEPS = [["pencil", "Describe", "Type what you want to see. One sentence is enough."], ["sliders-horizontal", "Choose", "Pick a shape and a generator. Free needs no key."], ["sparkles", "Create", "Your image or video appears in seconds."], ["images", "Keep", "Everything is saved on this device, in your Library."]];
+const projects = () => (S.projects = S.projects || []);
+const stamp = t => { const d = new Date(t); return d.toLocaleDateString(undefined, {month:"short", day:"numeric"}) + ", " + d.toLocaleTimeString(undefined, {hour:"2-digit", minute:"2-digit", hour12:false}); };
+let studioLive = null;
+function openStudio(kind, swap, opts){
+  if (studioLive && stack.includes(studioLive.L)) { studioLive.set(kind, opts); return; }
+  const st = {kind:kind === "video" ? "video" : "image", proj:(opts && opts.proj) || null, filter:"all", shape:"square", q:"", sort:"recent", busy:0};
+  open("studio", () => {
+    const bar = studioBar(st);
+    const L = makePage("Studio", (w, L2) => { bar.el.hidden = !st.proj; if (st.proj) bar.sync(); if (st.proj) studioSpace(w, L2, st, bar); else studioHome(w, L2, st); });
+    L.el.classList.add("studiopg"); L.el.append(bar.el);
+    L.onHide = () => { const v = L.el.querySelector("video.bgv"); if (v) v.pause(); studioLive = null; };
+    studioLive = {L, set:(k, o) => { st.kind = k === "video" ? "video" : "image"; st.proj = (o && o.proj) || null; st.filter = "all"; L.refresh(); }};
+    return L;
+  }, swap);
 }
-function openLibrary(swap){
-  let kind = "";
-  open("library", () => makePage("Library", (w, L) => {
-    const grid = h("div", {class:"mgrid"}), chips = h("div", {class:"chips", style:"margin-bottom:8px"});
-    const draw = async () => { grid.innerHTML = ""; const all = await mediaAll(kind); if (!all.length) grid.append(gnote("Images and videos you create show up here.")); all.forEach(it => grid.append(mtile(it, () => openMedia1(it, draw)))); };
-    [["", "All"], ["image", "Images"], ["video", "Videos"]].forEach(([id, t]) => chips.append(h("button", {type:"button", class:id === kind ? "on" : "", text:t, onclick:e => { kind = id; [...chips.children].forEach(x => x.classList.toggle("on", x === e.currentTarget)); draw(); }})));
-    w.append(h("div", {class:"studio"}, chips, grid)); draw();
-  }), swap);
+function openLibrary(swap){ openStudio("image", swap, {proj:"__all"}); }
+function newProject(st, L){ const pr = {id:uid(), name:stamp(Date.now()), at:Date.now()}; projects().unshift(pr); save(); st.proj = pr.id; st.filter = "all"; L.refresh(); }
+function studioHome(w, L, st){
+  const vid = h("video", {class:"bgv", loop:true, playsinline:true, preload:"auto", poster:STUDIO_BANNER.poster, "aria-hidden":"true", tabindex:"-1"});
+  vid.muted = true; vid.defaultMuted = true; vid.src = STUDIO_BANNER.src; vid.addEventListener("error", () => { vid.removeAttribute("src"); vid.load(); });
+  vid.addEventListener("canplay", () => { const p = vid.play(); if (p && p.catch) p.catch(() => {}); }, {once:true});
+  w.append(h("section", {class:"sbanner"}, vid, h("div", {class:"sshade"}),
+    h("div", {class:"sbtx"}, h("span", {class:"stag", text:"Vesper Studio"}), h("h2", {html:"Imagine it.<br>Create it."}), h("p", {text:"Describe a picture or a scene and watch it appear. Free, private and saved only on your device."}),
+      h("div", {class:"sbbtn"}, h("button", {class:"btn primary", type:"button", html:ic("plus") + "New project", onclick:() => newProject(st, L)}), h("button", {class:"btn ghost", type:"button", text:"How it works", onclick:() => { const t = w.querySelector(".shd"); if (t) t.scrollIntoView({behavior:"smooth", block:"start"}); }}))),
+    h("span", {class:"scredit", text:STUDIO_BANNER.credit})));
+  w.append(h("h3", {class:"shd", text:"How it works"}), h("div", {class:"ssteps"}, ...STEPS.map(([i, t, d], k) => h("div", {class:"sstep"}, h("span", {class:"snum", text:String(k + 1)}), h("div", {class:"sico", html:ic(i)}), h("b", {text:t}), h("p", {text:d})))));
+  const grid = h("div", {class:"spg"});
+  w.append(h("div", {class:"shead"}, h("h3", {class:"shd", text:"Your projects"}), dropdown("Sort", [["recent", "Last modified"], ["name", "Name"]], st.sort, v => { st.sort = v; L.refresh(); })), grid);
+  const cover = items => { const c = items.slice(0, 4), n = c.length >= 4 ? 4 : c.length >= 2 ? 2 : c.length === 1 ? 1 : 0, box = h("div", {class:"cover c" + n}); c.slice(0, n).forEach(it => box.append(it.kind === "video" ? h("video", {src:murl(it), muted:true, playsinline:true, preload:"metadata"}) : h("img", {src:murl(it), alt:"", loading:"lazy"}))); if (!n) box.append(h("span", {class:"ph", html:ic("images")})); return box; };
+  const card = (name, when, count, items, go) => h("button", {class:"pcard", type:"button", onclick:go}, cover(items), h("div", {class:"pm"}, h("b", {text:name}), h("span", {text:when + ", " + count + (count === 1 ? " item" : " items")})));
+  grid.append(h("button", {class:"pcard new", type:"button", onclick:() => newProject(st, L)}, h("div", {class:"cover"}, h("span", {html:ic("plus")})), h("div", {class:"pm"}, h("b", {text:"New project"}), h("span", {text:"Start from a blank prompt"}))));
+  mediaAll().then(all => {
+    const rows = projects().map(pr => { const items = all.filter(i => i.project === pr.id); return {pr, items, at:Math.max(pr.at, ...items.map(i => i.at))}; });
+    rows.sort((a, b) => st.sort === "name" ? a.pr.name.localeCompare(b.pr.name) : b.at - a.at);
+    rows.forEach(r => grid.append(card(r.pr.name, stamp(r.at), r.items.length, r.items, () => { st.proj = r.pr.id; st.filter = "all"; L.refresh(); })));
+    const loose = all.filter(i => !i.project); if (loose.length) grid.append(card("Earlier creations", stamp(loose[0].at), loose.length, loose, () => { st.proj = "__loose"; st.filter = "all"; L.refresh(); }));
+  }).catch(() => {});
+}
+function studioSpace(w, L, st, bar){
+  const isAll = st.proj === "__all", isLoose = st.proj === "__loose", proj = projects().find(x => x.id === st.proj);
+  const title = isAll ? "All media" : isLoose ? "Earlier creations" : proj ? proj.name : "Project";
+  const gen = IMG_VIA[media().image || "free"];
+  const rail = h("aside", {class:"srail"}, h("button", {class:"sback", type:"button", html:ic("chevron-left") + "<span>Studio</span>", onclick:() => { st.proj = null; L.refresh(); }}),
+    h("div", {class:"sname"}, h("b", {text:title}), proj ? h("button", {class:"icon-btn", type:"button", "aria-label":"Project options", html:ic("ellipsis"), onclick:() => menu("projmenu", title, [
+      {icon:"pencil", label:"Rename", run:() => dialog({title:"Rename project", input:proj.name, ok:"Save", onOk:v => { v = (v || "").trim(); if (!v) return; proj.name = v.slice(0, 60); save(); L.refresh(); }})},
+      {icon:"trash-2", label:"Delete project", danger:true, run:() => dialog({title:"Delete this project?", text:"Its images and videos are removed from this device.", ok:"Delete", danger:true, onOk:async () => { const items = await mediaAll(); for (const it of items.filter(i => i.project === proj.id)) await mediaDel(it.id); S.projects = projects().filter(x => x.id !== proj.id); save(); st.proj = null; L.refresh(); }})}])}) : null),
+    ...[["all", "images", "All media"], ["image", "image", "Images"], ["video", "video", "Videos"]].map(([id, icon, t]) => h("button", {class:"snav" + (st.filter === id ? " on" : ""), type:"button", html:ic(icon) + "<span>" + t + "</span>", onclick:() => { st.filter = id; L.refresh(); }})),
+    h("div", {class:"sgen"}, h("span", {text:"Generator"}), h("button", {type:"button", text:gen, onclick:() => openMedia()})));
+  const q = h("input", {type:"search", placeholder:"Search", "aria-label":"Search media", value:st.q}), grid = h("div", {class:"mgrid"});
+  const draw = async () => {
+    grid.innerHTML = ""; for (let i = 0; i < st.busy; i++) grid.append(h("div", {class:"mitem busy", text:"Creating"}));
+    const items = (await mediaAll()).filter(it => (isAll || (isLoose ? !it.project : it.project === st.proj)) && (st.filter === "all" || it.kind === st.filter) && (!st.q || it.prompt.toLowerCase().includes(st.q)));
+    if (!items.length && !st.busy) { grid.className = ""; grid.append(h("div", {class:"sempty"}, h("i", {class:"logo-flat", "aria-hidden":"true"}), h("h3", {text:"Start creating"}), h("p", {text:st.q ? "Nothing matches that search." : "Describe an image or a video in the bar below."}))); return; }
+    grid.className = "mgrid"; items.forEach(it => grid.append(mtile(it, () => openMedia1(it, draw))));
+  };
+  q.oninput = () => { st.q = q.value.trim().toLowerCase(); draw(); };
+  bar.refresh = draw;
+  w.append(h("div", {class:"sspace"}, rail, h("div", {class:"smain"}, h("label", {class:"ssearch", html:ic("search")}, q), grid))); draw();
+}
+function studioBar(st){
+  const ta = h("textarea", {rows:"1", placeholder:"What do you want to create?", "aria-label":"Prompt"}), mode = h("button", {class:"schip", type:"button", "aria-label":"Choose image or video"}), shape = h("button", {class:"schip", type:"button", "aria-label":"Choose a shape"}), go = h("button", {class:"sgo", type:"submit", "aria-label":"Create", html:ic("arrow-up")});
+  const el = h("form", {class:"sbar", autocomplete:"off", hidden:true}, mode, ta, shape, go), api = {el, refresh:() => {}, sync:() => {}};
+  api.sync = () => { mode.innerHTML = ic(st.kind === "video" ? "video" : "image") + "<span>" + (st.kind === "video" ? "Video" : "Image") + "</span>" + ic("chevron-down"); shape.hidden = st.kind === "video"; shape.innerHTML = "<span>" + ({square:"Square", portrait:"Portrait", landscape:"Wide"})[st.shape] + "</span>" + ic("chevron-down"); };
+  mode.onclick = () => menu("smode", "Create", [{icon:"image", label:"Image", run:() => { st.kind = "image"; api.sync(); }}, {icon:"video", label:"Video", run:() => { st.kind = "video"; api.sync(); }}]);
+  shape.onclick = () => menu("sshape", "Shape", [["square", "Square"], ["portrait", "Portrait"], ["landscape", "Wide"]].map(([id, t]) => ({icon:"image", label:t, run:() => { st.shape = id; api.sync(); }})));
+  ta.oninput = () => { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; };
+  ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); el.requestSubmit(); } };
+  el.onsubmit = async e => { e.preventDefault(); const prompt = ta.value.trim(); if (!prompt) { ta.focus(); return; }
+    const kind = st.kind, proj = st.proj && st.proj[0] !== "_" ? st.proj : undefined; st.busy++; api.refresh(); ta.value = ""; ta.style.height = "auto";
+    try { const blob = kind === "video" ? await genVideo(prompt) : await genImage(prompt, st.shape); await mediaPut({id:uid(), kind, prompt, at:Date.now(), blob, project:proj, via:kind === "video" ? "pollinations" : (media().image || "free")}); buzz(14); }
+    catch (err) { toast(String(err && err.message || err).slice(0, 140)); }
+    st.busy--; api.refresh(); };
+  api.sync(); return api;
 }
 // One simple theme: an accent color with its gradient, a background tone and a text size.
 // Themes: each one sets the whole look (background, surfaces, lines, highlight and its gradient). Gradient themes tint the app like a wallpaper.
@@ -2845,7 +2939,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "3.1";
+const APP_VERSION = "3.2";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;

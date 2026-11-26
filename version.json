@@ -1,8 +1,8 @@
 {
- "version": "3.1",
+ "version": "3.2",
  "notes": [
-  "Workspaces: Chat, Agent and Code",
-  "Your profile with Vesper avatars",
-  "A simpler home screen and a cleaner side panel"
+  "A new Studio: a banner home, how it works, and projects",
+  "Every project has its own workspace and prompt bar",
+  "Library and Studio are now one place"
  ]
 }
