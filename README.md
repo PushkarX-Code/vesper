@@ -82,7 +82,7 @@ Questions, ideas, problems or business? Email [support@nodefolds.com](mailto:sup
 
 **1. Open the app**
 
-Go to [pushkarx-code.github.io/vesper](https://pushkarx-code.github.io/vesper/) in Chrome on your phone.
+Go to [vesper.nodefolds.com](https://vesper.nodefolds.com) in Chrome on your phone.
 
 **2. Install it (optional, recommended)**
 
