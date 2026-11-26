@@ -236,6 +236,90 @@ body.dock .sheet .grab{visibility:hidden;height:12px;padding:0}
 body.dock ::-webkit-scrollbar{width:10px;height:10px}
 body.dock ::-webkit-scrollbar-thumb{background:var(--raised-2);border-radius:10px;border:3px solid transparent;background-clip:padding-box}
 body.dock ::-webkit-scrollbar-track{background:transparent}
+/* sidebar, desktop chat app style */
+.d-brand{justify-content:space-between;padding:4px 2px 12px 8px}
+.d-brand .left{display:flex;align-items:center;gap:10px}
+.d-tools{display:flex;gap:2px}.d-tools .icon-btn{width:34px;height:34px;border-radius:10px}.d-tools .ic{width:18px;height:18px}
+.d-tools .icon-btn:hover{background:var(--raised)}
+.d-search{display:none}.drawer.searching .d-search{display:flex}
+.d-new{padding:9px 12px;font-size:14.5px;border-radius:12px;gap:12px}.d-new .ic{width:18px;height:18px}
+.d-new.d-primary{margin:0 0 6px;color:var(--fg);font-weight:500}.d-new.d-primary .ic{color:var(--accent)}
+.d-new kbd{margin-left:auto;font:500 11px/1 var(--ui);color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:3px 6px;display:none}body.dock .d-new kbd{display:inline-block}
+.d-sec{font-size:12.5px;color:var(--faint);padding:14px 12px 4px}
+.d-new .tagp{font-size:10px;padding:2px 7px}
+.ci .open{padding:8px 12px;font-size:14.5px}
+body.dock .ci .more{opacity:0}body.dock .ci:hover .more,body.dock .ci.active .more{opacity:1}
+.d-more{display:block;width:100%;text-align:left;padding:8px 12px;font-size:14px;color:var(--faint);border-radius:12px}
+.d-foot{border-top:0;display:flex;flex-direction:column;gap:6px;padding-top:6px}
+.d-foot .d-promo{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:14px;border:1px solid var(--line);font-size:14px;color:var(--fg)}
+.d-promo .ic{width:18px;height:18px;color:#f0c26b}.d-promo .tagp{margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;color:#f0c26b;background:rgba(240,194,107,.14)}
+.d-user{display:flex;align-items:center;gap:10px;padding:6px 4px 2px 6px}
+.d-user .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1d2a44,#0c0f18);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;flex:0 0 auto}.d-user .av .logo-flat{width:17px;height:17px}
+.d-user .nm{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;text-align:left}.d-foot .d-user .nm{padding:0;width:auto;display:flex;gap:0}.d-user .nm b,.d-user .nm small{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.d-user .nm b{font-size:14px;font-weight:600}.d-user .nm small{font-size:12px;color:var(--faint)}
+.d-foot .d-user .icon-btn{width:36px;height:36px;padding:0;border-radius:10px;display:grid;place-items:center;flex:0 0 auto}.d-user .icon-btn:hover{background:var(--raised)}.d-user .ic{width:18px;height:18px}
+body.native #dSideBtn{display:none}
+/* home on wide screens: greeting, composer in the middle, ideas below */
+.sug-below{display:none}
+body.dock .app.is-empty{justify-content:center}
+body.dock .app.is-empty .thread{flex:0 0 auto;overflow:visible}
+body.dock .app.is-empty .hero.ready .mark,body.dock .app.is-empty .hero.ready p,body.dock .app.is-empty .hero.ready .suggest,body.dock .app.is-empty .hint{display:none}
+body.dock .app.is-empty .hero.ready .hero-main{padding:0 0 26px}
+body.dock .app.is-empty .hero.ready h1{font-size:30px;font-weight:500;letter-spacing:-.02em}
+body.dock .app.is-empty .sug-below{display:flex;flex-direction:column;gap:2px;max-width:760px;margin:14px auto 0;padding:0 6px}
+.sgl{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:12px;color:var(--fg-soft);font-size:15px;text-align:left}
+.sgl:hover{background:var(--raised);color:var(--fg)}.sgl .ic{width:18px;height:18px;color:var(--muted)}
+/* one click local AI on the home screen */
+.setup{display:flex;align-items:center;gap:16px;width:100%;max-width:640px;margin:18px auto 0;padding:16px 18px;border-radius:20px;background:var(--surface);border:1px solid var(--line);text-align:left}
+.setup .si{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}.setup .si .ic{width:22px;height:22px}
+.setup .st{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.setup .st b{font-size:15.5px;font-weight:600}.setup .st span{font-size:13.5px;color:var(--muted);line-height:1.45}
+.setup .sa{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:0 0 auto}
+.setup .sa .btn{height:38px;padding:0 16px;font-size:14px;white-space:nowrap}
+.setup .sa .lnk{font-size:12.5px;color:var(--muted)}.setup .sa .lnk:hover{color:var(--fg)}
+.setup .bar{width:150px;height:6px;border-radius:6px;background:var(--raised);overflow:hidden}.setup .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.setup .pct{font-size:12.5px;color:var(--muted)}
+@media (max-width:560px){.setup{flex-wrap:wrap}.setup .sa{width:100%;align-items:stretch}.setup .bar{width:100%}}
+/* one line composer on wide screens */
+body.dock .composer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px;padding:8px;border-radius:30px}
+body.dock .composer .c-row,body.dock .composer .c-side{display:contents}
+body.dock #attachRow{order:-1;width:100%}
+body.dock #attachBtn{order:0;background:var(--raised)}
+body.dock .composer textarea{order:1;flex:1;width:auto;min-width:0;padding:8px 8px}
+body.dock #modelChip{order:2;background:none}body.dock #modelChip:hover{background:var(--raised)}
+body.dock #micBtn{order:3}body.dock #send{order:4}
+body.dock .c-btn:hover{background:var(--raised)}
+/* settings as a floating window with its own menu */
+body.dock .page.modal{inset:auto;left:50%;top:50%;margin:0;width:min(1000px,calc(100vw - 64px));height:min(720px,calc(100vh - 96px));border-radius:22px;background:var(--surface);border:1px solid var(--line);box-shadow:0 40px 120px rgba(0,0,0,.75);opacity:0;transform:translate(-50%,-48%) scale(.98);overflow:hidden}
+body.dock .page.modal.on{opacity:1;transform:translate(-50%,-50%)}
+body.native .page.modal{top:calc(50% + 20px)}
+.page.modal .page-head{height:62px;padding:0 10px}
+.page.modal .page-head h2{text-align:left;font-size:20px}
+.page.modal.mroot .page-head{padding-left:22px;grid-template-columns:1fr 48px}
+.page.modal.mroot .page-head h2{grid-column:1;grid-row:1}
+.page.modal.mroot .page-head>.icon-btn{grid-column:2;grid-row:1}
+.page.modal .group{background:var(--bg)}
+.page.modal.has-nav{padding-left:250px}
+.page.modal.has-nav .page-body{padding-bottom:28px}
+.pnav{position:absolute;left:0;top:0;bottom:0;width:250px;border-right:1px solid var(--line-soft);padding:16px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.pnav button{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;font-size:14.5px;color:var(--fg-soft);text-align:left}
+.pnav button:hover{background:var(--raised)}.pnav button.on{background:var(--raised);color:var(--fg)}.pnav .ic{width:18px;height:18px}
+.pfoot{position:absolute;left:250px;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--line-soft);background:var(--surface);font-size:14px}
+.pfoot .ic{width:18px;height:18px;color:#f0c26b}.pfoot b{font-weight:600}.pfoot span{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pfoot button{height:34px;padding:0 16px;border-radius:999px;background:var(--fg);color:#000;font-weight:600;font-size:14px}
+/* connect apps */
+.apps-search{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg);margin:6px 0 12px}
+.apps-search .ic{width:18px;height:18px;color:var(--faint)}.apps-search input{flex:1;background:none;border:0;outline:0;font-size:15px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{height:34px;padding:0 14px;border-radius:999px;background:var(--raised);font-size:14px;color:var(--fg-soft)}
+.chips button.on{background:var(--fg);color:#000}
+.appgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:4px 24px}
+.appc{display:flex;align-items:center;gap:14px;padding:10px 2px}
+.appc .tile{width:48px;height:48px;border-radius:14px;background:var(--raised);display:grid;place-items:center;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 8px 20px rgba(0,0,0,.35)}
+.appc .tile svg{width:26px;height:26px}
+.appc .tx{flex:1;min-width:0}.appc b{display:block;font-size:15.5px;font-weight:600}
+.appc span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appc button{height:34px;padding:0 14px;border-radius:999px;background:var(--raised);font-size:13.5px;font-weight:500;flex:0 0 auto}
+.appc button{display:inline-flex;align-items:center;gap:6px}.appc button .ic{width:15px;height:15px}
+.appc button.on{background:none;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
 /* Windows app: its own title bar, like a native desktop app */
 .titlebar{display:none}
 body.native .titlebar{display:flex;position:fixed;top:0;left:0;right:0;height:40px;z-index:200;align-items:center;user-select:none;-webkit-user-select:none;background:var(--bg)}
@@ -582,56 +666,57 @@ select.input{appearance:none;background-image:none}
 <!-- Icons: Lucide (ISC license, lucide.dev). Settings always uses the real gear: #i-settings. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
-  <symbol id="i-panel-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 8h16"/><path d="M4 16h10"/></symbol>
-  <symbol id="i-square-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></symbol>
-  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
-  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
-  <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
-  <symbol id="i-stop" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="3" fill="currentColor"/></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
-  <symbol id="i-refresh-cw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
-  <symbol id="i-trash-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
-  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
-  <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
-  <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
-  <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
-  <symbol id="i-ellipsis" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
-  <symbol id="i-key-round" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
-  <symbol id="i-sliders-horizontal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5H3"/><path d="M12 19H3"/><path d="M14 3v4"/><path d="M16 17v4"/><path d="M21 12h-9"/><path d="M21 19h-5"/><path d="M21 5h-7"/><path d="M8 10v4"/><path d="M8 12H3"/></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></symbol>
-  <symbol id="i-ghost" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10v1"/><path d="M7.528 20.472a1.6 1.6 0 012.277 0l1.057 1.056a1.6 1.6 0 002.276 0l1.057-1.056a1.6 1.6 0 012.277 0l1.114 1.114a1.4 1.4 0 002.414-1V10a8 8 0 00-16 0v10.586a1.4 1.4 0 002.414 1z"/><path d="M9 10v1"/></symbol>
-  <symbol id="i-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
-  <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z"/><path d="M20.054 15.987H3.946"/></symbol>
-  <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></symbol>
-  <symbol id="i-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></symbol>
-  <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 01-3-4 4.17 4.17 0 01-3 4"/><path d="M17.707 6.294A3 3 0 1012 5a3 3 0 10-5.707 1.294"/><path d="M17.996 5.125a4 4 0 012.526 5.77"/><path d="M18 18a4 4 0 002-7.465"/><path d="M19.967 17.482a4 4 0 11-7.967.517 4 4 0 11-7.967-.517"/><path d="M6 18a4 4 0 01-2-7.465"/><path d="M6.004 5.125a4 4 0 00-2.526 5.77"/></symbol>
-  <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
-  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></symbol>
-  <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
-  <symbol id="i-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
-  <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></symbol>
-  <symbol id="i-vibrate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 8 2 2-2 2 2 2-2 2"/><path d="m22 8-2 2 2 2-2 2 2 2"/><rect width="8" height="14" x="8" y="5" rx="1"/></symbol>
-  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
-  <symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
-  <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
-  <symbol id="i-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></symbol>
-  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></symbol>
-  <symbol id="i-volume-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></symbol>
-  <symbol id="i-share-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
-  <symbol id="i-graduation-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
-  <symbol id="i-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
-  <symbol id="i-circle-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
-  <symbol id="i-corner-down-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 256 256" fill="currentColor"><path d="M237.66,18.34a8,8,0,0,0-11.32,0l-52.4,52.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L100,88.69l-6.34-6.35A8,8,0,0,0,82.34,93.66L88.69,100,65.37,123.31a32,32,0,0,0,0,45.26l5.38,5.37-52.41,52.4a8,8,0,0,0,11.32,11.32l52.4-52.41,5.37,5.38a32,32,0,0,0,45.26,0L156,167.31l6.34,6.35a8,8,0,0,0,11.32-11.32L167.31,156l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,52.41-52.4A8,8,0,0,0,237.66,18.34Zm-116.29,161a16,16,0,0,1-22.62,0L76.69,157.25a16,16,0,0,1,0-22.62L100,111.31,144.69,156Zm57.94-57.94L156,144.69,111.31,100l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,179.31,121.37ZM88.57,35A8,8,0,0,1,103.43,29l8,20A8,8,0,0,1,96.57,55ZM24.57,93A8,8,0,0,1,35,88.57l20,8A8,8,0,0,1,49,111.43l-20-8A8,8,0,0,1,24.57,93ZM231.43,163a8,8,0,0,1-10.4,4.46l-20-8A8,8,0,1,1,207,144.57l20,8A8,8,0,0,1,231.43,163Zm-64,58.06A8,8,0,0,1,152.57,227l-8-20A8,8,0,0,1,159.43,201Z"/></symbol>
+  <symbol id="i-panel-left" viewBox="0 0 256 256" fill="currentColor"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
+  <symbol id="i-square-pen" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 256 256" fill="currentColor"><path d="M208.49,120.49a12,12,0,0,1-17,0L140,69V216a12,12,0,0,1-24,0V69L64.49,120.49a12,12,0,0,1-17-17l72-72a12,12,0,0,1,17,0l72,72A12,12,0,0,1,208.49,120.49Z"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 256 256" fill="currentColor"><path d="M216,56V200a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40H200A16,16,0,0,1,216,56Z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 256 256" fill="currentColor"><path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/></symbol>
+  <symbol id="i-refresh-cw" viewBox="0 0 256 256" fill="currentColor"><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+  <symbol id="i-trash-2" viewBox="0 0 256 256" fill="currentColor"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 256 256" fill="currentColor"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"/></symbol>
+  <symbol id="i-ellipsis" viewBox="0 0 256 256" fill="currentColor"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"/></symbol>
+  <symbol id="i-key-round" viewBox="0 0 256 256" fill="currentColor"><path d="M216.57,39.43A80,80,0,0,0,83.91,120.78L28.69,176A15.86,15.86,0,0,0,24,187.31V216a16,16,0,0,0,16,16H72a8,8,0,0,0,8-8V208H96a8,8,0,0,0,8-8V184h16a8,8,0,0,0,5.66-2.34l9.56-9.57A79.73,79.73,0,0,0,160,176h.1A80,80,0,0,0,216.57,39.43ZM224,98.1c-1.09,34.09-29.75,61.86-63.89,61.9H160a63.7,63.7,0,0,1-23.65-4.51,8,8,0,0,0-8.84,1.68L116.69,168H96a8,8,0,0,0-8,8v16H72a8,8,0,0,0-8,8v16H40V187.31l58.83-58.82a8,8,0,0,0,1.68-8.84A63.72,63.72,0,0,1,96,95.92c0-34.14,27.81-62.8,61.9-63.89A64,64,0,0,1,224,98.1ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></symbol>
+  <symbol id="i-sliders-horizontal" viewBox="0 0 256 256" fill="currentColor"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0ZM93.66,77.66,120,51.31V144a8,8,0,0,0,16,0V51.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,77.66Z"/></symbol>
+  <symbol id="i-ghost" viewBox="0 0 256 256" fill="currentColor"><path d="M112,116a12,12,0,1,1-12-12A12,12,0,0,1,112,116Zm44-12a12,12,0,1,0,12,12A12,12,0,0,0,156,104Zm68,16v96a8,8,0,0,1-13.07,6.19l-24.26-19.85L162.4,222.19a8,8,0,0,1-10.13,0L128,202.34l-24.27,19.85a8,8,0,0,1-10.13,0L69.33,202.34,45.07,222.19A8,8,0,0,1,32,216V120a96,96,0,0,1,192,0Zm-16,0a80,80,0,0,0-160,0v79.12l16.27-13.31a8,8,0,0,1,10.13,0l24.27,19.85,24.26-19.85a8,8,0,0,1,10.14,0l24.26,19.85,24.27-19.85a8,8,0,0,1,10.13,0L208,199.12Z"/></symbol>
+  <symbol id="i-external-link" viewBox="0 0 256 256" fill="currentColor"><path d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 256 256" fill="currentColor"><path d="M232,168h-8V72a24,24,0,0,0-24-24H56A24,24,0,0,0,32,72v96H24a8,8,0,0,0-8,8v16a24,24,0,0,0,24,24H216a24,24,0,0,0,24-24V176A8,8,0,0,0,232,168ZM48,72a8,8,0,0,1,8-8H200a8,8,0,0,1,8,8v96H48ZM224,192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8v-8H224ZM152,88a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,88Z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 256 256" fill="currentColor"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></symbol>
+  <symbol id="i-message-square" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 256 256" fill="currentColor"><path d="M248,124a56.11,56.11,0,0,0-32-50.61V72a48,48,0,0,0-88-26.49A48,48,0,0,0,40,72v1.39a56,56,0,0,0,0,101.2V176a48,48,0,0,0,88,26.49A48,48,0,0,0,216,176v-1.41A56.09,56.09,0,0,0,248,124ZM88,208a32,32,0,0,1-31.81-28.56A55.87,55.87,0,0,0,64,180h8a8,8,0,0,0,0-16H64A40,40,0,0,1,50.67,86.27,8,8,0,0,0,56,78.73V72a32,32,0,0,1,64,0v68.26A47.8,47.8,0,0,0,88,128a8,8,0,0,0,0,16,32,32,0,0,1,0,64Zm104-44h-8a8,8,0,0,0,0,16h8a55.87,55.87,0,0,0,7.81-.56A32,32,0,1,1,168,144a8,8,0,0,0,0-16,47.8,47.8,0,0,0-32,12.26V72a32,32,0,0,1,64,0v6.73a8,8,0,0,0,5.33,7.54A40,40,0,0,1,192,164Zm16-52a8,8,0,0,1-8,8h-4a36,36,0,0,1-36-36V80a8,8,0,0,1,16,0v4a20,20,0,0,0,20,20h4A8,8,0,0,1,208,112ZM60,120H56a8,8,0,0,1,0-16h4A20,20,0,0,0,80,84V80a8,8,0,0,1,16,0v4A36,36,0,0,1,60,120Z"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 256 256" fill="currentColor"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 256 256" fill="currentColor"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"/></symbol>
+  <symbol id="i-clapperboard" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104H102.09L210,75.51a8,8,0,0,0,5.68-9.84l-8.16-30a15.93,15.93,0,0,0-19.42-11.13L35.81,64.74a15.75,15.75,0,0,0-9.7,7.4,15.51,15.51,0,0,0-1.55,12L32,111.56c0,.14,0,.29,0,.44v88a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V112A8,8,0,0,0,216,104ZM192.16,40l6,22.07-22.62,6L147.42,51.83Zm-66.69,17.6,28.12,16.24-36.94,9.75L88.53,67.37Zm-79.4,44.62-6-22.08,26.5-7L94.69,89.4ZM208,200H48V120H208v80Z"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 256 256" fill="currentColor"><path d="M248,80a28,28,0,1,0-51.12,15.77l-26.79,33L146,73.4a28,28,0,1,0-36.06,0L85.91,128.74l-26.79-33a28,28,0,1,0-26.6,12L47,194.63A16,16,0,0,0,62.78,208H193.22A16,16,0,0,0,209,194.63l14.47-86.85A28,28,0,0,0,248,80ZM128,40a12,12,0,1,1-12,12A12,12,0,0,1,128,40ZM24,80A12,12,0,1,1,36,92,12,12,0,0,1,24,80ZM193.22,192H62.78L48.86,108.52,81.79,149A8,8,0,0,0,88,152a7.83,7.83,0,0,0,1.08-.07,8,8,0,0,0,6.26-4.74l29.3-67.4a27,27,0,0,0,6.72,0l29.3,67.4a8,8,0,0,0,6.26,4.74A7.83,7.83,0,0,0,168,152a8,8,0,0,0,6.21-3l32.93-40.52ZM220,92a12,12,0,1,1,12-12A12,12,0,0,1,220,92Z"/></symbol>
+  <symbol id="i-vibrate" viewBox="0 0 256 256" fill="currentColor"><path d="M160,32H96A24,24,0,0,0,72,56V200a24,24,0,0,0,24,24h64a24,24,0,0,0,24-24V56A24,24,0,0,0,160,32Zm8,168a8,8,0,0,1-8,8H96a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8h64a8,8,0,0,1,8,8ZM216,88v80a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0Zm32,16v48a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0ZM56,88v80a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0ZM24,104v48a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 256 256" fill="currentColor"><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 256 256" fill="currentColor"><path d="M80,56V24a8,8,0,0,1,16,0V56a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,120,64Zm32,0a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,152,64Zm96,56v8a40,40,0,0,1-37.51,39.91,96.59,96.59,0,0,1-27,40.09H208a8,8,0,0,1,0,16H32a8,8,0,0,1,0-16H56.54A96.3,96.3,0,0,1,24,136V88a8,8,0,0,1,8-8H208A40,40,0,0,1,248,120ZM200,96H40v40a80.27,80.27,0,0,0,45.12,72h69.76A80.27,80.27,0,0,0,200,136Zm32,24a24,24,0,0,0-16-22.62V136a95.78,95.78,0,0,1-1.2,15A24,24,0,0,0,232,128Z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 256 256" fill="currentColor"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 256 256" fill="currentColor"><path d="M152,96H104a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V104A8,8,0,0,0,152,96Zm-8,48H112V112h32Zm88,0H216V112h16a8,8,0,0,0,0-16H216V56a16,16,0,0,0-16-16H160V24a8,8,0,0,0-16,0V40H112V24a8,8,0,0,0-16,0V40H56A16,16,0,0,0,40,56V96H24a8,8,0,0,0,0,16H40v32H24a8,8,0,0,0,0,16H40v40a16,16,0,0,0,16,16H96v16a8,8,0,0,0,16,0V216h32v16a8,8,0,0,0,16,0V216h40a16,16,0,0,0,16-16V160h16a8,8,0,0,0,0-16Zm-32,56H56V56H200v95.87s0,.09,0,.13,0,.09,0,.13V200Z"/></symbol>
+  <symbol id="i-paperclip" viewBox="0 0 256 256" fill="currentColor"><path d="M209.66,122.34a8,8,0,0,1,0,11.32l-82.05,82a56,56,0,0,1-79.2-79.21L147.67,35.73a40,40,0,1,1,56.61,56.55L105,193A24,24,0,1,1,71,159L154.3,74.38A8,8,0,1,1,165.7,85.6L82.39,170.31a8,8,0,1,0,11.27,11.36L192.93,81A24,24,0,1,0,159,47L59.76,147.68a40,40,0,1,0,56.53,56.62l82.06-82A8,8,0,0,1,209.66,122.34Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 256 256" fill="currentColor"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></symbol>
+  <symbol id="i-volume-2" viewBox="0 0 256 256" fill="currentColor"><path d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM32,96H72v64H32ZM144,207.64,88,164.09V91.91l56-43.55Zm54-106.08a40,40,0,0,1,0,52.88,8,8,0,0,1-12-10.58,24,24,0,0,0,0-31.72,8,8,0,0,1,12-10.58ZM248,128a79.9,79.9,0,0,1-20.37,53.34,8,8,0,0,1-11.92-10.67,64,64,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67A79.83,79.83,0,0,1,248,128Z"/></symbol>
+  <symbol id="i-share-2" viewBox="0 0 256 256" fill="currentColor"><path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 256 256" fill="currentColor"><path d="M235.32,81.37,174.63,20.69a16,16,0,0,0-22.63,0L98.37,74.49c-10.66-3.34-35-7.37-60.4,13.14a16,16,0,0,0-1.29,23.78L85,159.71,42.34,202.34a8,8,0,0,0,11.32,11.32L96.29,171l48.29,48.29A16,16,0,0,0,155.9,224c.38,0,.75,0,1.13,0a15.93,15.93,0,0,0,11.64-6.33c19.64-26.1,17.75-47.32,13.19-60L235.33,104A16,16,0,0,0,235.32,81.37ZM224,92.69h0l-57.27,57.46a8,8,0,0,0-1.49,9.22c9.46,18.93-1.8,38.59-9.34,48.62L48,100.08c12.08-9.74,23.64-12.31,32.48-12.31A40.13,40.13,0,0,1,96.81,91a8,8,0,0,0,9.25-1.51L163.32,32,224,92.68Z"/></symbol>
+  <symbol id="i-graduation-cap" viewBox="0 0 256 256" fill="currentColor"><path d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></symbol>
+  <symbol id="i-circle-check" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol>
+  <symbol id="i-circle-x" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol>
+  <symbol id="i-corner-down-left" viewBox="0 0 256 256" fill="currentColor"><path d="M200,32V176a8,8,0,0,1-8,8H67.31l34.35,34.34a8,8,0,0,1-11.32,11.32l-48-48a8,8,0,0,1,0-11.32l48-48a8,8,0,0,1,11.32,11.32L67.31,168H184V32a8,8,0,0,1,16,0Z"/></symbol>
   </defs>
 </svg>
 
@@ -660,7 +745,7 @@ select.input{appearance:none;background-image:none}
       <textarea id="input" rows="1" placeholder="Ask anything" aria-label="Message" enterkeyhint="send"></textarea>
       <div class="c-row">
         <div class="c-side">
-          <button class="c-btn" id="attachBtn" type="button" aria-label="Attach a photo or file"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg></button>
+          <button class="c-btn" id="attachBtn" type="button" aria-label="Attach a photo or file" title="Attach"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>
           <button class="model-chip" id="modelChip" type="button" aria-label="Choose model"><i class="dot" id="modelDot"></i><span id="modelName">Model</span><svg class="ic" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
         </div>
         <div class="c-side">
@@ -670,23 +755,26 @@ select.input{appearance:none;background-image:none}
       </div>
       <input type="file" id="attachFile" multiple hidden accept="image/*,.txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.log,.srt,.yaml,.yml">
     </form>
+    <div class="sug-below" id="sugBelow"></div>
     <div class="hint">Vesper can make mistakes. Check what matters.</div>
   </div>
 </div>
 
 <div class="scrim" id="drawerScrim"></div>
 <aside class="drawer layer" id="drawer" aria-label="Chats" inert>
-  <div class="d-brand"><i class="logo-flat" aria-hidden="true"></i><b>Vesper</b></div>
+  <div class="d-brand"><div class="left"><i class="logo-flat" aria-hidden="true"></i><b>Vesper</b></div><div class="d-tools"><button class="icon-btn" id="dSearchBtn" type="button" aria-label="Search chats" title="Search (Ctrl+K)"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></button><button class="icon-btn" id="dSideBtn" type="button" aria-label="Hide the sidebar" title="Sidebar (Ctrl+B)"><svg class="ic" aria-hidden="true"><use href="#i-panel-left"/></svg></button></div></div>
   <label class="d-search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="chatSearch" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></label>
-  <button class="d-new" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat</button>
+  <button class="d-new d-primary" id="newChatDrawer"><svg class="ic" aria-hidden="true"><use href="#i-square-pen"/></svg>New chat<kbd>Ctrl N</kbd></button>
   <button class="d-new" id="openCompanions"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Characters</button>
+  <button class="d-new" id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button>
+  <div class="d-sec">Studio</div>
   <button class="d-new" id="openImage"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Image Studio<span class="tagp">Soon</span></button>
   <button class="d-new" id="openVideo"><svg class="ic" aria-hidden="true"><use href="#i-clapperboard"/></svg>Video Studio<span class="tagp">Soon</span></button>
   <button class="d-new" id="openLive"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Live Characters<span class="tagp">Soon</span></button>
-  <button class="d-new" id="openPlus"><svg class="ic" aria-hidden="true"><use href="#i-crown"/></svg>Vesper Plus<span class="tagp gold">New</span></button>
-  <button class="d-new" id="openSupport"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg>Support Vesper</button>
   <div class="chat-list" id="chatList"></div>
-  <div class="d-foot"><button id="openLearn"><svg class="ic" aria-hidden="true"><use href="#i-graduation-cap"/></svg>Learn</button><button id="openSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button></div>
+  <div class="d-foot">
+    <div class="d-user"><span class="av"><i class="logo-flat" aria-hidden="true"></i></span><button class="nm" id="dStatus" type="button"><b id="dStatusT">Free and private</b><small id="dStatusS">Keys and chats stay here</small></button><button class="icon-btn" id="openSupport" type="button" aria-label="Support Vesper" title="Support Vesper"><svg class="ic" aria-hidden="true" style="color:#ff8fa3"><use href="#i-heart"/></svg></button><button class="icon-btn" id="openSettings" type="button" aria-label="Settings" title="Settings (Ctrl+,)"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button></div>
+  </div>
 </aside>
 
 <input type="file" id="importFile" accept="application/json,.json" hidden>
@@ -746,10 +834,10 @@ const SKIP = /whisper|tts|guard|embed|moderation|playai|orpheus|image|vision-pre
 const LENGTHS = [{id:"short", label:"Short", tokens:600}, {id:"normal", label:"Normal", tokens:1500}, {id:"long", label:"Long", tokens:4000}];
 const SYSTEM = "You are Vesper, a sharp, warm and witty conversational AI. Talk like a smart friend, not a corporate assistant. Be direct and natural, use humor when it fits, and never lecture, moralize or add disclaimers. Keep replies as short as the question deserves. Use markdown only when it truly helps. If you don't know something, say so plainly instead of guessing. Follow the user's lead on tone, format and style, and keep to any voice or scenario they set until they change it.";
 const SUGGEST = [
-  {title:"Write a hook", sub:"for a 15 second product video", prompt:"Write 5 scroll stopping hooks for a 15 second product video. Keep each one under 12 words."},
-  {title:"Brainstorm ideas", sub:"for this week's content", prompt:"Brainstorm 8 short video ideas I could film this week. Mix the formats and keep each idea to one line."},
-  {title:"Explain simply", sub:"anything, in plain words", prompt:"I want something explained in plain words. Ask me what the topic is first."},
-  {title:"Plan my day", sub:"hour by hour, realistic", prompt:"Help me plan my day hour by hour. Ask me what I need to get done first."}
+  {icon:"pencil", title:"Write a hook", sub:"for a 15 second product video", prompt:"Write 5 scroll stopping hooks for a 15 second product video. Keep each one under 12 words."},
+  {icon:"sparkles", title:"Brainstorm ideas", sub:"for this week's content", prompt:"Brainstorm 8 short video ideas I could film this week. Mix the formats and keep each idea to one line."},
+  {icon:"graduation-cap", title:"Explain simply", sub:"anything, in plain words", prompt:"I want something explained in plain words. Ask me what the topic is first."},
+  {icon:"clock", title:"Plan my day", sub:"hour by hour, realistic", prompt:"Help me plan my day hour by hour. Ask me what I need to get done first."}
 ];
 // App icon finishes. Chrome lives at the root; the others in icons/<id>/ with their own manifest.
 // Each finish also themes the app: accent, surfaces, lines and the glow behind the logo.
@@ -1072,12 +1160,16 @@ function dragToClose(L, handles){
     hd.addEventListener("pointerup", end); hd.addEventListener("pointercancel", end);
   });
 }
-function makePage(title, render){
-  const el = h("section", {class:"page layer", role:"dialog", "aria-modal":"true", "aria-label":title, inert:true});
+function makePage(title, render, opts){
+  const under = stack.some(l => l.el.classList.contains("modal"));
+  const modal = docked() && (!!(opts && opts.modal) || under);
+  const el = h("section", {class:"page layer" + (modal ? " modal" + (under ? "" : " mroot") : ""), role:"dialog", "aria-modal":"true", "aria-label":title, inert:true});
   const body = h("div", {class:"page-body"}); const wrap = h("div", {class:"wrap"}); body.append(wrap);
-  el.append(h("div", {class:"page-head"}, iconBtn("chevron-left", "Back", () => closeTop()), h("h2", {text:title}), h("span")), body);
+  el.append(h("div", {class:"page-head"}, modal && !under ? iconBtn("x", "Close", () => closeTop()) : iconBtn("chevron-left", "Back", () => closeTop()), h("h2", {text:title}), h("span")), body);
+  const scrim = modal && !under ? h("div", {class:"scrim"}) : null;
+  if (scrim) { document.body.append(scrim); scrim.addEventListener("click", () => { stack.filter(l => l.el.classList.contains("modal")).forEach(() => closeTop()); }); }
   document.body.append(el);
-  const L = {el, body:wrap, dynamic:true};
+  const L = {el, body:wrap, dynamic:true, scrim};
   L.refresh = () => { const st = body.scrollTop; wrap.innerHTML = ""; render(wrap, L); body.scrollTop = st; };
   L.refresh();
   return L;
@@ -1158,18 +1250,46 @@ function renderChip(){
   $("#modelName").textContent = m ? m.name : "Choose a model";
   $("#modelDot").className = "dot" + (m && ready(m.p) ? "" : " off");
 }
+// Windows app: set up a private model on this PC in one click, right from the home screen.
+function specLine(i){ return Math.round(i.ram_gb) + " GB memory" + (i.vram_gb >= 2 && i.gpu_name ? ", " + i.gpu_name + " " + Math.round(i.vram_gb) + " GB" : ", no graphics card"); }
+function setupCard(){
+  if (!DESKTOP || pcFiles.length) return null;
+  const card = h("div", {class:"setup"}, h("div", {class:"si", html:ic("cpu")}));
+  if (!pcInfo) { card.append(h("div", {class:"st"}, h("b", {text:"Checking this PC"}), h("span", {text:"Finding the best model for your memory and graphics card."}))); pcSpecs().then(() => { const c = chat(); if (!c || !c.messages.length) renderThread(); }); return card; }
+  const m = adviseModels(pcInfo.ram_gb, pcInfo.vram_gb >= 2 ? pcInfo.vram_gb : 0, PC_MODELS).best, dl = pcDl[m.file];
+  const pct = dl ? Math.min(100, Math.floor(dl.done / Math.max(1, dl.total) * 100)) : 0;
+  card.append(h("div", {class:"st"}, h("b", {text:dl ? "Installing " + m.name : "Run AI on this PC"}), h("span", {text:specLine(pcInfo) + ". Best fit: " + m.name + ", " + m.gb + " GB. Private, and works offline."})),
+    h("div", {class:"sa"}, ...(dl ? [h("div", {class:"bar"}, h("i", {"data-dlbar":m.file, style:"width:" + pct + "%"})), h("span", {class:"pct", "data-dl":m.file, text:pct + "%"})]
+      : [h("button", {class:"btn primary", type:"button", text:"Install and start", onclick:() => pcSetup(m)}), h("button", {class:"lnk", type:"button", text:"Pick another model", onclick:() => openPC()})])));
+  return card;
+}
+async function pcSetup(m){
+  const view = {refresh:() => { const c = chat(); if (!c || !c.messages.length) renderThread(); }, el:document.body};
+  await pcDownload(m, view);
+  if (pcFiles.includes(m.file)) { pcUse(m.file); refreshMain(); pcEnsure(m.file).catch(() => {}); }
+}
+function renderFoot(){
+  const t = $("#dStatusT"), sub = $("#dStatusS"); if (!t) return;
+  const n = Object.keys(PROVIDERS).filter(p => ready(p)).length;
+  if (DESKTOP) { t.textContent = pcFiles.length ? "Local AI ready" : "Set up local AI"; sub.textContent = pcFiles.length ? pcFiles.length + (pcFiles.length > 1 ? " models" : " model") + " on this PC" : "One click, works offline"; }
+  else { t.textContent = "Free and private"; sub.textContent = n ? n + (n > 1 ? " providers" : " provider") + " connected" : "Add a free model to start"; }
+}
 function renderHero(){
   inner.innerHTML = "";
   const hero = h("div", {class:"hero"});
   const main = h("div", {class:"hero-main", html:`<img class="mark" src="${iconFile("mark.webp")}" alt="" width="360" height="352" decoding="async">`});
   if (!anyReady()) {
+    if (DESKTOP) { main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Set up a private AI on this PC in one click, or connect a free cloud model."})); const sc = setupCard(); if (sc) main.append(sc); main.append(h("div", {class:"cta"}, h("button", {class:"btn ghost block", type:"button", text:"Use a cloud model", onclick:() => openProviders()}))); hero.append(main); inner.append(hero); return; }
     main.append(h("h1", {html:"Welcome to Vesper<i>.</i>"}), h("p", {text:"Connect a free AI model to start. It takes about a minute."}),
       h("div", {class:"cta"}, h("button", {class:"btn primary block", type:"button", text:"Connect a model", onclick:() => openProviders()}), h("button", {class:"btn ghost block", type:"button", text:"Use a local model", onclick:() => openLocal()}), h("button", {class:"btn ghost block", type:"button", html:ic("graduation-cap") + "New here? Learn the basics", onclick:() => openLearn()})));
     hero.append(main);
   } else {
     if (privateMode) main.append(h("h1", {html:"Private chat<i>.</i>"}), h("p", {text:"This chat won't be saved to your history."}));
     else main.append(h("h1", {html:esc(greeting()) + "<i>.</i>"}), h("p", {text:"What's on your mind?"}));
-    const sg = h("div", {class:"suggest"});
+    const sc = setupCard(); if (sc) main.append(sc);
+    hero.classList.add("ready");
+    const sg = h("div", {class:"suggest"}), below = $("#sugBelow"); below.innerHTML = "";
+    SUGGEST.forEach(s => below.append(h("button", {class:"sgl", type:"button", html:ic(s.icon) + "<span>" + esc(s.title + " " + s.sub) + "</span>", onclick:() => { input.value = s.prompt; autosize(); submit(); }})));
     SUGGEST.forEach(s => sg.append(h("button", {class:"sg", type:"button", onclick:() => { input.value = s.prompt; autosize(); submit(); }}, h("b", {text:s.title}), h("span", {text:s.sub}))));
     hero.append(main, sg);
   }
@@ -1177,7 +1297,8 @@ function renderHero(){
 }
 function renderThread(keep){
   const c = chat();
-  if (!c || !c.messages.length) { renderHero(); stick = true; $("#toBottom").classList.remove("on"); return; }
+  appEl.classList.toggle("is-empty", !c || !c.messages.length);
+  if (!c || !c.messages.length) { $("#sugBelow").innerHTML = ""; renderHero(); stick = true; $("#toBottom").classList.remove("on"); return; }
   const st = thread.scrollTop;
   inner.innerHTML = "";
   c.messages.forEach((m, i) => inner.append(msgEl(c, m, i)));
@@ -1433,13 +1554,16 @@ function setSide(off){ S.sideOff = !!off; save(); document.body.classList.toggle
 function toggleSide(){ if (docked()) setSide(!S.sideOff); else $("#openDrawer").click(); }
 document.body.classList.toggle("side-off", !!S.sideOff);
 $("#tbSide").onclick = toggleSide;
+$("#dStatus").onclick = () => DESKTOP ? openPC() : openProviders();
+$("#dSideBtn").onclick = () => { if (docked()) setSide(true); else closeTop(); };
+$("#dSearchBtn").onclick = () => { const d = $("#drawer"), on = d.classList.toggle("searching"); if (on) $("#chatSearch").focus(); else { $("#chatSearch").value = ""; renderDrawer(); } };
 // Keyboard shortcuts, like a desktop chat app
 addEventListener("keydown", e => {
   const mod = e.ctrlKey || e.metaKey; if (!mod || e.altKey) return;
   const k = e.key.toLowerCase();
   if ((k === "n" && DESKTOP) || (k === "o" && e.shiftKey)) { e.preventDefault(); newChat(); }
   else if (k === "b" && !e.shiftKey) { e.preventDefault(); toggleSide(); }
-  else if (k === "k" && docked()) { e.preventDefault(); if (S.sideOff) setSide(false); $("#chatSearch").focus(); }
+  else if (k === "k" && docked()) { e.preventDefault(); if (S.sideOff) setSide(false); $("#drawer").classList.add("searching"); $("#chatSearch").focus(); }
   else if (k === ",") { e.preventDefault(); openSettings(); }
 });
 function dayGroup(t){
@@ -1451,19 +1575,23 @@ function dayGroup(t){
   if (t >= start - 30 * 864e5) return "Previous 30 days";
   return d.toLocaleDateString(undefined, {month:"long", year:"numeric"});
 }
+let drawerAll = false;
 function renderDrawer(){
+  renderFoot();
   const list = $("#chatList"); list.innerHTML = "";
   const q = $("#chatSearch").value.trim().toLowerCase();
   const chats = S.chats.filter(c => !c.temp && (!q || c.title.toLowerCase().includes(q) || c.messages.some(m => String(m.content || "").toLowerCase().includes(q)))).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.updated - a.updated);
   if (!chats.length) { list.append(h("div", {class:"empty-list", text:q ? "No chats match that." : "Your chats will show up here."})); return; }
   let last = "";
-  chats.forEach(c => {
+  const all = chats.length, cap = q || drawerAll ? all : 14;
+  chats.slice(0, cap).forEach(c => {
     const g = c.pinned ? "Pinned" : dayGroup(c.updated); if (g !== last) { last = g; list.append(h("div", {class:"d-label", text:g})); }
     const k = c.companion ? compById(c.companion) : null;
     const o = h("button", {class:"open", type:"button", onclick:() => openChat(c.id)}, k ? avatar(k, "sm") : null, h("span", {text:c.title}));
     o.addEventListener("contextmenu", e => { e.preventDefault(); chatMenu(c); });
     list.append(h("div", {class:"ci" + (c.id === S.current ? " active" : "")}, o, h("button", {class:"more", type:"button", "aria-label":"Options for " + c.title, onclick:() => chatMenu(c), html:ic("ellipsis")})));
   });
+  if (all > cap) list.append(h("button", {class:"d-more", type:"button", text:"Show more", onclick:() => { drawerAll = true; renderDrawer(); }}));
 }
 function chatMenu(c){
   menu("chatmenu", c.title, [
@@ -1521,7 +1649,38 @@ function openModels(){
 }
 
 /* ---------- settings ---------- */
-function openSettings(swap){ open("settings", () => makePage("Settings", renderSettingsRoot), swap); }
+function openSettings(swap){ open("settings", () => { const L = makePage("Settings", renderSettingsRoot, {modal:true}); settingsNav(L); return L; }, swap); }
+// Settings opens as a floating window on wide screens, with a menu of its sections on the left.
+function settingsNav(L){
+  if (!L.el.classList.contains("modal")) return;
+  const ICON = {Models:"cpu", "Connect apps":"plug", Appearance:"palette", Chat:"message-square", Data:"download", Help:"graduation-cap", About:"info"};
+  const nav = h("nav", {class:"pnav", "aria-label":"Settings sections"}), scroller = L.body.parentNode;
+  L.el.classList.add("has-nav"); L.el.append(nav);
+  const build = () => { nav.innerHTML = ""; L.body.querySelectorAll(".glabel").forEach((g, i) => nav.append(h("button", {type:"button", class:i ? "" : "on", html:ic(ICON[g.textContent] || "settings") + "<span>" + esc(g.textContent) + "</span>", onclick:() => scroller.scrollTo({top:g.offsetTop - 8, behavior:"smooth"})}))); };
+  scroller.addEventListener("scroll", () => { const gs = [...L.body.querySelectorAll(".glabel")]; let k = 0; gs.forEach((g, i) => { if (g.offsetTop - 40 <= scroller.scrollTop) k = i; }); if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) k = gs.length - 1; [...nav.children].forEach((b, i) => b.classList.toggle("on", i === k)); }, {passive:true});
+  const r = L.refresh; L.refresh = () => { r(); build(); }; build();
+}
+// Apps Vesper will connect to. Logos are from Simple Icons (CC0). Connectors are not built yet, so Request only saves interest on this device.
+const APPS = {"gmail":["Gmail","#EA4335","M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z","Search, sum up and draft emails","Google"],"googledrive":["Google Drive","#4285F4","M12.01 1.485c-2.082 0-3.754.02-3.743.047.01.02 1.708 3.001 3.774 6.62l3.76 6.574h3.76c2.081 0 3.753-.02 3.742-.047-.005-.02-1.708-3.001-3.775-6.62l-3.76-6.574zm-4.76 1.73a789.828 789.861 0 0 0-3.63 6.319L0 15.868l1.89 3.298 1.885 3.297 3.62-6.335 3.618-6.33-1.88-3.287C8.1 4.704 7.255 3.22 7.25 3.214zm2.259 12.653-.203.348c-.114.198-.96 1.672-1.88 3.287a423.93 423.948 0 0 1-1.698 2.97c-.01.026 3.24.042 7.222.042h7.244l1.796-3.157c.992-1.734 1.85-3.23 1.906-3.323l.104-.167h-7.249z","Find files and answers in your Drive","Google"],"googlecalendar":["Google Calendar","#4285F4","M18.316 5.684H24v12.632h-5.684V5.684zM5.684 24h12.632v-5.684H5.684V24zM18.316 5.684V0H1.895A1.894 1.894 0 0 0 0 1.895v16.421h5.684V5.684h12.632zm-7.207 6.25v-.065c.272-.144.5-.349.687-.617s.279-.595.279-.982c0-.379-.099-.72-.3-1.025a2.05 2.05 0 0 0-.832-.714 2.703 2.703 0 0 0-1.197-.257c-.6 0-1.094.156-1.481.467-.386.311-.65.671-.793 1.078l1.085.452c.086-.249.224-.461.413-.633.189-.172.445-.257.767-.257.33 0 .602.088.816.264a.86.86 0 0 1 .322.703c0 .33-.12.589-.36.778-.24.19-.535.284-.886.284h-.567v1.085h.633c.407 0 .748.109 1.02.327.272.218.407.499.407.843 0 .336-.129.614-.387.832s-.565.327-.924.327c-.351 0-.651-.103-.897-.311-.248-.208-.422-.502-.521-.881l-1.096.452c.178.616.505 1.082.977 1.401.472.319.984.478 1.538.477a2.84 2.84 0 0 0 1.293-.291c.382-.193.684-.458.902-.794.218-.336.327-.72.327-1.149 0-.429-.115-.797-.344-1.105a2.067 2.067 0 0 0-.881-.689zm2.093-1.931l.602.913L15 10.045v5.744h1.187V8.446h-.827l-2.158 1.557zM22.105 0h-3.289v5.184H24V1.895A1.894 1.894 0 0 0 22.105 0zm-3.289 23.5l4.684-4.684h-4.684V23.5zM0 22.105C0 23.152.848 24 1.895 24h3.289v-5.184H0v3.289z","Check your schedule and plan events","Google"],"googledocs":["Google Docs","#4285F4","M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727h-6zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818v1.364zm0-3.273H7.091V9.273h9.818v1.363zM14.727 6h6l-6-6v6z","Read and draft documents","Google"],"googlesheets":["Google Sheets","#34A853","M11.318 12.545H7.91v-1.909h3.41v1.91zM14.728 0v6h6l-6-6zm1.363 10.636h-3.41v1.91h3.41v-1.91zm0 3.273h-3.41v1.91h3.41v-1.91zM20.727 6.5v15.864c0 .904-.732 1.636-1.636 1.636H4.909a1.636 1.636 0 0 1-1.636-1.636V1.636C3.273.732 4.005 0 4.909 0h9.318v6.5h6.5zm-3.273 2.773H6.545v7.909h10.91v-7.91zm-6.136 4.636H7.91v1.91h3.41v-1.91z","Analyze and update spreadsheets","Google"],"github":["GitHub","#181717","M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12","Look up code, issues and pull requests","Work"],"notion":["Notion","#000000","M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z","Search your pages and notes","Work"],"linear":["Linear","#5E6AD2","M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z","Track issues and projects","Work"],"trello":["Trello","#0052CC","M21.147 0H2.853A2.86 2.86 0 000 2.853v18.294A2.86 2.86 0 002.853 24h18.294A2.86 2.86 0 0024 21.147V2.853A2.86 2.86 0 0021.147 0zM10.34 17.287a.953.953 0 01-.953.953h-4a.954.954 0 01-.954-.953V5.38a.953.953 0 01.954-.953h4a.954.954 0 01.953.953zm9.233-5.467a.944.944 0 01-.953.947h-4a.947.947 0 01-.953-.947V5.38a.953.953 0 01.953-.953h4a.954.954 0 01.953.953z","See and update your boards","Work"],"todoist":["Todoist","#E44332","M21 0H3C1.35 0 0 1.35 0 3v3.858s3.854 2.24 4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.608 8.136-4.675.279-.161.58-.107.748-.01.164.097.606.348.84.48.232.134.221.502.013.622l-9.712 5.59c-.346.2-.69.204-1.048.002C3.478 10.907.998 9.463 0 8.882v2.02l4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.609 8.136-4.676.279-.16.58-.106.748-.008.164.096.606.347.84.48.232.133.221.5.013.62-.208.121-9.288 5.346-9.712 5.59-.346.2-.69.205-1.048.002C3.478 14.951.998 13.506 0 12.926v2.02l4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.609 8.136-4.676.279-.16.58-.106.748-.009.164.097.606.348.84.48.232.133.221.502.013.622l-9.712 5.59c-.346.199-.69.204-1.048.001C3.478 18.994.998 17.55 0 16.97V21c0 1.65 1.35 3 3 3h18c1.65 0 3-1.35 3-3V3c0-1.65-1.35-3-3-3z","Turn chats into tasks","Work"],"obsidian":["Obsidian","#7C3AED","M19.355 18.538a68.967 68.959 0 0 0 1.858-2.954.81.81 0 0 0-.062-.9c-.516-.685-1.504-2.075-2.042-3.362-.553-1.321-.636-3.375-.64-4.377a1.707 1.707 0 0 0-.358-1.05l-3.198-4.064a3.744 3.744 0 0 1-.076.543c-.106.503-.307 1.004-.536 1.5-.134.29-.29.6-.446.914l-.31.626c-.516 1.068-.997 2.227-1.132 3.59-.124 1.26.046 2.73.815 4.481.128.011.257.025.386.044a6.363 6.363 0 0 1 3.326 1.505c.916.79 1.744 1.922 2.415 3.5zM8.199 22.569c.073.012.146.02.22.02.78.024 2.095.092 3.16.29.87.16 2.593.64 4.01 1.055 1.083.316 2.198-.548 2.355-1.664.114-.814.33-1.735.725-2.58l-.01.005c-.67-1.87-1.522-3.078-2.416-3.849a5.295 5.295 0 0 0-2.778-1.257c-1.54-.216-2.952.19-3.84.45.532 2.218.368 4.829-1.425 7.531zM5.533 9.938c-.023.1-.056.197-.098.29L2.82 16.059a1.602 1.602 0 0 0 .313 1.772l4.116 4.24c2.103-3.101 1.796-6.02.836-8.3-.728-1.73-1.832-3.081-2.55-3.831zM9.32 14.01c.615-.183 1.606-.465 2.745-.534-.683-1.725-.848-3.233-.716-4.577.154-1.552.7-2.847 1.235-3.95.113-.235.223-.454.328-.664.149-.297.288-.577.419-.86.217-.47.379-.885.46-1.27.08-.38.08-.72-.014-1.043-.095-.325-.297-.675-.68-1.06a1.6 1.6 0 0 0-1.475.36l-4.95 4.452a1.602 1.602 0 0 0-.513.952l-.427 2.83c.672.59 2.328 2.316 3.335 4.711.09.21.175.43.253.653z","Chat with your vault","Work"],"evernote":["Evernote","#00A82D","M8.222 5.393c0 .239-.02.637-.256.895-.257.24-.652.259-.888.259H4.552c-.73 0-1.165 0-1.46.04-.159.02-.356.1-.455.14-.04.019-.04 0-.02-.02L8.38.796c.02-.02.04-.02.02.02-.04.099-.118.298-.138.457-.04.298-.04.736-.04 1.472v2.647zm5.348 17.869c-.67-.438-1.026-1.015-1.164-1.373a2.924 2.924 0 01-.217-1.095 3.007 3.007 0 013-3.004c.493 0 .888.398.888.895a.88.88 0 01-.454.776c-.099.06-.237.1-.336.12-.098.02-.473.06-.65.218-.198.16-.356.418-.356.697 0 .298.118.577.316.776.355.358.829.557 1.342.557a2.436 2.436 0 002.427-2.447c0-1.214-.809-2.29-1.875-2.766-.158-.08-.414-.14-.651-.2a8.04 8.04 0 00-.592-.1c-.829-.1-2.901-.755-3.04-2.605 0 0-.611 2.785-1.835 3.54-.118.06-.276.12-.454.16-.177.04-.374.06-.434.06-1.993.12-4.105-.517-5.565-2.03 0 0-.987-.815-1.5-3.103-.118-.558-.355-1.553-.493-2.488-.06-.338-.08-.597-.099-.836 0-.975.592-1.631 1.342-1.73h4.026c.69 0 1.086-.18 1.342-.42.336-.317.415-.775.415-1.312V1.354C9.05.617 9.703 0 10.669 0h.474c.197 0 .434.02.651.04.158.02.296.06.533.12 1.204.298 1.46 1.532 1.46 1.532s2.27.398 3.415.597c1.085.199 3.77.378 4.282 3.104 1.204 6.487.474 12.775.415 12.775-.849 6.129-5.901 5.83-5.901 5.83a4.1 4.1 0 01-2.428-.736zm4.54-13.034c-.652-.06-1.204.2-1.402.697-.04.1-.079.219-.059.278.02.06.06.08.099.1.237.12.631.179 1.204.239.572.06.967.1 1.223.06.04 0 .08-.02.119-.08.04-.06.02-.18.02-.28-.06-.536-.553-.934-1.204-1.014z","Find notes and clips","Work"],"figma":["Figma","#F24E1E","M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z","Talk through your designs","Work"],"dropbox":["Dropbox","#0061FF","M6 1.807L0 5.629l6 3.822 6.001-3.822L6 1.807zM18 1.807l-6 3.822 6 3.822 6-3.822-6-3.822zM0 13.274l6 3.822 6.001-3.822L6 9.452l-6 3.822zM18 9.452l-6 3.822 6 3.822 6-3.822-6-3.822zM6 18.371l6.001 3.822 6-3.822-6-3.822L6 18.371z","Find and read your files","Work"],"spotify":["Spotify","#1ED760","M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z","Make playlists from a mood","Media"],"youtube":["YouTube","#FF0000","M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z","Sum up videos and find clips","Media"],"discord":["Discord","#5865F2","M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z","Catch up on your servers","Social"],"telegram":["Telegram","#26A5E4","M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z","Talk to Vesper in Telegram","Social"],"whatsapp":["WhatsApp","#25D366","M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z","Talk to Vesper in WhatsApp","Social"],"reddit":["Reddit","#FF4500","M12 0C5.373 0 0 5.373 0 12c0 3.314 1.343 6.314 3.515 8.485l-2.286 2.286C.775 23.225 1.097 24 1.738 24H12c6.627 0 12-5.373 12-12S18.627 0 12 0Zm4.388 3.199c1.104 0 1.999.895 1.999 1.999 0 1.105-.895 2-1.999 2-.946 0-1.739-.657-1.947-1.539v.002c-1.147.162-2.032 1.15-2.032 2.341v.007c1.776.067 3.4.567 4.686 1.363.473-.363 1.064-.58 1.707-.58 1.547 0 2.802 1.254 2.802 2.802 0 1.117-.655 2.081-1.601 2.531-.088 3.256-3.637 5.876-7.997 5.876-4.361 0-7.905-2.617-7.998-5.87-.954-.447-1.614-1.415-1.614-2.538 0-1.548 1.255-2.802 2.803-2.802.645 0 1.239.218 1.712.585 1.275-.79 2.881-1.291 4.64-1.365v-.01c0-1.663 1.263-3.034 2.88-3.207.188-.911.993-1.595 1.959-1.595Zm-8.085 8.376c-.784 0-1.459.78-1.506 1.797-.047 1.016.64 1.429 1.426 1.429.786 0 1.371-.369 1.418-1.385.047-1.017-.553-1.841-1.338-1.841Zm7.406 0c-.786 0-1.385.824-1.338 1.841.047 1.017.634 1.385 1.418 1.385.785 0 1.473-.413 1.426-1.429-.046-1.017-.721-1.797-1.506-1.797Zm-3.703 4.013c-.974 0-1.907.048-2.77.135-.147.015-.241.168-.183.305.483 1.154 1.622 1.964 2.953 1.964 1.33 0 2.47-.81 2.953-1.964.057-.137-.037-.29-.184-.305-.863-.087-1.795-.135-2.769-.135Z","Sum up threads and trends","Social"],"x":["X","#000000","M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z","Draft posts and read trends","Social"],"zoom":["Zoom","#0B5CFF","M5.033 14.649H.743a.74.74 0 0 1-.686-.458.74.74 0 0 1 .16-.808L3.19 10.41H1.06A1.06 1.06 0 0 1 0 9.35h3.957c.301 0 .57.18.686.458a.74.74 0 0 1-.161.808L1.51 13.59h2.464c.585 0 1.06.475 1.06 1.06zM24 11.338c0-1.14-.927-2.066-2.066-2.066-.61 0-1.158.265-1.537.686a2.061 2.061 0 0 0-1.536-.686c-1.14 0-2.066.926-2.066 2.066v3.311a1.06 1.06 0 0 0 1.06-1.06v-2.251a1.004 1.004 0 0 1 2.013 0v2.251c0 .586.474 1.06 1.06 1.06v-3.311a1.004 1.004 0 0 1 2.012 0v2.251c0 .586.475 1.06 1.06 1.06zM16.265 12a2.728 2.728 0 1 1-5.457 0 2.728 2.728 0 0 1 5.457 0zm-1.06 0a1.669 1.669 0 1 0-3.338 0 1.669 1.669 0 0 0 3.338 0zm-4.82 0a2.728 2.728 0 1 1-5.458 0 2.728 2.728 0 0 1 5.457 0zm-1.06 0a1.669 1.669 0 1 0-3.338 0 1.669 1.669 0 0 0 3.338 0z","Sum up your meetings","Work"]};
+const APP_PICKS = ["gmail", "googledrive", "googlecalendar", "github", "notion", "spotify"];
+function appTile(id){ let [, hex, d] = APPS[id]; if (/^#(000000|181717)$/i.test(hex)) hex = "#f2f2f2"; return '<span class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="' + hex + '" d="' + d + '"/></svg></span>'; }
+function openApps(){
+  let q = "", cat = "All";
+  open("apps", () => makePage("Connect apps", w => {
+    w.append(gnote("Connectors are in development. Request the apps you use and they move up the list. Nothing connects until you turn it on."));
+    const search = h("input", {type:"search", placeholder:"Search apps", "aria-label":"Search apps", value:q});
+    const chips = h("div", {class:"chips"}), list = h("div");
+    const card = id => { const [name, , , desc] = APPS[id], key = "app:" + id, on = !!(S.waitlist && S.waitlist[key]);
+      const b = h("button", {type:"button", class:on ? "on" : "", html:on ? ic("check") + "Requested" : "Request", "aria-label":(on ? "Requested " : "Request ") + name, onclick:() => { S.waitlist = S.waitlist || {}; if (S.waitlist[key]) delete S.waitlist[key]; else S.waitlist[key] = Date.now(); save(); const now = !!S.waitlist[key]; b.className = now ? "on" : ""; b.innerHTML = now ? ic("check") + "Requested" : "Request"; buzz(10); }});
+      return h("div", {class:"appc", html:appTile(id)}, h("div", {class:"tx"}, h("b", {text:name}), h("span", {text:desc})), b); };
+    const draw = () => { list.innerHTML = ""; const ids = Object.keys(APPS).filter(id => (cat === "All" || APPS[id][4] === cat) && (!q || (APPS[id][0] + " " + APPS[id][3]).toLowerCase().includes(q)));
+      if (!q && cat === "All") { list.append(glabel("Recommended for you"), h("div", {class:"appgrid"}, ...APP_PICKS.map(card))); ["Google", "Work", "Social", "Media"].forEach(c => list.append(glabel(c), h("div", {class:"appgrid"}, ...ids.filter(id => APPS[id][4] === c && !APP_PICKS.includes(id)).map(card)))); }
+      else list.append(ids.length ? h("div", {class:"appgrid", style:"margin-top:14px"}, ...ids.map(card)) : gnote("No apps match that. Tell us what you need at support@nodefolds.com.")); };
+    ["All", "Google", "Work", "Social", "Media"].forEach(c => chips.append(h("button", {type:"button", class:c === cat ? "on" : "", text:c, onclick:e => { cat = c; [...chips.children].forEach(x => x.classList.toggle("on", x === e.currentTarget)); draw(); }})));
+    search.addEventListener("input", () => { q = search.value.trim().toLowerCase(); draw(); });
+    w.append(h("label", {class:"apps-search", html:ic("search")}, search), chips, list); draw();
+  }));
+}
 function renderSettingsRoot(w){
   const nReady = Object.keys(PROVIDERS).filter(p => ready(p)).length;
   const shown = S.models.filter(m => !isHidden(m) && ready(m.p)).length;
@@ -1548,6 +1707,7 @@ function renderSettingsRoot(w){
     row({icon:"upload", title:"Import chats", sub:"From a Vesper backup file", onclick:() => $("#importFile").click(), chev:false}),
     row({icon:"trash-2", title:"Delete all chats", danger:true, onclick:() => dialog({title:"Delete all chats?", text:"This removes every chat on this device. It can't be undone.", ok:"Delete all", danger:true, onOk:() => { S.chats = []; S.current = null; save(); renderDrawer(); toast("All chats deleted"); }})})
   ));
+  w.append(glabel("Connect apps"), group(row({icon:"plug", title:"Connect apps", sub:"Gmail, Drive, GitHub, Notion and more", onclick:() => openApps()})));
   w.append(glabel("Help"), group(row({icon:"graduation-cap", title:"Learn", sub:"Short guides with real screens", onclick:() => openLearn()})));
   w.append(glabel("About"), group(row({icon:"info", title:"Vesper", sub:"Version " + APP_VERSION}), row({icon:"download", title:"Check for updates", sub:"Get the newest Vesper", onclick:() => checkUpdate(true)}), row({icon:"heart", title:"Support Vesper", sub:"Help keep it free", onclick:() => openSupport()}), row({icon:"message-square", title:"Contact us", sub:"support@nodefolds.com", onclick:() => { location.href = "mailto:support@nodefolds.com?subject=Vesper"; }})),
     gnote("Your keys and chats stay on this device. Messages go only to the AI provider you pick."));
@@ -2060,7 +2220,7 @@ function openLanding(id){
     land.append(body); w.append(land);
   }), true);
 }
-["image", "video", "live", "plus"].forEach(id => { $("#open" + id[0].toUpperCase() + id.slice(1)).onclick = () => openLanding(id); });
+["image", "video", "live"].forEach(id => { $("#open" + id[0].toUpperCase() + id.slice(1)).onclick = () => openLanding(id); });
 
 /* support: goal bar plus the Ko-fi panel inside the app */
 const SUPPORT = {raised:0, goal:250, api:"https://vesper-chat.netlify.app/api/support", kofi:"https://ko-fi.com/buymeacofi/?hidefeed=true&widget=true&embed=true&preview=true"};
@@ -2180,7 +2340,7 @@ function openBackground(){
 }
 
 /* updates: version.json on the site says what is live */
-const APP_VERSION = "2.7";
+const APP_VERSION = "2.8";
 const newer = (a, b) => { const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
   for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 let updShown = "", updAt = 0;
@@ -2371,6 +2531,7 @@ if (DESKTOP && TAURI.event) TAURI.event.listen("dl-progress", ev => {
   pcDl[d.file] = {done:d.done, total:d.total || (pcDl[d.file] && pcDl[d.file].total) || 1};
   const pct = Math.min(100, Math.floor(d.done / Math.max(1, pcDl[d.file].total) * 100));
   document.querySelectorAll("[data-dl]").forEach(b => { if (b.dataset.dl === d.file) b.textContent = pct + "%"; });
+  document.querySelectorAll("[data-dlbar]").forEach(b => { if (b.dataset.dlbar === d.file) b.style.width = pct + "%"; });
 });
 function openPC(swap){
   open("pc", () => {
@@ -2569,7 +2730,7 @@ applyIcon();
 applyBg();
 history.replaceState({vd:0}, "");
 applyDock(); refreshMain();
-if (DESKTOP) pcList();
+if (DESKTOP) pcList().then(() => { refreshMain(); renderFoot(); });
 else if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 })();
 </script>

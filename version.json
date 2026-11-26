@@ -1,6 +1,9 @@
 {
- "version": "2.7",
+ "version": "2.8",
  "notes": [
-  "Desktop layout: the sidebar now stays open on big screens and in the Windows app"
+  "One click local AI on Windows: Vesper picks the best model for your PC and installs it",
+  "New desktop layout with a floating Settings window",
+  "Connect apps: request the apps you want next",
+  "Fresh icons across the app"
  ]
 }
