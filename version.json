@@ -1,8 +1,8 @@
 {
- "version": "3.0",
+ "version": "3.1",
  "notes": [
-  "Details panel: see the model, live activity and token use",
-  "A new Settings window with your profile and usage",
-  "Themes, including gradient themes that tint the whole app"
+  "Workspaces: Chat, Agent and Code",
+  "Your profile with Vesper avatars",
+  "A simpler home screen and a cleaner side panel"
  ]
 }
