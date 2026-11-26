@@ -76,24 +76,25 @@ h2{margin:0;font-size:clamp(38px,5.8vw,76px);font-weight:600;letter-spacing:-.04
 .sub{font-size:clamp(17px,1.7vw,20px);color:var(--muted);line-height:1.5;margin:18px 0 0;max-width:520px}
 /* story */
 .story{height:460vh}
-.story .pin{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;width:min(1180px,100% - 40px);margin:0 auto;overflow:visible}
-.texts{position:relative;height:300px}
+.story .pin{display:grid;grid-template-columns:4fr 7fr;align-items:center;gap:64px;width:min(1360px,100% - 64px);margin:0 auto;overflow:visible}
+.texts{position:relative;height:330px}
+.story h2{font-size:clamp(38px,4.4vw,62px)}
 .tx{position:absolute;inset:0}
 .ticks{display:flex;gap:8px;margin-top:8px}.ticks i{position:relative;width:46px;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.ticks i b{position:absolute;inset:0;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
-.stage{position:relative;height:min(80svh,740px);display:grid;place-items:center;perspective:1600px}
+.stage{position:relative;width:100%;display:grid;place-items:center;perspective:2200px}
 .glow{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(110,168,255,.38),transparent 70%)}
-.device{position:relative;height:100%;aspect-ratio:412/892;border-radius:46px;padding:10px;background:linear-gradient(160deg,#3a3a40,#111114 40%,#2a2a30);box-shadow:0 60px 120px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.09)}
-.screen{position:relative;width:100%;height:100%;border-radius:37px;overflow:hidden;background:#000;container-type:size}
-.sbar{position:absolute;left:0;right:0;top:0;height:6.4cqh;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:0 7cqw 0 9cqw;color:#fff;background:#000;font-size:3.9cqw}
-.sbar b{font-weight:600;letter-spacing:-.01em}
-.sbar .island{position:absolute;left:50%;top:1.3cqh;width:28cqw;height:3.9cqh;margin-left:-14cqw;border-radius:99px;background:#000;box-shadow:0 0 0 1px #111}
-.sbar .sic{display:flex;align-items:center;gap:1.4cqw}.sbar svg{height:2.9cqw;width:auto;fill:currentColor}.sbar svg:last-child{height:3.3cqw}
-.shots{position:absolute;left:0;right:0;top:6.4cqh;bottom:0;overflow:hidden}
-.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.device{position:relative;width:100%;max-height:72svh;aspect-ratio:1180/820;border-radius:clamp(22px,2.6vw,34px);padding:clamp(10px,1.2vw,16px);background:linear-gradient(150deg,#2e2e33,#0d0d10 45%,#24242a);box-shadow:0 70px 140px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.10),inset 0 0 0 1px rgba(255,255,255,.04)}
+.device::before{content:"";position:absolute;left:50%;top:calc(clamp(10px,1.2vw,16px) / 2 - 2.5px);width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#1d1d22;box-shadow:inset 0 0 1px rgba(255,255,255,.3)}
+.screen{position:relative;width:100%;height:100%;border-radius:clamp(12px,1.4vw,20px);overflow:hidden;background:#000;container-type:size}
+.sbar{position:absolute;left:0;right:0;top:0;height:3.6cqh;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:0 2.2cqw;color:#fff;background:#000;font-size:1.5cqw}
+.sbar b{font-weight:600;letter-spacing:-.01em}.sbar em{font-style:normal;font-weight:500;margin-left:.8cqw;opacity:.9}
+.sbar .sic{display:flex;align-items:center;gap:.6cqw}.sbar svg{height:1.1cqw;width:auto;fill:currentColor}.sbar svg:last-child{height:1.25cqw}
+.shots{position:absolute;left:0;right:0;top:3.6cqh;bottom:0;overflow:hidden}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
 @media (max-width:860px){
   .story .pin{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;gap:18px;padding:92px 0 24px}
-  .stage{height:min(52svh,560px);order:-1;perspective:none}
-  .device{border-radius:34px;padding:7px}.screen{border-radius:28px}
+  .stage{order:-1;perspective:none}
+  .device{border-radius:18px;padding:7px}.screen{border-radius:12px}
   .texts{height:190px}
   .story h2{font-size:34px}.story .sub{font-size:16px;margin-top:10px}
 }
@@ -224,11 +225,11 @@ footer a:hover{color:#fff}
     </div>
     <div class="ticks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
   </div>
-  <div class="stage"><div class="glow m" id="sglow"></div><div class="device m" id="device"><div class="screen"><div class="sbar"><b>9:41</b><i class="island"></i><span class="sic"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 11.5 10.6 8.4a3.6 3.6 0 0 0-5.2 0zM3.3 6.4a6.6 6.6 0 0 1 9.4 0l1.5-1.7a8.9 8.9 0 0 0-12.4 0zM.1 3.1a11.3 11.3 0 0 1 15.8 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="17" height="9" rx="2"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".45"/></svg></span></div><div class="shots">
-    <img class="m" src="img/home.webp" alt="Vesper home screen" width="760" height="1645">
-    <img class="m" src="img/chat-thinking.webp" alt="A Vesper answer" width="760" height="1645">
-    <img class="m" src="img/companions.webp" alt="Vesper characters" width="760" height="1645">
-    <img class="m" src="img/icons.webp" alt="Vesper app icon finishes" width="760" height="1645">
+  <div class="stage"><div class="glow m" id="sglow"></div><div class="device m" id="device"><div class="screen"><div class="sbar"><span><b>9:41</b><em>Mon Nov 24</em></span><span class="sic"><svg viewBox="0 0 16 12"><path d="M8 11.5 10.6 8.4a3.6 3.6 0 0 0-5.2 0zM3.3 6.4a6.6 6.6 0 0 1 9.4 0l1.5-1.7a8.9 8.9 0 0 0-12.4 0zM.1 3.1a11.3 11.3 0 0 1 15.8 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="17" height="9" rx="2"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".45"/></svg></span></div><div class="shots">
+    <img class="m" src="img/tab-home.webp" alt="Vesper home screen" width="1770" height="1230">
+    <img class="m" src="img/tab-chat.webp" alt="A Vesper answer" width="1770" height="1230">
+    <img class="m" src="img/tab-characters.webp" alt="Vesper characters" width="1770" height="1230">
+    <img class="m" src="img/tab-icons.webp" alt="Vesper app icon finishes" width="1770" height="1230">
   </div></div></div></div>
 </div></section>
 
@@ -395,11 +396,11 @@ document.querySelectorAll("[data-link]").forEach(a => { const u = LINKS[a.datase
     $("#heroIn").style.opacity = 1 - clamp(h * 2.2);
     $("#beam").style.opacity = .7 + he * .6; $("#beam").style.transform = "translateX(-50%) scaleY(" + (1 + he * .5) + ")";
     $("#halo").style.transform = "scale(" + (1 + he * 1.6) + ")"; $("#halo").style.opacity = 1 - clamp(h * 1.3);
-    // story: the phone rises, turns, and the screens slide by
+    // story: the tablet rises, turns gently, and the screens slide by
     const st = R[1], sp = sm("story", st.p), se = sm("storyIn", st.enter), seE = ease(se);
     const dev = $("#device");
     dev.style.transform = innerWidth <= 860 ? "translateY(" + ((1 - seE) * 12) + "vh) scale(" + (.92 + seE * .08) + ")"
-      : "translateY(" + ((1 - seE) * 28) + "vh) rotateX(" + ((1 - seE) * 32) + "deg) rotateY(" + (-12 + sp * 24) + "deg) scale(" + (.84 + seE * .12 + Math.sin(sp * Math.PI) * .04) + ")";
+      : "translateY(" + ((1 - seE) * 28) + "vh) rotateX(" + ((1 - seE) * 18) + "deg) rotateY(" + (-5 + sp * 10) + "deg) scale(" + (.9 + seE * .1) + ")";
     $("#sglow").style.opacity = seE; $("#sglow").style.transform = "scale(" + (.6 + seE * .5 + sp * .2) + ")";
     const f = sp * 3.6;
     // each new screen slides up over the last one; the one below sinks back a little
